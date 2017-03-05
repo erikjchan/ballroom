@@ -129,7 +129,7 @@ const competitions = get_competitions(COMPETITIONS)
 const events = get_events(EVENTS)
 const rounds = get_rounds(ROUNDS)
 const partnerships = get_partnerships(PARTNERSHIPS)
-const corganizations = get_organizations(ORGANIZATIONS)
+const organizations = get_organizations(ORGANIZATIONS)
 const payment_records = get_payment_records(PAYMENTS)
 const callbacks = get_callbacks(competitors)
 const admins = get_admins(ADMINS)
@@ -142,7 +142,7 @@ module.exports = {
   events,
   rounds,
   partnerships,
-  corganizations,
+  organizations,
   payment_records,
   callbacks,
   admins,

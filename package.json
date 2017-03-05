@@ -56,9 +56,16 @@
     "babel-polyfill": "^6.5.0",
     "babel-runtime": "^6.5.0",
     "express": "^4.12.3",
+    "fake-identity": "^1.0.6",
+    "phrase-generator": "^1.0.0",
+    "random-datetime": "^1.0.1",
+    "random-int": "^1.0.0",
+    "random-item": "^1.0.0",
+    "random-word": "^2.0.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-router": "^3.0.2",
+    "uuid": "^3.0.1",
     "webpack-hot-middleware": "^2.17.1"
   }
 }

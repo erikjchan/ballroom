@@ -30,8 +30,8 @@ app.get('/api/partnerships', (req, res) => {
   res.send(data.partnerships)
 })
 
-app.get('/api/corganizations', (req, res) => {
-  res.send(data.corganizations)
+app.get('/api/organizations', (req, res) => {
+  res.send(data.organizations)
 })
 
 app.get('/api/payment_records', (req, res) => {
