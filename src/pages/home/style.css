@@ -59,7 +59,7 @@ a:link, nav a:visited{
 }
 
 .circle {
- left:100px;
+ left:80px;
  top:20px;
  position: relative;
   width: 80px;
@@ -71,8 +71,15 @@ a:link, nav a:visited{
 }
 
 .circle p{
-	position: relative;
+	text-align: center;
 	vertical-align: center;
+	margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px; 
 }
 
 /*ul{
