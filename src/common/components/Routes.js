@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './App';
 import LoginPage from '../../login/page.jsx';
-import HomePage from '../../pages/home/page';
+import HomePage from '../../home/page.jsx';
 
 export default (
   <Route path="/" component={App}>
