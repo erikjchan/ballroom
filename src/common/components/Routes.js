@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './App';
-import LoginPage from '../../pages/login/page.jsx';
+import LoginPage from '../../login/page.jsx';
 import HomePage from '../../pages/home/page';
 
 
