@@ -79,7 +79,7 @@ a:link, nav a:visited{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    font-size: 40px; 
+    font-size: 30px; 
 }
 
 /*ul{
