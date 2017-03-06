@@ -15,8 +15,8 @@ const randomLevel = _ => randomItem(['begginer', 'intermediate', 'advanced']);
 const ORGANIZATIONS = 2
 const COMPETITORS = ORGANIZATIONS * 50
 const COMPETITIONS = 2
-const EVENTS = 2
-const ROUNDS = 2
+const EVENTS = COMPETITIONS * 5
+const ROUNDS = EVENTS * 3
 const JUDGES = 10
 const PARTNERSHIPS = COMPETITORS // 2x more than needed just in case
 const ADMINS = 5

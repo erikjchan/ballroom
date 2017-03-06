@@ -1,8 +1,7 @@
-// with es6
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-// with es6
-var React = require('react');
-var ReactDOM = require('react-dom');
+
+import React from 'react'
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
+
 var ReactBsTable  = require('react-bootstrap-table');
 
 var products = [{
@@ -17,7 +16,7 @@ var products = [{
       name: "Gold International Latin",
       partner: "Jiaqi / Cornell",
       amt_owed: 150,
-  }];
+  }]
 
 function buttonFormatter(cell, row){
   return '<button>DELETE</button>';
@@ -49,6 +48,7 @@ const selectRowProp = {
 };
 
 let order = 'desc';
+
 export default class YourEvents extends React.Component {
 
   handleBtnClick = () => {

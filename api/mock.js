@@ -10,6 +10,12 @@ app.post('*', (req, res) => {
   res.send({status: 'posted'})
 })
 
+app.get('/api/competition/:id', (req, res) => {
+  const id = parseInt(req.params.id)
+  const comps = data.competitions.filter(c => c.id === id)
+  res.send(comps[0])
+})
+
 app.get('/api/competitors', (req, res) => {
   res.send(data.competitors)
 })
