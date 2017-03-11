@@ -119,3 +119,10 @@ ul{
 				-webkit-transition: color 0.4s ease;
 				transition: color 0.4s ease;
 			}*/
+
+/* TODO: Temporary hack since it seems like sidebar overlays are on top of everything. Need to fix */
+.addEventContainer {
+	z-index: 100;
+	position: absolute;
+	background-color: white;
+}

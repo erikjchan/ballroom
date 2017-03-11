@@ -1,0 +1,22 @@
+.eventListWrapper {
+	display: inline-block;
+}
+
+.eventList {
+	color: black !important;
+}
+
+.eventList > li {
+	display: block;
+	line-height: normal;
+	text-align: center;
+	padding: 10px
+}
+
+.eventList > li:first-of-type{
+	font-weight: bold;
+}
+
+.eventList > li:nth-child(even) {
+	background-color: pink;
+}

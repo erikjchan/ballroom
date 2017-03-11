@@ -2,6 +2,7 @@
 import styles from "./style.css"
 import React from 'react'
 import XSidebar from '../common/XSidebar.jsx'
+import AddEvent from './addEvent.jsx'
 
 export default class HomePage extends React.Component {
  render() {
@@ -10,6 +11,9 @@ export default class HomePage extends React.Component {
        <h1>Home Page</h1>
        <XSidebar />
        <p className={styles.welcomeText}>Thanks for joining!</p>
+       <div className={styles.addEventContainer}>
+     	<AddEvent />
+       </div>
      </div>
    );
  }
