@@ -6,7 +6,6 @@
   "scripts": {
     "postinstall": "npm run build",
     "server": "node start.js",
-    "api": "node api/mock.js",
     "build": "webpack -p --progress --config webpack.production.config.js",
     "test": "nyc ava --fail-fast --verbose --require babel-register",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
@@ -63,6 +62,7 @@
     "random-item": "^1.0.0",
     "random-word": "^2.0.0",
     "react": "^15.0.1",
+    "react-autocomplete": "^1.4.0",
     "react-bootstrap-table": "^3.1.0",
     "react-dom": "^15.0.1",
     "react-helmet": "^4.0.0",

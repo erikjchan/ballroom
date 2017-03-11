@@ -30,14 +30,14 @@ const randomData = refresh => {
 
 const get_competitors = n => collection(n)(i => ({
   "id" : i,
-  "First Name" : randomData(1).firstName,
-  "Last Name" : randomData().lastName,
-  "Email Address" :  randomData().emailAddress,
-  "Mailing Address" : randomData().street,
-  "Lead Number" : randomBool() ? randomInt(0, 100) : null,
-  "Competitor Organization id" : randomId(ORGANIZATIONS),
-  "Password" : uuidV1(),
-  "Registered?" : randomBool(),
+  "first_name" : randomData(1).firstName,
+  "last_name" : randomData().lastName,
+  "email" :  randomData().emailAddress,
+  "mailing_address" : randomData().street,
+  "lead_number" : randomBool() ? randomInt(0, 100) : null,
+  "organization_id" : randomId(ORGANIZATIONS),
+  "password" : uuidV1(),
+  "registered" : randomBool(),
 }))
 
 // So its not completley RNG
@@ -89,7 +89,7 @@ const get_rounds = n => collection(n)(i => ({
 const get_partnerships = n => collection(n)(i => ({
   "Lead Competitor id" : randomId(COMPETITORS),
   "Follow Competitor id" : randomId(COMPETITORS),
-  "Event Category" : 0, // TODO
+  "Event Category" : randomId(EVENTS),
   "Lead Confirmed" : randomBool(),
   "Follow Confirmed" : randomBool(),
 }))

@@ -4,20 +4,6 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
 var ReactBsTable  = require('react-bootstrap-table');
 
-var products = [{
-      name: "Silver International Chacha",
-      partner: "Anne / Cornell",
-      amt_owed: 120,
-  }, {
-      name: "Gold International Chacha",
-      partner: "Peter / Cornell",
-      amt_owed: 140,
-  }, {
-      name: "Gold International Latin",
-      partner: "Jiaqi / Cornell",
-      amt_owed: 150,
-  }]
-
 function buttonFormatter(cell, row){
   return '<button>DELETE</button>';
 }
@@ -51,6 +37,10 @@ let order = 'desc';
 
 export default class YourEvents extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   handleBtnClick = () => {
     if (order === 'desc') {
       this.refs.table.handleSort('asc', 'name');
@@ -60,13 +50,14 @@ export default class YourEvents extends React.Component {
       order = 'desc';
     }
   }
+
   render() {
     return (
       <div>
-        <BootstrapTable ref='table' data={ products} deleteRow={ true } selectRow={ selectRowProp } options={ options }>
-            <TableHeaderColumn dataField='name' isKey={ true } dataSort={ true }>NAME</TableHeaderColumn>
-            <TableHeaderColumn dataField='partner' dataSort={ true }>PARTNER</TableHeaderColumn>
-            <TableHeaderColumn dataField='amt_owed' dataSort={ true }>AMT OWED</TableHeaderColumn>
+        <BootstrapTable ref='table' data={this.props.events || []} deleteRow={ false } selectRow={ selectRowProp } options={ options }>
+            <TableHeaderColumn dataField='Title' isKey={ true } dataSort={ true }>Title</TableHeaderColumn>
+            <TableHeaderColumn dataField='Style' dataSort={ true }>Style</TableHeaderColumn>
+            <TableHeaderColumn dataField='Level' dataSort={ true }>Level</TableHeaderColumn>
             <TableHeaderColumn dataField="button" dataFormat={buttonFormatter}>Buttons</TableHeaderColumn>
         </BootstrapTable>
       </div>

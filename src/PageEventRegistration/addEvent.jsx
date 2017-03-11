@@ -151,8 +151,8 @@ class List extends React.Component {
 	}*/
 
 	render() {
-		const listItems = this.props.data.map((d) =>
-			<li onClick={this.handleClick.bind(this)}>{d}</li>
+		const listItems = this.props.data.map((d, i) =>
+			<li onClick={this.handleClick.bind(this)} key={i}>{d}</li>
 		);
 		return (
 			<ul className={styles.eventList}>

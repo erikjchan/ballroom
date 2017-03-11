@@ -1,11 +1,9 @@
 import styles from "./XSidebar.css"
 import React from 'react'
-import Sidebar from 'react-sidebar'
 
 export default class OurSidebar extends React.Component {
   constructor (p) {
     super(p)
-
     this.state = {sidebarOpen: false, sidebarDocked: false};
   }
 
@@ -31,11 +29,7 @@ export default class OurSidebar extends React.Component {
     var sidebarContent = <b>Sidebar content</b>;
 
     return (
-      <Sidebar sidebar={sidebarContent}
-               open={this.state.sidebarOpen}
-               docked={this.state.sidebarDocked}
-               onSetOpen={this.onSetSidebarOpen}>
-
+      <div>
         <div className = {styles.nav}>
         <div className = {styles.circle}>
           <p>EU</p>
@@ -48,7 +42,7 @@ export default class OurSidebar extends React.Component {
         </ul>
       </div>
 
-      </Sidebar>
+      </div>
     );
   }
 }

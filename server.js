@@ -49,6 +49,10 @@ app.get('/api/competitors', (req, res) => {
   res.send(data.competitors)
 })
 
+app.get('/api/competitors/:id/events', (req, res) => {
+  res.send(data.events)
+})
+
 app.get('/api/competitions', (req, res) => {
   res.send(data.competitions)
 })
@@ -100,8 +104,18 @@ app.get('/api/', (req, res) => {
   ]})
 })
 
+const routes = [
+  "/",
+  "/home",
+  "/competition/:competition_id/eventregistration",
+  "/competition/:competition_id/editschedule",
+  "/competition/:competition_id/run",
+  "/competition/:competition_id",
+  "/competitions"
+]
+
 // Serve index page
-app.get('*', (req, res) => {
+app.get(routes, (req, res) => {
   res.sendFile(__dirname + '/build/index.html');
 });
 
