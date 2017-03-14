@@ -20,21 +20,25 @@
     display: block;
 }
 
-ul {
+.sub_menu {
   color: #fff;
   margin: 50px 50px 0 0;
     height: inherit;
     float: left;
 }
 
-li {
+.nav_sub {
+    color: #fff;
     list-style: none;
     display: inline-block;
     /*height: inherit;*/
     line-height: 55px;
 }
 
-a {
+.nav_link {
+  font-size: 17px;
+   text-decoration: none;
+  color: #fff;
   box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
@@ -45,13 +49,14 @@ a {
     height: 55px;
 }
 
-a:link, nav a:visited{
+.nav_link:link, nav .nav_link:visited{
   text-decoration: none;
        color: #fff;
 
 }
 
 .nav_link:hover {
+   text-decoration: none;
   border-bottom: 5px solid #F64747;
     color: #F64747;
   -webkit-transition: all 0.4s ease;
