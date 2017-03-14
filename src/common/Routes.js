@@ -31,7 +31,7 @@ export default (
       component={RunCompetition}
     />
     <Route 
-      path="competition/:competition_id"
+      path="competition/:competition_id/:competitor_id"
       component={CompetitionPage}
     />
     <Route 

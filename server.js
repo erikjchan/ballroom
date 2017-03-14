@@ -49,6 +49,12 @@ app.get('/api/competitors', (req, res) => {
   res.send(data.competitors)
 })
 
+app.get('/api/competitors/:id', (req, res) => {
+  const id = parseInt(req.params.id)
+  const comps = data.competitors.filter(c => c.id === id)
+  res.send(comps[0])
+})
+
 app.get('/api/competitors/:id/events', (req, res) => {
   res.send(data.events)
 })
@@ -110,7 +116,7 @@ const routes = [
   "/competition/:competition_id/eventregistration",
   "/competition/:competition_id/editschedule",
   "/competition/:competition_id/run",
-  "/competition/:competition_id",
+  "/competition/:competition_id/:competitor_id",
   "/competitions",
   "/admin/competition/:competition_id",
 ]
