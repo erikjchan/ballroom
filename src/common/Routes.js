@@ -9,6 +9,7 @@ import CompetitionPage      from '../PageCompetition/page.jsx'
 import EventRegistration    from '../PageEventRegistration/page.jsx'
 import EditSchedule         from '../PageEditSchedule/page.jsx'
 import RunCompetition       from '../PageRunCompetition/page.jsx'
+import CompetitionHomeAdmin       from '../PageCompetitionHomeAdmin/page.jsx'
 
 export default (
   <Route path="/" component={App}>
@@ -36,6 +37,10 @@ export default (
     <Route 
       path="competitions"
       component={CompetitionListPage}
+    />
+    <Route 
+      path="/admin/competition/:competition_id"
+      component={CompetitionHomeAdmin}
     />
   </Route>
 );
