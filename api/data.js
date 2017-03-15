@@ -45,10 +45,10 @@ const get_callbacks = competitors => competitors
 .filter(c => c["Lead Number"])
 .map((c, i) => ({
   "id" : i,
-  "Timestamp" : randomDate({year: 2017}),
-  "Judge id" : randomId(JUDGES),
+  "timestamp" : randomDate({year: 2017}),
+  "judge_id" : randomId(JUDGES),
   "Lead Competitor number" : c["Lead Number"],
-  "Round id" : randomId(ROUNDS),
+  "round_id" : randomId(ROUNDS),
 }))
 
 
@@ -72,18 +72,18 @@ const get_competitions = n => collection(n)(i => ({
 const get_events = n => collection(n)(i => ({
   "id" : i,
   "competitionId" : randomId(COMPETITIONS),
-  "Title" : pg.generate(),
-  "Style" : pg.generate(),
-  "Level" : randomLevel(),
+  "title" : pg.generate(),
+  "style" : pg.generate(),
+  "level" : randomLevel(),
 }))
 
 const get_rounds = n => collection(n)(i => ({
   "id" : i,
-  "Event" : randomId(EVENTS),
-  "Name" : pg.generate(),
-  "Order number" : i,
-  "Size" : randomInt(50, 100),
-  "nextRound" : randomInt(0, 20),
+  "event" : randomId(EVENTS),
+  "name" : pg.generate(),
+  "order_number" : i,
+  "size" : randomInt(50, 100),
+  "next_round" : randomInt(0, 20),
 }))
 
 const get_partnerships = n => collection(n)(i => ({
