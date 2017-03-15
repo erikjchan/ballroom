@@ -1,10 +1,13 @@
 
 import styles from "./style.css"
 import React from 'react'
-import XSidebar from '../common/XSidebar.jsx'
+import EventTable from '../common/EventTable.jsx'
 import Box from '../common/Box.jsx'
-import Competitor_events from './competitor_events.jsx';
+import Page from '../Page.jsx'
+import * as Table from 'reactabular-table';
 
+
+// competition/:competition_id/:competitor_id
 export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
     super(props)
@@ -87,14 +90,41 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     
     var event_titles = (<div className={styles.lines}>
                           {this.state.competitor_events.sort(function (a, b){
-                          return a.id - b.id}).map(event => {
-                            return (<p key={event.Title}>{event.Title}</p>)
+                          return a.id - b.id}).map((event, i) => {
+                            return (<p key={event.Title} key={i}>{event.Title}</p>)
                           })}
                         </div>)
+
+
+    const event_table_columns = [
+      {
+        property: 'title',
+        header: {
+          label: 'Title',
+          sortable: true,
+          resizable: true
+        }
+      },
+      {
+        property: 'style',
+        header: {
+          label: 'Style',
+          sortable: true,
+          resizable: true
+        }
+      },
+      {
+        property: 'level',
+        header: {
+          label: 'Level',
+          sortable: true,
+          resizable: true
+        }
+      }
+    ]
+
     return (
-      <div className={styles.content}>
-        <XSidebar />   
-        <div className={styles.contentBody}>
+      <Page ref="page">
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
@@ -115,8 +145,11 @@ export default class PageCompetitionHomeAdmin extends React.Component {
             </div>
 
             <div className={styles.separator}></div>
-             
-              <Competitor_events events={this.state.competitor_events}/>
+
+            <EventTable
+              events={this.state.competitor_events}
+            />
+
               <div className = {styles.addeditBtn}>
           <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Add/Edit Event</button>
         </div>
@@ -125,15 +158,12 @@ export default class PageCompetitionHomeAdmin extends React.Component {
         </div>
           </div>
                   
-        </div>
-      </div>
+      </Page>
 
     ); 
   }
   else {
-    return <div className={styles.content}>
-            <XSidebar />
-            </div>;
+    return <Page ref="page" />
   }
  }
 }

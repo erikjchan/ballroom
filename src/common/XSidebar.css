@@ -11,11 +11,7 @@
 
 .nav {
     font-family: 'Lato', sans-serif;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 270px;
-    height: 100%;
     background-color: #2E3025;
     display: block;
 }
@@ -24,7 +20,6 @@
   color: #fff;
   margin: 50px 50px 0 0;
     height: inherit;
-    float: left;
 }
 
 .nav_sub {

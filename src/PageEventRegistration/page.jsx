@@ -3,10 +3,11 @@ import styles from "./style.css"
 import React from 'react'
 import XSidebar from '../common/XSidebar.jsx'
 import AddEvent from './addEvent.jsx'
-import YourEvents from '../PageLogin/YourEvents.js'
+import EventTable from '../common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
+import Page from '../Page.jsx'
 
-
+// competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
 
 
@@ -15,8 +16,8 @@ export default class PageEventRegistration extends React.Component {
     this.state = {
       /** We will populate this w/ data from the API */
       competition: null,
-      competition_events: null,
-      user_competition_events: null,
+      competition_events: [],
+      user_competition_events: [],
       competitors: [],
 
       value: '',
@@ -61,6 +62,7 @@ export default class PageEventRegistration extends React.Component {
         return response.json()
       })
       .then(json => {
+        console.log('JSON', json)
 
         this.setState({user_competition_events: json})
       })
@@ -93,7 +95,7 @@ export default class PageEventRegistration extends React.Component {
 
    return (
 
-     <div className={styles.content}>
+    <Page ref="page">
      <XSidebar />
 
 
@@ -134,10 +136,24 @@ export default class PageEventRegistration extends React.Component {
         />
 
 
-        <YourEvents events={this.state.user_competition_events}/>
+        <EventTable
+          events={this.state.user_competition_events}
+          extra_columns={[{
+            content: (value, {rowData}) => (
+              <div>
+                <span
+                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
+                  style={{ marginLeft: '1em', cursor: 'pointer' }}
+                >
+                  &#10007;
+                </span>
+              </div>
+            )
+          }]}
+        />
 
       </div>
-     </div>
+     </Page>
    );
  }
 }

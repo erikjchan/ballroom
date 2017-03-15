@@ -1,15 +1,16 @@
 import styles from "./style.css"
 import React from 'react'
 import XSidebar from '../common/XSidebar.jsx'
+import Page from '../Page.jsx'
 
 export default class HomePage extends React.Component {
  render() {
    return (
-     <div className={styles.content}>
+    <Page ref="page">
        <h1>Home Page</h1>
        <XSidebar />
        <p className={styles.welcomeText}>Thanks for joining!</p>
-     </div>
+     </Page>
    );
  }
 }
