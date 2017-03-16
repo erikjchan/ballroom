@@ -1,5 +1,6 @@
 .eventListWrapper {
 	display: inline-block;
+	margin: 0px 30px;
 }
 
 .eventList {
@@ -19,4 +20,9 @@
 
 .eventList > li:nth-child(even) {
 	background-color: pink;
+}
+
+.placeholder {
+	font-size: 20pt;
+	font-weight: bold;
 }

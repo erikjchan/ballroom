@@ -26,7 +26,7 @@ export default class AddEvent extends React.Component {
 				console.log(data);
 				this.setState({
 					dances: data.map((d) => {
-						return d.Title
+						return d.title
 					})
 				});
 			});
@@ -46,8 +46,8 @@ export default class AddEvent extends React.Component {
 				console.log(respJson);
 				const data = respJson.reduce(
 					(acc, val) => {
-						acc.levels.push(val.Level);
-						acc.styles.push(val.Style);
+						acc.levels.push(val.level);
+						acc.styles.push(val.style);
 						return {
 							levels: acc.levels,
 							styles: acc.styles
