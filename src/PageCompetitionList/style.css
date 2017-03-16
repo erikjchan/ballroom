@@ -82,40 +82,64 @@ a:link, nav a:visited{
     font-size: 30px; 
 }
 
-/*ul{
-	display: none;
+.goMain {
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+ 	text-align: center;
 }
 
-	ul li:hover > ul {
-		display: block;
-	}
-
-ul{
-	background: #333333; border-radius: 0px; padding: 0;
-	position: absolute; top: 100%;
-	margin: 0;
+.search {
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+ 	text-align: center;
 }
-	ul li {
-		float: none; 
-		background: #000;
-		position: relative;
-		display: block;
-		margin: 0;
-		vertical-align: middle;
-		line-height: 55px;
-		height: 55px;
-	}
-		ul li a {
-			color: #fff;
-			display: block;
-			width: 100%;
-			text-align: center;
-			margin: 0;
-			width: inherit;
 
-		}	
-			ul li a:hover {
-    			color: #F64747;
-				-webkit-transition: color 0.4s ease;
-				transition: color 0.4s ease;
-			}*/
+.createNew {
+	float: right;
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+ 	text-align: center;
+}
+
+.register {
+	float: right;
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+ 	text-align: center;
+}

@@ -10,7 +10,7 @@ const array = n => new Array(n).fill(null)
 const collection = n => cb => array(n).map((_, i) => cb(i))
 const randomId = top => randomInt(top - 1)
 const randomBool = _ => !randomInt(1)
-const randomLevel = _ => randomItem(['begginer', 'intermediate', 'advanced']);
+const randomLevel = _ => randomItem(['beginner', 'intermediate', 'advanced']);
 
 const ORGANIZATIONS = 2
 const COMPETITORS = ORGANIZATIONS * 50
