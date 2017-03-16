@@ -123,11 +123,21 @@ const get_payment_records = n => collection(n)(i => ({
   "Payer name" : randomData(1).firstName + ' ' + randomData(1).lastName,
 }))
 
+const get_schedule = n => collection(n) (i => ({
+  "id" : i,
+  "order_number" : i,
+  "title" : pg.generate(),
+  "style" : pg.generate(),
+  "level" : randomLevel(),
+  "round": randomInt(1, 5),
+}))
+
 
 const competitors = get_competitors(COMPETITORS)
 const competitions = get_competitions(COMPETITIONS)
 const events = get_events(EVENTS)
 const rounds = get_rounds(ROUNDS)
+const schedule = get_schedule(ROUNDS)
 const partnerships = get_partnerships(PARTNERSHIPS)
 const organizations = get_organizations(ORGANIZATIONS)
 const payment_records = get_payment_records(PAYMENTS)
@@ -147,5 +157,6 @@ module.exports = {
   callbacks,
   admins,
   judges,
+  schedule,
 }
 

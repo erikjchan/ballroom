@@ -89,6 +89,10 @@ app.get('/api/rounds', (req, res) => {
   res.send(data.rounds)
 })
 
+app.get('/api/schedule', (req, res) => {
+  res.send(data.schedule)
+})
+
 app.get('/api/partnerships', (req, res) => {
   res.send(data.partnerships)
 })
