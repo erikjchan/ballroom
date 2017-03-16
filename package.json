@@ -1,6 +1,6 @@
 {
   "name": "essential-react",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A minimal skeleton for building testable React apps using Babel",
   "main": "src/main.js",
   "scripts": {
