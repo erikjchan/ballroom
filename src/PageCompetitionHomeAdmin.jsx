@@ -1,8 +1,9 @@
 
 import styles from "./style.css"
 import React from 'react'
-import XSidebar from '../common/XSidebar.jsx'
-import Box from '../common/Box.jsx'
+import XSidebar from './common/XSidebar.jsx'
+import Box from './common/Box.jsx'
+import Page from './Page.jsx'
 
 export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
@@ -146,8 +147,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           })}
                         </div>)
     return (
-      <div className={styles.content}>
-        <XSidebar />   
+      <Page ref="page">
         <div className={styles.contentBody}>
           <div className={styles.title}>
             <p>{comp_name}</p>
@@ -198,13 +198,11 @@ export default class PageCompetitionHomeAdmin extends React.Component {
               onClick={() => {/* TODO */}}>Run Competition</button>
         </div>
         }
-      </div>
+      </Page>
     ); 
   }
   else {
-    return <div className={styles.content}>
-            <XSidebar />
-            </div>;
+    return <Page ref="page" />
   }
  }
 }

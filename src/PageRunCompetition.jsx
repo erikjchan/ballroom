@@ -1,9 +1,9 @@
 
 import React from 'react'
 import * as Table from 'reactabular-table';
-import EventRunningInfo from './event.jsx'
-import lib from '../common/lib.js'
-import Page from '../Page.jsx'
+import EventRunningInfo from './PageRunCompetition/event.jsx'
+import lib from './common/lib.js'
+import Page from './Page.jsx'
 
 export default class RunCompetition extends React.Component {
   constructor(props) {

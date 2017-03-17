@@ -1,16 +1,16 @@
 
 import React from 'react'
-import XSidebar from '../common/XSidebar.jsx'
+import XSidebar from './common/XSidebar.jsx'
 import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
-import lib from '../common/lib.js'
+import lib from './common/lib.js'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import Page from '../Page.jsx'
-import DragAndDropTable from './schedule.jsx';
+import Page from './Page.jsx'
+import DragAndDropTable from './PageEditSchedule/schedule.jsx';
 import style from './style.css';
 
 // competition/:competition_id/editschedule

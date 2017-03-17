@@ -4,7 +4,7 @@ import findIndex from 'lodash/findIndex';
 import * as Table from 'reactabular-table';
 import * as dnd from 'reactabular-dnd';
 import * as resolve from 'table-resolver';
-import style from './style.css';
+import style from '../style.css';
 
 const rows = [
   {
