@@ -130,6 +130,9 @@ export default class PageEventRegistration extends React.Component {
       )
     }
 
+    const show_style = this.state.level !== null
+    const show_event = this.state.style !== null
+
     return (
 
     <Page ref="page">
@@ -137,29 +140,37 @@ export default class PageEventRegistration extends React.Component {
       <p>
         <h1>Event Registration</h1>
 
-        <h2>Level</h2>
-        <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
-          <RadioButton label='The Walking Dead' value='thewalkingdead'/>
-          <RadioButton label='From Hell' value='fromhell' disabled/>
-          <RadioButton label='V for a Vendetta' value='vvendetta'/>
-          <RadioButton label='Watchmen' value='watchmen'/>
-        </RadioGroup>
+        { true && <span>
+            <h2>Level</h2>
+            <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
+              <RadioButton label='beginner' value='beginner'/>
+              <RadioButton label='intermediate' value='intermediate'/>
+              <RadioButton label='advanced' value='advanced'/>
+            </RadioGroup>
+          </span>
+        }
+        
 
-        <h2>Style</h2>
-        <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
-          <RadioButton label='The Walking Dead' value='thewalkingdead'/>
-          <RadioButton label='From Hell' value='fromhell' disabled/>
-          <RadioButton label='V for a Vendetta' value='vvendetta'/>
-          <RadioButton label='Watchmen' value='watchmen'/>
-        </RadioGroup>
+        { show_style && <span>
+            <h2>Style</h2>
+            <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
+              <RadioButton label='Cha cha' value='Cha cha'/>
+              <RadioButton label='Rumba' value='Rumba'/>
+              <RadioButton label='Waltz' value='Waltz'/>
+              <RadioButton label='Foxtrot' value='Foxtrot'/>
+            </RadioGroup>
+          </span>
+        }
 
-        <h2>Event</h2>
-        <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-          <RadioButton label='The Walking Dead' value='thewalkingdead'/>
-          <RadioButton label='From Hell' value='fromhell' disabled/>
-          <RadioButton label='V for a Vendetta' value='vvendetta'/>
-          <RadioButton label='Watchmen' value='watchmen'/>
-        </RadioGroup>
+        { show_event && <span>
+            <h2>Event</h2>
+            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
+              <RadioButton label={`Gold ${this.state.level} ${this.state.style}`} value='thewalkingdead'/>
+              <RadioButton label={`Sliver ${this.state.level} ${this.state.style}`} value='fromhell'/>
+              <RadioButton label={`Bronze ${this.state.level} ${this.state.style}`} value='vvendetta'/>
+            </RadioGroup>
+          </span>
+        }
 
         <h2>Partner's email</h2>
         <Autocomplete
