@@ -2,14 +2,14 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './App';
 
-import LoginPage            from '../PageLogin/page.jsx';
-import HomePage             from '../PageHome/page.jsx';
-import CompetitionListPage  from '../PageCompetitionList/page.jsx'
-import CompetitionPage      from '../PageCompetition/page.jsx'
-import EventRegistration    from '../PageEventRegistration/page.jsx'
-import EditSchedule         from '../PageEditSchedule/page.jsx'
-import RunCompetition       from '../PageRunCompetition/page.jsx'
-import CompetitionHomeAdmin from '../PageCompetitionHomeAdmin/page.jsx'
+import LoginPage            from '../PageLogin.jsx'
+import HomePage             from '../PageHome.jsx'
+import CompetitionListPage  from '../PageCompetitionList.jsx'
+import CompetitionPage      from '../PageCompetition.jsx'
+import EventRegistration    from '../PageEventRegistration.jsx'
+import EditSchedule         from '../PageEditSchedule.jsx'
+import RunCompetition       from '../PageRunCompetition.jsx'
+import CompetitionHomeAdmin from '../PageCompetitionHomeAdmin.jsx'
 
 export default (
   <Route path="/" component={App}>

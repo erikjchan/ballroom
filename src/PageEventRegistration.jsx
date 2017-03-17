@@ -1,11 +1,10 @@
 
 import styles from "./style.css"
 import React from 'react'
-import XSidebar from '../common/XSidebar.jsx'
-import AddEvent from './addEvent.jsx'
-import EventTable from '../common/EventTable.jsx'
+import AddEvent from './PageEventRegistration/addEvent.jsx'
+import EventTable from './common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
-import Page from '../Page.jsx'
+import Page from './Page.jsx'
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
@@ -96,8 +95,6 @@ export default class PageEventRegistration extends React.Component {
    return (
 
     <Page ref="page">
-     <XSidebar />
-
 
       <div className={styles.contentBody}>
         <h1>Event Registration</h1>

@@ -2,8 +2,8 @@
 import styles from "./style.css"
 import React from 'react'
 import * as Table from 'reactabular-table';
-import lib from '../common/lib.js'
-import Page from '../Page.jsx'
+import lib from './common/lib.js'
+import Page from './Page.jsx'
 
 // /competitions
 export default class PageCompetitionList extends React.Component {

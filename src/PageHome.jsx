@@ -1,7 +1,7 @@
 import styles from "./style.css"
 import React from 'react'
-import XSidebar from '../common/XSidebar.jsx'
-import Page from '../Page.jsx'
+import XSidebar from './common/XSidebar.jsx'
+import Page from './Page.jsx'
 
 export default class HomePage extends React.Component {
  render() {

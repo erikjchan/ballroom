@@ -1,9 +1,9 @@
 
 import styles from "./style.css"
 import React from 'react'
-import XSidebar from '../common/XSidebar.jsx'
-import Box from '../common/Box.jsx'
-import Page from '../Page.jsx'
+import XSidebar from './common/XSidebar.jsx'
+import Box from './common/Box.jsx'
+import Page from './Page.jsx'
 
 export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
@@ -195,13 +195,12 @@ export default class PageCompetitionHomeAdmin extends React.Component {
           </div>
           <button className={styles.runBtn} 
               onClick={() => {/* TODO */}}>Run Competition</button>
+
       </Page>
     ); 
   }
   else {
-    return <div className={styles.content}>
-            <XSidebar />
-            </div>;
+    return <Page ref="page" />
   }
  }
 }

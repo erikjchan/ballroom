@@ -1,9 +1,9 @@
 
 import styles from "./style.css"
 import React from 'react'
-import EventTable from '../common/EventTable.jsx'
-import Box from '../common/Box.jsx'
-import Page from '../Page.jsx'
+import EventTable from './common/EventTable.jsx'
+import Box from './common/Box.jsx'
+import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 
 
