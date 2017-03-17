@@ -37,6 +37,7 @@ const get_competitors = n => collection(n)(i => ({
   "organization_id" : randomId(ORGANIZATIONS),
   "password" : uuidV1(),
   "registered" : randomBool(),
+  "lead_number" : randomInt(0, 100),
 }))
 
 // So its not completley RNG
