@@ -31,7 +31,7 @@ app.get('/style.css', (req, res) => {
 });
 
 
-const path          = require('path')
+const path = require('path')
 
 /********************************* DATA PATHS *********************************/
 
@@ -135,6 +135,7 @@ app.get('/api/', (req, res) => {
 const routes = [
   "/",
   "/home",
+  "/competition/:competition_id/",
   "/competition/:competition_id/eventregistration",
   "/competition/:competition_id/editschedule",
   "/competition/:competition_id/run",

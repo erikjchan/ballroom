@@ -148,7 +148,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                         </div>)
     return (
       <Page ref="page">
-        <div className={styles.contentBody}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
@@ -196,8 +195,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
           </div>
           <button className={styles.runBtn} 
               onClick={() => {/* TODO */}}>Run Competition</button>
-        </div>
-        }
+
       </Page>
     ); 
   }
