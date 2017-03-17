@@ -20,4 +20,4 @@ node_modules
 .lock-wscript
 
 .idea
-.DS_Store
+*.DS_Store
