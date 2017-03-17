@@ -129,25 +129,28 @@ export default class PageCompetition extends React.Component {
             <p>{comp_name}</p>
           </div>
           <div className={styles.infoTables}>
-            <div className={styles.infoBoxes}>
+            <div className={styles.infoBoxLeft}>
               <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
                              
                           </div>} 
                    content={comp_info}/>
             </div>
-            <div className={styles.infoBoxes}>
+            <div className={styles.infoBoxRight}>
               <Box title={<div className={styles.titleContainers}><span>User Info</span> 
                               <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit</button>
                           </div>}
                     content={competitor_info}/>
             </div>
 
-            <div className={styles.separators}></div>
+            <div className={styles.separator}></div>
+
             <div className={styles.eventTableCompetitor}>
             <EventTable
               events={this.state.competitor_events}
             />
             </div>
+
+<div className={styles.separators}></div>
 
               <div className = {styles.addeditBtns}>
           <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Add/Edit Event</button>

@@ -462,19 +462,34 @@ a:link, nav a:visited{
   padding: 20px 40px;
 }
 
-.infoBoxes{
+.infoBoxLeft{
   /*border: 4px solid #7F7F7F;*/
   /*border-radius: 8px;*/
   width: 48%;
-  height: 260px;
+  height: 300px;
   display: inline-block;
-  padding: 8px;
+  padding: 0px;
   vertical-align: middle;
+  float:left;
+  margin-bottom: 20px;
+}
+
+.infoBoxRight{
+  /*border: 4px solid #7F7F7F;*/
+  /*border-radius: 8px;*/
+  width: 48%;
+  height: 300px;
+  display: inline-block;
+  padding: 0px;
+  vertical-align: middle;
+  float:right;
+  margin-bottom: 20px;
+  
 }
 
 .separators{
   display: block;
-  height: 0;
+  height: 20px;
   width: 0;
 }
 
