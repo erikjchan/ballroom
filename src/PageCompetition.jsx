@@ -5,6 +5,7 @@ import EventTable from './common/EventTable.jsx'
 import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
+import { browserHistory } from 'react-router';
 
 
 // competition/:competition_id/:competitor_id
@@ -148,10 +149,15 @@ export default class PageCompetition extends React.Component {
             <EventTable
               events={this.state.competitor_events}
             />
+
             </div>
 
               <div className = {styles.addeditBtns}>
-          <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Add/Edit Event</button>
+          <button 
+            className={styles.editBtns} 
+            onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+              Add/Edit Event
+          </button>
         </div>
         <div className = {styles.editpayBtns}>
           <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
@@ -167,5 +173,3 @@ export default class PageCompetition extends React.Component {
   }
  }
 }
-
-
