@@ -4,7 +4,6 @@
   "description": "A minimal skeleton for building testable React apps using Babel",
   "main": "src/main.js",
   "scripts": {
-    "postinstall": "npm run build",
     "server": "node start.js",
     "build": "webpack -p --progress --config webpack.production.config.js",
     "test": "nyc ava --fail-fast --verbose --require babel-register",
