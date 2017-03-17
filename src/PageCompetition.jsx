@@ -16,7 +16,6 @@ export default class PageCompetition extends React.Component {
       competition: null,
       competitor_events: [],
       competitor: [],
-
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -39,22 +38,21 @@ export default class PageCompetition extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => alert(err))
+      .catch(err => { alert(err); console.log(err)})
 
     
     /** Fetch competitor */
-    fetch(`http://localhost:8080/api/competitors/${this.competitor_id}`)
+    fetch(`/api/competitors/${this.competitor_id}`)
       .then(response => {
         return response.json()
       })
       .then(json => {
-
         this.setState({competitor: json})
       })
-      .catch(err => alert(err))
+      .catch(err => { alert(err); console.log(err)})
 
     /**  Call the API for events that the competitor is in */
-    fetch(`http://localhost:8080/api/competitors/${this.competitor_id}/events`)
+    fetch(`/api/competitors/${this.competitor_id}/events`)
       .then(response => {
         return response.json()
       })
@@ -62,7 +60,7 @@ export default class PageCompetition extends React.Component {
 
         this.setState({competitor_events: json})
       })
-      .catch(err => alert(err))
+      .catch(err => { alert(err); console.log(err)})
   }
 
  render() {
