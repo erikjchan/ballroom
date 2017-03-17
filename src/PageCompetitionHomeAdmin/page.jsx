@@ -3,6 +3,7 @@ import styles from "./style.css"
 import React from 'react'
 import XSidebar from '../common/XSidebar.jsx'
 import Box from '../common/Box.jsx'
+import Page from '../Page.jsx'
 
 export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
@@ -146,9 +147,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           })}
                         </div>)
     return (
-      <div className={styles.content}>
-        <XSidebar />   
-        <div className={styles.contentBody}>
+      <Page ref="page">
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
@@ -196,9 +195,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
           </div>
           <button className={styles.runBtn} 
               onClick={() => {/* TODO */}}>Run Competition</button>
-        </div>
-        }
-      </div>
+      </Page>
     ); 
   }
   else {
