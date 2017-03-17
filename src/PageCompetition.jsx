@@ -98,25 +98,25 @@ export default class PageCompetition extends React.Component {
 
     const event_table_columns = [
       {
-        property: 'title',
+        property: 'name',
         header: {
-          label: 'Title',
+          label: 'Name',
           sortable: true,
           resizable: true
         }
       },
       {
-        property: 'style',
+        property: 'partner',
         header: {
-          label: 'Style',
+          label: 'Partner',
           sortable: true,
           resizable: true
         }
       },
       {
-        property: 'level',
+        property: 'amount awed',
         header: {
-          label: 'Level',
+          label: 'Amount awed',
           sortable: true,
           resizable: true
         }
@@ -143,10 +143,11 @@ export default class PageCompetition extends React.Component {
             </div>
 
             <div className={styles.separators}></div>
-
+            <div className={styles.eventTableCompetitor}>
             <EventTable
               events={this.state.competitor_events}
             />
+            </div>
 
               <div className = {styles.addeditBtns}>
           <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Add/Edit Event</button>
