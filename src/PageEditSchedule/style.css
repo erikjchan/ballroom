@@ -154,6 +154,38 @@ ul{
 	background-color: #aaaaaa;
 }
 
+#dragAndDropWrapper {
+	background-color: white;
+}
+
+#dragAndDropWrapperTopBar {
+	background-color: pink;
+	padding: 3px 3px 3px 5px; 
+}
+
+#dragAndDropWrapperTopBar > div {
+	display: inline-block;
+	width: 50%;
+}
+
+#dragAndDropTitle {
+	color: white;
+	font-size: 15pt;
+	text-align: left;
+}
+
+#dragAndDropAutosort {
+	text-align: right;
+}
+
+#dragAndDropAutosort > div {
+	display: inline-block;
+	background-color: #eeeeee;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px;
+}
+
 .tableWrapper {
 	border-collapse: separate;
 	background-color: #888888;

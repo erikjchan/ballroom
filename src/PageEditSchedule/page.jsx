@@ -26,7 +26,15 @@ class EditSchedule extends React.Component {
           <div id={style.cancelChanges}>Cancel</div>
         </div>
       </div>
-      <DragAndDropTable />
+      <div id={style.dragAndDropWrapper}>
+        <div id={style.dragAndDropWrapperTopBar}>
+          <div id={style.dragAndDropTitle}>Rounds</div>
+          <div id={style.dragAndDropAutosort}>
+            <div>Autosort</div>
+          </div>
+        </div>
+        <DragAndDropTable />
+      </div>
     </Page>
   );
  }
