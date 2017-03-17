@@ -47,7 +47,7 @@ const get_callbacks = competitors => competitors
   "id" : i,
   "timestamp" : randomDate({year: 2017}).toDateString(),
   "judge_id" : randomId(JUDGES),
-  "Lead Competitor number" : c["Lead Number"s],
+  "Lead Competitor number" : c["Lead Number"],
   "round_id" : randomId(ROUNDS),
 }))
 
