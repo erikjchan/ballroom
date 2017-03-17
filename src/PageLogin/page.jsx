@@ -1,6 +1,7 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import styles from './style.css'
+import Page from '../Page.jsx'
+import {Button, IconButton } from 'react-toolbox/lib/button';
 
 export default class LoginPage extends React.Component {
   signUp() {
@@ -9,12 +10,13 @@ export default class LoginPage extends React.Component {
   
   render() {
     return (
-      <div className={styles.content}>
-        <h1 className={styles.heading}>Login Page</h1>
+      <Page ref="page">
+        <h1>Login Page</h1>
         {JSON.stringify(this.props.params)}
-        <p className={styles.lead}>Create an account to get started!</p>
-        <button className={styles.signUpButton} onClick={this.signUp}>Sign up</button>
-      </div>
+        <p>Create an account to get started!</p>
+
+        <Button raised primary onClick={this.signUp}>Sign up</Button>
+      </Page>
     );
   }
 }

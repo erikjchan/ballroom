@@ -57,7 +57,7 @@ export default class Page extends React.Component {
           action='Dismiss'
           active={this.state.sb_active}
           label={this.state.sb_label}
-          timeout={2000}
+          timeout={5000}
           onClick={this.handleSnackbarClick}
           onTimeout={this.handleSnackbarTimeout}
           type={this.state.sb_type}

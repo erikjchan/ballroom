@@ -1,8 +1,8 @@
 import React from 'react'
-import Page from '../Page.jsx'
+import Page from './Page.jsx'
 import {Button, IconButton } from 'react-toolbox/lib/button';
 
-export default class HomePage extends React.Component {
+export default class PageCompetitorSearch extends React.Component {
 
   showError() {
     this.refs.page.errorNotif('Oh no, something bad happened!')()

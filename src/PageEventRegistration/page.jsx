@@ -1,5 +1,4 @@
 
-import styles from "./style.css"
 import React from 'react'
 import XSidebar from '../common/XSidebar.jsx'
 import AddEvent from './addEvent.jsx'
@@ -9,7 +8,6 @@ import Page from '../Page.jsx'
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
-
 
   constructor(props) {
     super(props)
@@ -96,10 +94,6 @@ export default class PageEventRegistration extends React.Component {
    return (
 
     <Page ref="page">
-     <XSidebar />
-
-
-      <div className={styles.contentBody}>
         <h1>Event Registration</h1>
 
         <AddEvent />
@@ -135,7 +129,6 @@ export default class PageEventRegistration extends React.Component {
           )}
         />
 
-
         <EventTable
           events={this.state.user_competition_events}
           extra_columns={[{
@@ -151,17 +144,7 @@ export default class PageEventRegistration extends React.Component {
             )
           }]}
         />
-
-      </div>
      </Page>
    );
  }
 }
-
-/*
-
-
-
-
-
- */

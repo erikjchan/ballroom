@@ -15,7 +15,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       competitors: [],
       organizations: [],
       judges: [],
-
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -119,7 +118,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     var event_titles = (<div className={styles.lines}>
                           {this.state.competition_events.sort(function (a, b){
                           return a.id - b.id}).map(event => {
-                            return (<p key={event.Title}>{event.Title}</p>)
+                            return (<p key={event.title}>{event.title}</p>)
                           })}
                         </div>)
     var total_judges = this.state.judges.length;
