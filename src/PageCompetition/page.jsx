@@ -8,7 +8,7 @@ import * as Table from 'reactabular-table';
 
 
 // competition/:competition_id/:competitor_id
-export default class PageCompetitionHomeAdmin extends React.Component {
+export default class PageCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

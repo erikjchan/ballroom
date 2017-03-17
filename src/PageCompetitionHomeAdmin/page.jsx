@@ -119,7 +119,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     var event_titles = (<div className={styles.lines}>
                           {this.state.competition_events.sort(function (a, b){
                           return a.id - b.id}).map(event => {
-                            return (<p key={event.Title}>{event.Title}</p>)
+                            return (<p key={event.title}>{event.title}</p>)
                           })}
                         </div>)
     var total_judges = this.state.judges.length;
@@ -142,7 +142,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           <p><b>Total Rounds:</b> {total_rounds}</p>
                           {this.state.competition_rounds
                             .map(round => {
-                            return (<p key={round.Name}>{round.Name}</p>)
+                            return (<p key={round.name}>{round.name}</p>)
                           })}
                         </div>)
     return (
