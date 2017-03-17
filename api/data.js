@@ -34,7 +34,6 @@ const get_competitors = n => collection(n)(i => ({
   "last_name" : randomData().lastName,
   "email" :  randomData().emailAddress,
   "mailing_address" : randomData().street,
-  "lead_number" : randomBool() ? randomInt(0, 100) : null,
   "organization_id" : randomId(ORGANIZATIONS),
   "password" : uuidV1(),
   "registered" : randomBool(),
@@ -66,6 +65,7 @@ const get_competitions = n => collection(n)(i => ({
   "RegEndDate" : randomDate({year: 2017}),
   "EarlyRegDeadline" : randomDate({year: 2017}),
   "RegularRegDeadline" : randomDate({year: 2017}),
+  "CompAdmin" : randomData().emailAddress,
 }))
 
 
@@ -84,14 +84,23 @@ const get_rounds = n => collection(n)(i => ({
   "order_number" : i,
   "size" : randomInt(50, 100),
   "next_round" : randomInt(0, 20),
+  "judge_1" : randomId(JUDGES),
+  "judge_2" : randomId(JUDGES),
+  "judge_3" : randomId(JUDGES),
+  "judge_4" : randomId(JUDGES),
+  "judge_5" : randomId(JUDGES),
+  "judge_6" : randomBool() ? randomId(JUDGES) : null,
 }))
 
 const get_partnerships = n => collection(n)(i => ({
+  "lead_number" : randomInt(0, 100),
   "Lead Competitor id" : randomId(COMPETITORS),
   "Follow Competitor id" : randomId(COMPETITORS),
   "Event Category" : randomId(EVENTS),
   "Lead Confirmed" : randomBool(),
   "Follow Confirmed" : randomBool(),
+  "Called Back" : randomBool(),
+  "Timestamp" : randomDate({year: 2017}),
 }))
 
 const get_organizations = n => collection(n)(i => ({
@@ -109,8 +118,7 @@ const get_judges = n => collection(n)(i => ({
   "Email address" : randomData(1).emailAddress,
   "Token" : uuidV1(),
   "First Name" : randomData().firstName,
-  "Last Name" : randomData().lastName,
-  "Current event id" : randomId(EVENTS)
+  "Last Name" : randomData().lastName,  
 }))
 
 const get_payment_records = n => collection(n)(i => ({
@@ -124,7 +132,7 @@ const get_payment_records = n => collection(n)(i => ({
 }))
 
 const get_schedule = n => collection(n) (i => ({
-  "id" : i,
+  "id" : i, 
   "order_number" : i,
   "title" : pg.generate(),
   "style" : pg.generate(),
