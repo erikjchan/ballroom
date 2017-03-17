@@ -8,7 +8,6 @@ export default class HomePage extends React.Component {
    return (
     <Page ref="page">
        <h1>Home Page</h1>
-       <XSidebar />
        <p className={styles.welcomeText}>Thanks for joining!</p>
      </Page>
    );
