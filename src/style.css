@@ -202,11 +202,15 @@ a:link, nav a:visited{
 
 #dragAndDropWrapper {
   background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; 
 }
 
 #dragAndDropWrapperTopBar {
   background-color: pink;
-  padding: 3px 3px 3px 5px; 
+  padding: 3px 3px 3px 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; 
 }
 
 #dragAndDropWrapperTopBar > div {
@@ -230,6 +234,11 @@ a:link, nav a:visited{
   border-radius: 10px;
   text-align: center;
   padding: 5px;
+}
+
+#dragAndDropTableScroller {
+  max-height: 60vh;
+  overflow-y: scroll;
 }
 
 .tableWrapper {

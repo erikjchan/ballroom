@@ -33,7 +33,9 @@ class EditSchedule extends React.Component {
             <div>Autosort</div>
           </div>
         </div>
-        <DragAndDropTable />
+        <div id={style.dragAndDropTableScroller}>
+          <DragAndDropTable />
+        </div>
       </div>
     </Page>
   );
