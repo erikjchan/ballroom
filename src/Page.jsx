@@ -1,7 +1,6 @@
 import styles from "./base.css"
 import React from 'react'
 import { Snackbar } from 'react-toolbox/lib/snackbar';
-import { Button, IconButton } from 'react-toolbox/lib/button';
 import XSidebar from './common/XSidebar.jsx'
 
 /**

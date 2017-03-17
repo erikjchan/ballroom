@@ -28,7 +28,7 @@ export default class OurSidebar extends React.Component {
             <Link to="competitions" className={styles.nav_link}>See Competitions</Link>
           </li>
           <li className={styles.nav_sub}>
-            <Link to="competition/0/" className={styles.nav_link}>Competition Page</Link>
+            <Link to="competition/0/0" className={styles.nav_link}>Competition Page</Link>
           </li>
           <li className={styles.nav_sub}>
             <Link to="#" className={styles.nav_link}>Logout</Link>

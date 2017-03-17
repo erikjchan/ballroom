@@ -20,7 +20,6 @@ const routes = {
   'competition/:competition_id/:competitor_id'    : CompetitionPage,
   'competitions'                                  : CompetitionListPage,
   'admin/competition/:competition_id'             : CompetitionHomeAdmin,
-  'competition/:competition_id'                   : CompetitionPage,
   'editprofile'                                   : EditProfile,
 }
 
