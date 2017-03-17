@@ -1,21 +1,24 @@
+
+import styles from "./style.css"
 import React from 'react'
-import { browserHistory } from 'react-router'
-import styles from './style.css'
+import Page from './Page.jsx'
+import { Link } from 'react-router'
 
-export default class LoginPage extends React.Component {
-  signUp() {
-    browserHistory.push('/home');
-  }
-  
-  render() {
-    return (
-      <div className={styles.content}>
-        <h1 className={styles.heading}>Login Page</h1>
-        {JSON.stringify(this.props.params)}
-        <p className={styles.lead}>Create an account to get started!</p>
-        <button className={styles.signUpButton} onClick={this.signUp}>Sign up</button>
-      </div>
-    );
-  }
+export default class HomePage extends React.Component {
+ render() {
+   return (
+    <Page ref="page">
+       <h1>Login Page</h1>
+       <p>Index of all pages, for the sake of development convenience</p>
+        <Link to='home'                           >HomePage</Link>
+        <Link to='competitions'                   >CompetitionListPage</Link>
+        <Link to='competition/0/0'                >CompetitionPage</Link>
+        <Link to='competition/0/eventregistration'>EventRegistration</Link>
+        <Link to='admin/competition/0'            >CompetitionHomeAdmin</Link>
+        <Link to='competition/0/editschedule'     >EditSchedule</Link>
+        <Link to='competition/0/run'              >RunCompetition</Link>
+        <Link to='editprofile'                    >EditProfile</Link>
+     </Page>
+   );
+ }
 }
-

@@ -10,37 +10,23 @@ import EventRegistration    from '../PageEventRegistration.jsx'
 import EditSchedule         from '../PageEditSchedule.jsx'
 import RunCompetition       from '../PageRunCompetition.jsx'
 import CompetitionHomeAdmin from '../PageCompetitionHomeAdmin.jsx'
+import EditProfile          from '../PageEditProfile.jsx'
+
+const routes = {
+  'home'                                          : HomePage,
+  'competition/:competition_id/eventregistration' : EventRegistration,
+  'competition/:competition_id/editschedule'      : EditSchedule,
+  'competition/:competition_id/run'               : RunCompetition,
+  'competition/:competition_id/:competitor_id'    : CompetitionPage,
+  'competitions'                                  : CompetitionListPage,
+  'admin/competition/:competition_id'             : CompetitionHomeAdmin,
+  'editprofile'                                   : EditProfile,
+}
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={LoginPage} />
-    <Route
-      path="home"
-      component={HomePage}
-    />
-    <Route
-      path="competition/:competition_id/eventregistration"
-      component={EventRegistration}
-    />
-    <Route
-      path="competition/:competition_id/editschedule"
-      component={EditSchedule}
-    />
-    <Route
-      path="competition/:competition_id/run"
-      component={RunCompetition}
-    />
-    <Route
-      path="competition/:competition_id/:competitor_id"
-      component={CompetitionPage}
-    />
-    <Route
-      path="competitions"
-      component={CompetitionListPage}
-    />
-    <Route
-      path="/admin/competition/:competition_id"
-      component={CompetitionHomeAdmin}
-    />
+    { Object.keys(routes)
+      .map((route, i) => <Route key={i} path={route} component={routes[route]} />) }
   </Route>
 );
