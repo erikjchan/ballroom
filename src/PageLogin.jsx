@@ -9,7 +9,7 @@ export default class HomePage extends React.Component {
    return (
     <Page ref="page">
        <h1>Login Page</h1>
-       <p>Index of all pages, for the sake of deve lopment convenience</p>
+       <p>Index of all pages, for the sake of development convenience</p>
         <Link to='home'                           >HomePage</Link>
         <Link to='competition/0/eventregistration'>EventRegistration</Link>
         <Link to='competition/0/editschedule'     >EditSchedule</Link>
