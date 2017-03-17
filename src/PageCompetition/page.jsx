@@ -125,36 +125,34 @@ export default class PageCompetitionHomeAdmin extends React.Component {
 
     return (
       <Page ref="page">
-          <div className={styles.title}>
+          <div className={styles.titles}>
             <p>{comp_name}</p>
           </div>
-          <div className={styles.infoTable}>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Competiton Info</span> 
+          <div className={styles.infoTables}>
+            <div className={styles.infoBoxes}>
+              <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
                              
                           </div>} 
                    content={comp_info}/>
             </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>User Info</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
+            <div className={styles.infoBoxes}>
+              <Box title={<div className={styles.titleContainers}><span>User Info</span> 
+                              <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit</button>
                           </div>}
                     content={competitor_info}/>
             </div>
-            <div className={styles.separator}>
-            </div>
 
-            <div className={styles.separator}></div>
+            <div className={styles.separators}></div>
 
             <EventTable
               events={this.state.competitor_events}
             />
 
-              <div className = {styles.addeditBtn}>
-          <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Add/Edit Event</button>
+              <div className = {styles.addeditBtns}>
+          <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Add/Edit Event</button>
         </div>
-        <div className = {styles.editpayBtn}>
-          <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
+        <div className = {styles.editpayBtns}>
+          <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
         </div>
           </div>
                   
