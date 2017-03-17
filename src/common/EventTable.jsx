@@ -78,7 +78,7 @@ export default class YourEvents extends React.Component {
     return (
       <div>
         <Table.Provider
-          className="pure-table pure-table-striped"
+          className="pure-table pure-table-striped event-table"
           columns={columns}>
           <Table.Header />
           <Table.Body rows={this.props.events} rowKey="id" />

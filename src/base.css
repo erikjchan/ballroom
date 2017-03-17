@@ -21,3 +21,6 @@ html, body {
   flex-grow: 1;
 }
 
+:global(.event-table) {
+  width: 100%;
+}
