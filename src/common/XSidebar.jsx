@@ -22,13 +22,13 @@ export default class OurSidebar extends React.Component {
         </div>
         <ul className= {styles.sub_menu}>
           <li className={styles.nav_sub}>
-            <Link to="editprofile" className={styles.nav_link}>Edit Profile</Link>
+            <Link to="/editprofile" className={styles.nav_link}>Edit Profile</Link>
           </li>
           <li className={styles.nav_sub}>
-            <Link to="competitions" className={styles.nav_link}>See Competitions</Link>
+            <Link to="/competitions" className={styles.nav_link}>See Competitions</Link>
           </li>
           <li className={styles.nav_sub}>
-            <Link to="competition/0/0" className={styles.nav_link}>Competition Page</Link>
+            <Link to="/competition/0/0/" className={styles.nav_link}>Competition Page</Link>
           </li>
           <li className={styles.nav_sub}>
             <Link to="#" className={styles.nav_link}>Logout</Link>

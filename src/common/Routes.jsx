@@ -27,6 +27,6 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={LoginPage} />
     { Object.keys(routes)
-      .map(route => <Route path={route} component={routes[route]} />) }
+      .map((route, i) => <Route key={i} path={route} component={routes[route]} />) }
   </Route>
 );
