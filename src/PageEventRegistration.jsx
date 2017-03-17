@@ -5,6 +5,29 @@ import AddEvent from './PageEventRegistration/addEvent.jsx'
 import EventTable from './common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'
+import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
+import {Button, IconButton} from 'react-toolbox/lib/button';
+import { Link } from 'react-router'
+/*
+
+
+class RadioTest extends React.Component {
+  state = {
+    value: 'vvendetta'
+  };
+
+  handleChange = (value) => {
+    this.setState({value});
+  };
+
+  render () {
+    return (
+      
+    );
+  }
+}
+
+ */
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
@@ -21,6 +44,11 @@ export default class PageEventRegistration extends React.Component {
 
       value: '',
       loading: false,
+
+      // Selected stuff
+      level: null,
+      style: null,
+      event: null,
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -62,8 +90,7 @@ export default class PageEventRegistration extends React.Component {
       })
       .then(json => {
         console.log('JSON', json)
-
-        this.setState({user_competition_events: json})
+        this.setState({user_competition_events: json.splice(0,3)})
       })
       .catch(err => alert(err))
 
@@ -79,28 +106,62 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
   }
 
+  handleLevelChange = (level) => {
+    this.setState({level});
+  };
+
+  handleStyleChange = (style) => {
+    this.setState({style});
+  };
+
+  handleEventChange = (event) => {
+    this.setState({event});
+  };
 
 
- render() {
+  render() {
 
-  const search_competitor = (list, query) => {
-    if (query === '') return []
-    return list.filter(comp => 
-      comp.email.indexOf(query) != -1 ||
-      comp.first_name.toLowerCase().indexOf(query.toLowerCase()) != -1 ||
-      comp.last_name.toLowerCase().indexOf(query.toLowerCase()) != -1
-    )
-  }
+    const search_competitor = (list, query) => {
+      if (query === '') return []
+      return list.filter(comp => 
+        comp.email.indexOf(query) != -1 ||
+        comp.first_name.toLowerCase().indexOf(query.toLowerCase()) != -1 ||
+        comp.last_name.toLowerCase().indexOf(query.toLowerCase()) != -1
+      )
+    }
 
-   return (
+    return (
 
     <Page ref="page">
 
-      <div className={styles.contentBody}>
+      <p>
         <h1>Event Registration</h1>
 
-        <AddEvent />
+        <h2>Level</h2>
+        <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
+          <RadioButton label='The Walking Dead' value='thewalkingdead'/>
+          <RadioButton label='From Hell' value='fromhell' disabled/>
+          <RadioButton label='V for a Vendetta' value='vvendetta'/>
+          <RadioButton label='Watchmen' value='watchmen'/>
+        </RadioGroup>
 
+        <h2>Style</h2>
+        <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
+          <RadioButton label='The Walking Dead' value='thewalkingdead'/>
+          <RadioButton label='From Hell' value='fromhell' disabled/>
+          <RadioButton label='V for a Vendetta' value='vvendetta'/>
+          <RadioButton label='Watchmen' value='watchmen'/>
+        </RadioGroup>
+
+        <h2>Event</h2>
+        <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
+          <RadioButton label='The Walking Dead' value='thewalkingdead'/>
+          <RadioButton label='From Hell' value='fromhell' disabled/>
+          <RadioButton label='V for a Vendetta' value='vvendetta'/>
+          <RadioButton label='Watchmen' value='watchmen'/>
+        </RadioGroup>
+
+        <h2>Partner's email</h2>
         <Autocomplete
           inputProps={{name: "US state", id: "states-autocomplete"}}
           ref="autocomplete"
@@ -133,6 +194,14 @@ export default class PageEventRegistration extends React.Component {
         />
 
 
+
+      </p>
+
+      <p><Link to="/competition/0/0/">Register!</Link></p>
+      <hr />
+
+
+        <h2>You're already registered to these:</h2>
         <EventTable
           events={this.state.user_competition_events}
           extra_columns={[{
@@ -142,23 +211,15 @@ export default class PageEventRegistration extends React.Component {
                   onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
-                  &#10007;
+                  &#10007; Drop
                 </span>
               </div>
             )
           }]}
         />
 
-      </div>
      </Page>
    );
  }
 }
 
-/*
-
-
-
-
-
- */

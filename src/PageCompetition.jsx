@@ -142,6 +142,9 @@ export default class PageCompetition extends React.Component {
 
             <div className={styles.separators}></div>
             <div className={styles.eventTableCompetitor}>
+
+            <h2>Your Events:</h2>
+
             <EventTable
               events={this.state.competitor_events}
             />
