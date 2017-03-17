@@ -44,9 +44,9 @@ const get_callbacks = competitors => competitors
 .filter(c => c["Lead Number"])
 .map((c, i) => ({
   "id" : i,
-  "timestamp" : randomDate({year: 2017}),
+  "timestamp" : randomDate({year: 2017}).toDateString(),
   "judge_id" : randomId(JUDGES),
-  "Lead Competitor number" : c["Lead Number"],
+  "Lead Competitor number" : c["Lead Number"s],
   "round_id" : randomId(ROUNDS),
 }))
 
@@ -59,13 +59,14 @@ const get_competitions = n => collection(n)(i => ({
   "EarlyPrice" : randomInt(0, 100),
   "RegPrice" : randomInt(0, 100),
   "LatePrice" : randomInt(0, 100),
-  "StartDate" : randomDate({year: 2018}),
-  "EndDate" : randomDate({year: 2018}),
-  "RegStartDate" : randomDate({year: 2017}),
-  "RegEndDate" : randomDate({year: 2017}),
-  "EarlyRegDeadline" : randomDate({year: 2017}),
-  "RegularRegDeadline" : randomDate({year: 2017}),
+  "StartDate" : randomDate({year: 2018}).toDateString(),
+  "EndDate" : randomDate({year: 2018}).toDateString(),
+  "RegStartDate" : randomDate({year: 2017}).toDateString(),
+  "RegEndDate" : randomDate({year: 2017}).toDateString(),
+  "EarlyRegDeadline" : (randomDate({year: 2017})).toDateString(),
+  "RegularRegDeadline" : randomDate({year: 2017}).toDateString(),
   "CompAdmin" : randomData().emailAddress,
+
 }))
 
 
@@ -124,7 +125,7 @@ const get_judges = n => collection(n)(i => ({
 const get_payment_records = n => collection(n)(i => ({
   "id" : i,
   "competitionId" : randomId(COMPETITIONS),
-  "Timestamp" : randomDate({year: 2017}),
+  "Timestamp" : randomDate({year: 2017}).toDateString(),
   "Competitor id" : randomId(COMPETITORS),
   "Amount" : randomInt(50, 100)/2,
   "Online/offline" : randomBool(),
