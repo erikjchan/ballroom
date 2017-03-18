@@ -56,6 +56,7 @@
     "express": "^4.12.3",
     "fake-identity": "^1.0.6",
     "fixed-data-table": "^0.6.3",
+    "ip": "^1.1.5",
     "phrase-generator": "^1.0.0",
     "random-datetime": "^1.0.1",
     "random-int": "^1.0.0",

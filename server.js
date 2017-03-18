@@ -1,6 +1,7 @@
 import express from 'express';
 const app = express();
 const data          = require('./api/data')
+const ip = require('ip');
 
 
 /************************************************************
@@ -17,7 +18,7 @@ app.get('/app.js', (req, res) => {
   if (process.env.PRODUCTION) {
     res.sendFile(__dirname + '/build/app.js');
   } else {
-    res.redirect('//localhost:9090/build/app.js');
+    res.redirect('//' + ip.address() + ':9090/build/app.js');
   }
 });
 
@@ -26,7 +27,7 @@ app.get('/style.css', (req, res) => {
   if (process.env.PRODUCTION) {
     res.sendFile(__dirname + '/build/style.css');
   } else {
-    res.redirect('//localhost:9090/build/style.css');
+    res.redirect('//' + ip.address() + ':9090/build/style.css');
   }
 });
 
@@ -176,7 +177,7 @@ if (!process.env.PRODUCTION) {
     hot: true,
     noInfo: true,
     historyApiFallback: true
-  }).listen(9090, 'localhost', (err, result) => {
+  }).listen(9090, ip.address(), (err, result) => {
     if (err) {
       console.log(err);
     }
