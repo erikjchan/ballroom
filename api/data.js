@@ -10,7 +10,12 @@ const array = n => new Array(n).fill(null)
 const collection = n => cb => array(n).map((_, i) => cb(i))
 const randomId = top => randomInt(top - 1)
 const randomBool = _ => !randomInt(1)
-const randomLevel = _ => randomItem(['beginner', 'intermediate', 'advanced']);
+const randomLevel = _ => randomItem(['Newcomer', 'Bronze', 'Silver', 'Gold', 'Open', 'Syllabus']);
+const randomStyle = _ => randomItem(['Latin', 'Rhythm', 'Smooth', 'Standard']);
+const randomRound = _ => randomItem(['Round 1', 'Round 2', 'Quarterfinals', 'Semifinals', 'Finals']);
+const randomEventTitle = _ => randomItem(['Event1', 'Event2', 'Event3', 'Event4']);
+const randomCompName = _ => randomItem(['Cornell Dancesport Classic', 'RPI Ballroom Competition', 'Greendale Community College Ball-stravaganza!']);
+
 
 const ORGANIZATIONS = 2
 const COMPETITORS = ORGANIZATIONS * 50
@@ -21,6 +26,8 @@ const JUDGES = 10
 const PARTNERSHIPS = COMPETITORS // 2x more than needed just in case
 const ADMINS = 5
 const PAYMENTS = COMPETITORS
+const COMPETITOR_EVENTS = 6
+
 
 let prevdata = null
 const randomData = refresh => {
@@ -54,7 +61,7 @@ const get_callbacks = competitors => competitors
 
 const get_competitions = n => collection(n)(i => ({
   "id" : i,
-  "Name" : randomWord(),
+  "Name" : randomCompName(),
   "leadIdStartNum" : 0, // TODO
   "LocationName" : randomData(1).city,
   "EarlyPrice" : randomInt(0, 100),
@@ -73,16 +80,16 @@ const get_competitions = n => collection(n)(i => ({
 
 const get_events = n => collection(n)(i => ({
   "id" : i,
-  "competitionId" : randomId(COMPETITIONS),
-  "title" : pg.generate(),
-  "style" : pg.generate(),
+  "competition_id" : randomId(COMPETITIONS),
+  "title" : randomEventTitle(),
+  "style" : randomStyle(),
   "level" : randomLevel(),
 }))
 
 const get_rounds = n => collection(n)(i => ({
   "id" : i,
   "event" : randomId(EVENTS),
-  "name" : pg.generate(),
+  "name" : randomRound(),
   "order_number" : i,
   "size" : randomInt(50, 100),
   "next_round" : randomInt(0, 20),
@@ -96,8 +103,8 @@ const get_rounds = n => collection(n)(i => ({
 
 const get_partnerships = n => collection(n)(i => ({
   "lead_number" : randomInt(0, 100),
-  "Lead Competitor id" : randomId(COMPETITORS),
-  "Follow Competitor id" : randomId(COMPETITORS),
+  "lead_competitor_id" : randomId(COMPETITORS),
+  "follow_competitor_id" : randomId(COMPETITORS),
   "Event Category" : randomId(EVENTS),
   "Lead Confirmed" : randomBool(),
   "Follow Confirmed" : randomBool(),
@@ -125,9 +132,9 @@ const get_judges = n => collection(n)(i => ({
 
 const get_payment_records = n => collection(n)(i => ({
   "id" : i,
-  "competitionId" : randomId(COMPETITIONS),
+  "competition_id" : randomId(COMPETITIONS),
   "Timestamp" : randomDate({year: 2017}).toDateString(),
-  "Competitor id" : randomId(COMPETITORS),
+  "competitor_id" : randomId(COMPETITORS),
   "Amount" : randomInt(50, 100)/2,
   "Online/offline" : randomBool(),
   "Payer name" : randomData(1).firstName + ' ' + randomData(1).lastName,
@@ -136,12 +143,30 @@ const get_payment_records = n => collection(n)(i => ({
 const get_schedule = n => collection(n) (i => ({
   "id" : i, 
   "order_number" : i,
-  "title" : pg.generate(),
-  "style" : pg.generate(),
+  "title" : randomEventTitle(),
+  "style" : randomStyle(),
   "level" : randomLevel(),
-  "round": randomInt(1, 5),
+  "round": randomRound(),
 }))
 
+const get_competitor_events = n => collection(n) (i => ({
+  "title" : randomEventTitle(),
+  "style" : randomStyle(),
+  "level" : randomLevel(),
+  "round" : randomRound(),
+  "partner" : randomData(1).firstName.concat(" ").concat(randomData().lastName),
+  "leading" : randomBool(),
+}))
+
+const get_competitor_competition_information = n => collection(n) (i => ({
+  "id" : i,
+  "first_name" : randomData(1).firstName,
+  "last_name" : randomData().lastName,
+  "email" :  randomData().emailAddress,
+  "organization_id" : randomId(ORGANIZATIONS),
+  "lead_number" : randomInt(0, 100),
+  "amount_owed" : randomInt(0, 100),
+}))
 
 const competitors = get_competitors(COMPETITORS)
 const competitions = get_competitions(COMPETITIONS)
@@ -154,7 +179,8 @@ const payment_records = get_payment_records(PAYMENTS)
 const callbacks = get_callbacks(competitors)
 const admins = get_admins(ADMINS)
 const judges = get_judges(JUDGES)
-
+const competitor_events = get_competitor_events(COMPETITOR_EVENTS)
+const competitor_competition_information = get_competitor_competition_information(1)
 
 module.exports = {
   competitors,
@@ -170,3 +196,4 @@ module.exports = {
   schedule,
 }
 
+  
