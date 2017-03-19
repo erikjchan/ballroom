@@ -62,8 +62,14 @@ app.get('/api/competitors/:id', (req, res) => {
   res.send(comps[0])
 })
 
+app.get('/api/competitors/:id1/competition/:id2', (req, res) => {
+  const id1 = parseInt(req.params.id1)
+  const id2 = parseInt(req.params.id2)
+  res.send(data.competitor_competition_information)
+})
+
 app.get('/api/competitors/:id/events', (req, res) => {
-  res.send(data.events)
+  res.send(data.competitor_events)
 })
 
 app.get('/api/competitions', (req, res) => {
