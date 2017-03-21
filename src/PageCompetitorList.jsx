@@ -20,7 +20,7 @@ class CompetitorsList extends React.Component {
   return (
     <Page ref="page">
       <div id={style.titleContainer}>
-        <h1>Competitors/h1>
+        <h1>Competitors</h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges}>Save Changes</div>
           <div id={style.cancelChanges}>Cancel</div>
