@@ -10,6 +10,7 @@ import EventRegistration    from '../PageEventRegistration.jsx'
 import EditSchedule         from '../PageEditSchedule.jsx'
 import RunCompetition       from '../PageRunCompetition.jsx'
 import CompetitionHomeAdmin from '../PageCompetitionHomeAdmin.jsx'
+import CompetitorsList      from '../PageCompetitorList.jsx'
 import EditProfile          from '../PageEditProfile.jsx'
 
 const routes = {
@@ -18,7 +19,7 @@ const routes = {
   'competition/:competition_id/editschedule'      : EditSchedule,
   'competition/:competition_id/run'               : RunCompetition,
   'competition/:competition_id/:competitor_id'    : CompetitionPage,
-  'competition/:competition_id/competitorlist'    : CompetitorsList,
+  'competition/:competition_id/competitorslist'   : CompetitorsList,
   'competitions'                                  : CompetitionListPage,
   'admin/competition/:competition_id'             : CompetitionHomeAdmin,
   'editprofile'                                   : EditProfile,
