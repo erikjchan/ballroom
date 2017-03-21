@@ -13,11 +13,14 @@ import Page from './Page.jsx'
 import DragAndDropTable from './PageCompetitorList/competitors.jsx';
 import style from './style.css';
 
+// competition/:competition_id/competitorlist
+class CompetitorsList extends React.Component {
 
  render() {
   return (
     <Page ref="page">
       <div id={style.titleContainer}>
+        <h1>Competitors/h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges}>Save Changes</div>
           <div id={style.cancelChanges}>Cancel</div>
@@ -39,5 +42,6 @@ import style from './style.css';
  }
 }
 
+export default DragDropContext(HTML5Backend)(CompetitorsList);
 
 
