@@ -77,7 +77,6 @@ const get_competitions = n => collection(n)(i => ({
 
 }))
 
-
 const get_events = n => collection(n)(i => ({
   "id" : i,
   "competition_id" : randomId(COMPETITIONS),
@@ -194,6 +193,8 @@ module.exports = {
   admins,
   judges,
   schedule,
+  competitor_events,
+  competitor_competition_information,
 }
 
   
