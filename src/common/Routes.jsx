@@ -18,6 +18,7 @@ const routes = {
   'competition/:competition_id/editschedule'      : EditSchedule,
   'competition/:competition_id/run'               : RunCompetition,
   'competition/:competition_id/:competitor_id'    : CompetitionPage,
+  'competition/:competition_id/competitorlist'    : CompetitorsList,
   'competitions'                                  : CompetitionListPage,
   'admin/competition/:competition_id'             : CompetitionHomeAdmin,
   'editprofile'                                   : EditProfile,
