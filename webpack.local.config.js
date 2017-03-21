@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ip = require('ip');
 
 /**
  * This is the Webpack configuration file for local development. It contains
@@ -18,7 +19,7 @@ module.exports = {
 
   // Set entry point to ./src/main and include necessary files for hot load
   entry:  [
-    "webpack-dev-server/client?http://localhost:9090",
+    "webpack-dev-server/client?http://" + ip.address() + ":9090",
     "webpack/hot/only-dev-server",
     "./src/main"
   ],
@@ -28,7 +29,7 @@ module.exports = {
   output: {
     path: __dirname + "/build/",
     filename: "app.js",
-    publicPath: "http://localhost:9090/build/"
+    publicPath: "http://" + ip.address() + ":9090/build/"
   },
 
   // Necessary plugins for hot load

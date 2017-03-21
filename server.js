@@ -1,6 +1,7 @@
 import express from 'express';
 const app = express();
 const data          = require('./api/data')
+const ip = require('ip');
 
 
 /************************************************************
@@ -17,7 +18,7 @@ app.get('/app.js', (req, res) => {
   if (process.env.PRODUCTION) {
     res.sendFile(__dirname + '/build/app.js');
   } else {
-    res.redirect('//localhost:9090/build/app.js');
+    res.redirect('//' + ip.address() + ':9090/build/app.js');
   }
 });
 
@@ -26,7 +27,7 @@ app.get('/style.css', (req, res) => {
   if (process.env.PRODUCTION) {
     res.sendFile(__dirname + '/build/style.css');
   } else {
-    res.redirect('//localhost:9090/build/style.css');
+    res.redirect('//' + ip.address() + ':9090/build/style.css');
   }
 });
 
@@ -61,8 +62,14 @@ app.get('/api/competitors/:id', (req, res) => {
   res.send(comps[0])
 })
 
+app.get('/api/competitors/:id1/competition/:id2', (req, res) => {
+  const id1 = parseInt(req.params.id1)
+  const id2 = parseInt(req.params.id2)
+  res.send(data.competitor_competition_information)
+})
+
 app.get('/api/competitors/:id/events', (req, res) => {
-  res.send(data.events)
+  res.send(data.competitor_events)
 })
 
 app.get('/api/competitions', (req, res) => {
@@ -170,7 +177,7 @@ if (!process.env.PRODUCTION) {
     hot: true,
     noInfo: true,
     historyApiFallback: true
-  }).listen(9090, 'localhost', (err, result) => {
+  }).listen(9090, ip.address(), (err, result) => {
     if (err) {
       console.log(err);
     }
