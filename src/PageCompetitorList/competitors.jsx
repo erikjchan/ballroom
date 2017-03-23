@@ -6,41 +6,6 @@ import * as dnd from 'reactabular-dnd';
 import * as resolve from 'table-resolver';
 import style from '../style.css';
 
-const rows = [
-  {
-    id: 1,
-    order_number: 1,
-    style: 'tango',
-    level: 'gold',
-    dance: 'dance',
-    round: 1
-  },
-  {
-    id: 2,
-    order_number: 2,
-    style: 'cha cha',
-    level: 'silver',
-    dance: 'dance',
-    round: 1
-  },
-  {
-    id: 3,
-    order_number: 3,
-    style: 'cha cha',
-    level: 'bronze',
-    dance: 'dance',
-    round: 1
-  },
-  {
-    id: 4,
-    order_number: 4,
-    style: 'tango',
-    level: 'gold',
-    dance: 'dance',
-    round: 2
-  }
-];
-
 export default class DragAndDropTable extends React.Component {
   constructor(props) {
     super(props);
@@ -48,59 +13,47 @@ export default class DragAndDropTable extends React.Component {
     this.state = {
       columns: [
         {
-          property: 'order_number',
+          property: 'name',
           props: {
+            style: {
+              width: 300
+            }
+          },
+          header: {
+            label: 'Name',
+          }
+        },
+        {
+          property: 'organization_name',
+          props: {
+            style: {
+              width: 300
+            }
+          },
+          header: {
+            label: 'Organization',
+          }
+        },
+        {
+          property: 'lead_number',
+          props: {
+            style: {
+              width: 300
+            }
+          },
+          header: {
             label: 'Number',
-            style: {
-              width: 100
-            }
-          },
-          header: {
-            label: 'Number'
           }
         },
         {
-          property: 'style',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Style',
-          }
-        },
-        {
-          property: 'level',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Level',
-          }
-        },
-        {
-          property: 'title',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Dance',
-          }
-        },
-        {
-          property: 'round',
+          property: 'amount_owed',
           props: {
             style: {
               width: 100
             }
           },
           header: {
-            label: 'Round',
+            label: 'Owes',
           }
         },
         {
@@ -112,7 +65,8 @@ export default class DragAndDropTable extends React.Component {
         }
 
       ],
-      rows: []
+      rows: [],
+      filteredDataList: this.rows,
     };
 
     this.onRow = this.onRow.bind(this);
@@ -120,10 +74,11 @@ export default class DragAndDropTable extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/competitors")
+    fetch("/api/competitors/competition/:id2")
       .then(response => response.json())
       .then(json => {
-        this.setState({rows: json})
+        this.setState({rows: json,
+                       filteredDataList: this.rows, })
       })
       .catch(err => alert(err))
   }
@@ -140,9 +95,7 @@ export default class DragAndDropTable extends React.Component {
       }
     };
     const { columns, rows } = this.state;
-    for (let i = 0; i < rows.length; i++) {
-        rows[i].order_number = (i + 1);
-    }
+
     //const resolvedColumns = resolve.columnChildren({ columns });
     const resolvedRows = resolve.resolve({
       columns: columns,
@@ -170,21 +123,33 @@ export default class DragAndDropTable extends React.Component {
     );
   }
 
-  onRow(row) {
-    return {
-      rowId: row.id,
-      onMove: this.onMoveRow
-    };
+  _renderHeader(label, cellDataKey) {
+    return <div>
+          <span>{label}</span>
+            <div>
+              <br />
+              <input style={{width:90+'%'}} onChange={this._onFilterChange.bind(this, cellDataKey)}/>
+            </div>
+        </div>;
   }
-
-  onMoveRow({ sourceRowId, targetRowId }) {
-    const rows = dnd.moveRows({
-      sourceRowId,
-      targetRowId
-    })(this.state.rows);
-
-    if (rows) {
-      this.setState({ rows });
+ 
+  _onFilterChange(cellDataKey, event) {
+    if (!event.target.value) {
+      this.setState({
+        filteredDataList: this.rows,
+      });
     }
+    var filterBy = event.target.value.toString().toLowerCase();
+    var size = this.rows.length;
+    var filteredList = [];
+    for (var index = 0; index < size; index++) {
+      var v = this.rows[index][cellDataKey];
+      if (v.toString().toLowerCase().indexOf(filterBy) !== -1) {
+        filteredList.push(this.rows[index]);
+      }
+    }
+    this.setState({
+      filteredDataList: filteredList,
+    });
   }
 }

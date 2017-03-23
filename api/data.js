@@ -159,11 +159,10 @@ const get_competitor_events = n => collection(n) (i => ({
 
 const get_competitor_competition_information = n => collection(n) (i => ({
   "id" : i,
-  "first_name" : randomData(1).firstName,
-  "last_name" : randomData().lastName,
+  "name" : randomData(1).firstName.concat(" ").concat(randomData().lastName),
   "email" :  randomData().emailAddress,
-  "organization_id" : randomId(ORGANIZATIONS),
-  "lead_number" : randomInt(0, 100),
+  "organization_name" : randomData(1).company,
+  "lead_number" : randomBool() ? randomInt(0, 100) : "N/A",
   "amount_owed" : randomInt(0, 100),
 }))
 
@@ -179,7 +178,7 @@ const callbacks = get_callbacks(competitors)
 const admins = get_admins(ADMINS)
 const judges = get_judges(JUDGES)
 const competitor_events = get_competitor_events(COMPETITOR_EVENTS)
-const competitor_competition_information = get_competitor_competition_information(1)
+const competitor_competition_information = get_competitor_competition_information(COMPETITORS)
 
 module.exports = {
   competitors,

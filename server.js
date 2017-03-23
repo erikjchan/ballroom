@@ -56,6 +56,12 @@ app.get('/api/competitors', (req, res) => {
   res.send(data.competitors)
 })
 
+app.get('/api/competitors/competition/:id2', (req, res) => {
+  const id1 = parseInt(req.params.id1)
+  const id2 = parseInt(req.params.id2)
+  res.send(data.competitor_competition_information)
+})
+
 app.get('/api/competitors/:id', (req, res) => {
   const id = parseInt(req.params.id)
   const comps = data.competitors.filter(c => c.id === id)
@@ -65,7 +71,7 @@ app.get('/api/competitors/:id', (req, res) => {
 app.get('/api/competitors/:id1/competition/:id2', (req, res) => {
   const id1 = parseInt(req.params.id1)
   const id2 = parseInt(req.params.id2)
-  res.send(data.competitor_competition_information)
+  res.send(data.competitor_competition_information[id1])
 })
 
 app.get('/api/competitors/:id/events', (req, res) => {
