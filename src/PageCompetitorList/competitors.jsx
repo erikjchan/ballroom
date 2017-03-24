@@ -1,129 +1,113 @@
 import React from 'react';
-import cloneDeep from 'lodash/cloneDeep';
-import findIndex from 'lodash/findIndex';
-import * as Table from 'reactabular-table';
-import * as dnd from 'reactabular-dnd';
+import {Table, Column, Cell} from 'fixed-data-table';
 import * as resolve from 'table-resolver';
 import style from '../style.css';
 
-export default class DragAndDropTable extends React.Component {
-  constructor(props) {
-    super(props);
+export default class SearchTable extends React.Component {
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      columns: [
-        {
-          property: 'name',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Name',
-          }
-        },
-        {
-          property: 'organization_name',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Organization',
-          }
-        },
-        {
-          property: 'lead_number',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Number',
-          }
-        },
-        {
-          property: 'amount_owed',
-          props: {
-            style: {
-              width: 100
-            }
-          },
-          header: {
-            label: 'Owes',
-          }
-        },
-        {
-          props: {
-            style: {
-              width: 200
-            }
-          }
-        }
+        this.rows = [];
+        this.state = {
+            columns: [
+            {
+                dataKey: 'name',
+                label: 'Name',
+                props: {
+                    style: {
+                        width: 300
+                    }
+                },
+                headerRenderer: this._renderHeader.bind(this),
+            },
+            {
+                dataKey: 'organization_name',
+                label: 'Organization',
+                props: {
+                    style: {
+                        width: 300
+                    }
+                },
+                headerRenderer: this._renderHeader.bind(this),
 
-      ],
-      rows: [],
-      filteredDataList: this.rows,
-    };
+            },
+            {
+                dataKey: 'lead_number',
+                label: 'Number',          
+                props: {
+                    style: {
+                        width: 300
+                    }
+                },
+                headerRenderer: this._renderHeader.bind(this),
 
-    this.onRow = this.onRow.bind(this);
-    this.onMoveRow = this.onMoveRow.bind(this);
+            },
+            {
+                dataKey: 'amount_owed',
+                label: 'Owes',
+                props: {
+                    style: {
+                        width: 100
+                    }
+                },
+                headerRenderer: this._renderHeader.bind(this),
+            },
+            {
+                props: {
+                    style: {
+                        width: 200
+                    }
+                }
+            }
+
+            ],
+            filteredDataList: this.rows,
+        };
+    }
+
+    componentDidMount() {
+        fetch("/api/competitors/competition/:id2")
+          .then(response => response.json())
+          .then(json => {
+              this.rows = json
+              console.log("rows length is" + this.rows.length)
+              this.setState({
+                  filteredDataList: this.rows, })
+              console.log("filter length is" + this.state.filteredDataList.length)
+
+          })
+          .catch(err => alert(err))
+    }
+
+    render() {
+        const { columns, rows, filteredDataList } = this.state;
+
+        //const resolvedColumns = resolve.columnChildren({ columns });
+        const resolvedRows = resolve.resolve({
+            columns: columns,
+            method: resolve.nested
+        })(filteredDataList);
+
+        return <Table
+        height={40+((this.state.filteredDataList.length+1) * 30)}
+        width={1150}
+        rowsCount={this.state.filteredDataList.length}
+        rowHeight={30}
+        headerHeight={30}
+        rowGetter={function(rowIndex) {return this.state.filteredDataList[rowIndex]; }.bind(this)}>
+        <Column dataKey = 'name' width = {300} label = 'Name'
+        headerRenderer =  {this._renderHeader.bind(this)}/>
+        <Column dataKey = 'organization_name' width = {300} label = 'Organization'
+        headerRenderer =  {this._renderHeader.bind(this)}/>
+        <Column dataKey = 'lead_number' width = {300} label = 'Number'
+        headerRenderer =  {this._renderHeader.bind(this)}/>
+        <Column dataKey = 'amount_owed' width = {300} label = 'Owes'
+        headerRenderer =  {this._renderHeader.bind(this)}/>
+        </Table>;
   }
 
-  componentDidMount() {
-    fetch("/api/competitors/competition/:id2")
-      .then(response => response.json())
-      .then(json => {
-        this.setState({rows: json,
-                       filteredDataList: this.rows, })
-      })
-      .catch(err => alert(err))
-  }
-
-  render() {
-    const components = {
-      header: {
-        wrapper: 'thead',
-        row: 'tr',
-        cell: 'th'
-      },
-      body: {
-        row: dnd.Row
-      }
-    };
-    const { columns, rows } = this.state;
-
-    //const resolvedColumns = resolve.columnChildren({ columns });
-    const resolvedRows = resolve.resolve({
-      columns: columns,
-      method: resolve.nested
-    })(rows);
-
-    return (
-      <Table.Provider
-        components={components}
-        columns={columns}
-        className={style.tableWrapper}
-      >
-        <Table.Header
-          headerRows={resolve.headerRows({ columns })}
-          className={style.tableHeader}
-        />
-
-        <Table.Body
-          className={style.tableBody}
-          rows={resolvedRows}
-          rowKey="id"
-          onRow={this.onRow}
-        />
-      </Table.Provider>
-    );
-  }
-
-  _renderHeader(label, cellDataKey) {
+_renderHeader(label, cellDataKey) {
+    console.log("rendering a header" + label);
     return <div>
           <span>{label}</span>
             <div>
