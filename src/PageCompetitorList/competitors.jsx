@@ -107,7 +107,6 @@ export default class SearchTable extends React.Component {
   }
 
 _renderHeader(label, cellDataKey) {
-    console.log("rendering a header" + label);
     return <div>
           <span>{label}</span>
             <div>
