@@ -6,41 +6,6 @@ import * as dnd from 'reactabular-dnd';
 import * as resolve from 'table-resolver';
 import style from '../style.css';
 
-const rows = [
-  {
-    id: 1,
-    order_number: 1,
-    style: 'tango',
-    level: 'gold',
-    dance: 'dance',
-    round: 1
-  },
-  {
-    id: 2,
-    order_number: 2,
-    style: 'cha cha',
-    level: 'silver',
-    dance: 'dance',
-    round: 1
-  },
-  {
-    id: 3,
-    order_number: 3,
-    style: 'cha cha',
-    level: 'bronze',
-    dance: 'dance',
-    round: 1
-  },
-  {
-    id: 4,
-    order_number: 4,
-    style: 'tango',
-    level: 'gold',
-    dance: 'dance',
-    round: 2
-  }
-];
-
 export default class DragAndDropTable extends React.Component {
   constructor(props) {
     super(props);
