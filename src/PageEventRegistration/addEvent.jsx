@@ -126,28 +126,30 @@ class List extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: null
+			selectedKey: null
 		};
 	}
 
-	handleClick(dance) {
+	handleClick(dance, key) {
 		if (this.props.name === "Dance") {
 			this.props.selectDance(dance);
 		}
 		// TODO: Uncomment when we figure out how an element can pass itself into a click handler
-		/*this.setState({
-			selected: li
-		});*/
+		this.setState({
+			selectedKey: key
+		});
 	}
 
-	// TODO: Uncomment when we figure out how an element can pass itself into a click handler
-	/*isSelected(li) {
-		return "eventListItem" + (this.state.selected === li ? " selected" : "");
-	}*/
+	getHighlightClassName(key) {
+		if (this.state.selectedKey === key) {
+			return styles.addEventHighligtedItem;
+		}
+		return '';
+	}
 
 	render() {
 		const listItems = this.props.data.map((d, i) =>
-			<li onClick={this.handleClick.bind(this)} key={i}>{d}</li>
+			<li onClick={this.handleClick.bind(this, d, i)} className={this.getHighlightClassName.bind(this, i)()} key={i}>{d}</li>
 		);
 		return (
 			<ul className={styles.eventList}>
@@ -157,3 +159,5 @@ class List extends React.Component {
 		);
 	}
 }
+
+//

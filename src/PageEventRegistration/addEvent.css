@@ -26,3 +26,7 @@
 	font-size: 20pt;
 	font-weight: bold;
 }
+
+.addEventHighligtedItem {
+	background-color: red !important;
+}
