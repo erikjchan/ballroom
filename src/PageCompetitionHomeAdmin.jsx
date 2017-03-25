@@ -43,8 +43,8 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     fetch(`/api/events`)
       .then(response => response.json())
       .then(json => json.filter(event => {
-        console.log(event.competitionId, this.competition_id)
-        return event.competitionId === this.competition_id
+        console.log(event.competition_id, this.competition_id)
+        return event.competition_id === this.competition_id
       }))
       .then(json => {
         this.setState({ competition_events : json})
@@ -180,7 +180,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
             </div>
             <div className={styles.separator}></div>
             <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Schedule</span> 
+              <Box title={<div className={styles.titleContainer}><span>Round Schedule</span> 
                               <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
                           </div>}
               content={rounds_titles}/>
