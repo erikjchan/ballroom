@@ -13,7 +13,7 @@
     font-family: 'Lato', sans-serif;
     width: 270px;
     background-color: #2E3025;
-    display: block;
+    display: table-cell;
 }
 
 .sub_menu {
