@@ -51,7 +51,7 @@
 }
 
 .runBtn{
-	background-color: #E7B6A4;
+	background-color: #606776;
 	font-size: 24px;
 	padding: 10px;
 	width: auto;
@@ -602,7 +602,7 @@ a:link, nav a:visited{
   width: 0;
 }
 
-.runBtn{
+/*.runBtn{
   background-color: #E7B6A4;
   font-size: 24px;
   padding: 10px;
@@ -612,7 +612,7 @@ a:link, nav a:visited{
   box-shadow: 0px 5px 8px black;
   float: right;
   margin-right: 40px;
-}
+}*/
 
 .titleContainer{
   vertical-align: middle; 
