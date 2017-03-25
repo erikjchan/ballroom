@@ -121,12 +121,6 @@ export default class PageCompetitionList extends React.Component {
               rowKey="id"
             />
 
-            <tfoot>
-            <tr>
-              <td>Selected: {selectedRow[0]}</td>
-              <td></td>
-            </tr>
-          </tfoot>
       		</Table.Provider>
 
       		<button 
