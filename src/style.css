@@ -198,9 +198,41 @@ Start
   padding: 5px 20px;
 }
 
-#dragAndDropTableScroller {
-  max-height: 60vh;
-  overflow-y: scroll;
+#scheduleWrapper {
+  padding: 30px;
+}
+
+#scheduleRoundAdder {
+  background-color: #C5C7CF;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 5px 20px;
+  position: relative;
+  vertical-align: middle;
+}
+
+#scheduleRoundAdder > * {
+  display: inline-block;
+}
+
+#scheduleRoundAdderNumber {
+  width: 40px;
+}
+
+#scheduleEditorAddButton {
+  float: right;
+  padding: 2px 5px;
+  margin-right: 20px;
+  border-radius: 5px;
+  background-color: #606776;
+  color: white;
+  vertical-align: middle;
+}
+
+.scheduleEditorSelect {
+  width: 75px;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 
 .tableWrapper {
