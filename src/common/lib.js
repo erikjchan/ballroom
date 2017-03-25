@@ -14,6 +14,6 @@ export default {
    * our data loads from the server.
    */
   flat_loading_proxy : new Proxy({}, {
-      get: _ => 'Loading...'
+      get: prop => 'Loading...'
   }),
 }
