@@ -31,9 +31,8 @@ export default class Page extends React.Component {
   };
 
   errorNotif(msg) { 
-    console.log('asdfasdfasdf?/')
-    return () => {
-    console.log('ejalskdfjlasdf', msg)
+    return (e) => {
+    console.error(e)
     this.setState({
       sb_active: true,
       sb_label: msg,

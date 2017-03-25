@@ -47,8 +47,8 @@ app.get('/api/competition/:id', (req, res) => {
 })
 
 app.get('/api/competition/:cid/events', (req, res) => {
-  const cid = parseInt(req.params.cid)
-  const events = data.events.filter(e => e.competitionId === cid)
+  console.log(data.events)
+  const events = data.events.filter(e => e.competition_id === cid)
   res.send(events)
 })
 
@@ -99,6 +99,10 @@ app.get('/api/event/:rid/rounds', (req, res) => {
 })
 
 app.get('/api/rounds', (req, res) => {
+  res.send(data.rounds)
+})
+
+app.get('/api/competition/:cid/rounds', (req, res) => {
   res.send(data.rounds)
 })
 
