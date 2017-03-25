@@ -73,6 +73,7 @@
     "react-sidebar": "^2.3.0",
     "react-toolbox": "^2.0.0-beta.7",
     "reactabular-dnd": "^8.7.1",
+    "reactabular-select": "^7.0.0",
     "reactabular-table": "^8.6.0",
     "selectabular": "^2.0.1",
     "table-resolver": "^3.1.0",

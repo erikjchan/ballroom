@@ -7,6 +7,8 @@ import Page from './Page.jsx';
 import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import select from 'selectabular';
+import { byArrowKeys } from 'reactabular-select';
+import findIndex from 'lodash/findIndex';
 
 // /competitions
 export default class PageCompetitionList extends React.Component {
@@ -15,12 +17,13 @@ export default class PageCompetitionList extends React.Component {
     super(props)
     this.state = {
       /** We will populate this w/ data from the API */
-      competitions: [],
-      selectedRow: [],
+      rows: [],
+      selectedRows: [],
     }
 
-    // this.onSelectRow = this.onSelectRow.bind(this);
-    // this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
+    this.onRow = this.onRow.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
+    this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +35,7 @@ export default class PageCompetitionList extends React.Component {
       .then(response => response.json()) // parse the result
       .then(json => { 
         // update the state of our component
-        this.setState({ competitions : json })
+        this.setState({ rows : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
@@ -42,6 +45,8 @@ export default class PageCompetitionList extends React.Component {
   }
 
   render() {
+
+    const { rows, selectedRows } = this.state;
 
  	const yourColumns = [
     {
@@ -97,6 +102,8 @@ export default class PageCompetitionList extends React.Component {
     }
   ]
 
+  const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
+
   const search_competition = (list, query) => {
       if (query === '') return []
       return list.filter(comp => 
@@ -104,7 +111,11 @@ export default class PageCompetitionList extends React.Component {
       )
     }
 
-   return (
+   return byArrowKeys({
+      rows,
+      selectedRowIndex,
+      onSelectRow: this.onSelectRow
+    }) (
    		<Page ref="page">
 
      		<div className={styles.content}>
@@ -117,14 +128,15 @@ export default class PageCompetitionList extends React.Component {
         		columns = {yourColumns}>
         		<Table.Header />
         		<Table.Body
-              rows = {this.state.competitions || []}
+              rows = {this.state.rows || []}
               rowKey="id"
             />
 
             <tfoot>
             <tr>
-              <td>Selected: {selectedRow[0]}</td>
-              <td></td>
+              <td>selectedRows[0]: {"" + selectedRows[0]}</td>
+              <td>selectedRowIndex: {selectedRowIndex}</td>
+              <td>onSelectRow: undefined</td>
             </tr>
           </tfoot>
       		</Table.Provider>
@@ -142,14 +154,17 @@ export default class PageCompetitionList extends React.Component {
         		className="pure-table pure-table-striped"
         		columns={otherColumns}>
         		<Table.Header />
-        		<Table.Body rows={this.state.competitions || []} rowKey="id" />
+        		<Table.Body
+              rows= {this.state.rows || []}
+              rowKey="id"
+            />
       		</Table.Provider>
 
           <Autocomplete
             inputProps={{name: "US state", id: "states-autocomplete"}}
             ref = "autocomplete"
             value = {this.state.value}
-            items = {this.state.competitions}
+            items = {this.state.rows}
             getItemValue = {(item) => item.Name}
             onSelect = {(value, item) => {
               // set the menu to only the selected item
@@ -183,6 +198,34 @@ export default class PageCompetitionList extends React.Component {
      		</div>
      </Page>
    );
- }
+  }
+
+  onRow(row, { rowIndex }) {
+    return {
+      className: classnames(
+        rowIndex % 2 ? 'odd-row' : 'even-row',
+        row.selected && 'selected-row'
+      ),
+      onClick: () => this.onSelectRow(rowIndex)
+    };
+  }
+
+  onSelectRow(selectedRowIndex) {
+    const { rows } = this.state;
+    const selectedRowId = rows[selectedRowIndex].id;
+ 
+    this.setState(
+      compose(
+        select.rows(row => row.id === selectedRowId),
+        select.none
+      )(rows)
+    );
+  }
+
+  getSelectedRowIndex(selectedRows) {
+    return findIndex(this.state.rows, {
+      id: selectedRows[0] && selectedRows[0].id
+    });
+  }
 }
 
