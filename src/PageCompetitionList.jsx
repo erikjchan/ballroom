@@ -15,8 +15,6 @@ export default class PageCompetitionList extends React.Component {
       /** We will populate this w/ data from the API */
       competitions: [],
     }
-
-    this.competition_id = 2
   }
 
   componentDidMount() {
@@ -35,10 +33,9 @@ export default class PageCompetitionList extends React.Component {
       // connection comes back
       .catch(this.refs.page.errorNotif(
         `There was an error fetching the competitions`))
-
   }
 
- render() {
+  render() {
 
  	const yourColumns = [
     {
@@ -134,14 +131,24 @@ export default class PageCompetitionList extends React.Component {
 
           <Autocomplete
             inputProps={{name: "US state", id: "states-autocomplete"}}
-            ref="autocomplete"
-            value={this.state.value}
-            items={this.state.competitions}
-            getItemValue={(item) => item.Name}
-            onSelect={(value, item) => {
+            ref = "autocomplete"
+            value = {this.state.value}
+            items = {this.state.competitions}
+            getItemValue = {(item) => item.Name}
+            onSelect = {(value, item) => {
               // set the menu to only the selected item
               this.setState({ value })
             }}
+            onChange = {(event, value) => {
+            this.setState({ value, loading: true })
+
+            fetch(`http://localhost:8080/api/competitions`)
+              .then(response => response.json())
+              .then(json => {
+                json = search_competition(json, value)
+              })
+              .catch(err => alert(err))
+          }}
             renderItem={(item, isHighlighted) => (
               <div
                 key={item.abbr}
@@ -163,5 +170,4 @@ export default class PageCompetitionList extends React.Component {
    );
  }
 }
-
 
