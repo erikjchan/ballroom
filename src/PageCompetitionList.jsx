@@ -1,9 +1,12 @@
 
-import styles from "./style.css"
-import React from 'react'
+import styles from "./style.css";
+import React from 'react';
 import * as Table from 'reactabular-table';
-import lib from './common/lib.js'
-import Page from './Page.jsx'
+import lib from './common/lib.js';
+import Page from './Page.jsx';
+import Autocomplete from 'react-autocomplete';
+import { browserHistory } from 'react-router';
+import select from 'selectabular';
 
 // /competitions
 export default class PageCompetitionList extends React.Component {
@@ -13,9 +16,11 @@ export default class PageCompetitionList extends React.Component {
     this.state = {
       /** We will populate this w/ data from the API */
       competitions: [],
+      selectedRow: [],
     }
 
-    this.competition_id = 2
+    // this.onSelectRow = this.onSelectRow.bind(this);
+    // this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
   }
 
   componentDidMount() {
@@ -34,10 +39,9 @@ export default class PageCompetitionList extends React.Component {
       // connection comes back
       .catch(this.refs.page.errorNotif(
         `There was an error fetching the competitions`))
-
   }
 
- render() {
+  render() {
 
  	const yourColumns = [
     {
@@ -93,6 +97,13 @@ export default class PageCompetitionList extends React.Component {
     }
   ]
 
+  const search_competition = (list, query) => {
+      if (query === '') return []
+      return list.filter(comp => 
+        comp.Name.toLowerCase().indexOf(query.toLowerCase()) != -1
+      )
+    }
+
    return (
    		<Page ref="page">
 
@@ -102,14 +113,22 @@ export default class PageCompetitionList extends React.Component {
        		<div>
        		<h2>Your Competitions</h2>
        		<Table.Provider
-        		className="pure-table pure-table-striped"
-        		columns={yourColumns}>
+        		className = "pure-table pure-table-striped"
+        		columns = {yourColumns}>
         		<Table.Header />
-        		<Table.Body rows={this.state.competitions || []} rowKey="id" />
+        		<Table.Body
+              rows = {this.state.competitions || []}
+              rowKey="id"
+            />
+
       		</Table.Provider>
 
-      		<button className={styles.goMain} disabled>Go to Main Page</button>
-      		</div>
+      		<button 
+            className={styles.goMain} 
+            onClick={()=>{ browserHistory.push('competition/0/0') }}> 
+              Go to Main Page
+          </button>
+          </div>
 
       		<div>
        		<h2>Other Competitions</h2>
@@ -120,14 +139,45 @@ export default class PageCompetitionList extends React.Component {
         		<Table.Body rows={this.state.competitions || []} rowKey="id" />
       		</Table.Provider>
 
-      		<button className={styles.search} disabled>Search</button>
-      		<button className={styles.createNew} disabled>Create New</button>
-      		<button className={styles.register} disabled>Register</button>
-      		</div>
+          <Autocomplete
+            inputProps={{name: "US state", id: "states-autocomplete"}}
+            ref = "autocomplete"
+            value = {this.state.value}
+            items = {this.state.competitions}
+            getItemValue = {(item) => item.Name}
+            onSelect = {(value, item) => {
+              // set the menu to only the selected item
+              this.setState({ value })
+            }}
+            onChange = {(event, value) => {
+            this.setState({ value, loading: true })
+
+            fetch(`http://localhost:8080/api/competitions`)
+              .then(response => response.json())
+              .then(json => {
+                json = search_competition(json, value)
+              })
+              .catch(err => alert(err))
+          }}
+            renderItem={(item, isHighlighted) => (
+              <div
+                key={item.abbr}
+                id={item.abbr}
+              >{item.Name})</div>
+            )}
+          />
+
+      		<button className={styles.search} onClick={()=>{/*TODO*/}}>Search</button>
+      		<button className={styles.createNew} onClick={()=>{/*TODO*/}}>Create New</button>
+      		<button 
+            className={styles.register} 
+            onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+              Register
+          </button>
+          </div>
      		</div>
      </Page>
    );
  }
 }
-
 
