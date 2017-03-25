@@ -242,7 +242,7 @@ export default class RunCompetition extends React.Component {
           <h2>Past Rounds</h2>
           {past_rounds_table}
         </div>
-        <button onClick={this.goToEnterCallbacks}>Enter callbacks</button>
+        <button onClick={this.goToEnterCallbacks.bind(this)}>Enter callbacks</button>
 
 
         <div className="container">
