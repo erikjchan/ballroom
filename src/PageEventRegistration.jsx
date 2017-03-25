@@ -5,29 +5,8 @@ import AddEvent from './PageEventRegistration/addEvent.jsx'
 import EventTable from './common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'
-import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
-import {Button, IconButton} from 'react-toolbox/lib/button';
 import { Link } from 'react-router'
-/*
 
-
-class RadioTest extends React.Component {
-  state = {
-    value: 'vvendetta'
-  };
-
-  handleChange = (value) => {
-    this.setState({value});
-  };
-
-  render () {
-    return (
-      
-    );
-  }
-}
-
- */
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
@@ -44,11 +23,6 @@ export default class PageEventRegistration extends React.Component {
 
       value: '',
       loading: false,
-
-      // Selected stuff
-      level: null,
-      style: null,
-      event: null,
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -57,67 +31,6 @@ export default class PageEventRegistration extends React.Component {
     try {this.competition_id = parseInt(this.props.params.competition_id)}
     catch (e) { alert('Invalid competition ID!') }
   }
-
-  componentDidMount() {
-    /* Call the API for competition data */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
-      .then(json => { 
-        // update the state of our component
-        this.setState({ competition : json })
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
-      // connection comes back
-      .catch(err => alert(err))
-
-    /** Pretty similar to above! */
-    fetch(`/api/events`)
-      .then(response => response.json())
-      .then(json => json.filter(event => {
-        console.log(event.competitionId, this.competition_id)
-        return event.competitionId === this.competition_id
-      }))
-      .then(json => {
-        this.setState({ competition_events : json})
-      })
-      .catch(err => alert(err))
-
-    /** Fetch the events a user is already registered to */
-    fetch(`http://localhost:8080/api/competitors/0/events`)
-      .then(response => {
-        return response.json()
-      })
-      .then(json => {
-        console.log('JSON', json)
-        this.setState({user_competition_events: json.splice(0,3)})
-      })
-      .catch(err => alert(err))
-
-    /** Fetch competitors for partner search */
-    fetch(`http://localhost:8080/api/competitors`)
-      .then(response => {
-        return response.json()
-      })
-      .then(json => {
-
-        this.setState({competitors: json})
-      })
-      .catch(err => alert(err))
-  }
-
-  handleLevelChange = (level) => {
-    this.setState({level});
-  };
-
-  handleStyleChange = (style) => {
-    this.setState({style});
-  };
-
-  handleEventChange = (event) => {
-    this.setState({event});
-  };
-
 
   render() {
 
@@ -139,39 +52,7 @@ export default class PageEventRegistration extends React.Component {
 
       <p>
         <h1>Event Registration</h1>
-
-        { true && <span>
-            <h2>Level</h2>
-            <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
-              <RadioButton label='beginner' value='beginner'/>
-              <RadioButton label='intermediate' value='intermediate'/>
-              <RadioButton label='advanced' value='advanced'/>
-            </RadioGroup>
-          </span>
-        }
-        
-
-        { show_style && <span>
-            <h2>Style</h2>
-            <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
-              <RadioButton label='Cha cha' value='Cha cha'/>
-              <RadioButton label='Rumba' value='Rumba'/>
-              <RadioButton label='Waltz' value='Waltz'/>
-              <RadioButton label='Foxtrot' value='Foxtrot'/>
-            </RadioGroup>
-          </span>
-        }
-
-        { show_event && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`Gold ${this.state.level} ${this.state.style}`} value='thewalkingdead'/>
-              <RadioButton label={`Sliver ${this.state.level} ${this.state.style}`} value='fromhell'/>
-              <RadioButton label={`Bronze ${this.state.level} ${this.state.style}`} value='vvendetta'/>
-            </RadioGroup>
-          </span>
-        }
-
+        <AddEvent />
         <h2>Partner's email</h2>
         <Autocomplete
           inputProps={{name: "US state", id: "states-autocomplete"}}

@@ -70,11 +70,9 @@ export default class AddEvent extends React.Component {
 
 	selectDance(dance) {
 		this.getLevelsAndStyles();
-
-		// TODO: Uncomment when we figure out how an element can pass itself into a click handler
-		/*this.setState({
+		this.setState({
 			selectedDance: dance
-		});*/
+		});
 	}
 
 	render() {
@@ -132,12 +130,9 @@ class List extends React.Component {
 		};
 	}
 
-	handleClick(li) {
-		console.log(this.props);
+	handleClick(dance) {
 		if (this.props.name === "Dance") {
-			// TODO: Uncomment when we figure out how an element can pass itself into a click handler
-			// this.props.selectDance(li.props.value);
-			this.props.selectDance();
+			this.props.selectDance(dance);
 		}
 		// TODO: Uncomment when we figure out how an element can pass itself into a click handler
 		/*this.setState({
