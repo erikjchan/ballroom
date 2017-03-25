@@ -102,11 +102,12 @@ export default class PageCompetitionHomeAdmin extends React.Component {
    if (this.state.competition){
     var comp_name = this.state.competition.Name;
     var comp_info = (<div className={styles.lines}>
-                      <p><b>Date:</b> {this.state.competition.StartDate}</p>
+                      <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
                       <p><b>Location:</b> {this.state.competition.LocationName}</p>
-                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline}</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline}</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline}</p>
+                      <p><b>Registration Start Date:</b> {this.state.competition.RegStartDate}</p>
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>
                     </div>)
     /* TODO: How to get numbe rof competitors in different styles?*/
     // var style_category={}
@@ -147,7 +148,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           })}
                         </div>)
     return (
-      <Page ref="page">
+      <Page ref="page" isAdmin={true}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>

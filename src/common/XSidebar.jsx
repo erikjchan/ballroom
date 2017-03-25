@@ -43,12 +43,12 @@ const competitor_links = [
 const admin_links = [
     {
         name: "Competition Information",
-        to: "/competition/0/0",
+        to: "/admin/competition/0/0",
         isTopOfList: true
     },
     {
-        name: "Edit Competition",
-        to: "#",
+        name: "Run Competition",
+        to: "/competition/0/run",
         isTopOfList: true
     },
     {
