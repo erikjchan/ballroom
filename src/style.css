@@ -88,38 +88,6 @@
 	height: 100%;
 }
 
-ul {
-    color: #fff;
-    margin-top: 50px;
-    height: inherit;
-    float: left;
-}
-
-li {
-    list-style: none;
-    display: inline-block;
-    /*height: inherit;*/
-    line-height: 55px;
-}
-
-a {
-  box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    text-decoration: none;
-    padding-right: 20px;
-    padding-left: 20px;
-    display: block;
-    height: 55px;
-}
-
-a:link, nav a:visited{
-  text-decoration: none;
-       color: #fff;
-
-}
-
-
 /**
 Edit Schedule Page
 Start
@@ -576,3 +544,31 @@ End
   height: 100%;
 }
 
+
+
+:global(.container) {
+  background-color: white;
+  border: 1px #AAA solid;
+  border-radius: 5px 5px 0px 0px;
+  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.24);
+  max-width: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+:global(.container h3) {
+  margin: 0px;
+}
+
+:global(.container h2) {
+  padding: 4px 6px;
+  margin: 0px;
+  background-color: #E7B6A4;
+  border-radius: 5px 5px 0px 0px;
+
+}
+
+
+:global(.container div) {
+  padding: 23px 16px;
+}

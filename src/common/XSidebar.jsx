@@ -9,11 +9,6 @@ const competitor_links = [
         isTopOfList: true
     },
     {
-        name: "Event List",
-        to: "#",
-        isTopOfList: true
-    },
-    {
         name: "Event Registration",
         to: "/competition/0/eventregistration",
         isTopOfList: true
@@ -22,11 +17,6 @@ const competitor_links = [
         name: "Edit Payment Method",
         to: "#",
         isTopOfList: true
-    },
-    {
-        name: "Switch Competition",
-        to: "/competitions",
-        isTopOfList: false
     },
     {
         name: "Explore Competitions",
@@ -43,12 +33,12 @@ const competitor_links = [
 const admin_links = [
     {
         name: "Competition Information",
-        to: "/competition/0/0",
+        to: "/admin/competition/0",
         isTopOfList: true
     },
     {
-        name: "Edit Competition",
-        to: "#",
+        name: "Run Competition",
+        to: "/competition/0/run",
         isTopOfList: true
     },
     {
