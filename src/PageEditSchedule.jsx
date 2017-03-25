@@ -18,7 +18,7 @@ class EditSchedule extends React.Component {
 
  render() {
   return (
-    <Page ref="page">
+    <Page ref="page" isAdmin={true}>
       <div id={style.titleContainer}>
         <h1>Schedule Editor</h1>
         <div id={style.buttonsContainer}>

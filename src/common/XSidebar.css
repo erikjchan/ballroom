@@ -11,8 +11,13 @@
 
 .sub_menu {
     color: #fff;
-    margin: 50px 50px 0 0;
+    margin-top: 50px;
     height: inherit;
+}
+
+.sub_menu_bottom {
+    position: absolute;
+    bottom: 0;
 }
 
 .nav_sub {
