@@ -94,8 +94,7 @@
 /* nav */
 
 .nav {
-  display: table-cell;
-  font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif;
     z-index: 10;
     position: fixed;
     top: 0;

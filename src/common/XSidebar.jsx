@@ -1,4 +1,4 @@
-import styles from "./XSidebar.css"
+import styles from "../style.css"
 import React from 'react'
 import { Link } from 'react-router'
 

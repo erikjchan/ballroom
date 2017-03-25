@@ -1,24 +1,22 @@
-/** {
+* {
   box-sizing: border-box;
 }
-*/
+
 html, body {
   margin: 0;
   padding: 0;
-  overflow: auto;
   height: 100%;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .container {
-  display: table;
   height: 100%;
 }
 
 .content {
-  padding: 10px 24px;
+  padding: 10px 24px 10px 310px;
   background-color: #f1f1f1;
-  display: table-cell;
+  width: 100%;
 }
 
 :global(.event-table) {
