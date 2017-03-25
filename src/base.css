@@ -5,7 +5,6 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
@@ -16,7 +15,6 @@ html, body {
 .content {
   padding: 10px 24px 10px 310px;
   background-color: #f1f1f1;
-  width: 100%;
 }
 
 :global(.event-table) {
