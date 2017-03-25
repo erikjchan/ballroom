@@ -1,56 +1,45 @@
-
-
 .heading {
-  font-size: 10vw;
+	font-size: 10vw;
 }
-
 .lead {
-  display: inline-block;
-  margin-right: 20px;
-  font-size: 3vw;
+	display: inline-block;
+	margin-right: 20px;
+	font-size: 3vw;
 }
-
 .contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
+	position: absolute;
+	left: 270px;
+	top: 0px;
+	height: auto;
+	width: calc(100% - 270px);
+	padding: 32px 20px;
+	background-color: #CAC7C6;
 }
-
 .title {
-  font-size: 34px;
-  font-weight: bold;
-  color: #000000;
-  width: 100%;
-  text-align: center;
+	font-size: 34px;
+	font-weight: bold;
+	color: #000000;
+	width: 100%;
+	text-align: center;
 }
-
-.infoTable{
+.infoTable {
 	width: 100%;
 	height: auto;
 	padding: 20px 40px;
 }
-
-.infoBox{
-	/*border: 4px solid #7F7F7F;*/
-	/*border-radius: 8px;*/
-	width: 40%;
+.infoBox {
+	width: 45%;
 	height: 260px;
 	display: inline-block;
 	padding: 8px;
 	vertical-align: middle;
 }
-
-.separator{
+.separator {
 	display: block;
-	height: 0;
+	height: 20px;
 	width: 0;
 }
-
-.runBtn{
+.runBtn {
 	background-color: #606776;
 	font-size: 24px;
 	padding: 10px;
@@ -61,12 +50,10 @@
 	float: right;
 	margin-right: 40px;
 }
-
-.titleContainer{
-  vertical-align: middle;	
+.titleContainer {
+	vertical-align: middle;
 }
-
-.editBtn{
+.editBtn {
 	float: right;
 	background-color: white;
 	color: black;
@@ -79,496 +66,326 @@
 	box-shadow: 0 0 0;
 	border: 0;
 	vertical-align: middle;
- 	text-align: center;
+	text-align: center;
 }
-
-.lines{
+.lines {
 	padding: 20px;
 	font-size: 14px;
 	height: 100%;
 }
 
-/**
-Edit Schedule Page
-Start
- */
-
-
 #titleContainer {
-  position: relative;
+	position: relative;
 }
-
 #titleContainer > h1 {
-  display: inline-block;
+	display: inline-block;
 }
-
 #buttonsContainer {
-  position: absolute;
-  right: 5vw;
-  top: 15px;
-  display: inline-block;
+	position: absolute;
+	right: 5vw;
+	top: 15px;
+	display: inline-block;
 }
-
 #buttonsContainer > div {
-  display: inline-block;
-  font-size: 18pt;
-  box-sizing: border-box;
-  border: solid black 1px;
-  border-radius: 20px;
-  padding: 10px;
-  background-color: #365D82;
-  color: white;
+	display: inline-block;
+	font-size: 18pt;
+	box-sizing: border-box;
+	border: solid black 1px;
+	border-radius: 20px;
+	padding: 10px;
+	background-color: #365D82;
+	color: white;
 }
-
 #saveChanges {
-
 }
-
 #cancelChanges {
-  margin-left: 30px;
+	margin-left: 30px;
 }
-
 #dragAndDropWrapper {
-  background-color: white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px; 
+	background-color: white;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
-
 #dragAndDropWrapperTopBar {
-  background-color: #365D82;
-  padding: 10px 10px 10px 15px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  vertical-align: middle;
+	background-color: #365D82;
+	padding: 10px 10px 10px 15px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	vertical-align: middle;
 }
-
 #dragAndDropWrapperTopBar > div {
-  display: inline-block;
-  width: 50%;
-  vertical-align: middle;
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
 }
-
 #dragAndDropTitle {
-  color: white;
-  font-size: 20pt;
-  text-align: left;
+	color: white;
+	font-size: 20pt;
+	text-align: left;
 }
-
 #dragAndDropAutosort {
-  text-align: right;
+	text-align: right;
 }
-
 #dragAndDropAutosort > div {
-  display: inline-block;
-  background-color: #eeeeee;
-  border-radius: 10px;
-  text-align: center;
-  padding: 5px 20px;
+	display: inline-block;
+	background-color: #eeeeee;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px 20px;
 }
-
 #scheduleWrapper {
-  padding: 30px;
+	padding: 30px;
 }
-
 #scheduleRoundAdder {
-  background-color: #C5C7CF;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  padding: 5px 20px;
-  position: relative;
-  vertical-align: middle;
+	background-color: #C5C7CF;
+	border-radius: 20px;
+	margin-bottom: 20px;
+	padding: 5px 20px;
+	position: relative;
+	vertical-align: middle;
 }
-
 #scheduleRoundAdder > * {
-  display: inline-block;
+	display: inline-block;
 }
-
 #scheduleRoundAdderNumber {
-  width: 40px;
+	width: 40px;
 }
-
 #scheduleEditorAddButton {
-  float: right;
-  padding: 2px 5px;
-  margin-right: 20px;
-  border-radius: 5px;
-  background-color: #606776;
-  color: white;
-  vertical-align: middle;
+	float: right;
+	padding: 2px 5px;
+	margin-right: 20px;
+	border-radius: 5px;
+	background-color: #606776;
+	color: white;
+	vertical-align: middle;
 }
-
 .scheduleEditorSelect {
-  width: 75px;
-  margin-left: 7%;
-  margin-right: 7%;
+	width: 75px;
+	margin-left: 7%;
+	margin-right: 7%;
 }
-
 .tableWrapper {
-  border-collapse: separate;
-  background-color: #888888;
-  border-spacing: 0px 20px;
+	border-collapse: separate;
+	background-color: #888888;
+	border-spacing: 0px 20px;
 }
-
 .tableWrapper > thead > tr {
-  background-color: #dddddd;
+	background-color: #dddddd;
 }
-
 .tableWrapper > thead th {
-  box-sizing: border-box;
-  text-align: center;
-  border-top: solid black 1px;
-  border-bottom: solid black 1px;
-  padding: 10px;
-  box-shadow: 0px 3px #333333;
+	box-sizing: border-box;
+	text-align: center;
+	border-top: solid black 1px;
+	border-bottom: solid black 1px;
+	padding: 10px;
+	box-shadow: 0px 3px #333333;
 }
-
 .tableWrapper > thead th:first-child {
-  border-left: solid black 1px;
+	border-left: solid black 1px;
 }
-
 .tableWrapper > thead th:last-child {
-  border-right: solid black 1px;
+	border-right: solid black 1px;
 }
-
 .tableBody > tr {
-  background-color: white;
+	background-color: white;
 }
-
 .tableBody td {
-  box-sizing: border-box;
-  text-align: center;
-  border-top: solid black 1px;
-  border-bottom: solid black 1px;
-  padding: 10px;
-  box-shadow: 0px 3px #333333;
+	box-sizing: border-box;
+	text-align: center;
+	border-top: solid black 1px;
+	border-bottom: solid black 1px;
+	padding: 10px;
+	box-shadow: 0px 3px #333333;
 }
-
 .tableBody > tr > td:first-child {
-  border-left: solid black 1px;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+	border-left: solid black 1px;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
 }
-
 .tableBody > tr > td:last-child {
-  border-right: solid black 1px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+	border-right: solid black 1px;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
 }
-
-/**
-Edit Schedule Page
-End
- */
 
 .goMain {
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 1;
-  vertical-align: middle;
-  text-align: center;
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+	text-align: center;
 }
-
 .search {
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 1;
-  vertical-align: middle;
-  text-align: center;
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+	text-align: center;
 }
-
 .createNew {
-  float: right;
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 1;
-  vertical-align: middle;
-  text-align: center;
+	float: right;
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+	text-align: center;
 }
-
 .register {
-  float: right;
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 1;
-  vertical-align: middle;
-  text-align: center;
+	float: right;
+	background-color: white;
+	color: black;
+	opacity: 0.5;
+	font-size: 20px;
+	padding: 6px;
+	width: auto;
+	height: 100%;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 1;
+	vertical-align: middle;
+	text-align: center;
 }
-
-/*.content{
-  height: 100%;
-  width: 100%;
-}*/
-
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .titles {
-  font-size: 34px;
-  font-weight: bold;
-  color: #000000;
-  width: 100%;
-  text-align: center;
+	font-size: 34px;
+	font-weight: bold;
+	color: #000000;
+	width: 100%;
+	text-align: center;
 }
-
-.infoTables{
-  width: auto;
-  height: auto;
-  padding: 20px 40px;
+.infoTables {
+	width: auto;
+	height: auto;
+	padding: 20px 40px;
 }
-
-.infoBoxLeft{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
-  width: 48%;
-  height: 300px;
-  display: inline-block;
-  padding: 0px;
-  vertical-align: middle;
-  float:left;
-  margin-bottom: 20px;
+.infoBoxLeft {
+	width: 48%;
+	height: 300px;
+	display: inline-block;
+	padding: 0px;
+	vertical-align: middle;
+	float: left;
+	margin-bottom: 20px;
 }
-
-.infoBoxRight{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
-  width: 48%;
-  height: 300px;
-  display: inline-block;
-  padding: 0px;
-  vertical-align: middle;
-  float:right;
-  margin-bottom: 20px;
-  
+.infoBoxRight {
+	width: 48%;
+	height: 300px;
+	display: inline-block;
+	padding: 0px;
+	vertical-align: middle;
+	float: right;
+	margin-bottom: 20px;
 }
-
-.separators{
-  display: block;
-  height: 170px;
-  width: 100%;
+.separators {
+	display: block;
+	height: 170px;
+	width: 100%;
 }
-
-.runBtns{
-  background-color: #E7B6A4;
-  font-size: 24px;
-  padding: 10px;
-  width: auto;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 5px 8px black;
-  float: right;
-  margin-right: 40px;
+.runBtns {
+	background-color: #E7B6A4;
+	font-size: 24px;
+	padding: 10px;
+	width: auto;
+	height: auto;
+	border-radius: 10px;
+	box-shadow: 0px 5px 8px black;
+	float: right;
+	margin-right: 40px;
 }
-
-.titleContainers{
-  vertical-align: middle; 
+.titleContainers {
+	vertical-align: middle;
 }
-
-.editBtns{
-  float: right;
-  display:inline-block;
-  background-color: #CFC7C5;
-  color: black;
-  opacity: 1;
-  font-size: 20px;
-  padding: 10px;
-  width: auto;
-  height: 50px;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 0;
-  vertical-align: middle;
-  text-align: center;
-  box-shadow: 0px 4px 10px #444444;
+.editBtns {
+	float: right;
+	display: inline-block;
+	background-color: #CFC7C5;
+	color: black;
+	opacity: 1;
+	font-size: 20px;
+	padding: 10px;
+	width: auto;
+	height: 50px;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 0;
+	vertical-align: middle;
+	text-align: center;
+	box-shadow: 0px 4px 10px #444444;
 }
-
-.lines{
-  padding: 20px;
-  font-size: 14px;
-  height: 100%;
+.addeditBtns {
+	float: left;
+	display: inline-block;
+	color: black;
+	opacity: 1;
+	font-size: 20px;
+	padding: 10px;
+	width: auto;
+	height: 50px;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 0;
+	vertical-align: middle;
+	text-align: center;
 }
-
-.addeditBtns{
-  float: left;
-  display:inline-block;
-  /*background-color: white;*/
-  color: black;
-  opacity: 1;
-  font-size: 20px;
-  padding: 10px;
-  width: auto;
-  height: 50px;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 0;
-  vertical-align: middle;
-  text-align: center;
+.editpayBtns {
+	color: black;
+	opacity: 1;
+	font-size: 20px;
+	padding: 10px;
+	width: auto;
+	height: 50px;
+	border-radius: 10px;
+	box-shadow: 0 0 0;
+	border: 0;
+	vertical-align: middle;
+	text-align: center;
 }
-
-.editpayBtns{
-  /*background-color: white;*/
-  color: black;
-  opacity: 1;
-  font-size: 20px;
-  padding: 10px;
-  width: auto;
-  height: 50px;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 0;
-  vertical-align: middle;
-  text-align: center;
+.comp_containers {
+	background-color: white;
+	padding: 40px;
+	margin-top: -40px;
+	border-radius: 20px;
 }
-
-.comp_containers{
-  background-color: white;
-  padding:40px;
-  margin-top:-40px;
-  border-radius:20px;
-}
-
-/*.content{
-  height: 100%;
-  width: 100%;
-}*/
-
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
-.title {
-  font-size: 34px;
-  font-weight: bold;
-  color: #000000;
-  width: 100%;
-  text-align: center;
-}
-
-.infoTable{
-  width: 100%;
-  height: auto;
-  padding: 20px 40px;
-}
-
-.infoBox{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
-  width: 45%;
-  height: 260px;
-  display: inline-block;
-  padding: 8px;
-  vertical-align: middle;
-}
-
-.separator{
-  display: block;
-  height: 20px;
-  width: 0;
-}
-
-/*.runBtn{
-  background-color: #E7B6A4;
-  font-size: 24px;
-  padding: 10px;
-  width: auto;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 5px 8px black;
-  float: right;
-  margin-right: 40px;
-}*/
-
-.titleContainer{
-  vertical-align: middle; 
-}
-
-.editBtn{
-  float: right;
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 0;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.lines{
-  padding: 20px;
-  font-size: 14px;
-  height: 100%;
-}
-
 
 
 :global(.container) {
-  background-color: white;
-  border: 1px #AAA solid;
-  border-radius: 5px 5px 0px 0px;
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.24);
-  max-width: 500px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+	background-color: white;
+	border: 1px #AAA solid;
+	border-radius: 5px 5px 0px 0px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.24);
+	max-width: 500px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
-
 :global(.container h3) {
-  margin: 0px;
+	margin: 0px;
 }
-
 :global(.container h2) {
-  padding: 4px 6px;
-  margin: 0px;
-  background-color: #E7B6A4;
-  border-radius: 5px 5px 0px 0px;
-
+	padding: 4px 6px;
+	margin: 0px;
+	background-color: #E7B6A4;
+	border-radius: 5px 5px 0px 0px;
 }
-
-
 :global(.container div) {
-  padding: 23px 16px;
+	padding: 23px 16px;
 }
