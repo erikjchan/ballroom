@@ -141,8 +141,6 @@ export default class PageCompetitionList extends React.Component {
             onSelect={(value, item) => {
               // set the menu to only the selected item
               this.setState({ value })
-              // or you could reset it to a default list again
-              // this.setState({ unitedStates: getStates() })
             }}
             renderItem={(item, isHighlighted) => (
               <div
