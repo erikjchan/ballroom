@@ -410,8 +410,8 @@ End
 
 .separators{
   display: block;
-  height: 20px;
-  width: 0;
+  height: 170px;
+  width: 100%;
 }
 
 .runBtns{
@@ -432,13 +432,14 @@ End
 
 .editBtns{
   float: right;
+  display:inline-block;
   background-color: #CFC7C5;
   color: black;
-  opacity: 0.5;
+  opacity: 1;
   font-size: 20px;
-  padding: 6px;
+  padding: 10px;
   width: auto;
-  height: 100%;
+  height: 50px;
   border-radius: 10px;
   box-shadow: 0 0 0;
   border: 0;
@@ -455,18 +456,41 @@ End
 
 .addeditBtns{
   float: left;
-  background-color: white;
+  display:inline-block;
+  /*background-color: white;*/
   color: black;
-  opacity: 0.5;
+  opacity: 1;
   font-size: 20px;
-  padding: 6px;
+  padding: 10px;
   width: auto;
-  height: 100%;
+  height: 50px;
   border-radius: 10px;
   box-shadow: 0 0 0;
   border: 0;
   vertical-align: middle;
   text-align: center;
+}
+
+.editpayBtns{
+  /*background-color: white;*/
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 10px;
+  width: auto;
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.comp_containers{
+  background-color: white;
+  padding:40px;
+  margin-top:-40px;
+  border-radius:20px;
 }
 
 /*.content{
@@ -510,7 +534,7 @@ End
 
 .separator{
   display: block;
-  height: 0;
+  height: 20px;
   width: 0;
 }
 
