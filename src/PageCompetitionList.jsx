@@ -168,7 +168,6 @@ export default class PageCompetitionList extends React.Component {
           />
 
       		<button className={styles.search} onClick={()=>{/*TODO*/}}>Search</button>
-      		<button className={styles.createNew} onClick={()=>{/*TODO*/}}>Create New</button>
       		<button 
             className={styles.register} 
             onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
