@@ -1,11 +1,12 @@
 
-import styles from "./style.css"
-import React from 'react'
-import * as Table from 'reactabular-table'
-import lib from './common/lib.js'
-import Page from './Page.jsx'
-import Autocomplete from 'react-autocomplete'
+import styles from "./style.css";
+import React from 'react';
+import * as Table from 'reactabular-table';
+import lib from './common/lib.js';
+import Page from './Page.jsx';
+import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
+import select from 'selectabular';
 
 // /competitions
 export default class PageCompetitionList extends React.Component {
@@ -15,7 +16,11 @@ export default class PageCompetitionList extends React.Component {
     this.state = {
       /** We will populate this w/ data from the API */
       competitions: [],
+      selectedRow: [],
     }
+
+    // this.onSelectRow = this.onSelectRow.bind(this);
+    // this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
   }
 
   componentDidMount() {
@@ -108,10 +113,20 @@ export default class PageCompetitionList extends React.Component {
        		<div>
        		<h2>Your Competitions</h2>
        		<Table.Provider
-        		className="pure-table pure-table-striped"
-        		columns={yourColumns}>
+        		className = "pure-table pure-table-striped"
+        		columns = {yourColumns}>
         		<Table.Header />
-        		<Table.Body rows={this.state.competitions || []} rowKey="id" />
+        		<Table.Body
+              rows = {this.state.competitions || []}
+              rowKey="id"
+            />
+
+            <tfoot>
+            <tr>
+              <td>Selected: {selectedRow[0]}</td>
+              <td></td>
+            </tr>
+          </tfoot>
       		</Table.Provider>
 
       		<button 
