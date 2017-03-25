@@ -46,7 +46,7 @@ export default class Page extends React.Component {
     return (
       <section className={styles.container}>
 
-        <XSidebar />
+        <XSidebar isAdmin={this.props.isAdmin} />
 
         <div className={styles.content}>
           {this.props.children}
