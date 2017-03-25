@@ -1,9 +1,10 @@
 
 import styles from "./style.css"
 import React from 'react'
-import * as Table from 'reactabular-table';
+import * as Table from 'reactabular-table'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
+import Autocomplete from 'react-autocomplete'
 
 // /competitions
 export default class PageCompetitionList extends React.Component {
@@ -93,6 +94,13 @@ export default class PageCompetitionList extends React.Component {
     }
   ]
 
+  const search_competition = (list, query) => {
+      if (query === '') return []
+      return list.filter(comp => 
+        comp.Name.toLowerCase().indexOf(query.toLowerCase()) != -1
+      )
+    }
+
    return (
    		<Page ref="page">
 
@@ -108,8 +116,12 @@ export default class PageCompetitionList extends React.Component {
         		<Table.Body rows={this.state.competitions || []} rowKey="id" />
       		</Table.Provider>
 
-      		<button className={styles.goMain} disabled>Go to Main Page</button>
-      		</div>
+      		<button 
+            className={styles.goMain} 
+            onClick={()=>{ browserHistory.push('competition/0/0') }}> 
+              Go to Main Page
+          </button>
+          </div>
 
       		<div>
        		<h2>Other Competitions</h2>
@@ -120,10 +132,34 @@ export default class PageCompetitionList extends React.Component {
         		<Table.Body rows={this.state.competitions || []} rowKey="id" />
       		</Table.Provider>
 
+          <Autocomplete
+            inputProps={{name: "US state", id: "states-autocomplete"}}
+            ref="autocomplete"
+            value={this.state.value}
+            items={this.state.competitions}
+            getItemValue={(item) => item.Name}
+            onSelect={(value, item) => {
+              // set the menu to only the selected item
+              this.setState({ value })
+              // or you could reset it to a default list again
+              // this.setState({ unitedStates: getStates() })
+            }}
+            renderItem={(item, isHighlighted) => (
+              <div
+                key={item.abbr}
+                id={item.abbr}
+              >{item.Name})</div>
+            )}
+          />
+
       		<button className={styles.search} disabled>Search</button>
       		<button className={styles.createNew} disabled>Create New</button>
-      		<button className={styles.register} disabled>Register</button>
-      		</div>
+      		<button 
+            className={styles.register} 
+            onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+              Register
+          </button>
+          </div>
      		</div>
      </Page>
    );
