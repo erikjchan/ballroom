@@ -101,7 +101,7 @@ li {
     /*height: inherit;*/
     line-height: 55px;
 }
-
+/*
 a {
   box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -111,13 +111,13 @@ a {
     padding-left: 20px;
     display: block;
     height: 55px;
-}
+}*/
 
-a:link, nav a:visited{
+/*a:link, nav a:visited{
   text-decoration: none;
        color: #fff;
 
-}
+}*/
 
 
 /**

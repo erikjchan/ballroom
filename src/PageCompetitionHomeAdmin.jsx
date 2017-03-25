@@ -129,7 +129,8 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           <p><b>Total Judges:</b> {total_judges}</p>
                           {this.state.judges.map(judge => {
                             var name = judge['Last Name']+" "+judge['First Name']
-                            return (<p key={name}>{name}</p>)
+                            var email = "mailto:"+judge['Email address'];
+                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
                           })}
                         </div>)
     var total_orgs = this.state.organizations.length;
