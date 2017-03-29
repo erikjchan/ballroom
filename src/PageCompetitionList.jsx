@@ -61,9 +61,9 @@ export default class PageCompetitionList extends React.Component {
       }
     },
     {
-      property: 'Button',
+      property: 'Select',
       header: {
-        label: 'Test',
+        label: '',
         sortable: true,
         resizable: true
       }
@@ -101,6 +101,7 @@ export default class PageCompetitionList extends React.Component {
     var new_rows = [];
     for (var i = 0; i < rows.length; i++) {
       new_rows[i] = rows[i];
+      new_rows[i]['Select'] = <button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>;
     }
     return new_rows;
   }
