@@ -98,12 +98,12 @@ export default class PageCompetitionList extends React.Component {
   ]
 
   const expand_rows = (rows) => {
-    var new_rows = [];
     for (var i = 0; i < rows.length; i++) {
-      new_rows[i] = rows[i];
-      new_rows[i]['Select'] = <button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>;
+      var temp = String(rows[i]['id']);
+      rows[i]['Select'] = <button className = {styles.search}
+        onClick = {()=>{ browserHistory.push('competition/' + temp + '/0'); alert('Are you sure?') }}>Visit Page</button>;
     }
-    return new_rows;
+    return rows;
   }
 
   const search_competition = (list, query) => {
@@ -116,38 +116,30 @@ export default class PageCompetitionList extends React.Component {
   return (
    	<Page ref="page">
       <div className = {styles.content}>
-       		<h1>Competitions Page</h1>
-
-       		<div>
-       		<h2>Your Competitions</h2>
-       		<Table.Provider
-        		className = "pure-table pure-table-striped"
-        		columns = {yourColumns}>
-        		<Table.Header />
-        		<Table.Body
+       	<h1>Competitions Page</h1>
+       	<div>
+       	  <h2>Your Competitions</h2>
+       	  <Table.Provider
+          	className = "pure-table pure-table-striped"
+          	columns = {yourColumns}>
+          	<Table.Header />
+          	<Table.Body
               rows = {expand_rows(this.state.rows) || []}
               rowKey = "id"
             />
-      		</Table.Provider>
-
-      		<button
-            className = {styles.goMain} 
-            onClick = {() => { browserHistory.push('competition/0/0')}}> 
-              Go to Main Page
-          </button>
-          </div>
-
-      		<div>
-       		<h2>Other Competitions</h2>
-       		<Table.Provider
-        		className = "pure-table pure-table-striped"
-        		columns = {otherColumns}>
-        		<Table.Header />
-        		<Table.Body
+      	  </Table.Provider>
+        </div>
+      	<div>
+       	  <h2>Other Competitions</h2>
+       	  <Table.Provider
+          	className = "pure-table pure-table-striped"
+          	columns = {otherColumns}>
+          	<Table.Header />
+          	<Table.Body
               rows = {this.state.rows || []}
               rowKey = "id"
             />
-      		</Table.Provider>
+      	  </Table.Provider>
 
           <Autocomplete
             inputProps = {{name: "US state", id: "states-autocomplete"}}
@@ -172,21 +164,20 @@ export default class PageCompetitionList extends React.Component {
             renderItem = {(item, isHighlighted) => (
               <div
                 key = {item.abbr}
-                id = {item.abbr}
-              >{item.Name})</div>
+                id = {item.abbr} > {item.Name})
+              </div>
             )}
           />
 
-      		<button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>
-      		<button 
+      	  <button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>
+      	  <button 
             className = {styles.register} 
             onClick = {()=>{ browserHistory.push('competition/0/eventregistration') }}> 
               Register
           </button>
-          </div>
-     		</div>
-     </Page>
+        </div>
+     	</div>
+    </Page>
    );
   }
 }
-
