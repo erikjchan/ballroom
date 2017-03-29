@@ -1,4 +1,3 @@
-
 import styles from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
@@ -6,28 +5,19 @@ import lib from './common/lib.js';
 import Page from './Page.jsx';
 import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
-import select from 'selectabular';
-import { byArrowKeys } from 'reactabular-select';
-import findIndex from 'lodash/findIndex';
+import classnames from 'classnames';
 
 // /competitions
 export default class PageCompetitionList extends React.Component {
-
 	constructor(props) {
     super(props)
     this.state = {
       /** We will populate this w/ data from the API */
       rows: [],
-      selectedRows: [],
     }
-
-    this.onRow = this.onRow.bind(this);
-    this.onSelectRow = this.onSelectRow.bind(this);
-    this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
   }
 
   componentDidMount() {
-
     console.log('this', this)
 
     /* Call the API for competitions info */
@@ -45,10 +35,7 @@ export default class PageCompetitionList extends React.Component {
   }
 
   render() {
-
-    const { rows, selectedRows } = this.state;
-
- 	const yourColumns = [
+    const yourColumns = [
     {
       property: 'Name',
       header: {
@@ -69,6 +56,14 @@ export default class PageCompetitionList extends React.Component {
       property: 'StartDate',
       header: {
         label: 'Date',
+        sortable: true,
+        resizable: true
+      }
+    },
+    {
+      property: 'Button',
+      header: {
+        label: 'Test',
         sortable: true,
         resizable: true
       }
@@ -102,23 +97,24 @@ export default class PageCompetitionList extends React.Component {
     }
   ]
 
-  const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
+  const expand_rows = (rows) => {
+    var new_rows = [];
+    for (var i = 0; i < rows.length; i++) {
+      new_rows[i] = rows[i];
+    }
+    return new_rows;
+  }
 
   const search_competition = (list, query) => {
-      if (query === '') return []
-      return list.filter(comp => 
-        comp.Name.toLowerCase().indexOf(query.toLowerCase()) != -1
-      )
-    }
+    if (query === '') return []
+    return list.filter(comp => 
+      comp.Name.toLowerCase().indexOf(query.toLowerCase()) != -1
+    )
+  }
 
-   return byArrowKeys({
-      rows,
-      selectedRowIndex,
-      onSelectRow: this.onSelectRow
-    }) (
-   		<Page ref="page">
-
-     		<div className={styles.content}>
+  return (
+   	<Page ref="page">
+      <div className = {styles.content}>
        		<h1>Competitions Page</h1>
 
        		<div>
@@ -128,22 +124,14 @@ export default class PageCompetitionList extends React.Component {
         		columns = {yourColumns}>
         		<Table.Header />
         		<Table.Body
-              rows = {this.state.rows || []}
-              rowKey="id"
+              rows = {expand_rows(this.state.rows) || []}
+              rowKey = "id"
             />
-
-            <tfoot>
-            <tr>
-              <td>selectedRows[0]: {"" + selectedRows[0]}</td>
-              <td>selectedRowIndex: {selectedRowIndex}</td>
-              <td>onSelectRow: undefined</td>
-            </tr>
-          </tfoot>
       		</Table.Provider>
 
-      		<button 
-            className={styles.goMain} 
-            onClick={()=>{ browserHistory.push('competition/0/0') }}> 
+      		<button
+            className = {styles.goMain} 
+            onClick = {() => { browserHistory.push('competition/0/0')}}> 
               Go to Main Page
           </button>
           </div>
@@ -151,17 +139,17 @@ export default class PageCompetitionList extends React.Component {
       		<div>
        		<h2>Other Competitions</h2>
        		<Table.Provider
-        		className="pure-table pure-table-striped"
-        		columns={otherColumns}>
+        		className = "pure-table pure-table-striped"
+        		columns = {otherColumns}>
         		<Table.Header />
         		<Table.Body
-              rows= {this.state.rows || []}
-              rowKey="id"
+              rows = {this.state.rows || []}
+              rowKey = "id"
             />
       		</Table.Provider>
 
           <Autocomplete
-            inputProps={{name: "US state", id: "states-autocomplete"}}
+            inputProps = {{name: "US state", id: "states-autocomplete"}}
             ref = "autocomplete"
             value = {this.state.value}
             items = {this.state.rows}
@@ -171,61 +159,33 @@ export default class PageCompetitionList extends React.Component {
               this.setState({ value })
             }}
             onChange = {(event, value) => {
-            this.setState({ value, loading: true })
+              this.setState({ value, loading: true })
 
-            fetch(`http://localhost:8080/api/competitions`)
-              .then(response => response.json())
-              .then(json => {
-                json = search_competition(json, value)
-              })
-              .catch(err => alert(err))
-          }}
-            renderItem={(item, isHighlighted) => (
+              fetch(`http://localhost:8080/api/competitions`)
+                .then(response => response.json())
+                .then(json => {
+                  json = search_competition(json, value)
+                })
+                .catch(err => alert(err))
+            }}
+            renderItem = {(item, isHighlighted) => (
               <div
-                key={item.abbr}
-                id={item.abbr}
+                key = {item.abbr}
+                id = {item.abbr}
               >{item.Name})</div>
             )}
           />
 
-      		<button className={styles.search} onClick={()=>{/*TODO*/}}>Search</button>
+      		<button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>
       		<button 
-            className={styles.register} 
-            onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+            className = {styles.register} 
+            onClick = {()=>{ browserHistory.push('competition/0/eventregistration') }}> 
               Register
           </button>
           </div>
      		</div>
      </Page>
    );
-  }
-
-  onRow(row, { rowIndex }) {
-    return {
-      className: classnames(
-        rowIndex % 2 ? 'odd-row' : 'even-row',
-        row.selected && 'selected-row'
-      ),
-      onClick: () => this.onSelectRow(rowIndex)
-    };
-  }
-
-  onSelectRow(selectedRowIndex) {
-    const { rows } = this.state;
-    const selectedRowId = rows[selectedRowIndex].id;
- 
-    this.setState(
-      compose(
-        select.rows(row => row.id === selectedRowId),
-        select.none
-      )(rows)
-    );
-  }
-
-  getSelectedRowIndex(selectedRows) {
-    return findIndex(this.state.rows, {
-      id: selectedRows[0] && selectedRows[0].id
-    });
   }
 }
 
