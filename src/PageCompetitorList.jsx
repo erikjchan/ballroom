@@ -26,17 +26,12 @@ class CompetitorsList extends React.Component {
           <div id={style.saveChanges}>See Organizations</div>
         </div>
       </div>
-      <div id={style.dragAndDropWrapper}>
         <div id={style.dragAndDropWrapperTopBar}>
           <div id={style.dragAndDropTitle}>Competitors</div>
-          <div id={style.dragAndDropAutosort}>
-            <div>Autosort</div>
-          </div>
         </div>
         <div id={style.dragAndDropTableScroller}>
           <SearchTable />
         </div>
-      </div>
     </Page>
   );
  }
