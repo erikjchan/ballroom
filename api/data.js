@@ -49,12 +49,12 @@ const get_competitors = n => collection(n)(i => ({
 
 // So its not completley RNG
 const get_callbacks = competitors => competitors
-.filter(c => c["Lead Number"])
+.filter(c => c["lead_number"])
 .map((c, i) => ({
   "id" : i,
   "timestamp" : randomDate({year: 2017}).toDateString(),
   "judge_id" : randomId(JUDGES),
-  "Lead Competitor number" : c["Lead Number"],
+  "lead_competitor_number" : c["lead_number"],
   "round_id" : randomId(ROUNDS),
 }))
 
@@ -92,6 +92,7 @@ const get_rounds = n => collection(n)(i => ({
   "order_number" : i,
   "size" : randomInt(50, 100),
   "next_round" : randomInt(0, 20),
+  "competitors": [0,1,2,3,4,5,6,7,8,9],
   "judge_1" : randomId(JUDGES),
   "judge_2" : randomId(JUDGES),
   "judge_3" : randomId(JUDGES),

@@ -2,6 +2,7 @@
 import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
+import CompEventTable from './common/CompEventTable.jsx'
 import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
@@ -141,30 +142,34 @@ export default class PageCompetition extends React.Component {
                     content={competitor_info}/>
             </div>
 
-            <div className={styles.separator}></div>
+            <div className={styles.separators}></div>
 
             <div className={styles.eventTableCompetitor}>
 
-            <h2>Your Events:</h2>
-
-            <EventTable
+             <div className={styles.separators}></div>
+             <Box title={<div className={styles.titleContainers}><span>Your Events</span> 
+                             
+                          </div>} 
+                   content={  <CompEventTable
               events={this.state.competitor_events}
-            />
+            />}/>
 
             </div>
 
-<div className={styles.separators}></div>
-
-              <div className = {styles.addeditBtns}>
+<div className={styles.separator}></div>
+          <div className = {styles.comp_containers}>
+          <div className = {styles.addeditBtns}>
           <button 
             className={styles.editBtns} 
             onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
               Add/Edit Event
           </button>
-        </div>
+         </div>
         <div className = {styles.editpayBtns}>
           <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
         </div>
+
+          </div>
           </div>
                   
       </Page>

@@ -1,24 +1,20 @@
 /** {
   box-sizing: border-box;
-}
-*/
+}*/
+
 html, body {
   margin: 0;
   padding: 0;
-  overflow: auto;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .container {
-  display: flex; /* or inline-flex */
-  flex-direction: row;
   height: 100%;
 }
 
 .content {
-  padding: 10px 24px;
-  background-color: #f1f1f1;
-  flex-grow: 1;
+  padding: 10px 24px 10px 310px;
+  background-color: #CFC7C5;
 }
 
 :global(.event-table) {

@@ -2,7 +2,7 @@
 import styles from "./style.css"
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
-import Box from './common/Box.jsx'
+import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
 
 export default class PageCompetitionHomeAdmin extends React.Component {
@@ -43,8 +43,8 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     fetch(`/api/events`)
       .then(response => response.json())
       .then(json => json.filter(event => {
-        console.log(event.competitionId, this.competition_id)
-        return event.competitionId === this.competition_id
+        console.log(event.competition_id, this.competition_id)
+        return event.competition_id === this.competition_id
       }))
       .then(json => {
         this.setState({ competition_events : json})
@@ -102,11 +102,12 @@ export default class PageCompetitionHomeAdmin extends React.Component {
    if (this.state.competition){
     var comp_name = this.state.competition.Name;
     var comp_info = (<div className={styles.lines}>
-                      <p><b>Date:</b> {this.state.competition.StartDate}</p>
+                      <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
                       <p><b>Location:</b> {this.state.competition.LocationName}</p>
-                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline}</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline}</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline}</p>
+                      <p><b>Registration Start Date:</b> {this.state.competition.RegStartDate}</p>
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>
                     </div>)
     /* TODO: How to get numbe rof competitors in different styles?*/
     // var style_category={}
@@ -128,7 +129,8 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           <p><b>Total Judges:</b> {total_judges}</p>
                           {this.state.judges.map(judge => {
                             var name = judge['Last Name']+" "+judge['First Name']
-                            return (<p key={name}>{name}</p>)
+                            var email = "mailto:"+judge['Email address'];
+                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
                           })}
                         </div>)
     var total_orgs = this.state.organizations.length;
@@ -147,7 +149,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                           })}
                         </div>)
     return (
-      <Page ref="page">
+      <Page ref="page" isAdmin={true}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
@@ -180,7 +182,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
             </div>
             <div className={styles.separator}></div>
             <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Schedule</span> 
+              <Box title={<div className={styles.titleContainer}><span>Round Schedule</span> 
                               <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
                           </div>}
               content={rounds_titles}/>
@@ -195,7 +197,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
           </div>
           <button className={styles.runBtn} 
               onClick={() => {/* TODO */}}>Run Competition</button>
-
       </Page>
     ); 
   }
