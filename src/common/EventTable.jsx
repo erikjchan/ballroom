@@ -40,6 +40,22 @@ export default class YourEvents extends React.Component {
 
     const columns = [
       {
+          property: 'level',
+          header: {
+              label: 'Level',
+              sortable: true,
+              resizable: true
+          }
+      },
+      {
+          property: 'style',
+          header: {
+              label: 'Style',
+              sortable: true,
+              resizable: true
+          }
+      },
+      {
         property: 'title',
         header: {
           label: 'Title',
@@ -48,17 +64,17 @@ export default class YourEvents extends React.Component {
         }
       },
       {
-        property: 'style',
+        property: 'partner',
         header: {
-          label: 'Style',
+          label: 'Partner',
           sortable: true,
           resizable: true
         }
       },
       {
-        property: 'level',
+        property: 'leading',
         header: {
-          label: 'Level',
+          label: 'Role',
           sortable: true,
           resizable: true
         }
