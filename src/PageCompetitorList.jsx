@@ -19,19 +19,21 @@ class CompetitorsList extends React.Component {
 
  render() {
   return (
-    <Page ref="page">
+    <Page ref="page" isAdmin={true}>
       <div id={style.titleContainer}>
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges}>See Organizations</div>
         </div>
       </div>
+      <div id={style.dragAndDropWrapper}>
         <div id={style.dragAndDropWrapperTopBar}>
           <div id={style.dragAndDropTitle}>Competitors</div>
         </div>
-        <div id={style.dragAndDropTableScroller}>
+        <div id={style.scheduleWrapper}>
           <SearchTable />
         </div>
+      </div>
     </Page>
   );
  }
