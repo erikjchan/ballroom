@@ -42,9 +42,8 @@ export default class PageCompetition extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    
     /** Fetch competitor */
-    fetch(`/api/competitors/${this.competitor_id}`)
+    fetch(`/api/competitors/${this.competitor_id}/competition/${this.competitor_id}`)
       .then(response => {
         return response.json()
       })
@@ -59,7 +58,13 @@ export default class PageCompetition extends React.Component {
         return response.json()
       })
       .then(json => {
-
+        for (let i = 0; i < json.length; i++) {
+            if (json[i].leading) {
+                json[i].leading = "Leading";
+            } else {
+                json[i].leading = "Following";
+            }
+        }
         this.setState({competitor_events: json})
       })
       .catch(err => { alert(err); console.log(err)})
@@ -71,9 +76,9 @@ export default class PageCompetition extends React.Component {
     var comp_info = (<div className={styles.lines}>
                       <p><b>Date:</b> {this.state.competition.StartDate}</p>
                       <p><b>Location:</b> {this.state.competition.LocationName}</p>
-                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline}</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline}</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline}</p>
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>
                     </div>)
     /* TODO: How to get numbe rof competitors in different styles?*/
     // var style_category={}
@@ -82,10 +87,12 @@ export default class PageCompetition extends React.Component {
     // })
 
     var competitor_info = (<div className={styles.lines}>
-                      <p><b>First Name:</b> {this.state.competitor.first_name}</p>
-                      <p><b>Last Name:</b> {this.state.competitor.last_name}</p>
+                      <p><b>Name:</b> {this.state.competitor.name}</p>
                       <p><b>Email:</b> {this.state.competitor.email}</p>
+                      <p><b>Organization:</b> {this.state.competitor.organization_name}</p>
                       <p><b>Number:</b> {this.state.competitor.lead_number}</p>
+                      <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
+                      <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
     
     var event_titles = (<div className={styles.lines}>
@@ -149,11 +156,8 @@ export default class PageCompetition extends React.Component {
              <div className={styles.separators}></div>
              <Box title={<div className={styles.titleContainers}><span>Your Events</span> 
                              
-                          </div>} 
-                   content={  <CompEventTable
-              events={this.state.competitor_events}
-            />}/>
-
+             </div>} 
+                   content={ <EventTable events={this.state.competitor_events} />}/>
             </div>
 
 <div className={styles.separator}></div>
