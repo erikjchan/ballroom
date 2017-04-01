@@ -31,9 +31,8 @@ export default class Page extends React.Component {
   };
 
   errorNotif(msg) { 
-    console.log('asdfasdfasdf?/')
-    return () => {
-    console.log('ejalskdfjlasdf', msg)
+    return e => {
+    console.error(e)
     this.setState({
       sb_active: true,
       sb_label: msg,
@@ -56,7 +55,7 @@ export default class Page extends React.Component {
           action='Dismiss'
           active={this.state.sb_active}
           label={this.state.sb_label}
-          timeout={2000}
+          timeout={5000}
           onClick={this.handleSnackbarClick}
           onTimeout={this.handleSnackbarTimeout}
           type={this.state.sb_type}

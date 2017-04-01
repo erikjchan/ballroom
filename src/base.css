@@ -14,7 +14,7 @@ html, body {
 
 .content {
   padding: 10px 24px 10px 310px;
-  background-color: #f1f1f1;
+  background-color: #CFC7C5;
 }
 
 :global(.event-table) {
