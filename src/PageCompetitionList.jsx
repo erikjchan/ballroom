@@ -13,7 +13,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
 
 // /competitions
-export default class PageCompetitionList extends React.Component {
+class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)
     this.state = {
@@ -156,7 +156,7 @@ export default class PageCompetitionList extends React.Component {
         </div>
       	<div>
        	  <h2>Other Competitions</h2>
-          <Autocomplete
+          Search: <Autocomplete
             inputProps = {{name: "US state", id: "states-autocomplete"}}
             ref = "autocomplete"
             value = {this.state.value}
@@ -184,7 +184,6 @@ export default class PageCompetitionList extends React.Component {
             )}
           />
 
-          <button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>
           <SearchTable />
        	  <Table.Provider
           	className = "pure-table pure-table-striped"
@@ -201,3 +200,4 @@ export default class PageCompetitionList extends React.Component {
    );
   }
 }
+export default DragDropContext(HTML5Backend)(PageCompetitionList);
