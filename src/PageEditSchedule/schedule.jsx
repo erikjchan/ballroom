@@ -69,16 +69,27 @@ export default class DragAndDropTable extends React.Component {
           }
         },
         {
+          cell: {
+            formatters: [
+              (value, { rowData }) => (
+                <span
+                  onClick={() => this.onRemove(rowData.id)} style={{ cursor: 'pointer' }}
+                >
+                  &#10007;
+                </span>
+              )
+            ]
+          },
           props: {
             style: {
-              width: 200
+              width: 100
             }
           }
         }
-
       ],
       rows: []
     };
+
 
     this.onRow = this.onRow.bind(this);
     this.onMoveRow = this.onMoveRow.bind(this);
@@ -151,5 +162,15 @@ export default class DragAndDropTable extends React.Component {
     if (rows) {
       this.setState({ rows });
     }
+  }
+
+  onRemove(id) {
+    const rows = cloneDeep(this.state.rows);
+    const idx = findIndex(rows, { id });
+
+    // this could go through flux etc.
+    rows.splice(idx, 1);
+
+    this.setState({ rows });
   }
 }
