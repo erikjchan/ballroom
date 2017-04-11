@@ -6,6 +6,9 @@ import Page from './Page.jsx';
 import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
+import SearchTable from './PageCompetitionList/competitions.jsx';
+
+// max flow overflow hidden for scrollbar
 
 // /competitions
 export default class PageCompetitionList extends React.Component {
@@ -94,18 +97,38 @@ export default class PageCompetitionList extends React.Component {
         sortable: true,
         resizable: true
       }
+    },
+    {
+      property: 'Register',
+      header: {
+        label: '',
+        sortable: true,
+        resizable: true
+      }
     }
   ]
 
-  const expand_rows = (rows) => {
+  // Add a button to the competition corresponding to the competition in each row 
+  const expand_your_rows = (rows) => {
     for (var i = 0; i < rows.length; i++) {
       let temp = String(rows[i]['id']);
       rows[i]['Select'] = <button className = {styles.search}
-        onClick = {()=>{ browserHistory.push('competition/' + temp + '/0'); alert('Are you sure?') }}>Visit Page</button>;
+        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0'); alert('Are you sure?') }}>Visit Page</button>;
     }
     return rows;
   }
 
+  // Add a button to the registration corresponding to the competition in each row 
+  const expand_other_rows = (rows) => {
+    for (var i = 0; i < rows.length; i++) {
+      let temp = String(rows[i]['id']);
+      rows[i]['Register'] = <button className = {styles.search}
+        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/eventregistration'); alert('Are you sure?') }}>Register Events</button>;
+    }
+    return rows;
+  }
+
+  // Search for the competition by name given a query
   const search_competition = (list, query) => {
     if (query === '') return []
     return list.filter(comp => 
@@ -114,7 +137,7 @@ export default class PageCompetitionList extends React.Component {
   }
 
   return (
-   	<Page ref="page">
+   	<Page ref="page" isAdmin={false}>
       <div className = {styles.content}>
        	<h1>Competitions Page</h1>
        	<div>
@@ -124,23 +147,13 @@ export default class PageCompetitionList extends React.Component {
           	columns = {yourColumns}>
           	<Table.Header />
           	<Table.Body
-              rows = {expand_rows(this.state.rows) || []}
+              rows = {expand_your_rows(this.state.rows) || []}
               rowKey = "id"
             />
       	  </Table.Provider>
         </div>
       	<div>
        	  <h2>Other Competitions</h2>
-       	  <Table.Provider
-          	className = "pure-table pure-table-striped"
-          	columns = {otherColumns}>
-          	<Table.Header />
-          	<Table.Body
-              rows = {this.state.rows || []}
-              rowKey = "id"
-            />
-      	  </Table.Provider>
-
           <Autocomplete
             inputProps = {{name: "US state", id: "states-autocomplete"}}
             ref = "autocomplete"
@@ -169,12 +182,17 @@ export default class PageCompetitionList extends React.Component {
             )}
           />
 
-      	  <button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>
-      	  <button 
-            className = {styles.register} 
-            onClick = {()=>{ browserHistory.push('competition/0/eventregistration') }}> 
-              Register
-          </button>
+          <button className = {styles.search} onClick={() => {/*TODO*/}}>Search</button>
+          <SearchTable />
+       	  <Table.Provider
+          	className = "pure-table pure-table-striped"
+          	columns = {otherColumns}>
+          	<Table.Header />
+          	<Table.Body
+              rows = {expand_other_rows(this.state.rows) || []}
+              rowKey = "id"
+            />
+      	  </Table.Provider>
         </div>
      	</div>
     </Page>
