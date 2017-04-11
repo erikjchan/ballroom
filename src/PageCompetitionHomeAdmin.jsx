@@ -16,7 +16,8 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       competitors: [],
       organizations: [],
       judges: [],
-
+      expanded: null,
+      boxes: {},
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -98,9 +99,53 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
   }
 
+ populate(box_name, lines_react, max_line_num){
+   var ext;
+   if (max_line_num < lines_react.length){
+     ext = (
+       <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
+     )
+   }
+  var c = <div className={styles.lines}>
+            {lines_react.slice(0, max_line_num)}
+            {ext}
+        </div>
+    return <div className={styles.infoBox}>
+      <Box title={<div className={styles.titleContainer}><span>{box_name}</span> 
+                      <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
+                  </div>}
+      content={c}/>
+    </div>
+ }
+
+populate_expanded(box_name, lines_react){
+    return <div className={styles.infoBoxExpanded}>
+      <Box title={<div className={styles.titleContainer}>
+                      <button className={styles.returnBtn} 
+                              onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
+                      <span>{box_name}</span> 
+                      <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
+                  </div>}
+      content={<div className={styles.lines}>
+                  {lines_react} </div>}/>
+    </div>
+ }
+
  render() {
    if (this.state.competition){
+
+    var dict = {}
+
     var comp_name = this.state.competition.Name;
+
+    dict['Competiton Info'] = [<p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>,
+                      <p><b>Location:</b> {this.state.competition.LocationName}</p>,
+                      <p><b>Registration Start Date:</b> {this.state.competition.RegStartDate}</p>,
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>,
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>,
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>,
+                    ]
+/*
     var comp_info = (<div className={styles.lines}>
                       <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
                       <p><b>Location:</b> {this.state.competition.LocationName}</p>
@@ -108,91 +153,110 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                       <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>
                       <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>
                       <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>
-                    </div>)
+                    </div>)*/
     /* TODO: How to get numbe rof competitors in different styles?*/
     // var style_category={}
     // this.state.competitors.map(c => {
     //     return event.competitionId === this.competition_id
     // })
-    var competitors_info = (<div className={styles.lines}>
-                      <p><b>Total Competitors:</b> {this.state.competitors.length}</p>
-                    </div>)
+    // /*var competitors_info = (<div className={styles.lines}>
+    //                   <p><b>Total Competitors:</b> {this.state.competitors.length}</p>
+    //                 </div>)*/
+
+    dict['Competitors'] = [<p><b>Total Competitors:</b> {this.state.competitors.length}</p>]
     
-    var event_titles = (<div className={styles.lines}>
+    /*var event_titles = (<div className={styles.lines}>
                           {this.state.competition_events.sort(function (a, b){
                           return a.id - b.id}).map(event => {
                             return (<p key={event.title}>{event.title}</p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Event Schedule'] = this.state.competition_events.sort(function (a, b){
+                          return a.id - b.id}).map(event => {
+                            return (<p key={event.title}>{event.title}</p>)
+                          })
+
     var total_judges = this.state.judges.length;
-    var judges_names = (<div className={styles.lines}>
+    /*var judges_names = (<div className={styles.lines}>
                           <p><b>Total Judges:</b> {total_judges}</p>
                           {this.state.judges.map(judge => {
                             var name = judge['Last Name']+" "+judge['First Name']
                             var email = "mailto:"+judge['Email address'];
                             return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Judges'] = [<p><b>Total Judges:</b> {total_judges}</p>].concat(
+                          this.state.judges.map(judge => {
+                            var name = judge['Last Name']+" "+judge['First Name']
+                            var email = "mailto:"+judge['Email address'];
+                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
+                          }))
+                          
     var total_orgs = this.state.organizations.length;
-    var org_names = (<div className={styles.lines}>
+    /*var org_names = (<div className={styles.lines}>
                           <p><b>Total Organizations:</b> {total_orgs}</p>
                           {this.state.organizations.map(org => {
                             return (<p key={org.name}>{org.name}</p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Organizations'] = [<p><b>Total Organizations:</b> {total_orgs}</p>].concat(
+                          this.state.organizations.map(org => {
+                            return (<p key={org.id}>{org.name}</p>)
+                          }))
+
     var total_rounds = this.state.competition_rounds.length;
-    var rounds_titles = (<div className={styles.lines}>
+    /*var rounds_titles = (<div className={styles.lines}>
                           <p><b>Total Rounds:</b> {total_rounds}</p>
                           {this.state.competition_rounds
                             .map(round => {
                             return (<p key={round.name}>{round.name}</p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Round Schedule'] = [<p><b>Total Rounds:</b> {total_rounds}</p>].concat(
+                          this.state.competition_rounds
+                            .sort(function (a, b){
+                                  return a.order_number - b.order_number})
+                            .map(round => {
+                            var event_name = this.state.competition_events.filter(event => {return event.id == round.event})
+                            if (event_name.length > 0){
+                              event_name = event_name[0].title+" "
+                            }
+                            else{
+                              event_name = ""
+                            }
+                              return (<p key={round.id}>{event_name+round.name}</p>)
+                          }))
+                        
+    if (this.state.expanded!=null){
+        return (
+          <Page ref="page" isAdmin={true}>
+            <div className={styles.title}>
+              <p>{comp_name}</p>
+            </div>
+            <div className={styles.infoTable}>
+              {this.populate_expanded(this.state.expanded, dict[this.state.expanded])}
+            </div>
+          </Page>);
+    }
+    var num = 6
     return (
       <Page ref="page" isAdmin={true}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
           <div className={styles.infoTable}>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Competiton Info</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>} 
-                   content={comp_info}/>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Competitors</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-                    content={competitors_info}/>
-            </div>
-            <div className={styles.separator}>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Event Schedule</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-                    content={event_titles}/>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Judges</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>} 
-                   content={judges_names}/>
-            </div>
+             {this.populate("Competiton Info", dict["Competiton Info"], num)}
+             {this.populate("Competitors", dict["Competitors"], num)}
             <div className={styles.separator}></div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Round Schedule</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-              content={rounds_titles}/>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Organizations</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-               content={org_names}/>
-            </div>
+            {this.populate("Event Schedule", dict["Event Schedule"], num)}
+             {this.populate("Judges", dict["Judges"], num)}
+            <div className={styles.separator}></div>
+            {this.populate("Round Schedule", dict["Round Schedule"], num)}
+             {this.populate("Organizations", dict["Organizations"], num)}
             <div className={styles.separator}></div>
           </div>
           <button className={styles.runBtn} 
