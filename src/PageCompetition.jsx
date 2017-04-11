@@ -60,9 +60,11 @@ export default class PageCompetition extends React.Component {
       .then(json => {
         for (let i = 0; i < json.length; i++) {
             if (json[i].leading) {
-                json[i].leading = "Leading";
+                json[i].leader = "You"
+                json[i].follower = json[i].partner
             } else {
-                json[i].leading = "Following";
+                json[i].leader = json[i].partner
+                json[i].follower = "You"
             }
         }
         this.setState({competitor_events: json})
@@ -160,7 +162,7 @@ export default class PageCompetition extends React.Component {
                    content={ <EventTable events={this.state.competitor_events} />}/>
             </div>
 
-<div className={styles.separator}></div>
+    <div className={styles.separator}></div>
           <div className = {styles.comp_containers}>
           <div className = {styles.addeditBtns}>
           <button 
@@ -169,10 +171,6 @@ export default class PageCompetition extends React.Component {
               Add/Edit Event
           </button>
          </div>
-        <div className = {styles.editpayBtns}>
-          <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
-        </div>
-
           </div>
           </div>
                   

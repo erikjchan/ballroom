@@ -64,17 +64,17 @@ export default class YourEvents extends React.Component {
         }
       },
       {
-        property: 'partner',
+        property: 'leader',
         header: {
-          label: 'Partner',
+          label: 'Leader',
           sortable: true,
           resizable: true
         }
       },
       {
-        property: 'leading',
+        property: 'follower',
         header: {
-          label: 'Role',
+          label: 'Follower',
           sortable: true,
           resizable: true
         }

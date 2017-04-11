@@ -93,9 +93,11 @@ export default class PageEventRegistration extends React.Component {
       .then(json => {
         for (let i = 0; i < json.length; i++) {
             if (json[i].leading) {
-                json[i].leading = "Leading";
+                json[i].leader = "You"
+                json[i].follower = json[i].partner
             } else {
-                json[i].leading = "Following";
+                json[i].leader = json[i].partner
+                json[i].follower = "You"
             }
         }
         console.log('JSON', json)
@@ -142,9 +144,17 @@ export default class PageEventRegistration extends React.Component {
       const { level, style, event, partner, isLeading, user_competition_events } = this.state;
       const button_enabled = (event != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
-          user_competition_events.push(
-              {level: level, style: style, title: event, round: '', leading: isLeading, partner: partner}
-          );
+          console.log(isLeading);
+          if (isLeading == 'Leading') {
+              user_competition_events.push(
+                  {level: level, style: style, title: event, round: '', leader: "You", follower: partner}
+              );
+          } else {
+              user_competition_events.push(
+                  {level: level, style: style, title: event, round: '', leader: partner, follower: "You"}
+              );
+          }
+
           this.setState({user_competition_events});
       } else {
           alert('Please finish selecting a event and your partner!');
