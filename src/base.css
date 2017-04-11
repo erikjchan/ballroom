@@ -17,6 +17,11 @@ html, body {
   background-color: #CFC7C5;
 }
 
+.content.admin {
+  padding: 10px 24px 10px 310px;
+  background-color: #CFC7C5;
+}
+
 :global(.event-table) {
   width: 100%;
 }
