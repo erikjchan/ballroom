@@ -113,8 +113,11 @@ export default class RunCompetition extends React.Component {
    * Selects the next round as currently running round
    */
   nextRound () {
-    // We've reached the last round. Exit.
+    // We've reached the last round. Do nothing.
     if (this.state.current_round + 1 >= this.state.rounds.length) return;
+
+    // Acutally switch rounds?
+    if (!confirm("This will start the next round.\nDo you want to continue?")) return;
 
     // Increment the round number
     this.setState({ current_round : this.state.current_round += 1 })
@@ -127,8 +130,22 @@ export default class RunCompetition extends React.Component {
     // We're on the first round! Exit.
     if (this.state.current_round === 0) return;
 
+    // Acutally switch rounds?
+    if (!confirm("This will return to a previous round.\nDo you want to continue?")) return;
+
     // Decrement the round number
     this.setState({ current_round : this.state.current_round -= 1 })
+  }
+
+  /******************************** Management ********************************/
+
+  enterCallbacksFor(round) {
+
+    // Confirm with the user
+    if (!confirm(`Are you sure you want to enter callbacks for ${round.name}?`)) return;
+
+    browserHistory.push(`competition/${this.competition_id}/round/${round.id}/entercallbacks`);
+
   }
 
   /******************************** UI Helpers ********************************/
@@ -139,7 +156,7 @@ export default class RunCompetition extends React.Component {
    */
   columnsForPreviousRoundsTable() {
     return [
-      {
+      { 
         property: 'name',
         header: {
           label: 'Name',
@@ -148,12 +165,23 @@ export default class RunCompetition extends React.Component {
         }
       },
       {
-        property: 'order_number',
         header: {
-          label: 'Order',
+          label: "Callbacks Recieved",
           sortable: true,
-          resizable: true
-        }
+          resizable: true,
+        },
+        cell: { formatters: [
+          (value, {rowData}) => `${rowData.callbacks_recieved}/${rowData.judges.length}`   
+        ]}
+      },
+      {
+        cell: { formatters: [
+          (value, {rowData}) => (
+            <button
+              onClick={() => this.enterCallbacksFor(rowData)}
+            > Enter Callbacks
+            </button>)    
+        ]}
       }
     ]
   }
@@ -175,7 +203,7 @@ export default class RunCompetition extends React.Component {
       {
         property: 'size',
         header: {
-          label: 'No. couples',
+          label: 'No. of couples',
           sortable: true,
           resizable: true
         }
@@ -194,7 +222,7 @@ export default class RunCompetition extends React.Component {
     if (this.state.competitors.length === 0) return [];
 
     // We have all the info we need
-    return round.competitors.map(id => <span key={id}> {this.state.competitors[id].lead_number} </span>)
+    else return round.competitors
   }
 
   /**
@@ -238,21 +266,23 @@ export default class RunCompetition extends React.Component {
         <h1>Running: {this.state.competition.Name}</h1>
 
 
-        <div className="container">
+        <div className="container admin">
           <h2>Past Rounds</h2>
           {past_rounds_table}
         </div>
-        <button onClick={this.goToEnterCallbacks.bind(this)}>Enter callbacks</button>
 
-
-        <div className="container">
+        <div className="container admin">
           <h2>Current Round</h2>
           <div className="container-content">
             <h3>{current_round.name}</h3>
-            <div>{this.getCouplesInRound(current_round)}</div>
+
+            <div>
+              <h5>Couples in round:</h5>
+              {this.getCouplesInRound(current_round).map(id => <span key={id}> {this.state.competitors[id].lead_number} </span>)}
+            </div>
             <ul>
-              <li>Total # of couples : {current_round.size}</li>
-              <li># to recall: {current_round.next_round}</li>
+              <li>Total number of couples : {this.getCouplesInRound(current_round).length}</li>
+              <li>Number to recall: {current_round.next_round}</li>
             </ul>
 
             <button onClick={this.prevRound.bind(this)}> Previous Round </button>
@@ -261,7 +291,7 @@ export default class RunCompetition extends React.Component {
         </div>
 
 
-        <div className="container">
+        <div className="container admin">
           <h2>Upcoming rounds</h2>
           {future_rounds_table}
         </div>
@@ -272,30 +302,5 @@ export default class RunCompetition extends React.Component {
    )
   }
 }
-
-
-/* Object formats reference:
-
-Round:
-
-{
-  "id": 0,
-  "event": 5,
-  "name": "Round 1",
-  "order_number": 0,
-  "size": 70,
-  "next_round": 6,
-  "judge_1": 0,
-  "judge_2": 1,
-  "judge_3": 0,
-  "judge_4": 2,
-  "judge_5": 0,
-  "judge_6": 0
-}
-
-*/
-
-
-
 
 

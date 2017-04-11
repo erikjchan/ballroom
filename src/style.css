@@ -10,16 +10,6 @@
   font-size: 3vw;
 }
 
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .title {
   font-size: 34px;
   font-weight: bold;
@@ -308,21 +298,6 @@ End
   text-align: center;
 }
 
-/*.content{
-  height: 100%;
-  width: 100%;
-}*/
-
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .titles {
   font-size: 34px;
   font-weight: bold;
@@ -464,21 +439,6 @@ End
   border-radius:20px;
 }
 
-/*.content{
-  height: 100%;
-  width: 100%;
-}*/
-
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .title {
   font-size: 34px;
   font-weight: bold;
@@ -554,7 +514,7 @@ End
   height: 100%;
 }*/
 
-
+/* */
 
 :global(.container) {
   background-color: white;
@@ -566,6 +526,14 @@ End
   margin-bottom: 10px;
 }
 
+:global(.container h5) {
+  margin: 0px;
+}
+
+:global(.container h4) {
+  margin: 0px;
+}
+
 :global(.container h3) {
   margin: 0px;
 }
@@ -575,9 +543,13 @@ End
   margin: 0px;
   background-color: #E7B6A4;
   border-radius: 5px 5px 0px 0px;
-
 }
 
+:global(.container.admin h2) {
+  background-color: #365d82;
+  color: white;
+  font-weight: lighter;
+}
 
 :global(.container div) {
   padding: 23px 16px;
