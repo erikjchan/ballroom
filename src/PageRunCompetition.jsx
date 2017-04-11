@@ -285,8 +285,10 @@ export default class RunCompetition extends React.Component {
               <li>Number to recall: {current_round.next_round}</li>
             </ul>
 
-            <button onClick={this.prevRound.bind(this)}> Previous Round </button>
-            <button onClick={this.nextRound.bind(this)}> Next Round </button>
+            <span className="right_align">
+              <button onClick={this.prevRound.bind(this)}> Previous Round </button>
+              <button onClick={this.nextRound.bind(this)}> Next Round </button>
+            </span>
           </div>
         </div>
 

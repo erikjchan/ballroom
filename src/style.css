@@ -551,6 +551,16 @@ End
   font-weight: lighter;
 }
 
-:global(.container div) {
+:global(.container div.container-content) {
   padding: 23px 16px;
+}
+
+:global(.container div) {
+  padding: 12px 0px;
+}
+
+:global(.right_align) {
+  text-align: right;
+  width: 100%;
+  display: block;
 }
