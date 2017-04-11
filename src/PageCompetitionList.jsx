@@ -8,6 +8,8 @@ import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import SearchTable from './PageCompetitionList/competitions.jsx';
 
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
 
 // /competitions

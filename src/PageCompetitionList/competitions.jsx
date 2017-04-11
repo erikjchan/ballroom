@@ -98,31 +98,17 @@ class CompetitionsTable extends React.Component {
 		    },
 		    width: 150
 		 },
-		 {
-		     cell: {
-		         formatters: [
-                   (value, { rowData }) => (
-                       <div>
-                         <input type="button"
-                                value="Edit/See More"
-                                onClick={() => alert(`${JSON.stringify(rowData, null, 2)}`)} />
-			         </div>
-		          )
-		 ]
-		 },
-		     width: 100
-		 }
-		 ];
-		 }
+		];
+	}
 
   componentDidMount() {
-      fetch("localhost:8080/api/competitions")
+      fetch("/api/competitions")
 		   .then(response => response.json())
 		   .then(json => {
              this.rows = json;
 		     this.setState({ rows: json, }); 
 		 })
-		   .catch(err => alert(err));
+		   .catch(err => alert("alert"));
   }
 
   render() {
