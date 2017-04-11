@@ -100,9 +100,8 @@ export default class PageCompetitionList extends React.Component {
   const expand_rows = (rows) => {
     for (var i = 0; i < rows.length; i++) {
       let temp = String(rows[i]['id']);
-      rows[i]['Select'] = <button
-        className = {styles.search}
-        onClick = {()=>{ browserHistory.push('competition/' + temp + '/0'); alert('Are you ' + temp + 'sure?') }}>Visit Page {temp}</button>;
+      rows[i]['Select'] = <button className = {styles.search}
+        onClick = {()=>{ browserHistory.push('competition/' + temp + '/0'); alert('Are you sure?') }}>Visit Page</button>;
     }
     return rows;
   }
