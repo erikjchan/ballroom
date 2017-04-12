@@ -10,38 +10,12 @@
   font-size: 3vw;
 }
 
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .title {
   font-size: 34px;
   font-weight: bold;
   color: #000000;
   width: 100%;
   text-align: center;
-}
-
-.infoTable{
-	width: 100%;
-	height: auto;
-	padding: 20px 40px;
-}
-
-.infoBox{
-	/*border: 4px solid #7F7F7F;*/
-	/*border-radius: 8px;*/
-	width: 40%;
-	height: 260px;
-	display: inline-block;
-	padding: 8px;
-	vertical-align: middle;
 }
 
 .separator{
@@ -52,14 +26,26 @@
 
 .runBtn{
 	background-color: #606776;
+  color: white;
 	font-size: 24px;
 	padding: 10px;
 	width: auto;
 	height: auto;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 0px 5px 8px black;
 	float: right;
 	margin-right: 40px;
+  margin-bottom: 40px;
+}
+
+.searchBtn{
+  background-color: #606776;
+  color: white;
+	/*font-size: 24px;
+	padding: 10px;*/
+	width: auto;
+	height: auto;
+	border-radius: 5px;
 }
 
 .titleContainer{
@@ -83,9 +69,9 @@
 }
 
 .lines{
-	padding: 20px;
+	padding: 4px 20px;
 	font-size: 14px;
-	height: 100%;
+	margin: 0 auto;
 }
 
 /**
@@ -322,21 +308,6 @@ End
   text-align: center;
 }
 
-/*.content{
-  height: 100%;
-  width: 100%;
-}*/
-
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .titles {
   font-size: 34px;
   font-weight: bold;
@@ -349,6 +320,21 @@ End
   width: auto;
   height: auto;
   padding: 20px 40px;
+}
+
+
+.infoBox{
+	width: 48%;
+	height: 300px;
+	display: inline-block;
+	padding: 8px;
+	vertical-align: middle;
+}
+
+.infoBoxExpanded{
+	width: 100%;
+	height: 100%;
+	padding: 8px;
 }
 
 .infoBoxLeft{
@@ -418,11 +404,11 @@ End
   box-shadow: 0px 4px 10px #444444;
 }
 
-.lines{
+/*.lines{
   padding: 20px;
   font-size: 14px;
   height: 100%;
-}
+}*/
 
 .addeditBtns{
   float: left;
@@ -463,21 +449,6 @@ End
   border-radius:20px;
 }
 
-/*.content{
-  height: 100%;
-  width: 100%;
-}*/
-
-.contentBody {
-  position: absolute;
-  left: 270px;
-  top: 0px;
-  height: auto;
-  width: calc(100% - 270px);
-  padding: 32px 20px;
-  background-color: #CAC7C6;
-}
-
 .title {
   font-size: 34px;
   font-weight: bold;
@@ -487,19 +458,9 @@ End
 }
 
 .infoTable{
-  width: 100%;
+  width: auto;
   height: auto;
   padding: 20px 40px;
-}
-
-.infoBox{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
-  width: 45%;
-  height: 260px;
-  display: inline-block;
-  padding: 8px;
-  vertical-align: middle;
 }
 
 .separator{
@@ -524,7 +485,24 @@ End
   vertical-align: middle; 
 }
 
-.editBtn{
+.returnBtn{
+  float: left;
+  background-color: white;
+  color: black;
+  opacity: 0.5;
+  font-size: 20px;
+  padding: 6px;
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/*.editBtn{
   float: right;
   background-color: white;
   color: black;
@@ -538,15 +516,15 @@ End
   border: 0;
   vertical-align: middle;
   text-align: center;
-}
+}*/
 
-.lines{
+/*.lines{
   padding: 20px;
   font-size: 14px;
   height: 100%;
-}
+}*/
 
-
+/* */
 
 :global(.container) {
   background-color: white;
@@ -558,6 +536,14 @@ End
   margin-bottom: 10px;
 }
 
+:global(.container h5) {
+  margin: 0px;
+}
+
+:global(.container h4) {
+  margin: 0px;
+}
+
 :global(.container h3) {
   margin: 0px;
 }
@@ -567,10 +553,24 @@ End
   margin: 0px;
   background-color: #E7B6A4;
   border-radius: 5px 5px 0px 0px;
-
 }
 
+:global(.container.admin h2) {
+  background-color: #365d82;
+  color: white;
+  font-weight: lighter;
+}
+
+:global(.container div.container-content) {
+  padding: 23px 16px;
+}
 
 :global(.container div) {
-  padding: 23px 16px;
+  padding: 12px 0px;
+}
+
+:global(.right_align) {
+  text-align: right;
+  width: 100%;
+  display: block;
 }

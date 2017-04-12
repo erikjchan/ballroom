@@ -12,7 +12,8 @@
 }
 .contentBoard{
     background-color: white;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
+    box-shadow: 0px 4px 10px #444444;
     width: 100%;
     height: auto;
     margin: 0px auto;

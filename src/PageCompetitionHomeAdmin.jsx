@@ -4,6 +4,8 @@ import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
 import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
+import Autocomplete from 'react-autocomplete'
+import { browserHistory } from 'react-router';
 
 export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
@@ -14,9 +16,13 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       competition_events: [],
       competition_rounds: [],
       competitors: [],
+      searched_competitors: [],
+      keyword: "",
+      partnerships: [],
       organizations: [],
       judges: [],
-
+      expanded: null,
+      boxes: {},
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -65,13 +71,43 @@ export default class PageCompetitionHomeAdmin extends React.Component {
      * TODO: Currently fetch all competitors in database, but need to 
      * fetch competitors registered for this competition. 
     */
-    fetch(`http://localhost:8080/api/competitors`)
+    fetch(`http://localhost:8080/api/competitors/competition/`+this.state.competition_id)
       .then(response => {
         return response.json()
       })
       .then(json => {
 
         this.setState({competitors: json})
+      })
+      .catch(err => alert(err))
+
+    /** fetch partnerships */
+    fetch(`http://localhost:8080/api/partnerships`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+
+        this.setState({partnerships: json})
+
+        // /** Filter registered competitors */
+        // var all_competitors = this.state.partnerships.map(item => {
+        //   return item.lead_competitor_id;
+        // }).concat(
+        //   this.state.partnerships.map(item2 => {
+        //   return item2.follow_competitor_id;
+        // }));
+
+        // all_competitors = all_competitors.filter((v, i, a) => a.indexOf(v) === i); 
+        // all_competitors = all_competitors.map(real_comp_id=>{
+        //   var results = this.state.competitors.filter(comp=>
+        //     {
+        //       return comp.id == real_comp_id
+        //     }
+        //   )
+        //   return results[0];
+        // });
+        // this.setState({registered_competitors: all_competitors})
       })
       .catch(err => alert(err))
 
@@ -98,9 +134,60 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
   }
 
+ populate(box_name, lines_react, max_line_num, link){
+   var ext;
+   if (max_line_num < lines_react.length){
+     ext = (
+       <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
+     )
+   }
+  var c = <div className={styles.lines}>
+            {lines_react.slice(0, max_line_num)}
+            {ext}
+        </div>
+    return <div className={styles.infoBox}>
+      <Box title={<div className={styles.titleContainer}><span>{box_name}</span> 
+                      <button className={styles.editBtn} onClick={()=>{
+                          window.location.href = link;
+                        }}> Edit</button>
+                  </div>}
+      content={c}/>
+    </div>
+ }
+
+populate_expanded(box_name, lines_react, link){
+    return <div className={styles.infoBoxExpanded}>
+      <Box title={<div className={styles.titleContainer}>
+                      <button className={styles.returnBtn} 
+                              onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
+                      <span>{box_name}</span> 
+                      <button className={styles.editBtn} onClick={()=>{
+                                                  window.location.href = link;
+                                                  }}> Edit</button>
+                  </div>}
+      content={<div className={styles.lines}>
+                  {lines_react} </div>}/>
+    </div>
+ }
+
  render() {
    if (this.state.competition){
+
+    var dict = {}
+
+    var links = {}
+
     var comp_name = this.state.competition.Name;
+
+    dict['Competiton Info'] = [<p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>,
+                      <p><b>Location:</b> {this.state.competition.LocationName}</p>,
+                      <p><b>Registration Start Date:</b> {this.state.competition.RegStartDate}</p>,
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>,
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>,
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>,
+                    ]
+    links["Competiton Info"] = "#";
+/*
     var comp_info = (<div className={styles.lines}>
                       <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
                       <p><b>Location:</b> {this.state.competition.LocationName}</p>
@@ -108,95 +195,184 @@ export default class PageCompetitionHomeAdmin extends React.Component {
                       <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>
                       <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>
                       <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>
-                    </div>)
+                    </div>)*/
     /* TODO: How to get numbe rof competitors in different styles?*/
     // var style_category={}
     // this.state.competitors.map(c => {
     //     return event.competitionId === this.competition_id
     // })
-    var competitors_info = (<div className={styles.lines}>
-                      <p><b>Total Competitors:</b> {this.state.competitors.length}</p>
-                    </div>)
-    
-    var event_titles = (<div className={styles.lines}>
+    // /*var competitors_info = (<div className={styles.lines}>
+    //                   <p><b>Total Competitors:</b> {this.state.competitors.length}</p>
+    //                 </div>)*/
+  
+    var buckets ={};
+    this.state.competition_events.forEach(function(element) {
+      if (!(element.style in buckets)){
+        buckets[element.style]=0;
+      }
+      this.state.partnerships.forEach(
+        function(p) {
+          if (p["Event Category"] == element.id){
+            buckets[element.style] = buckets[element.style]+2;
+          }
+        }, this);
+    }, this);
+
+    var competitor_stats = Object.keys(buckets).map(
+        (key) => {
+          return <p><b>{key+": "}</b> {buckets[key]}</p>
+        }
+    );
+    console.log(buckets)
+    console.log(competitor_stats)
+
+    const search_competitor = (list, query) => {
+    if (query === '') return []
+    return list.filter(comp => 
+        comp.email.indexOf(query) != -1 ||
+        comp.name.toLowerCase().indexOf(query.toLowerCase()) != -1
+      )
+    }
+    dict['Competitors'] = [<p><b>Total Competitors:</b> {this.state.competitors.length}</p>,
+    <div>
+      <Autocomplete
+          fullWidth = {true}
+          ref="autocomplete"
+          value={this.state.value}
+          items={this.state.searched_competitors}
+          getItemValue={(item) => item.name}
+          onSelect={(value, item) => {
+            // set the menu to only the selected item
+            this.setState({ value, searched_competitors: [ item ] })
+            this.setState({keyword: value})
+            // or you could reset it to a default list again
+            // this.setState({ unitedStates: getStates() })
+              }}
+          onChange={(event, value) => {
+            this.setState({ value, loading: true })
+            this.setState({keyword: value})
+            var output = search_competitor(this.state.competitors, value)
+            this.setState({searched_competitors: output, loading: false})
+          }}
+          renderItem={(item, isHighlighted) => (
+            <div
+              key={item.abbr}
+              id={item.abbr}
+            >{item.name} ({item.email})</div>
+          )}
+        />
+        <button 
+        className = {styles.searchBtn}
+        onClick={() => {
+                        browserHistory.push({ //browserHistory.push should also work here
+                          pathname: "/competition/"+this.competition_id+"/competitorslist",
+                          state: {query: {name: this.state.keyword}}
+                        }); 
+                        }}
+        > Search </button>
+      </div>].concat(competitor_stats);
+    links["Competitors"] = "/competition/"+this.competition_id+"/competitorslist";
+
+    /*var event_titles = (<div className={styles.lines}>
                           {this.state.competition_events.sort(function (a, b){
                           return a.id - b.id}).map(event => {
                             return (<p key={event.title}>{event.title}</p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Events'] = this.state.competition_events.sort(function (a, b){
+                          return a.id - b.id}).map(event => {
+                            return (<p key={event.title}>{event.title}</p>)
+                          })
+    links["Events"] = "#";
+
     var total_judges = this.state.judges.length;
-    var judges_names = (<div className={styles.lines}>
+    /*var judges_names = (<div className={styles.lines}>
                           <p><b>Total Judges:</b> {total_judges}</p>
                           {this.state.judges.map(judge => {
                             var name = judge['Last Name']+" "+judge['First Name']
                             var email = "mailto:"+judge['Email address'];
                             return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Judges'] = [<p><b>Total Judges:</b> {total_judges}</p>].concat(
+                          this.state.judges.map(judge => {
+                            var name = judge['Last Name']+" "+judge['First Name']
+                            var email = "mailto:"+judge['Email address'];
+                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
+                          }))
+    links["Judges"] = "#";
+
     var total_orgs = this.state.organizations.length;
-    var org_names = (<div className={styles.lines}>
+    /*var org_names = (<div className={styles.lines}>
                           <p><b>Total Organizations:</b> {total_orgs}</p>
                           {this.state.organizations.map(org => {
                             return (<p key={org.name}>{org.name}</p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Organizations'] = [<p><b>Total Organizations:</b> {total_orgs}</p>].concat(
+                          this.state.organizations.map(org => {
+                            return (<p key={org.id}>{org.name}</p>)
+                          }))
+    links["Organizations"] = "#";
+
     var total_rounds = this.state.competition_rounds.length;
-    var rounds_titles = (<div className={styles.lines}>
+    /*var rounds_titles = (<div className={styles.lines}>
                           <p><b>Total Rounds:</b> {total_rounds}</p>
                           {this.state.competition_rounds
                             .map(round => {
                             return (<p key={round.name}>{round.name}</p>)
                           })}
-                        </div>)
+                        </div>)*/
+
+    dict['Schedule'] = [<p><b>Total Rounds:</b> {total_rounds}</p>].concat(
+                          this.state.competition_rounds
+                            .sort(function (a, b){
+                                  return a.order_number - b.order_number})
+                            .map((round,i) => {
+                            var event_name = this.state.competition_events.filter(event=> {return event.id == round.event})
+                            if (event_name.length > 0){
+                              event_name = event_name[0].title+" "
+                            }
+                            else{
+                              event_name = ""
+                            }
+                              return (<p key={round.id}><b>{(i+1)+": "}</b>{event_name+round.name}</p>)
+                          }))
+    links["Schedule"] = "/competition/"+this.competition_id+"/editschedule";
+
+    if (this.state.expanded!=null){
+        return (
+          <Page ref="page" isAdmin={true}>
+            <div className={styles.title}>
+              <p>{comp_name}</p>
+            </div>
+            <div className={styles.infoTable}>
+              {this.populate_expanded(this.state.expanded, dict[this.state.expanded], links[this.state.expanded])}
+            </div>
+          </Page>);
+    }
+    var num = 6
     return (
       <Page ref="page" isAdmin={true}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
           <div className={styles.infoTable}>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Competiton Info</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>} 
-                   content={comp_info}/>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Competitors</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-                    content={competitors_info}/>
-            </div>
-            <div className={styles.separator}>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Event Schedule</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-                    content={event_titles}/>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Judges</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>} 
-                   content={judges_names}/>
-            </div>
+             {this.populate("Competiton Info", dict["Competiton Info"], num, links["Competiton Info"])}
+              {this.populate("Judges", dict["Judges"], num, links["Judges"])}
             <div className={styles.separator}></div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Round Schedule</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-              content={rounds_titles}/>
-            </div>
-            <div className={styles.infoBox}>
-              <Box title={<div className={styles.titleContainer}><span>Organizations</span> 
-                              <button className={styles.editBtn} onClick={()=>{/*TODO*/}}> Edit</button>
-                          </div>}
-               content={org_names}/>
-            </div>
+            {this.populate("Events", dict["Events"], num, links["Events"])}
+            {this.populate("Schedule", dict["Schedule"], num, links["Schedule"])}
+            <div className={styles.separator}></div>
+             {this.populate("Competitors", dict["Competitors"], num, links["Competitors"])}
+             {this.populate("Organizations", dict["Organizations"], num, links["Organizations"])}
             <div className={styles.separator}></div>
           </div>
           <button className={styles.runBtn} 
-              onClick={() => {/* TODO */}}>Run Competition</button>
+              onClick={() => {window.location.href = "/competition/"+this.competition_id+"/run";}}>Run Competition</button>
       </Page>
     ); 
   }

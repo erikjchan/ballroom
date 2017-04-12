@@ -12,6 +12,7 @@ import uuid from 'uuid';
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
 import style from '../style.css';
+import { browserHistory } from 'react-router';
 
 const schema = {
   type: 'object',
@@ -22,40 +23,32 @@ const schema = {
 	name: {
 	  type: 'string'
 	},
-	organization_name: {
+	price: {
+	  type: 'int'
+	},
+	reg_deadline: {
 	  type: 'string'
-	},
-	lead_number: {
-	  type: 'integer'
-	},
-	amount_owed: {
-	  type: 'integer'
 	}
   },
-  required: ['id', 'name', 'organization_name', 'lead_number', 'amount_owed'],
+  required: ['id', 'name', 'price', 'reg_deadline'],
 };
 
-class EasyDemo extends React.Component {
+class CompetitionsTable extends React.Component {
   constructor(props) {
-	super(props);
-    
-	this.rows = null;
-	this.state = {
-	  rows: [],
-	  columns: this.getColumns(),
-	  sortingColumns: {},
-	  query: {},
-    };
-	this.table = null;
-
-	console.log(this.state)
+		super(props);
+  	  
+		this.rows = null;
+		this.state = {
+		  rows: [],
+		  columns: this.getColumns(),
+		  sortingColumns: {},
+		  query: {},
+  	  };
+		this.table = null;
   }
 
   componentWillMount() {
-		if (this.props.data){
-			this.setState({query: this.props.data.query})
-		}
-    this.resizableHelper = resizable.helper({
+      this.resizableHelper = resizable.helper({
 	  globalId: uuid.v4(),
 	  getId: ({ id }) => id
 	  });
@@ -67,9 +60,9 @@ class EasyDemo extends React.Component {
 
   getColumns() {
 	  return [
-         {
-		    id: 'name',
-		    property: 'name',
+      {
+      	id: 'name',
+		    property: 'Name',
 		    header: {
 		        label: 'Name',
 		        sortable: true,
@@ -79,81 +72,61 @@ class EasyDemo extends React.Component {
 		        highlight: true
 		    },
 		    width: 250
-		 },
-		 {
-		     id: 'organization_name',
-		     property: 'organization_name',
-		     header: {
-		        label: 'Organization',
-		        sortable: true,
-		        resizable: true
-		    },
-		    cell: {
-		        highlight: true
-		    },
-		    width: 250
-		 },
-		 {
-		    id: 'lead_number',
-		    property: 'lead_number',
+		 	},
+		 	{
+		    id: 'price',
+		    property: 'RegPrice',
 		    header: {
-		        label: 'Number',
-		        sortable: true,
-		        resizable: true
+		      label: 'Price',
+		      sortable: true,
+		      resizable: true
 		    },
 		    cell: {
 		        highlight: true
+		    },
+		    width: 50
+		 	},
+		 	{
+		    id: 'reg_deadline',
+		    property: 'RegEndDate',
+		    header: {
+		      label: 'Reg Deadline',
+		      sortable: true,
+		      resizable: true
+		    },
+		    cell: {
+		      highlight: true
 		    },
 		    width: 150
-		 },
-		 {
-		    id: 'amount_owed',
-		    property: 'amount_owed',
-		    header: {
-		        label: 'Owes',
-		        sortable: true,
-		        resizable: true
-		    },
+		 	},
+		 	{
 		    cell: {
-		        highlight: true
-		    },
-		    width: 200
-		 },
-		 {
-		     cell: {
-		         formatters: [
-                   (value, { rowData }) => (
-                       <div>
-                         <input type="button"
-                                value="Edit/See More"
-                                onClick={() => alert(`${JSON.stringify(rowData, null, 2)}`)} />
-			         </div>
+		      formatters: [
+            (value, { rowData }) => (
+              <div>
+                <input type="button"
+                	value="Register"
+                	onClick={() => browserHistory.push('competition/0/eventregistration')} />
+			        </div>
 		          )
-		 ]
+		 			]
+		 		},
+		    width: 100
 		 },
-		     width: 100
-		 }
-		 ];
-		 }
+		];
+	}
 
   componentDidMount() {
-      fetch("/api/competitors/competition/:id2")
+      fetch("api/competitions")
 		   .then(response => response.json())
 		   .then(json => {
              this.rows = json;
-             for (let i = 0; i < this.rows.length; i++) {
-                if (this.rows[i].amount_owed != 0) {
-                    console.log("DOING STUFF");
-                    this.rows[i].amount_owed = "$" + this.rows[i].amount_owed.toString();
-		         }
-		     }
 		     this.setState({ rows: json, }); 
 		 })
 		   .catch(err => alert(err));
   }
 
   render() {
-	  console.log(this.props.data)
     const components = {
       header: {
         wrapper: 'thead',
@@ -193,27 +166,26 @@ class EasyDemo extends React.Component {
 
 	  return (
 	    <div>
-            <Table.Provider
-              className={style.tableWrapper}
-              columns={columns}
-              components={components}
+        <Table.Provider
+          className = {style.tableWrapper}
+          columns = {columns}
+          components = {components}
+        >
+          <Table.Header
+            className = {style.tableHeader}
             >
-              <Table.Header
-                className={style.tableHeader}
-                >
-                <search.Columns
-                  query={query}
-                  columns={columns}
-                  onChange={query => this.setState({ query })}
-                />
-              </Table.Header>
-
-              <Table.Body 
-                rows={visibleRows} 
-                rowKey="id" 
-                className={style.tableBody} 
-              />
-            </Table.Provider>
+            <search.Columns
+              query = {query}
+              columns = {columns}
+              onChange = {query => this.setState({ query })}
+            />
+          </Table.Header>
+          <Table.Body 
+            rows={visibleRows} 
+            rowKey="id" 
+            className={style.tableBody} 
+          />
+        </Table.Provider>
 	    </div>
       );
   }
@@ -239,11 +211,6 @@ class EasyDemo extends React.Component {
   }
 }
 
-		  // Set up drag and drop context
-		  // const DragAndDropDemo = DragDropContext(HTML5Backend)(EasyDemo);
-
-<EasyDemo />
-
+<CompetitionsTable />
 		  
-export default EasyDemo
-		  
+export default CompetitionsTable

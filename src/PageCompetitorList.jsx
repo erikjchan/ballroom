@@ -18,6 +18,7 @@ import style from './style.css';
 class CompetitorsList extends React.Component {
 
  render() {
+  console.log(this.props.location.state);
   return (
     <Page ref="page" isAdmin={true}>
       <div id={style.titleContainer}>
@@ -31,7 +32,7 @@ class CompetitorsList extends React.Component {
           <div id={style.dragAndDropTitle}>Competitors</div>
         </div>
         <div id={style.scheduleWrapper}>
-          <SearchTable />
+          <SearchTable data={this.props.location.state}/>
         </div>
       </div>
     </Page>

@@ -10,7 +10,6 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import Page from './Page.jsx';
-import AddRound from './PageEditSchedule/AddRound.jsx';
 import DragAndDropTable from './PageEditSchedule/schedule.jsx';
 import style from './style.css';
 
@@ -35,7 +34,6 @@ class EditSchedule extends React.Component {
           </div>
         </div>
           <div id={style.scheduleWrapper}>
-              <AddRound />
               <DragAndDropTable />
           </div>
 
