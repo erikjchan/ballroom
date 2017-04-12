@@ -93,12 +93,10 @@ const get_rounds = n => collection(n)(i => ({
   "size" : randomInt(50, 100),
   "next_round" : randomInt(0, 20),
   "competitors": [0,1,2,3,4,5,6,7,8,9],
-  "judge_1" : randomId(JUDGES),
-  "judge_2" : randomId(JUDGES),
-  "judge_3" : randomId(JUDGES),
-  "judge_4" : randomId(JUDGES),
-  "judge_5" : randomId(JUDGES),
-  "judge_6" : randomBool() ? randomId(JUDGES) : null,
+  "judges": [0,1,2,3,4,5],
+  // this is faster to calculate on the backend
+  // using an SQL join
+  "callbacks_recieved": randomInt(6),
 }))
 
 const get_partnerships = n => collection(n)(i => ({

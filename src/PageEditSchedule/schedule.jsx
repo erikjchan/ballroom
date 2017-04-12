@@ -4,6 +4,7 @@ import findIndex from 'lodash/findIndex';
 import * as Table from 'reactabular-table';
 import * as dnd from 'reactabular-dnd';
 import * as resolve from 'table-resolver';
+import * as search from 'searchtabular';
 import style from '../style.css';
 
 export default class DragAndDropTable extends React.Component {
@@ -17,7 +18,7 @@ export default class DragAndDropTable extends React.Component {
           props: {
             label: 'Number',
             style: {
-              width: 100
+              width: 50
             }
           },
           header: {
@@ -125,6 +126,15 @@ export default class DragAndDropTable extends React.Component {
       method: resolve.nested
     })(rows);
 
+    var newRow = {};
+
+    var inputs = [];
+    // <input type="text" style={{width: "auto"}} />
+    for (let i = 0; i < columns.length - 1; i++) {
+      inputs.push(<td style={{padding: "10px"}}><input type="text" onChange={value => {newRow[columns[i].property] = value;}} style={{width: "100%"}} /></td>);
+    }
+    inputs.push(<td style={{padding: "10px"}}><div onClick={() => {newRow.id = rows.length; rows.unshift(newRow); this.setState({rows}); console.log(this.state.rows);}} style={{textAlign: "center", cursor: "pointer"}}>&#43;</div></td>);
+
     return (
       <Table.Provider
         components={components}
@@ -135,6 +145,11 @@ export default class DragAndDropTable extends React.Component {
           headerRows={resolve.headerRows({ columns })}
           className={style.tableHeader}
         />
+        <tbody>
+            <tr>
+              {inputs}
+            </tr>
+          </tbody>
 
         <Table.Body
           className={style.tableBody}
