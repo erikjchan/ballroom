@@ -12,6 +12,7 @@ import uuid from 'uuid';
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
 import style from '../style.css';
+import { browserHistory } from 'react-router';
 
 const schema = {
   type: 'object',
@@ -34,16 +35,16 @@ const schema = {
 
 class CompetitionsTable extends React.Component {
   constructor(props) {
-	super(props);
-    
-	this.rows = null;
-	this.state = {
-	  rows: [],
-	  columns: this.getColumns(),
-	  sortingColumns: {},
-	  query: {},
-    };
-	this.table = null;
+		super(props);
+  	  
+		this.rows = null;
+		this.state = {
+		  rows: [],
+		  columns: this.getColumns(),
+		  sortingColumns: {},
+		  query: {},
+  	  };
+		this.table = null;
   }
 
   componentWillMount() {
@@ -59,8 +60,8 @@ class CompetitionsTable extends React.Component {
 
   getColumns() {
 	  return [
-         {
-		    id: 'name',
+      {
+      	id: 'name',
 		    property: 'Name',
 		    header: {
 		        label: 'Name',
@@ -71,44 +72,58 @@ class CompetitionsTable extends React.Component {
 		        highlight: true
 		    },
 		    width: 250
-		 },
-		 {
-		     id: 'price',
-		     property: 'RegPrice',
-		     header: {
-		        label: 'Price',
-		        sortable: true,
-		        resizable: true
+		 	},
+		 	{
+		    id: 'price',
+		    property: 'RegPrice',
+		    header: {
+		      label: 'Price',
+		      sortable: true,
+		      resizable: true
 		    },
 		    cell: {
 		        highlight: true
 		    },
 		    width: 50
-		 },
-		 {
+		 	},
+		 	{
 		    id: 'reg_deadline',
 		    property: 'RegEndDate',
 		    header: {
-		        label: 'Reg Deadline',
-		        sortable: true,
-		        resizable: true
+		      label: 'Reg Deadline',
+		      sortable: true,
+		      resizable: true
 		    },
 		    cell: {
-		        highlight: true
+		      highlight: true
 		    },
 		    width: 150
+		 	},
+		 	{
+		    cell: {
+		      formatters: [
+            (value, { rowData }) => (
+              <div>
+                <input type="button"
+                	value="Register"
+                	onClick={() => browserHistory.push('competition/0/eventregistration')} />
+			        </div>
+		          )
+		 			]
+		 		},
+		    width: 100
 		 },
 		];
 	}
 
   componentDidMount() {
-      fetch("/api/competitions")
+      fetch("api/competitions")
 		   .then(response => response.json())
 		   .then(json => {
              this.rows = json;
 		     this.setState({ rows: json, }); 
 		 })
-		   .catch(err => alert("alert"));
+		   .catch(err => alert(err));
   }
 
   render() {
@@ -151,27 +166,26 @@ class CompetitionsTable extends React.Component {
 
 	  return (
 	    <div>
-            <Table.Provider
-              className={style.tableWrapper}
-              columns={columns}
-              components={components}
+        <Table.Provider
+          className = {style.tableWrapper}
+          columns = {columns}
+          components = {components}
+        >
+          <Table.Header
+            className = {style.tableHeader}
             >
-              <Table.Header
-                className={style.tableHeader}
-                >
-                <search.Columns
-                  query={query}
-                  columns={columns}
-                  onChange={query => this.setState({ query })}
-                />
-              </Table.Header>
-
-              <Table.Body 
-                rows={visibleRows} 
-                rowKey="id" 
-                className={style.tableBody} 
-              />
-            </Table.Provider>
+            <search.Columns
+              query = {query}
+              columns = {columns}
+              onChange = {query => this.setState({ query })}
+            />
+          </Table.Header>
+          <Table.Body 
+            rows={visibleRows} 
+            rowKey="id" 
+            className={style.tableBody} 
+          />
+        </Table.Provider>
 	    </div>
       );
   }

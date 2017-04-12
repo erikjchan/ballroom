@@ -6,7 +6,7 @@ import Page from './Page.jsx';
 import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
-import SearchTable from './PageCompetitionList/competitions.jsx';
+import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -75,41 +75,6 @@ class PageCompetitionList extends React.Component {
     }
   ]
 
-  const otherColumns = [
-    {
-      property: 'Name',
-      header: {
-        label: 'Name',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'RegPrice',
-      header: {
-        label: 'Price',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'RegEndDate',
-      header: {
-        label: 'Reg Deadline',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'Register',
-      header: {
-        label: '',
-        sortable: true,
-        resizable: true
-      }
-    }
-  ]
-
   // Add a button to the competition corresponding to the competition in each row 
   const expand_your_rows = (rows) => {
     for (var i = 0; i < rows.length; i++) {
@@ -118,24 +83,6 @@ class PageCompetitionList extends React.Component {
         onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0'); alert('Are you sure?') }}>Visit Page</button>;
     }
     return rows;
-  }
-
-  // Add a button to the registration corresponding to the competition in each row 
-  const expand_other_rows = (rows) => {
-    for (var i = 0; i < rows.length; i++) {
-      let temp = String(rows[i]['id']);
-      rows[i]['Register'] = <button className = {styles.search}
-        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/eventregistration'); alert('Are you sure?') }}>Register Events</button>;
-    }
-    return rows;
-  }
-
-  // Search for the competition by name given a query
-  const search_competition = (list, query) => {
-    if (query === '') return []
-    return list.filter(comp => 
-      comp.Name.toLowerCase().indexOf(query.toLowerCase()) != -1
-    )
   }
 
   return (
@@ -156,44 +103,7 @@ class PageCompetitionList extends React.Component {
         </div>
       	<div>
        	  <h2>Other Competitions</h2>
-          Search: <Autocomplete
-            inputProps = {{name: "US state", id: "states-autocomplete"}}
-            ref = "autocomplete"
-            value = {this.state.value}
-            items = {this.state.rows}
-            getItemValue = {(item) => item.Name}
-            onSelect = {(value, item) => {
-              // set the menu to only the selected item
-              this.setState({ value })
-            }}
-            onChange = {(event, value) => {
-              this.setState({ value, loading: true })
-
-              fetch(`http://localhost:8080/api/competitions`)
-                .then(response => response.json())
-                .then(json => {
-                  json = search_competition(json, value)
-                })
-                .catch(err => alert(err))
-            }}
-            renderItem = {(item, isHighlighted) => (
-              <div
-                key = {item.abbr}
-                id = {item.abbr} > {item.Name})
-              </div>
-            )}
-          />
-
-          <SearchTable />
-       	  <Table.Provider
-          	className = "pure-table pure-table-striped"
-          	columns = {otherColumns}>
-          	<Table.Header />
-          	<Table.Body
-              rows = {expand_other_rows(this.state.rows) || []}
-              rowKey = "id"
-            />
-      	  </Table.Provider>
+          <CompetitionsTable />
         </div>
      	</div>
     </Page>
