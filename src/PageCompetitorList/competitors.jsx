@@ -47,10 +47,15 @@ class EasyDemo extends React.Component {
 	  query: {},
     };
 	this.table = null;
+
+	console.log(this.state)
   }
 
   componentWillMount() {
-      this.resizableHelper = resizable.helper({
+		if (this.props.data){
+			this.setState({query: this.props.data.query})
+		}
+    this.resizableHelper = resizable.helper({
 	  globalId: uuid.v4(),
 	  getId: ({ id }) => id
 	  });
@@ -148,6 +153,7 @@ class EasyDemo extends React.Component {
   }
 
   render() {
+	  console.log(this.props.data)
     const components = {
       header: {
         wrapper: 'thead',
