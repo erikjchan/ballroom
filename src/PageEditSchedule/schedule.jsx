@@ -26,6 +26,17 @@ export default class DragAndDropTable extends React.Component {
           }
         },
         {
+            property: 'level',
+            props: {
+                style: {
+                    width: 300
+                }
+            },
+            header: {
+                label: 'Level',
+            }
+        },
+        {
           property: 'style',
           props: {
             style: {
@@ -34,17 +45,6 @@ export default class DragAndDropTable extends React.Component {
           },
           header: {
             label: 'Style',
-          }
-        },
-        {
-          property: 'level',
-          props: {
-            style: {
-              width: 300
-            }
-          },
-          header: {
-            label: 'Level',
           }
         },
         {
@@ -88,7 +88,32 @@ export default class DragAndDropTable extends React.Component {
           }
         }
       ],
-      rows: []
+      rows: [],
+      levels: ["Newcomer", "Bronze", "Silver", "Gold", "Open"],
+      styles: [
+          {
+            title: "Smooth",
+            dances: ["Waltz", "Tango", "Foxtrot", "V. Waltz"]
+          },
+          {
+            title: "Standard",
+            dances: ["Waltz", "Tango", "Foxtrot", "Quickstep"]
+          },
+          {
+            title: "Rhythm",
+            dances: ["Cha Cha", "Rhumba", "Swing", "Mambo"]
+          },
+          {
+            title: "Latin",
+            dances: ["Cha Cha", "Rhumba", "Jive", "V. Samba"]
+          }
+      ],
+      rounds: ["Round 1", "Round 2", "Round 3", "Round 4", "Quarterfinals", "Semifinals", "Finals"],
+      selectedNumber: null,
+      selectedLevel: null,
+      selectedStyle: null,
+      selectedDance: null,
+      selectedRound: null
     };
 
 
@@ -102,7 +127,8 @@ export default class DragAndDropTable extends React.Component {
       .then(json => {
         this.setState({rows: json})
       })
-      .catch(err => alert(err))
+      .catch(err => alert(err));
+
   }
 
   render() {
@@ -128,12 +154,19 @@ export default class DragAndDropTable extends React.Component {
 
     var newRow = {};
 
-    var inputs = [];
-    // <input type="text" style={{width: "auto"}} />
-    for (let i = 0; i < columns.length - 1; i++) {
-      inputs.push(<td style={{padding: "10px"}}><input type="text" onChange={value => {newRow[columns[i].property] = value;}} style={{width: "100%"}} /></td>);
-    }
-    inputs.push(<td style={{padding: "10px"}}><div onClick={() => {newRow.id = rows.length; rows.unshift(newRow); this.setState({rows}); console.log(this.state.rows);}} style={{textAlign: "center", cursor: "pointer"}}>&#43;</div></td>);
+      var numberOptions = [];
+      for (let i = 1; i <= this.state.rows.length; i++) {
+          numberOptions.push(<option value={i}>{i}</option>);
+      }
+      var levelOptions = this.state.levels.map(level => (<option value={level}>{level}</option>));
+      var styleOptions = this.state.styles.map(style => (<option value={style.title}>{style.title}</option>));
+      var roundOptions = this.state.rounds.map(round => (<option value={round} onChange={() => this.setState({selectedRound: level})}>{round}</option>));
+      var danceOptions = null;
+      if (this.state.selectedStyle) {
+        const dances = this.state.styles.filter(style => this.state.selectedStyle == style.title)[0].dances;
+        danceOptions = dances.map(dance => (<option value={dance}>{dance}</option>));
+      }
+
 
     return (
       <Table.Provider
@@ -147,7 +180,16 @@ export default class DragAndDropTable extends React.Component {
         />
         <tbody>
             <tr>
-              {inputs}
+              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedNumber: event.target.value})}>{numberOptions}</select></td>
+              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedLevel: event.target.value})}>{levelOptions}</select></td>
+              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedStyle: event.target.value})}>{styleOptions}</select></td>
+                {this.state.selectedStyle != null ? (
+                  <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedDance: event.target.value})}>{danceOptions}</select></td>
+                ) : (
+                  <td style={{padding: "10px"}}><select style={{width: "100%"}}></select></td>
+                )}
+              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedRound: event.target.value})}>{roundOptions}</select></td>
+              <td style={{padding: "10px"}}><div onClick={() => this.addNewRow(newRow, rows)} style={{textAlign: "center", cursor: "pointer"}}>&#43;</div></td>
             </tr>
           </tbody>
 
@@ -159,6 +201,19 @@ export default class DragAndDropTable extends React.Component {
         />
       </Table.Provider>
     );
+  }
+
+  addNewRow(newRow, rows) {
+    for (let i = 0; i < columns.length - 1; i++) {
+      let key = columns[i].property;
+      if (!(key in newRow)) {
+        return false;
+      }
+    }
+    newRow.id = rows.length;
+    rows.splice(newRow.order_number, 1, newRow);
+    this.setState(rows);
+    console.log(this.state.rows);
   }
 
   onRow(row) {
