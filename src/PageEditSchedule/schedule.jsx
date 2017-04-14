@@ -332,6 +332,5 @@ export default class DragAndDropTable extends React.Component {
   		return 0;
   	});
   	this.setState({rows});
-  	console.log(rows);
   }
 }
