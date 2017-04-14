@@ -248,6 +248,10 @@ Start
   border-right: solid black 1px;
 }
 
+.tableWrapper > thead input {
+  width: 100%;
+}
+
 .scheduleAddEventTBody td {
   padding: 10px;
 }
