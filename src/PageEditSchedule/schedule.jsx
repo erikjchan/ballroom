@@ -297,32 +297,19 @@ export default class DragAndDropTable extends React.Component {
   autoSortRows() {
   	var _this = this;
   	var rows = this.state.rows;
-  	var swapOrderNumber = function(a, b, order) {
-  		if (order < 0 || order > 0) {
-  			const temp = a.order_number;
-  			a.order_number = b.order_number;
-  			b.order_number = temp;
-  		}
-  	};
   	rows.sort(function(a, b) {
   		if (a.style != b.style) {
   			const styles = ["Smooth", "Rhythm", "Standard", "Latin"];
-  			const order = styles.indexOf(a.style) - styles.indexOf(b.style);
-  			swapOrderNumber(a, b, order);
-  			return order;
+  			return styles.indexOf(a.style) - styles.indexOf(b.style);
   		}
   		if (a.level != b.level) {
-  			const order = _this.state.levels.indexOf(a.level) - _this.state.levels.indexOf(b.level);
-  			swapOrderNumber(a, b, order);
-  			return order;
+  			return _this.state.levels.indexOf(a.level) - _this.state.levels.indexOf(b.level);
   		}
   		if (a.title != b.title) {
   			if (a.title < b.title) {
-  				swapOrderNumber(a, b, -1);
   				return -1;
   			}
   			if (a.title > b.title) {
-  				swapOrderNumber(a, b, 1);
   				return 1;
   			}
   			return 0;
@@ -331,22 +318,16 @@ export default class DragAndDropTable extends React.Component {
   			const a_round = parseInt(a.round);
   			const b_round = parseInt(b.round);
   			if (!isNaN(a_round) && !isNaN(b_round)) {
-  				const order = a_round - b_round;
-  				swapOrderNumber(a, b, order);
-  				return order;
+  				return a_round - b_round;
   			} 
   			if (!isNaN(a_round)) {
-  				swapOrderNumber(a, b, -1);
   				return -1;
   			} 
   			if (!isNaN(b_round)) {
-  				swapOrderNumber(a, b, 1);
   				return 1;
   			}
   			const rounds = ["Quarterfinals", "Semifinals", "Finals"];
-  			const order = rounds.indexOf(a.round) - rounds.indexOf(b.round);
-  			swapOrderNumber(a, b, order);
-  			return order;
+  			return rounds.indexOf(a.round) - rounds.indexOf(b.round);
   		}
   		return 0;
   	});
