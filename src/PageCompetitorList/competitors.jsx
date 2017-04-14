@@ -30,9 +30,12 @@ const schema = {
 	},
 	amount_owed: {
 	  type: 'integer'
+	},
+	pay_w_org: {
+	  type: 'string'
 	}
   },
-  required: ['id', 'name', 'organization_name', 'lead_number', 'amount_owed'],
+  required: ['id', 'name', 'organization_name', 'lead_number', 'amount_owed', 'pay_w_org'],
 };
 
 class EasyDemo extends React.Component {
@@ -120,6 +123,19 @@ class EasyDemo extends React.Component {
 		    width: 200
 		 },
 		 {
+		     id: 'pay_w_org',
+		     property: 'pay_w_org',
+		     header: {
+		         label: 'Paying w/ Organization?',
+		         sortable: true,
+		         resizable: true
+		     },
+		     cell: {
+		         highlight: true
+		     },
+		     width: 100
+		 },
+		 {
 		     cell: {
 		         formatters: [
                    (value, { rowData }) => (
@@ -143,31 +159,35 @@ class EasyDemo extends React.Component {
              this.rows = json;
              for (let i = 0; i < this.rows.length; i++) {
                 if (this.rows[i].amount_owed != 0) {
-                    console.log("DOING STUFF");
                     this.rows[i].amount_owed = "$" + this.rows[i].amount_owed.toString();
-		         }
-		     }
+		 }
+                if (this.rows[i].pay_w_org) {
+                    this.rows[i].pay_w_org = "Yes";
+		 } else {
+                    this.rows[i].pay_w_org = "No";
+		 }
+		 }
 		     this.setState({ rows: json, }); 
 		 })
 		   .catch(err => alert(err));
-  }
+		 }
 
   render() {
 	  console.log(this.props.data)
     const components = {
-      header: {
-        wrapper: 'thead',
-        row: 'tr',
-        cell: 'th'
-      },
-      body: {
-        row: dnd.Row
-      }
-    };
+		     header: {
+		     wrapper: 'thead',
+		     row: 'tr',
+		     cell: 'th'
+		 },
+		     body: {
+		     row: dnd.Row
+		 }
+		 };
 
     const {
       columns, rows, query
-	} = this.state;
+		 } = this.state;
     const cols = columns;
 
     const visibleRows = compose(
@@ -183,11 +203,11 @@ class EasyDemo extends React.Component {
 
 	  for (let i = 0; i < rows.length; i++) {
 	    rows[i].id = (i + 1);
-	  }
+		 }
 
 	  const headerRows = resolve.headerRows({
-	    columns: columns
-	  });
+		     columns: columns
+		 });
 
 	  const tableHeight = 40 * (rows.length)
 
@@ -197,6 +217,7 @@ class EasyDemo extends React.Component {
               className={style.tableWrapper}
               columns={columns}
               components={components}
+              width={"100%"}
             >
               <Table.Header
                 className={style.tableHeader}
@@ -216,14 +237,14 @@ class EasyDemo extends React.Component {
             </Table.Provider>
 	    </div>
       );
-  }
+		 }
 
   _onFilterChange(cellDataKey, event) {
     if (!event.target.value) {
         this.setState({
-		    filteredDataList: this.rows,
-        });
-    }
+		     filteredDataList: this.rows,
+		 });
+		 }
     var filterBy = event.target.value.toString().toLowerCase();
     var size = this.rows.length;
     var filteredList = [];
@@ -231,16 +252,16 @@ class EasyDemo extends React.Component {
         var v = this.rows[index][cellDataKey];
         if (v.toString().toLowerCase().indexOf(filterBy) !== -1) {
             filteredList.push(this.rows[index]);
-		}
-	}
+		 }
+		 }
     this.setState({
-	    filteredDataList: filteredList,
-    });
-  }
-}
+		     filteredDataList: filteredList,
+		 });
+		 }
+		 }
 
-		  // Set up drag and drop context
-		  // const DragAndDropDemo = DragDropContext(HTML5Backend)(EasyDemo);
+		     // Set up drag and drop context
+		     // const DragAndDropDemo = DragDropContext(HTML5Backend)(EasyDemo);
 
 <EasyDemo />
 
