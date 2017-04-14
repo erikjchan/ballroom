@@ -42,8 +42,8 @@ const admin_links = [
         isTopOfList: true
     },
     {
-        name: "Event List",
-        to: "#",
+        name: "Competitor List",
+        to: "/competition/0/competitorslist",
         isTopOfList: true
     },
     {
