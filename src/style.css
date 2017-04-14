@@ -143,6 +143,7 @@ Start
 
 #dragAndDropAutosort {
   text-align: right;
+  cursor: pointer;
 }
 
 #dragAndDropAutosort > div {
