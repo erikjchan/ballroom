@@ -7,6 +7,7 @@ import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import {Button, IconButton} from 'react-toolbox/lib/button';
+import Box from './common/BoxAdmin.jsx'
 import { Link } from 'react-router'
 /*
 
@@ -178,13 +179,27 @@ export default class PageEventRegistration extends React.Component {
     const show_latin = this.state.style == 'Latin'
     const show_leading = this.state.event !== null
 
+    const myMenuStyle = {
+      borderRadius: '3px',
+      boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+      background: 'rgba(255, 255, 255, 0.9)',
+      padding: '2px 0',
+      fontSize: '90%',
+      position: 'fixed',
+      overflow: 'auto',
+      maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+      zIndex: 200
+    };
+
+
     return (
 
     <Page ref="page">
-
-      <p>
-        <h1>Event Registration</h1>
-
+      <h1>Event Registration</h1>
+        <Box 
+        title = {<div>Register for New Event</div>}
+        content={
+        <div className={styles.lines}>
         { true && <span>
             <h2>Level</h2>
             <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
@@ -257,9 +272,11 @@ export default class PageEventRegistration extends React.Component {
             </RadioGroup>
           </span>
               }
-
+            
         <h2>Partner's email</h2>
+
         <Autocomplete
+          menuStyle={myMenuStyle}
           inputProps={{name: "US state", id: "states-autocomplete"}}
           ref="autocomplete"
           value={this.state.value}
@@ -289,16 +306,13 @@ export default class PageEventRegistration extends React.Component {
             >{item.first_name} {item.last_name} ({item.email})</div>
           )}
         />
-
-
-
-      </p>
-
-      <p><Button onClick={this.registerEventHandler}>Register!</Button></p>
+      <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register!</button></p>
+              </div>
+        }/>
       <hr />
 
-
-        <h2>You're already registered to these:</h2>
+      <Box title={<div>You're already registered to these:</div>}
+      content = {
         <EventTable
           events={this.state.user_competition_events}
           extra_columns={[{
@@ -314,7 +328,8 @@ export default class PageEventRegistration extends React.Component {
             )
           }]}
         />
-
+      }
+      />
      </Page>
    );
  }
