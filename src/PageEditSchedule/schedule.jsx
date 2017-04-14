@@ -154,15 +154,15 @@ export default class DragAndDropTable extends React.Component {
 
     var numberOptions = [];
     for (let i = 1; i <= this.state.rows.length; i++) {
-        numberOptions.push(<option value={i}>{i}</option>);
+        numberOptions.push(<option key={"order_number_" + i} value={i}>{i}</option>);
     }
-    var levelOptions = this.state.levels.map(level => (<option value={level}>{level}</option>));
-    var styleOptions = this.state.styles.map(style => (<option value={style.title}>{style.title}</option>));
-    var roundOptions = this.state.rounds.map(round => (<option value={round} onChange={() => this.setState({selectedRound: level})}>{round}</option>));
+    var levelOptions = this.state.levels.map(level => (<option key={"level_" + level} value={level}>{level}</option>));
+    var styleOptions = this.state.styles.map(style => (<option key={"style_" + style.title} value={style.title}>{style.title}</option>));
+    var roundOptions = this.state.rounds.map(round => (<option key={"round_" + round} value={round} onChange={() => this.setState({selectedRound: level})}>{round}</option>));
     var danceOptions = null;
     if (this.state.selectedStyle != "") {
       const dances = this.state.styles.filter(style => this.state.selectedStyle == style.title)[0].dances;
-      danceOptions = dances.map(dance => (<option value={dance}>{dance}</option>));
+      danceOptions = dances.map(dance => (<option key={"dance_" + dance} value={dance}>{dance}</option>));
     }
 
 
