@@ -163,6 +163,7 @@ const get_competitor_competition_information = n => collection(n) (i => ({
   "organization_name" : randomData(1).company,
   "lead_number" : randomBool() ? randomInt(0, 100) : "N/A",
   "amount_owed" : randomInt(0, 100),
+  "pay_w_org" : randomBool(),
 }))
 
 const competitors = get_competitors(COMPETITORS)
