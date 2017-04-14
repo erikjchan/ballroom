@@ -7,7 +7,7 @@ import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import {Button, IconButton} from 'react-toolbox/lib/button';
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import { Link } from 'react-router'
 /*
 
