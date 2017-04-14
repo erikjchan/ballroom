@@ -91,6 +91,20 @@
 }
 
 /**
+Competitions Page Start
+*/
+#yourCompetitionsTable {
+  padding: 30px;
+}
+
+#otherCompetitionsTable {
+  padding: 30px;
+}
+/**
+Competitions Page End
+*/
+
+/**
 Edit Schedule Page
 Start
  */

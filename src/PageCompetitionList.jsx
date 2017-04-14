@@ -1,4 +1,4 @@
-import styles from "./style.css";
+import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
 import lib from './common/lib.js';
@@ -7,6 +7,7 @@ import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
+import Box from './common/Box.jsx'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -79,31 +80,43 @@ class PageCompetitionList extends React.Component {
   const expand_your_rows = (rows) => {
     for (var i = 0; i < rows.length; i++) {
       let temp = String(rows[i]['id']);
-      rows[i]['Select'] = <button className = {styles.search}
-        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0'); alert('Are you sure?') }}>Visit Page</button>;
+      rows[i]['Select'] = <button className = {style.search}
+        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0')}}>Visit Page</button>;
     }
     return rows;
   }
 
   return (
    	<Page ref="page" isAdmin={false}>
-      <div className = {styles.content}>
+      <div className = {style.content}>
        	<h1>Competitions Page</h1>
        	<div>
-       	  <h2>Your Competitions</h2>
-       	  <Table.Provider
-          	className = "pure-table pure-table-striped"
-          	columns = {yourColumns}>
-          	<Table.Header />
-          	<Table.Body
-              rows = {expand_your_rows(this.state.rows) || []}
-              rowKey = "id"
-            />
-      	  </Table.Provider>
+          <Box title={<div>Your Competitions</div>}
+            content = {
+              <div id={style.yourCompetitionsTable}>
+                <Table.Provider
+                  className = "pure-table pure-table-striped"
+                  columns = {yourColumns}
+                >
+                  <Table.Header />
+                  <Table.Body
+                    rows = {expand_your_rows(this.state.rows) || []}
+                    rowKey = "id"
+                  />
+                </Table.Provider>
+             </div>
+            }
+          />
         </div>
+        <hr />
       	<div>
-       	  <h2>Other Competitions</h2>
-          <CompetitionsTable />
+          <Box title={<div>Other Competitions</div>}
+            content = {
+              <div id={style.otherCompetitionsTable}>
+                <CompetitionsTable />
+              </div>
+            }
+          />
         </div>
      	</div>
     </Page>
