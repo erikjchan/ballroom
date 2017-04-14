@@ -107,11 +107,12 @@ Start
 }
 
 #saveChanges {
-
+  cursor: pointer;
 }
 
 #cancelChanges {
   margin-left: 30px;
+  cursor: pointer;
 }
 
 #dragAndDropWrapper {
@@ -214,6 +215,23 @@ Start
 
 .tableWrapper > thead th:last-child {
   border-right: solid black 1px;
+}
+
+.scheduleAddEventTBody td {
+  padding: 10px;
+}
+
+.scheduleAddEventTBody td:last-child > div {
+  text-align: center;
+  cursor: pointer;
+  border: solid black 1px;
+  box-shadow: 0px 3px #333333;
+  background-color: white;
+
+}
+
+.scheduleAddEventTBody td > select {
+  width: 100%;
 }
 
 .tableBody > tr {

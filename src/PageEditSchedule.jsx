@@ -4,7 +4,7 @@ import XSidebar from './common/XSidebar.jsx'
 import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
-import lib from './common/lib.js'
+import lib from './common/lib.js';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -22,27 +22,41 @@ class EditSchedule extends React.Component {
       <div id={style.titleContainer}>
         <h1>Schedule Editor</h1>
         <div id={style.buttonsContainer}>
-          <div id={style.saveChanges}>Save Changes</div>
-          <div id={style.cancelChanges}>Cancel</div>
+          <div id={style.saveChanges} onClick={
+            () => this.confirmGoToUrl("/competition/0/editschedule", "Are you sure you want to save changes?")  
+          }>Save Changes</div>
+          <div id={style.cancelChanges} onClick={
+            () => this.confirmGoToUrl("/admin/competition/0", "Are you sure you want to discard changes?")
+          }>Cancel</div>
         </div>
       </div>
       <div id={style.dragAndDropWrapper}>
         <div id={style.dragAndDropWrapperTopBar}>
           <div id={style.dragAndDropTitle}>Rounds</div>
-          <div id={style.dragAndDropAutosort}>
+          <div id={style.dragAndDropAutosort} onClick={() => this.confirmAutoSortRows()}>
             <div>Autosort</div>
           </div>
         </div>
           <div id={style.scheduleWrapper}>
-              <DragAndDropTable />
+              <DragAndDropTable ref="ddTable" />
           </div>
 
       </div>
     </Page>
   );
  }
+
+ confirmGoToUrl(url, message) {
+  if (confirm(message)) {
+    this.props.router.push(url);
+  }
+ }
+
+ confirmAutoSortRows() {
+  if(confirm("Are you sure you want to autosort the schedule?")) {
+    this.refs.ddTable.autoSortRows();
+  }
+ }
 }
 
 export default DragDropContext(HTML5Backend)(EditSchedule);
-
-

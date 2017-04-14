@@ -109,11 +109,11 @@ export default class DragAndDropTable extends React.Component {
           }
       ],
       rounds: ["Round 1", "Round 2", "Round 3", "Round 4", "Quarterfinals", "Semifinals", "Finals"],
-      selectedNumber: null,
-      selectedLevel: null,
-      selectedStyle: null,
-      selectedDance: null,
-      selectedRound: null
+      selectedNumber: "",
+      selectedLevel: "",
+      selectedStyle: "",
+      selectedDance: "",
+      selectedRound: ""
     };
 
 
@@ -152,20 +152,18 @@ export default class DragAndDropTable extends React.Component {
       method: resolve.nested
     })(rows);
 
-    var newRow = {};
-
-      var numberOptions = [];
-      for (let i = 1; i <= this.state.rows.length; i++) {
-          numberOptions.push(<option value={i}>{i}</option>);
-      }
-      var levelOptions = this.state.levels.map(level => (<option value={level}>{level}</option>));
-      var styleOptions = this.state.styles.map(style => (<option value={style.title}>{style.title}</option>));
-      var roundOptions = this.state.rounds.map(round => (<option value={round} onChange={() => this.setState({selectedRound: level})}>{round}</option>));
-      var danceOptions = null;
-      if (this.state.selectedStyle) {
-        const dances = this.state.styles.filter(style => this.state.selectedStyle == style.title)[0].dances;
-        danceOptions = dances.map(dance => (<option value={dance}>{dance}</option>));
-      }
+    var numberOptions = [];
+    for (let i = 1; i <= this.state.rows.length; i++) {
+        numberOptions.push(<option value={i}>{i}</option>);
+    }
+    var levelOptions = this.state.levels.map(level => (<option value={level}>{level}</option>));
+    var styleOptions = this.state.styles.map(style => (<option value={style.title}>{style.title}</option>));
+    var roundOptions = this.state.rounds.map(round => (<option value={round} onChange={() => this.setState({selectedRound: level})}>{round}</option>));
+    var danceOptions = null;
+    if (this.state.selectedStyle != "") {
+      const dances = this.state.styles.filter(style => this.state.selectedStyle == style.title)[0].dances;
+      danceOptions = dances.map(dance => (<option value={dance}>{dance}</option>));
+    }
 
 
     return (
@@ -178,18 +176,47 @@ export default class DragAndDropTable extends React.Component {
           headerRows={resolve.headerRows({ columns })}
           className={style.tableHeader}
         />
-        <tbody>
+        <tbody className={style.scheduleAddEventTBody}>
             <tr>
-              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedNumber: event.target.value})}>{numberOptions}</select></td>
-              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedLevel: event.target.value})}>{levelOptions}</select></td>
-              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedStyle: event.target.value})}>{styleOptions}</select></td>
-                {this.state.selectedStyle != null ? (
-                  <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedDance: event.target.value})}>{danceOptions}</select></td>
-                ) : (
-                  <td style={{padding: "10px"}}><select style={{width: "100%"}}></select></td>
-                )}
-              <td style={{padding: "10px"}}><select style={{width: "100%"}} onChange={(event) => this.setState({selectedRound: event.target.value})}>{roundOptions}</select></td>
-              <td style={{padding: "10px"}}><div onClick={() => this.addNewRow(newRow, rows)} style={{textAlign: "center", cursor: "pointer"}}>&#43;</div></td>
+              <td>
+              	<select value={this.state.selectedNumber} onChange={(event) => this.setState({selectedNumber: event.target.value})}>
+              		<option disabled value=""></option>
+              		{numberOptions}
+              	</select>
+              </td>
+              <td>
+              	<select value={this.state.selectedLevel} onChange={(event) => this.setState({selectedLevel: event.target.value})}>
+              		<option disabled value=""></option>
+              		{levelOptions}
+              	</select>
+              </td>
+              <td>
+              	<select value={this.state.selectedStyle} onChange={(event) => this.setState({selectedStyle: event.target.value})}>
+              		<option disabled value=""></option>
+              		{styleOptions}
+              	</select>
+              </td>
+              {this.state.selectedStyle != "" ? (
+                <td>
+                	<select value={this.state.selectedDance} onChange={(event) => this.setState({selectedDance: event.target.value})}>
+                		<option disabled value=""></option>
+                		{danceOptions}
+                	</select>
+                </td>
+              ) : (
+                <td>
+                	<select></select>
+                </td>
+              )}
+              <td>
+              	<select value={this.state.selectedRound} onChange={(event) => this.setState({selectedRound: event.target.value})}>
+              		<option disabled value=""></option>
+              		{roundOptions}
+              	</select>
+              </td>
+              <td>
+              	<div onClick={() =>this.addNewRow()}>&#43;</div>
+              </td>
             </tr>
           </tbody>
 
@@ -203,16 +230,36 @@ export default class DragAndDropTable extends React.Component {
     );
   }
 
-  addNewRow(newRow, rows) {
-    for (let i = 0; i < columns.length - 1; i++) {
-      let key = columns[i].property;
-      if (!(key in newRow)) {
-        return false;
-      }
+  addNewRow() {
+    const {
+    	selectedNumber,
+      selectedLevel,
+      selectedStyle,
+      selectedDance,
+      selectedRound,
+    } = this.state;
+    var rows = this.state.rows;
+    if (selectedNumber == "" || selectedLevel == "" 
+    		|| selectedStyle == "" || selectedDance == "" || selectedRound == "") {
+    	return false;
     }
-    newRow.id = rows.length;
-    rows.splice(newRow.order_number, 1, newRow);
-    this.setState(rows);
+    const newRow = {
+    	id: rows.length,
+    	order_number: selectedNumber,
+    	title: selectedDance,
+    	style: selectedStyle,
+    	level: selectedLevel,
+    	round: selectedRound
+    };
+    rows.splice(selectedNumber - 1, 0, newRow);
+    this.setState({
+    	rows: rows,
+    	selectedNumber: "",
+    	selectedLevel: "",
+    	selectedStyle: "",
+    	selectedDance: "",
+    	selectedRound: ""
+    });
     console.log(this.state.rows);
   }
 
@@ -235,6 +282,9 @@ export default class DragAndDropTable extends React.Component {
   }
 
   onRemove(id) {
+  	if (!confirm("Are you sure you want to delete this?")) {
+  		return false;
+  	}
     const rows = cloneDeep(this.state.rows);
     const idx = findIndex(rows, { id });
 
@@ -242,5 +292,65 @@ export default class DragAndDropTable extends React.Component {
     rows.splice(idx, 1);
 
     this.setState({ rows });
+  }
+
+  autoSortRows() {
+  	var _this = this;
+  	var rows = this.state.rows;
+  	var swapOrderNumber = function(a, b, order) {
+  		if (order < 0 || order > 0) {
+  			const temp = a.order_number;
+  			a.order_number = b.order_number;
+  			b.order_number = temp;
+  		}
+  	};
+  	rows.sort(function(a, b) {
+  		if (a.style != b.style) {
+  			const styles = ["Smooth", "Rhythm", "Standard", "Latin"];
+  			const order = styles.indexOf(a.style) - styles.indexOf(b.style);
+  			swapOrderNumber(a, b, order);
+  			return order;
+  		}
+  		if (a.level != b.level) {
+  			const order = _this.state.levels.indexOf(a.level) - _this.state.levels.indexOf(b.level);
+  			swapOrderNumber(a, b, order);
+  			return order;
+  		}
+  		if (a.title != b.title) {
+  			if (a.title < b.title) {
+  				swapOrderNumber(a, b, -1);
+  				return -1;
+  			}
+  			if (a.title > b.title) {
+  				swapOrderNumber(a, b, 1);
+  				return 1;
+  			}
+  			return 0;
+  		}
+  		if (a.round != b.round) {
+  			const a_round = parseInt(a.round);
+  			const b_round = parseInt(b.round);
+  			if (!isNaN(a_round) && !isNaN(b_round)) {
+  				const order = a_round - b_round;
+  				swapOrderNumber(a, b, order);
+  				return order;
+  			} 
+  			if (!isNaN(a_round)) {
+  				swapOrderNumber(a, b, -1);
+  				return -1;
+  			} 
+  			if (!isNaN(b_round)) {
+  				swapOrderNumber(a, b, 1);
+  				return 1;
+  			}
+  			const rounds = ["Quarterfinals", "Semifinals", "Finals"];
+  			const order = rounds.indexOf(a.round) - rounds.indexOf(b.round);
+  			swapOrderNumber(a, b, order);
+  			return order;
+  		}
+  		return 0;
+  	});
+  	this.setState({rows});
+  	console.log(rows);
   }
 }
