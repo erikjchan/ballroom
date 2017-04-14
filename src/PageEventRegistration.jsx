@@ -185,7 +185,6 @@ export default class PageEventRegistration extends React.Component {
       background: 'rgba(255, 255, 255, 0.9)',
       padding: '2px 0',
       fontSize: '90%',
-      position: 'fixed',
       overflow: 'auto',
       maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
       zIndex: 200
