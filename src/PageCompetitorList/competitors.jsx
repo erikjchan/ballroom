@@ -217,7 +217,6 @@ class EasyDemo extends React.Component {
               className={style.tableWrapper}
               columns={columns}
               components={components}
-              width={"100%"}
             >
               <Table.Header
                 className={style.tableHeader}

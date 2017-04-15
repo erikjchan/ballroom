@@ -91,6 +91,20 @@
 }
 
 /**
+Competitions Page Start
+*/
+#yourCompetitionsTable {
+  padding: 30px;
+}
+
+#otherCompetitionsTable {
+  padding: 30px;
+}
+/**
+Competitions Page End
+*/
+
+/**
 Edit Schedule Page
 Start
  */
@@ -247,6 +261,10 @@ Start
 
 .tableWrapper > thead th:last-child {
   border-right: solid black 1px;
+}
+
+.tableWrapper > thead input {
+  width: 100%;
 }
 
 .scheduleAddEventTBody td {

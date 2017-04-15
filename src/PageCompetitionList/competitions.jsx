@@ -165,7 +165,6 @@ class CompetitionsTable extends React.Component {
 	  const tableHeight = 40 * (rows.length)
 
 	  return (
-	    <div>
         <Table.Provider
           className = {style.tableWrapper}
           columns = {columns}
@@ -186,7 +185,6 @@ class CompetitionsTable extends React.Component {
             className={style.tableBody} 
           />
         </Table.Provider>
-	    </div>
       );
   }
 
