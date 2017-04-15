@@ -93,7 +93,7 @@ class PageCompetitionList extends React.Component {
            <Box title="Your Competitions"
            content = {
        	  <Table.Provider
-          	className = "pure-table pure-table-striped"
+          	className = "pure-table pure-table-striped event-table"
           	columns = {yourColumns}>
           	<Table.Header />
           	<Table.Body
