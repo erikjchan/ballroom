@@ -3,6 +3,7 @@ import React from 'react';
 import * as Table from 'reactabular-table';
 import lib from './common/lib.js';
 import Page from './Page.jsx';
+import Box from './common/Box.jsx'
 import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
@@ -90,7 +91,8 @@ class PageCompetitionList extends React.Component {
       <div className = {styles.content}>
        	<h1>Competitions Page</h1>
        	<div>
-       	  <h2>Your Competitions</h2>
+           <Box title="Your Competitions"
+           content = {
        	  <Table.Provider
           	className = "pure-table pure-table-striped"
           	columns = {yourColumns}>
@@ -100,10 +102,11 @@ class PageCompetitionList extends React.Component {
               rowKey = "id"
             />
       	  </Table.Provider>
+           } />
         </div>
       	<div>
-       	  <h2>Other Competitions</h2>
-          <CompetitionsTable />
+          <Box title="Other Competitions"
+          content ={ <CompetitionsTable />}/>
         </div>
      	</div>
     </Page>

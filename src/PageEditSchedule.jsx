@@ -5,6 +5,7 @@ import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
+import Box from './common/BoxAdmin.jsx'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -30,18 +31,19 @@ class EditSchedule extends React.Component {
           }>Cancel</div>
         </div>
       </div>
-      <div id={style.dragAndDropWrapper}>
-        <div id={style.dragAndDropWrapperTopBar}>
-          <div id={style.dragAndDropTitle}>Rounds</div>
-          <div id={style.dragAndDropAutosort} onClick={() => this.confirmAutoSortRows()}>
-            <div>Autosort</div>
-          </div>
-        </div>
-          <div id={style.scheduleWrapper}>
-              <DragAndDropTable ref="ddTable" />
-          </div>
-
-      </div>
+        <Box title={
+                    <div>
+                      <div id={style.dragAndDropTitle}>Rounds</div>
+                      <button id={style.dragAndDropAutosort} onClick={() => this.confirmAutoSortRows()}>
+                          Autosort
+                      </button>
+                    </div>
+                    }
+            content = {
+                      <div id={style.scheduleWrapper}>
+                          <DragAndDropTable ref="ddTable" />
+                      </div>} 
+        />
     </Page>
   );
  }

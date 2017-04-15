@@ -272,7 +272,7 @@ export default class PageEventRegistration extends React.Component {
             </RadioGroup>
           </span>
               }
-            
+        <hr />
         <h2>Partner's email</h2>
 
         <Autocomplete
@@ -309,7 +309,6 @@ export default class PageEventRegistration extends React.Component {
       <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register!</button></p>
               </div>
         }/>
-      <hr />
 
       <Box title={<div>You're already registered to these:</div>}
       content = {

@@ -5,6 +5,7 @@ import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
+import Box from './common/BoxAdmin.jsx'
 
 
 import { DragDropContext } from 'react-dnd';
@@ -27,14 +28,14 @@ class CompetitorsList extends React.Component {
           <div id={style.saveChanges}>See Organizations</div>
         </div>
       </div>
-      <div id={style.dragAndDropWrapper}>
-        <div id={style.dragAndDropWrapperTopBar}>
-          <div id={style.dragAndDropTitle}>Competitors</div>
-        </div>
+      <Box title="Competitors"
+      content=
+      {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>
           <SearchTable data={this.props.location.state}/>
         </div>
-      </div>
+      </div>}
+      />
     </Page>
   );
  }

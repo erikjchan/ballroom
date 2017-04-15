@@ -4,6 +4,7 @@ import * as Table from 'reactabular-table';
 import EventRunningInfo from './PageRunCompetition/event.jsx'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
+import Box from './common/BoxAdmin.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
@@ -242,7 +243,7 @@ export default class RunCompetition extends React.Component {
     const current_round = this.getCurrentRound() || lib.flat_loading_proxy;
 
     const past_rounds_table = (this.getPastRounds().length === 0)
-      ? <div className="container-content"> Empty </div>
+      ? <div className={style.lines}> <h2>Empty</h2> </div>
       : <Table.Provider
           style={{width: '100%'}}
           className="pure-table pure-table-striped"
@@ -265,15 +266,16 @@ export default class RunCompetition extends React.Component {
 
         <h1>Running: {this.state.competition.Name}</h1>
 
-
-        <div className="container admin">
+       <Box title={"Past Rounds"}
+            content ={past_rounds_table} />
+        {/*<div className="container admin">
           <h2>Past Rounds</h2>
           {past_rounds_table}
-        </div>
+        </div>*/}
 
-        <div className="container admin">
-          <h2>Current Round</h2>
-          <div className="container-content">
+       <Box title={"Current Round"}
+            content ={
+          <div className={style.lines}>
             <h3>{current_round.name}</h3>
 
             <div>
@@ -289,14 +291,19 @@ export default class RunCompetition extends React.Component {
               <button onClick={this.prevRound.bind(this)}> Previous Round </button>
               <button onClick={this.nextRound.bind(this)}> Next Round </button>
             </span>
-          </div>
-        </div>
+          </div>} />
 
-
-        <div className="container admin">
+        {/*<div className="container admin">
+          <h2>Current Round</h2>*/}
+        
+        <Box
+          title = "Upcoming rounds"
+          content = {future_rounds_table}
+        />
+        {/*<div className="container admin">
           <h2>Upcoming rounds</h2>
           {future_rounds_table}
-        </div>
+        </div>*/}
 
         <Link to={`/competition/${this.competition_id}/editschedule`}>Edit schedule</Link>
 

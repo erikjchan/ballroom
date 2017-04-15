@@ -160,20 +160,25 @@ export default class PageCompetition extends React.Component {
              <Box title={<div className={styles.titleContainers}><span>Your Events</span> 
                              
              </div>} 
-                   content={ <EventTable events={this.state.competitor_events} />}/>
+                   content={<div> 
+                                <div className={styles.eventtable_containers}>
+                                <EventTable events={this.state.competitor_events} />
+                                </div>
+                              <div className = {styles.comp_containers}>
+                              <div className = {styles.addeditBtns}>
+                              <button 
+                                className={styles.editBtns} 
+                                onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+                                  Add/Edit Event
+                              </button>
+                            </div>
+                              </div>              
+                   </div>
+                   }/>
             </div>
 
-    <div className={styles.separator}></div>
-          <div className = {styles.comp_containers}>
-          <div className = {styles.addeditBtns}>
-          <button 
-            className={styles.editBtns} 
-            onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
-              Add/Edit Event
-          </button>
-         </div>
-          </div>
-          </div>
+            <div className={styles.separator}></div>
+      </div>
                   
       </Page>
 
