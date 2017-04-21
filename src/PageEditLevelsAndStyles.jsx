@@ -27,6 +27,7 @@ class EditLevelsAndStyles extends React.Component {
             () => this.confirmGoToUrl("/competition/0/editlevelsandstyles", "Are you sure you want to save changes?")  
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
+            () => this.confirmGoToUrl("/competition/0/editevents", "Are you sure you wish to leave this page without saving?")
           }>Define Events</div>
         </div>
       </div>
