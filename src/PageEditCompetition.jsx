@@ -3,7 +3,7 @@ import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
-import Box from './common/Box.jsx'
+import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
