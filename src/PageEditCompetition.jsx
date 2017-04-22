@@ -45,7 +45,8 @@ export default class PageEditCompetition extends React.Component {
  render() {
    if (this.state.competition){
     var comp_name = this.state.competition.Name;
-    var comp_info = (<form>
+    var comp_info = (<form className = {styles.long_form}>
+        <div>
                 <div className = {styles.form_row}>
                     <label className = {styles.long_label}>
                         Competition Name: <br />
@@ -67,18 +68,18 @@ export default class PageEditCompetition extends React.Component {
                     </label>
                 </div>
                 <div className = {styles.form_row}>
-                    <label className = {styles.three}>
+                    <label >
                         Early Price:<br />
-                        <input type="number" name="early_price" />
+                        <input className = {styles.price} type="number" name="early_price" />
                     </label>
 
-                    <label className = {styles.three}>
+                    <label>
                         Regular Price:<br />
-                        <input type="number" name="regular_price" />
+                        <input className = {styles.price} type="number" name="regular_price" />
                     </label>
-                    <label className = {styles.three}>
+                    <label>
                         Late price:<br />
-                        <input type="number" name="late_price" />
+                        <input  className = {styles.price} type="number" name="late_price" />
                     </label>
                 </div>
                 <div className = {styles.form_row}>
@@ -104,6 +105,7 @@ export default class PageEditCompetition extends React.Component {
                 <div className = {styles.form_row}>
                     <input className = {styles.competitionEditBtns} type="submit" value="Edit Levels and Styles" />
                     <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
+                </div>
                 </div>
             </form>)
 

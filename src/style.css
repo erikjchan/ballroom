@@ -600,8 +600,11 @@ End
 
 /****************************************** Edit Competition Page *****************************************/
 form{
-  height:100vh;
   margin:20px;
+}
+
+.long_form{
+  height:100vh;
 }
 .form_row{
   /*margin-top:10px;*/
@@ -616,8 +619,9 @@ input{
 input[type = "text"]{
   width:100%;
 }
-input[type="number"]{
-  width:50%;
+
+.price{
+  width:80%;
 }
 input[type="date"]{
   width:90%;
@@ -659,6 +663,29 @@ label{
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
+}
+
+.judgeEditBtns{
+  margin-top: 20px;
+  margin-right: 50px;
+  margin-bottom:20px;
+  float: right;
+  display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 

@@ -14,6 +14,7 @@ import CompetitorsList      from '../PageCompetitorList.jsx'
 import EditProfile          from '../PageEditProfile.jsx'
 import EnterCallbacks       from '../PageEnterCallbacks.jsx'
 import EditCompetition      from '../PageEditCompetition.jsx'
+import EditOfficial         from '../PageEditOfficial.jsx'
 
 const routes = {
   'home'                                                       : HomePage,
@@ -27,6 +28,7 @@ const routes = {
   'editprofile'                                                : EditProfile,
   'competition/:competition_id/round/:round_id/entercallbacks' : EnterCallbacks,
   'editcompetition/:competition_id'                            : EditCompetition,
+  'editofficial/:competition_id'                               : EditOfficial, 
 }
 
 export default (
