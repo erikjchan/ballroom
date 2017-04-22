@@ -19,6 +19,7 @@ export default class HomePage extends React.Component {
         <li><Link to='competition/0/competitorslist'  >SeeCompetitors</Link></li>
         <li><Link to='competition/0/run'              >RunCompetition</Link></li>
         <li><Link to='editprofile'                    >EditProfile</Link></li>
+        <li><Link to='editcompetition/0'              >EditCompetition</Link></li>
      </Page>
    );
  }

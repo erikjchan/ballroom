@@ -159,7 +159,8 @@ const routes = [
   "/competition/:competition_id/:competitor_id",
   "/competitions",
   "/admin/competition/:competition_id",
-  '/editprofile'
+  '/editprofile',
+  '/editcompetition/:competition_id'
 ]
 
 // Serve index page
