@@ -122,7 +122,8 @@ export default class EventTable extends React.Component {
   }
     var levelOptions = this.state.levels.map(level => (<option key={"level_" + level} value={level}>{level}</option>));
     var styleOptions = this.state.styles.map(style => (<option key={"style_" + style} value={style}>{style}</option>));
-    var danceOptions = <input type="text" ref="input" value={this.state.selectedDance} onChange={(event) => this.setState({selectedDance: event.target.value})}/>;
+    var danceOptions = <input type="text" ref="input" style = {{width: '100%'}}
+                              value={this.state.selectedDance} onChange={(event) => this.setState({selectedDance: event.target.value})}/>;
 
     return (
       <Table.Provider

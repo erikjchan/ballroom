@@ -104,7 +104,7 @@ export default class LevelTable extends React.Component {
                   <div width ='100' />
               </td>
               <td>
-                <input type="text" ref="input" value={this.state.userData} onChange={(event) => this.setState({userData: event.target.value})}/>
+                <input type="text" ref="input" value={this.state.userData} onChange={(event) => this.setState({userData: event.target.value})} style = {{width: '100%'}}/>
               </td>
               <td>
               	<div onClick={() =>this.addNewRow()} width ={100}>&#43;</div>
