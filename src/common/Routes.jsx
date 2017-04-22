@@ -15,12 +15,16 @@ import EditProfile          from '../PageEditProfile.jsx'
 import EnterCallbacks       from '../PageEnterCallbacks.jsx'
 import EditCompetition      from '../PageEditCompetition.jsx'
 import EditOfficial         from '../PageEditOfficial.jsx'
+import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
+import EditEvents           from '../PageEditEvents.jsx'
 
 const routes = {
   'home'                                                       : HomePage,
   'competition/:competition_id/eventregistration'              : EventRegistration,
   'competition/:competition_id/editschedule'                   : EditSchedule,
   'competition/:competition_id/run'                            : RunCompetition,
+  'competition/:competition_id/editlevelsandstyles'            : EditLevelsAndStyles,
+  'competition/:competition_id/editevents'                     : EditEvents,
   'competition/:competition_id/competitorslist'                : CompetitorsList,
   'competition/:competition_id/:competitor_id'                 : CompetitionPage,
   'competitions'                                               : CompetitionListPage,
