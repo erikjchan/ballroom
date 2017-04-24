@@ -28,7 +28,7 @@
     line-height: 55px;
 }
 
-.nav_link {
+:global(.nav_link) {
     font-size: 17px;
     text-decoration: none;
     color: #fff;

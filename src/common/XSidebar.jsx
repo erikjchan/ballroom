@@ -1,6 +1,7 @@
 import styles from "./XSidebar.css"
 import React from 'react'
 import { Link } from 'react-router'
+import { login, logoutUser } from '../actions'
 
 const competitor_links = [
     {
@@ -21,11 +22,6 @@ const competitor_links = [
     {
         name: "Explore Competitions",
         to: "/competitions",
-        isTopOfList: false
-    },
-    {
-        name: "Logout",
-        to: "#",
         isTopOfList: false
     }
 ]
@@ -60,11 +56,6 @@ const admin_links = [
         name: "New Competition",
         to: "/competitions",
         isTopOfList: false
-    },
-    {
-        name: "Logout",
-        to: "#",
-        isTopOfList: false
     }
 ]
 
@@ -80,7 +71,7 @@ export default class OurSidebar extends React.Component {
 
   render() {
     var sidebarContent = <b>Sidebar content</b>;
-
+    const { isAuthenticated, isAdmin } = this.props
     return (
       <div className = {styles.nav}>
         <div className = {styles.circle}>
@@ -91,7 +82,24 @@ export default class OurSidebar extends React.Component {
         </div>
         <div className = {styles.sub_menu_bottom}>
             {this.props.isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
+
+                { !isAuthenticated &&
+                    <button onClick={() => window.dispatch(login())} className="btn btn-primary">
+                        Login
+                    </button>
+                }
+
+                { isAuthenticated &&
+                    <button onClick={() => window.dispatch(logoutUser())} className="btn btn-primary">
+                        Logout
+                    </button>
+                }
+
+                { isAdmin && <pre>(admin)</pre> }
+        
         </div>
+
+
       </div>
     );
   }

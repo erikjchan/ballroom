@@ -2,11 +2,12 @@ import styles from "./base.css"
 import React from 'react'
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import XSidebar from './common/XSidebar.jsx'
+import { connect } from 'react-redux'
 
 /**
  * Standard page layout and utilities all pages might need.
  */
-export default class Page extends React.Component {
+class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +46,11 @@ export default class Page extends React.Component {
     return (
       <section className={styles.container}>
 
-        <XSidebar isAdmin={this.props.isAdmin} />
+        <XSidebar
+          isAdmin={this.props.isAdmin}
+          isAuthenticated={this.props.isAuthenticated}
+          isAdmin={this.props.isAdmin}
+          />
 
         <div className={styles.content}>
           {this.props.children}
@@ -64,3 +69,19 @@ export default class Page extends React.Component {
     );
   }
 }
+
+
+export default connect((state) => {
+
+  const { quotes, auth } = state
+  const { quote, authenticated } = quotes
+  const { isAuthenticated, errorMessage, profile, isAdmin } = auth
+  return {
+    // quote,
+    // isSecretQuote: authenticated,
+    isAuthenticated,
+    isAdmin,
+    // errorMessage
+  }
+
+})(Page)
