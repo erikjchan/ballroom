@@ -2,8 +2,10 @@ import styles from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
 import Input from 'react-toolbox/lib/input';
-import Button from 'react-toolbox/lib/button';
 
+
+    // editProfileWidget.init(user_token);
+    
 
 export default class PageEditProfile extends React.Component {
 
@@ -22,39 +24,68 @@ export default class PageEditProfile extends React.Component {
     this.setState({...this.state, [name]: value});
   };
 
+  saveChanges () {
+
+    let id_token = localStorage.getItem('id_token');
+    if (!id_token) return null;
+
+      const auth_domain = 'mrkev.auth0.com'
+      window.editProfileWidget = new Auth0EditProfileWidget('editProfileContainer', { domain: auth_domain }, [
+        { label: "Name", type:"text", attribute:"name", 
+          validation: (name) => (name.length > 10 ? 'The name is too long' : null)
+        },
+
+        // { label: "Lastname", type:"text", attribute:"lastname" },
+
+        // { label: "BirthDay", type:"date", attribute:"birthday" },
+        { label: "hobby", type:"text", attribute:"hobby"}
+        
+        // { label: "Type", type:"select", attribute:"account_type", 
+        //   options:[
+        //     { value: "type_1", text:"Type 1"},
+        //     { value: "type_2", text:"Type 2"},
+        //     { value: "type_3", text:"Type 3"}
+        //   ]
+        // }
+    ]);
+
+    editProfileWidget.init(id_token);
+
+  }
+
 
   render() {
+
+
+
     return (
      <Page ref="page">
         <h1>Edit Profile</h1>
-        <Input
+        <b>First Name</b>
+        <div id='editProfileContainer'></div>
+        <input
           type='text'
-          label='First Name'
           name='first_name'
-          icon='circle'
           value={this.state.first_name}
           onChange={this.handleChange.bind(this, 'first_name')}
-          maxLength={16} />
-        <Input
+          maxLength={16} /><br/>
+        <b>Last Name</b>
+        <input
           type='text'
-          label='Last Name'
           name='last_name'
-          icon='circle'
           value={this.state.last_name}
-          onChange={this.handleChange.bind(this, 'last_name')} />
-        <Input 
+          onChange={this.handleChange.bind(this, 'last_name')} /><br/>
+        <b>Email address</b>
+        <input 
           type='email' 
-          label='Email address' 
-          icon='email' 
           value={this.state.email} 
-          onChange={this.handleChange.bind(this, 'email')} />
-        <Input 
+          onChange={this.handleChange.bind(this, 'email')} /><br/>
+        <b>Mailing Address</b>
+        <input 
           type='text' 
-          label='Mailing Address'
           value={this.state.mailing_address} 
-          onChange={this.handleChange.bind(this, 'mailing_address')}
-          icon={<span>MA</span>} />
-        <Button label='Save' primary />
+          onChange={this.handleChange.bind(this, 'mailing_address')} />
+        <button onClick={this.saveChanges.bind(this)}>Save</button>
       </Page>
     );
   }
