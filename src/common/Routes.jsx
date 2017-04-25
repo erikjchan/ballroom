@@ -13,18 +13,22 @@ import CompetitionHomeAdmin from '../PageCompetitionHomeAdmin.jsx'
 import CompetitorsList      from '../PageCompetitorList.jsx'
 import EditProfile          from '../PageEditProfile.jsx'
 import EnterCallbacks       from '../PageEnterCallbacks.jsx'
+import EditCompetition      from '../PageEditCompetition.jsx'
+import EditOfficial         from '../PageEditOfficial.jsx'
 
 const routes = {
   'home'                                                       : HomePage,
   'competition/:competition_id/eventregistration'              : EventRegistration,
   'competition/:competition_id/editschedule'                   : EditSchedule,
   'competition/:competition_id/run'                            : RunCompetition,
-  'competition/:competition_id/competitorslist'   : CompetitorsList,
+  'competition/:competition_id/competitorslist'                : CompetitorsList,
   'competition/:competition_id/:competitor_id'                 : CompetitionPage,
   'competitions'                                               : CompetitionListPage,
   'admin/competition/:competition_id'                          : CompetitionHomeAdmin,
   'editprofile'                                                : EditProfile,
   'competition/:competition_id/round/:round_id/entercallbacks' : EnterCallbacks,
+  'editcompetition/:competition_id'                            : EditCompetition,
+  'editofficial/:competition_id'                               : EditOfficial, 
 }
 
 export default (
