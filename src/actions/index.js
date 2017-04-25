@@ -15,12 +15,11 @@ const lockError   = (err) => ({ type: LOCK_ERROR, err })
 
 // Opens the Lock widget and
 // dispatches actions along the way
-export function login() {
+export const login = () => {
   const lock = new Auth0Lock('Dl30IRGbXkkPlENLT4nR9QIWLHiMAxxF', 'mrkev.auth0.com');
-  return (dispatch) => {
+  return dispatch => {
     lock.show((err, profile, token) => {
-      if(err) {
-        console.error(err)
+      if (err) { console.error(err)
         dispatch(lockError(err))
         return
       }
@@ -44,14 +43,11 @@ const requestLogout = () => ({ type: LOGOUT_REQUEST, isFetching: true, isAuthent
 const receiveLogout = () => ({ type: LOGOUT_SUCCESS, isFetching: false, isAuthenticated: false})
 
 // Logs the user out
-export function logoutUser() {
-  return dispatch => {
-    dispatch(requestLogout())
-    localStorage.removeItem('id_token')
-    dispatch(receiveLogout())
-  }
+export const logoutUser = () => dispatch => {
+  dispatch(requestLogout())
+  localStorage.removeItem('id_token')
+  dispatch(receiveLogout())
 }
-
 
 export const QUOTE_REQUEST = 'QUOTE_REQUEST'
 export const QUOTE_SUCCESS = 'QUOTE_SUCCESS'
