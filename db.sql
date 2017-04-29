@@ -64,7 +64,7 @@ ALTER TABLE affiliation OWNER TO erikchan;
 
 CREATE TABLE callback (
     id integer NOT NULL,
-    "timestamp" timestamp without time zone,
+    "timestamp" timestamp with time zone,
     judgeid integer,
     leadcompetitornumber integer,
     roundid integer,
@@ -86,12 +86,12 @@ CREATE TABLE competition (
     earlyprice numeric(6,2),
     regularprice numeric(6,2),
     lateprice numeric(6,2),
-    startdate timestamp without time zone,
-    enddate timestamp without time zone,
-    regstartdate timestamp without time zone,
-    earlyregdeadline timestamp without time zone,
-    regularregdeadline timestamp without time zone,
-    lateregdeadline timestamp without time zone,
+    startdate timestamp with time zone,
+    enddate timestamp with time zone,
+    regstartdate timestamp with time zone,
+    earlyregdeadline timestamp with time zone,
+    regularregdeadline timestamp with time zone,
+    lateregdeadline timestamp with time zone,
     compadmin character varying(100),
     currenteventid integer,
     description character varying(1000)
@@ -178,7 +178,7 @@ CREATE TABLE partnership (
     competitionid integer,
     number integer,
     calledback boolean,
-    "timestamp" timestamp without time zone
+    "timestamp" timestamp with time zone
 );
 
 
@@ -191,7 +191,7 @@ ALTER TABLE partnership OWNER TO erikchan;
 CREATE TABLE paymentrecord (
     id integer NOT NULL,
     competitionid integer,
-    "timestamp" timestamp without time zone,
+    "timestamp" timestamp with time zone,
     competitorid integer,
     amount numeric(6,2),
     online boolean,
