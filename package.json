@@ -61,6 +61,7 @@
     "ip": "^1.1.5",
     "json-pretty": "0.0.1",
     "lodash": "^4.17.4",
+    "pg": "^6.1.5",
     "phrase-generator": "^1.0.0",
     "prettyjson": "^1.2.1",
     "random-datetime": "^1.0.1",

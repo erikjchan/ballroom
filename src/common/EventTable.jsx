@@ -58,7 +58,7 @@ export default class YourEvents extends React.Component {
       {
         property: 'title',
         header: {
-          label: 'Title',
+          label: 'Dance(s)',
           sortable: true,
           resizable: true
         }
