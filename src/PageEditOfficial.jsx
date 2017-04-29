@@ -7,8 +7,9 @@ import Box from './common/BoxAdmin.jsx'
 import EventTable from './common/OfficialTable.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
+import connection from './common/connection'
 
-export default class EditOfficial extends React.Component {
+class EditOfficial extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -77,7 +78,7 @@ export default class EditOfficial extends React.Component {
                 <Table.Body rows={this.state.officials.slice(0,this.state.officials.length)} rowKey="id" />
                 </Table.Provider>*/
 
-            return (<Page ref="page" isAdmin={true}>
+            return (<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
 
                 <h1>Edit Official: {this.state.competition.Name}</h1>
                 <Box title={"Add Official"}
@@ -148,3 +149,4 @@ export default class EditOfficial extends React.Component {
 }
 
 
+export default connection(EditOfficial)

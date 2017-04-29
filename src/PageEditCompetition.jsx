@@ -7,10 +7,10 @@ import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
-
+import connection from './common/connection'
 
 // editcompetition/:competition_id
-export default class PageEditCompetition extends React.Component {
+class PageEditCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -146,7 +146,7 @@ export default class PageEditCompetition extends React.Component {
     ]
 
     return (
-      <Page ref="page">
+      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
           <div className={styles.titles}>
             <p>{comp_name}</p>
           </div>
@@ -172,3 +172,5 @@ export default class PageEditCompetition extends React.Component {
   }
  }
 }
+
+export default connection(PageEditCompetition)

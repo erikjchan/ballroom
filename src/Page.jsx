@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 /**
  * Standard page layout and utilities all pages might need.
  */
-class Page extends React.Component {
+export default class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,17 +43,20 @@ class Page extends React.Component {
   }}
 
   render () {
+    const { profile, isAuthenticated } = this.props.auth
+    const { children } = this.props
+
     return (
       <section className={styles.container}>
 
         <XSidebar
-          isAdmin={this.props.isAdmin}
-          isAuthenticated={this.props.isAuthenticated}
-          isAdmin={this.props.isAdmin}
+          profile={profile}
+          isAdmin={profile && profile.roles.admin }
+          isAuthenticated={ isAuthenticated}
           />
 
         <div className={styles.content}>
-          {this.props.children}
+          {children}
         </div>
 
         <Snackbar
@@ -69,19 +72,3 @@ class Page extends React.Component {
     );
   }
 }
-
-
-export default connect((state) => {
-
-  const { quotes, auth } = state
-  const { quote, authenticated } = quotes
-  const { isAuthenticated, errorMessage, profile, isAdmin } = auth
-  return {
-    // quote,
-    // isSecretQuote: authenticated,
-    isAuthenticated,
-    isAdmin,
-    // errorMessage
-  }
-
-})(Page)

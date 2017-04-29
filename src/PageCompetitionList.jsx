@@ -8,6 +8,7 @@ import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/Box.jsx'
+import connection from './common/connection'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -87,7 +88,7 @@ class PageCompetitionList extends React.Component {
   }
 
   return (
-   	<Page ref="page" isAdmin={false}>
+   	<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
       <div className = {style.content}>
        	<h1>Competitions Page</h1>
            <Box title="Your Competitions"
@@ -117,4 +118,4 @@ class PageCompetitionList extends React.Component {
    );
   }
 }
-export default DragDropContext(HTML5Backend)(PageCompetitionList);
+export default connection(DragDropContext(HTML5Backend)(PageCompetitionList))

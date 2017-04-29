@@ -46,6 +46,7 @@ const receiveLogout = () => ({ type: LOGOUT_SUCCESS, isFetching: false, isAuthen
 export const logoutUser = () => dispatch => {
   dispatch(requestLogout())
   localStorage.removeItem('id_token')
+  localStorage.removeItem('profile')
   dispatch(receiveLogout())
 }
 
