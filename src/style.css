@@ -716,6 +716,14 @@ label{
   margin: 0px;
 }
 
+:global(.container h4) {
+  margin: 0px;
+}
+
+:global(h5) {
+  margin: 3px;
+}
+
 :global(.container h2) {
   padding: 4px 6px;
   margin: 0px;
