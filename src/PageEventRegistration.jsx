@@ -208,10 +208,12 @@ export default class PageEventRegistration extends React.Component {
               <RadioButton label='Gold' value='Gold'/>
               <RadioButton label='Open' value='Open'/>
             </RadioGroup>
+            <br/>
           </span>
         } 
 
         { show_style && <span>
+            <br/>
             <h2>Style</h2>
             <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
               <RadioButton label='Smooth' value='Smooth'/>
@@ -219,9 +221,11 @@ export default class PageEventRegistration extends React.Component {
               <RadioButton label='Rhythm' value='Rhythm'/>
               <RadioButton label='Latin' value='Latin'/>
             </RadioGroup>
+            <br/>
           </span>
         }
-
+        {<div>
+          <br/>
         { show_smooth && <span>
             <h2>Event</h2>
             <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
@@ -262,15 +266,20 @@ export default class PageEventRegistration extends React.Component {
             </RadioGroup>
           </span>
               }
+          <br/>
+        </div>}
 
               { show_leading && <span>
+                 <br/>
             <h3>Are you leading or following?</h3>
             <RadioGroup name='comic' value={this.state.isLeading} onChange={this.handleLeadChange}>
               <RadioButton label='Leading' value='Leading'/>
               <RadioButton label='Following' value='Following'/>
             </RadioGroup>
+            <br/>
           </span>
               }
+        <br/>
         <hr />
         <h2>Partner's email</h2>
 
