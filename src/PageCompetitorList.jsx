@@ -6,7 +6,7 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
 import Box from './common/BoxAdmin.jsx'
-
+import connection from './common/connection'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -21,7 +21,7 @@ class CompetitorsList extends React.Component {
  render() {
   console.log(this.props.location.state);
   return (
-    <Page ref="page" isAdmin={true}>
+    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
       <div id={style.titleContainer}>
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>
@@ -41,6 +41,6 @@ class CompetitorsList extends React.Component {
  }
 }
 
-export default DragDropContext(HTML5Backend)(CompetitorsList);
+export default connection(DragDropContext(HTML5Backend)(CompetitorsList))
 
 

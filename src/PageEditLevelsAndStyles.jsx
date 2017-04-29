@@ -6,7 +6,7 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
 import Box from './common/BoxAdmin.jsx'
-
+import connection from './common/connection'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -19,7 +19,7 @@ class EditLevelsAndStyles extends React.Component {
 
  render() {
   return (
-    <Page ref="page" isAdmin={true}>
+    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
       <div id={style.titleContainer}>
         <h1>Define Levels and Styles</h1>
         <div id={style.buttonsContainer}>
@@ -80,4 +80,4 @@ class EditLevelsAndStyles extends React.Component {
  }
 }
 
-export default DragDropContext(HTML5Backend)(EditLevelsAndStyles);
+export default connection(DragDropContext(HTML5Backend)(EditLevelsAndStyles))

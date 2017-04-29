@@ -71,17 +71,17 @@ export default class OurSidebar extends React.Component {
 
   render() {
     var sidebarContent = <b>Sidebar content</b>;
-    const { isAuthenticated, isAdmin } = this.props
+    const { isAuthenticated, isAdmin, profile } = this.props
     return (
       <div className = {styles.nav}>
         <div className = {styles.circle}>
           <p>EU</p>
         </div>
         <div className = {styles.sub_menu_top}>
-            {this.props.isAdmin ? this.generateLinks(admin_links, true) : this.generateLinks(competitor_links, true)}
+            { isAdmin ? this.generateLinks(admin_links, true) : this.generateLinks(competitor_links, true)}
         </div>
         <div className = {styles.sub_menu_bottom}>
-            {this.props.isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
+            { isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
 
                 { !isAuthenticated &&
                     <button onClick={() => window.dispatch(login())} className="btn btn-primary">
