@@ -144,7 +144,8 @@ CREATE TABLE judge (
     token character varying(100),
     firstname character varying(30),
     lastname character varying(30),
-    phonenumber character varying(30)
+    phonenumber character varying(30),
+    competitionid integer
 );
 
 
@@ -288,7 +289,7 @@ COPY event (id, competitionid, styleid, levelid, dance, ordernumber) FROM stdin;
 -- Data for Name: judge; Type: TABLE DATA; Schema: public; Owner: erikchan
 --
 
-COPY judge (id, email, token, firstname, lastname, phonenumber) FROM stdin;
+COPY judge (id, email, token, firstname, lastname, phonenumber, competitionid) FROM stdin;
 \.
 
 
@@ -490,6 +491,14 @@ ALTER TABLE ONLY event
 
 ALTER TABLE ONLY event
     ADD CONSTRAINT event_styleid_fkey FOREIGN KEY (styleid) REFERENCES style(id);
+
+
+--
+-- Name: judge judge_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+--
+
+ALTER TABLE ONLY judge
+    ADD CONSTRAINT judge_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
 
 
 --
