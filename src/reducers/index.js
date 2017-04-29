@@ -11,7 +11,6 @@ const { profile, isAuthenticated } = (() => {
   try {
     profile = JSON.parse(localStorage.getItem('profile'))
   } catch (e) { isAuthenticated = false }
-  console.log(profile, isAuthenticated)
   return { profile, isAuthenticated }
 })()
 

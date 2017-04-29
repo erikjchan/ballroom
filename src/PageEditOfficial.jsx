@@ -143,7 +143,7 @@ class EditOfficial extends React.Component {
         )
     }
     else{
-        return <Page ref="page" />
+        return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
     }
   }
 }

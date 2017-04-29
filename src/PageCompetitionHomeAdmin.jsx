@@ -390,7 +390,7 @@ populate_expanded(box_name, lines_react, link){
     ); 
   }
   else {
-    return <Page ref="page" />
+    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
   }
  }
 }
