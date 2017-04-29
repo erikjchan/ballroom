@@ -32,7 +32,7 @@ const get_judges_by_competition = (comp_id) => {
             //to run a query we just pass it to the pool
     //after we're done nothing has to be taken care of
     //we don't have to return any client to the pool or close a connection
-    pool.query('SELECT * FROM Judge WHERE comp_id = $1::INT', [comp_id], function(err, res) {
+    pool.query('SELECT * FROM Judge WHERE competitionid = $1::INT', [comp_id], function(err, res) {
     if(err) {
         return console.error('error running query', err);
     }
