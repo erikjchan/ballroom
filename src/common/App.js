@@ -13,7 +13,9 @@ export default ({children}) => {
       <Helmet
         link={ stylesheets.map(s => ({rel:'stylesheet', href:s})) }
         script={[
-          {src: "https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"}
+          {src: "https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"},
+          {src: "//cdn.auth0.com/js/lock-9.0.min.js"},
+          {src: "https://gitcdn.xyz/repo/auth0/auth0-editprofile-widget/master/build/auth0-editprofile-widget.js"}
         ]}
       />
       {children}

@@ -186,7 +186,7 @@ populate_expanded(box_name, lines_react, link){
                       <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>,
                       <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>,
                     ]
-    links["Competiton Info"] = "#";
+    links["Competiton Info"] = "/editcompetition/" + this.competition_id;
 /*
     var comp_info = (<div className={styles.lines}>
                       <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
@@ -296,7 +296,7 @@ populate_expanded(box_name, lines_react, link){
                           return a.id - b.id}).map(event => {
                             return (<p key={event.title}>{event.title}</p>)
                           })
-    links["Events"] = "#";
+    links["Events"] = "/competition/"+this.competition_id+"/editevents";
 
     var total_judges = this.state.judges.length;
     /*var judges_names = (<div className={styles.lines}>
@@ -314,7 +314,7 @@ populate_expanded(box_name, lines_react, link){
                             var email = "mailto:"+judge['Email address'];
                             return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
                           }))
-    links["Judges"] = "#";
+    links["Judges"] = "/editofficial/" + this.competition_id;
 
     var total_orgs = this.state.organizations.length;
     /*var org_names = (<div className={styles.lines}>
@@ -328,7 +328,7 @@ populate_expanded(box_name, lines_react, link){
                           this.state.organizations.map(org => {
                             return (<p key={org.id}>{org.name}</p>)
                           }))
-    links["Organizations"] = "#";
+    links["Organizations"] = "";
 
     var total_rounds = this.state.competition_rounds.length;
     /*var rounds_titles = (<div className={styles.lines}>

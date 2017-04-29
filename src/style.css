@@ -284,6 +284,14 @@ Start
   width: 100%;
 }
 
+.editLnSBox{
+	width: 50%;
+	height: auto;
+	display: inline-block;
+	padding: 0px;
+	vertical-align: top;
+}
+
 .tableBody > tr {
   background-color: white;
 }
