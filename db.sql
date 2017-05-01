@@ -35,7 +35,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: admin; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: admin; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE admin (
@@ -44,10 +44,10 @@ CREATE TABLE admin (
 );
 
 
-ALTER TABLE admin OWNER TO erikchan;
+ALTER TABLE admin OWNER TO postgres;
 
 --
--- Name: affiliation; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: affiliation; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE affiliation (
@@ -56,10 +56,10 @@ CREATE TABLE affiliation (
 );
 
 
-ALTER TABLE affiliation OWNER TO erikchan;
+ALTER TABLE affiliation OWNER TO postgres;
 
 --
--- Name: callback; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: callback; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE callback (
@@ -72,10 +72,10 @@ CREATE TABLE callback (
 );
 
 
-ALTER TABLE callback OWNER TO erikchan;
+ALTER TABLE callback OWNER TO postgres;
 
 --
--- Name: competition; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: competition; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE competition (
@@ -98,10 +98,10 @@ CREATE TABLE competition (
 );
 
 
-ALTER TABLE competition OWNER TO erikchan;
+ALTER TABLE competition OWNER TO postgres;
 
 --
--- Name: competitor; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: competitor; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE competitor (
@@ -116,10 +116,10 @@ CREATE TABLE competitor (
 );
 
 
-ALTER TABLE competitor OWNER TO erikchan;
+ALTER TABLE competitor OWNER TO postgres;
 
 --
--- Name: event; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: event; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE event (
@@ -132,10 +132,10 @@ CREATE TABLE event (
 );
 
 
-ALTER TABLE event OWNER TO erikchan;
+ALTER TABLE event OWNER TO postgres;
 
 --
--- Name: judge; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: judge; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE judge (
@@ -149,10 +149,10 @@ CREATE TABLE judge (
 );
 
 
-ALTER TABLE judge OWNER TO erikchan;
+ALTER TABLE judge OWNER TO postgres;
 
 --
--- Name: level; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: level; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE level (
@@ -163,10 +163,10 @@ CREATE TABLE level (
 );
 
 
-ALTER TABLE level OWNER TO erikchan;
+ALTER TABLE level OWNER TO postgres;
 
 --
--- Name: partnership; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: partnership; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE partnership (
@@ -182,10 +182,10 @@ CREATE TABLE partnership (
 );
 
 
-ALTER TABLE partnership OWNER TO erikchan;
+ALTER TABLE partnership OWNER TO postgres;
 
 --
--- Name: paymentrecord; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: paymentrecord; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE paymentrecord (
@@ -199,10 +199,10 @@ CREATE TABLE paymentrecord (
 );
 
 
-ALTER TABLE paymentrecord OWNER TO erikchan;
+ALTER TABLE paymentrecord OWNER TO postgres;
 
 --
--- Name: round; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: round; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE round (
@@ -221,10 +221,10 @@ CREATE TABLE round (
 );
 
 
-ALTER TABLE round OWNER TO erikchan;
+ALTER TABLE round OWNER TO postgres;
 
 --
--- Name: style; Type: TABLE; Schema: public; Owner: erikchan
+-- Name: style; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE style (
@@ -235,106 +235,11 @@ CREATE TABLE style (
 );
 
 
-ALTER TABLE style OWNER TO erikchan;
-
---
--- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY admin (email, password) FROM stdin;
-\.
+ALTER TABLE style OWNER TO postgres;
 
 
 --
--- Data for Name: affiliation; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY affiliation (id, name) FROM stdin;
-\.
-
-
---
--- Data for Name: callback; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY callback (id, "timestamp", judgeid, leadcompetitornumber, roundid, competitionid) FROM stdin;
-\.
-
-
---
--- Data for Name: competition; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY competition (id, name, leadidstartnum, locationname, earlyprice, regularprice, lateprice, startdate, enddate, regstartdate, earlyregdeadline, regularregdeadline, lateregdeadline, compadmin, currenteventid, description) FROM stdin;
-\.
-
-
---
--- Data for Name: competitor; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY competitor (id, firstname, lastname, email, mailingaddress, affiliationid, password, hasregistered) FROM stdin;
-\.
-
-
---
--- Data for Name: event; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY event (id, competitionid, styleid, levelid, dance, ordernumber) FROM stdin;
-\.
-
-
---
--- Data for Name: judge; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY judge (id, email, token, firstname, lastname, phonenumber, competitionid) FROM stdin;
-\.
-
-
---
--- Data for Name: level; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY level (id, name, ordernumber, competitionid) FROM stdin;
-\.
-
-
---
--- Data for Name: partnership; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY partnership (leadcompetitorid, followcompetitorid, eventid, leadconfirmed, followconfirmed, competitionid, number, calledback, "timestamp") FROM stdin;
-\.
-
-
---
--- Data for Name: paymentrecord; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY paymentrecord (id, competitionid, "timestamp", competitorid, amount, online, paidwithaffiliation) FROM stdin;
-\.
-
-
---
--- Data for Name: round; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY round (id, eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) FROM stdin;
-\.
-
-
---
--- Data for Name: style; Type: TABLE DATA; Schema: public; Owner: erikchan
---
-
-COPY style (id, name, ordernumber, competitionid) FROM stdin;
-\.
-
-
---
--- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY admin
@@ -342,7 +247,7 @@ ALTER TABLE ONLY admin
 
 
 --
--- Name: affiliation affiliation_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: affiliation affiliation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY affiliation
@@ -350,7 +255,7 @@ ALTER TABLE ONLY affiliation
 
 
 --
--- Name: callback callback_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: callback callback_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY callback
@@ -358,7 +263,7 @@ ALTER TABLE ONLY callback
 
 
 --
--- Name: competition competition_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: competition competition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY competition
@@ -366,7 +271,7 @@ ALTER TABLE ONLY competition
 
 
 --
--- Name: competitor competitor_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: competitor competitor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY competitor
@@ -374,7 +279,7 @@ ALTER TABLE ONLY competitor
 
 
 --
--- Name: event event_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: event event_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY event
@@ -382,7 +287,7 @@ ALTER TABLE ONLY event
 
 
 --
--- Name: judge judge_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: judge judge_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY judge
@@ -390,7 +295,7 @@ ALTER TABLE ONLY judge
 
 
 --
--- Name: level level_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: level level_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY level
@@ -398,7 +303,7 @@ ALTER TABLE ONLY level
 
 
 --
--- Name: partnership partnership_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: partnership partnership_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partnership
@@ -406,7 +311,7 @@ ALTER TABLE ONLY partnership
 
 
 --
--- Name: paymentrecord paymentrecord_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: paymentrecord paymentrecord_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY paymentrecord
@@ -414,7 +319,7 @@ ALTER TABLE ONLY paymentrecord
 
 
 --
--- Name: round round_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -422,7 +327,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: style style_pkey; Type: CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: style style_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY style
@@ -430,7 +335,7 @@ ALTER TABLE ONLY style
 
 
 --
--- Name: callback callback_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: callback callback_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY callback
@@ -438,7 +343,7 @@ ALTER TABLE ONLY callback
 
 
 --
--- Name: callback callback_judgeid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: callback callback_judgeid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY callback
@@ -446,7 +351,7 @@ ALTER TABLE ONLY callback
 
 
 --
--- Name: callback callback_roundid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: callback callback_roundid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY callback
@@ -454,7 +359,7 @@ ALTER TABLE ONLY callback
 
 
 --
--- Name: competition competition_compadmin_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: competition competition_compadmin_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY competition
@@ -462,7 +367,7 @@ ALTER TABLE ONLY competition
 
 
 --
--- Name: competitor competitor_affiliationid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: competitor competitor_affiliationid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY competitor
@@ -470,7 +375,7 @@ ALTER TABLE ONLY competitor
 
 
 --
--- Name: event event_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: event event_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY event
@@ -478,7 +383,7 @@ ALTER TABLE ONLY event
 
 
 --
--- Name: event event_levelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: event event_levelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY event
@@ -486,7 +391,7 @@ ALTER TABLE ONLY event
 
 
 --
--- Name: event event_styleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: event event_styleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY event
@@ -494,7 +399,7 @@ ALTER TABLE ONLY event
 
 
 --
--- Name: judge judge_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: judge judge_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY judge
@@ -502,7 +407,7 @@ ALTER TABLE ONLY judge
 
 
 --
--- Name: level level_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: level level_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY level
@@ -510,7 +415,7 @@ ALTER TABLE ONLY level
 
 
 --
--- Name: partnership partnership_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: partnership partnership_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partnership
@@ -518,7 +423,7 @@ ALTER TABLE ONLY partnership
 
 
 --
--- Name: partnership partnership_eventid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: partnership partnership_eventid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partnership
@@ -526,7 +431,7 @@ ALTER TABLE ONLY partnership
 
 
 --
--- Name: partnership partnership_followcompetitorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: partnership partnership_followcompetitorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partnership
@@ -534,7 +439,7 @@ ALTER TABLE ONLY partnership
 
 
 --
--- Name: partnership partnership_leadcompetitorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: partnership partnership_leadcompetitorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partnership
@@ -542,7 +447,7 @@ ALTER TABLE ONLY partnership
 
 
 --
--- Name: paymentrecord paymentrecord_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: paymentrecord paymentrecord_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY paymentrecord
@@ -550,7 +455,7 @@ ALTER TABLE ONLY paymentrecord
 
 
 --
--- Name: paymentrecord paymentrecord_competitorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: paymentrecord paymentrecord_competitorid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY paymentrecord
@@ -558,7 +463,7 @@ ALTER TABLE ONLY paymentrecord
 
 
 --
--- Name: round round_eventid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_eventid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -566,7 +471,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_judgeid1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -574,7 +479,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_judgeid2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -582,7 +487,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid3_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_judgeid3_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -590,7 +495,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid4_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_judgeid4_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -598,7 +503,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid5_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_judgeid5_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -606,7 +511,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid6_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: round round_judgeid6_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY round
@@ -614,7 +519,7 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: style style_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: erikchan
+-- Name: style style_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY style
