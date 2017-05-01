@@ -103,6 +103,13 @@ app.get('/api/event/:rid/rounds', (req, res) => {
   res.send(rounds)
 })
 
+app.get('/api/affiliations', (req, res) => {
+    query.get_affiliations().then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
+})
+
 app.get('/api/rounds', (req, res) => {
   res.send(data.rounds)
 })
@@ -134,8 +141,11 @@ app.get('/api/admins', (req, res) => {
   });
 })
 
-app.get('/api/judges', (req, res) => {
-  res.send(data.judges)
+app.get('/api/judges/:jid', (req, res) => {
+    query.get_judge(req.params.jid).then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/competition/:cid/judges', (req, res) => {
@@ -147,6 +157,7 @@ app.get('/api/competition/:cid/judges', (req, res) => {
 
 app.get('/api/', (req, res) => {
   res.send({routes: [
+    '/api/affiliations',
     '/api/competitors',
     '/api/competitions',
     '/api/events',
