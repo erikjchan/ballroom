@@ -40,7 +40,7 @@ SET default_with_oids = false;
 
 CREATE TABLE admin (
     email character varying(100) NOT NULL,
-    password character varying(100)
+    password character varying(100) NOT NULL
 );
 
 
@@ -51,7 +51,7 @@ ALTER TABLE admin OWNER TO postgres;
 --
 
 CREATE TABLE affiliation (
-    id integer NOT NULL,
+    id SERIAL,
     name character varying(100)
 );
 
@@ -63,7 +63,7 @@ ALTER TABLE affiliation OWNER TO postgres;
 --
 
 CREATE TABLE callback (
-    id integer NOT NULL,
+    id SERIAL,
     "timestamp" timestamp with time zone,
     judgeid integer,
     leadcompetitornumber integer,
@@ -79,7 +79,7 @@ ALTER TABLE callback OWNER TO postgres;
 --
 
 CREATE TABLE competition (
-    id integer NOT NULL,
+    id SERIAL,
     name character varying(100),
     leadidstartnum integer,
     locationname character varying(100),
@@ -105,7 +105,7 @@ ALTER TABLE competition OWNER TO postgres;
 --
 
 CREATE TABLE competitor (
-    id integer NOT NULL,
+    id SERIAL,
     firstname character varying(30),
     lastname character varying(30),
     email character varying(100),
@@ -123,7 +123,7 @@ ALTER TABLE competitor OWNER TO postgres;
 --
 
 CREATE TABLE event (
-    id integer NOT NULL,
+    id SERIAL,
     competitionid integer,
     styleid integer,
     levelid integer,
@@ -139,7 +139,7 @@ ALTER TABLE event OWNER TO postgres;
 --
 
 CREATE TABLE judge (
-    id integer NOT NULL,
+    id SERIAL,
     email character varying(100),
     token character varying(100),
     firstname character varying(30),
@@ -156,7 +156,7 @@ ALTER TABLE judge OWNER TO postgres;
 --
 
 CREATE TABLE level (
-    id integer NOT NULL,
+    id SERIAL,
     name character varying(30),
     ordernumber integer,
     competitionid integer
@@ -189,7 +189,7 @@ ALTER TABLE partnership OWNER TO postgres;
 --
 
 CREATE TABLE paymentrecord (
-    id integer NOT NULL,
+    id SERIAL,
     competitionid integer,
     "timestamp" timestamp with time zone,
     competitorid integer,
@@ -206,7 +206,7 @@ ALTER TABLE paymentrecord OWNER TO postgres;
 --
 
 CREATE TABLE round (
-    id integer NOT NULL,
+    id SERIAL,
     eventid integer,
     name character varying(100),
     ordernumber integer,
@@ -228,7 +228,7 @@ ALTER TABLE round OWNER TO postgres;
 --
 
 CREATE TABLE style (
-    id integer NOT NULL,
+    id SERIAL,
     name character varying(30),
     ordernumber integer,
     competitionid integer
