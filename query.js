@@ -1,32 +1,36 @@
-const pool = require('./lib/db');
+const pool = require('./api/db');
 
 const get_admins = () => {
     
-    //to run a query we just pass it to the pool
-    //after we're done nothing has to be taken care of
-    //we don't have to return any client to the pool or close a connection
-    pool.query('SELECT * FROM Admin', function(err, res) {
-    if(err) {
-        return console.error('error running query', err);
-        Promise.reject(res.rows);
-    }
-    console.log('Admins:', res.rows);
-    Promise.resolve(res.rows);
-    });
+//     //to run a query we just pass it to the pool
+//     //after we're done nothing has to be taken care of
+//     //we don't have to return any client to the pool or close a connection
+    return new Promise(function(resolve, reject) {
+        pool.query('SELECT * FROM Admin', function(err, res) {
+        if(err) {
+            return console.error('error running query', err);
+            reject(res.rows);
+        }
+        console.log('Admins:', res.rows);
+        resolve(res.rows);
+        });
+  });
 }
 
-const get_admins = () => {
-        //to run a query we just pass it to the pool
-    //after we're done nothing has to be taken care of
-    //we don't have to return any client to the pool or close a connection
-    pool.query('SELECT * FROM Admin', function(err, res) {
-    if(err) {
-        return console.error('error running query', err);
-    }
+// const get_admins = () => {
+//         //to run a query we just pass it to the pool
+//     //after we're done nothing has to be taken care of
+//     //we don't have to return any client to the pool or close a connection
+    
+//     pool.query('SELECT * FROM Admin', function(err, res) {
+//     if(err) {
+//         return console.error('error running query', err);
+//     }
 
-    console.log('Admins:', res.rows);
-    });
-}
+//     console.log('Admins:', res.rows);
+//     return res.rows;
+//     });
+// }
 
 const get_judges_by_competition = (comp_id) => {
             //to run a query we just pass it to the pool

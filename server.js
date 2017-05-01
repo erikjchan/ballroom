@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 const data          = require('./api/data')
 const ip = require('ip');
+const query          = require('./query')
 
 
 /************************************************************
@@ -127,7 +128,10 @@ app.get('/api/callbacks', (req, res) => {
 })
 
 app.get('/api/admins', (req, res) => {
-  res.send(data.admins)
+  query.get_admins().then(function (value) {
+      console.log(value);
+      res.send(value);
+  });
 })
 
 app.get('/api/judges', (req, res) => {
