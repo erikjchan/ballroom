@@ -177,6 +177,14 @@ app.get('/test/competitors', (req, res) => {
     });
 })
 
+app.get('/test/competitors/competition/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    query2.get_competitors_by_competition(id).then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
+})
+
 app.get('/test/competitors/id/:id', (req, res) => {
   const id = parseInt(req.params.id)
   query2.get_competitor_by_id(id).then(function (value) {
@@ -406,6 +414,7 @@ app.get('/test/partnerships/update/:leadcompetitorid/:followcompetitorid/:eventi
 app.get('/test/', (req, res) => {
   res.send({routes: [
     '/test/competitors',
+    '/test/competitors/competition/:id',
     '/test/competitors/id/:id',
     '/test/competitors/email/:email',
     '/test/competitors/insert/:email/:firstname/:lastname/:mailingaddress/:affiliationid/:password',
