@@ -34,13 +34,34 @@ module.exports.query = function (text, values) {
   return new Promise(function(resolve, reject) {
       pool.query(text, values, function(err, res) {
           if(err) {
-              return console.error('error running query', err);
-              reject(res.rows);
+              console.error('error running query', err);
+              reject(err);
           }
           resolve(res.rows);
       });
   });
 };
+
+//export the query method for passing queries to the pool
+module.exports.query_wrapped = function (text, values) {
+  console.log('query:', text, values);
+  return new Promise(function(resolve, reject) {
+      pool.query(text, values, function(err, res) {
+          if(err) {
+              console.error('error running query', err);
+              reject(err);
+          }
+          resolve(res);
+      });
+  });
+};
+
+//export the query method for passing queries to the pool
+module.exports.raw_query = function (text, values, callback) {
+  console.log('query:', text, values);
+  return pool.query(text, values, callback);
+};
+
 
 // the pool also supports checking out a client for
 // multiple operations, such as a transaction

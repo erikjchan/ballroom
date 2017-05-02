@@ -1,84 +1,182 @@
 const pool = require('./api/db');
+const SQL = require('sql-template-strings')
 
+
+
+/*******************************************
+ ***  Query about competitor START HERE ****
+ *******************************************/
 // SELECT
-
 const get_all_competitors = () => {
-    
-//     //to run a query we just pass it to the pool
-//     //after we're done nothing has to be taken care of
-//     //we don't have to return any client to the pool or close a connection
-    return new Promise(function(resolve, reject) {
-        pool.query('SELECT * FROM competitor', function(err, res) {
-        if(err) {
-            console.error('error running query', err);
-            reject(err);
-        }
-        console.log('Competitors:', res.rows);
-        resolve(res.rows);
-        });
-    });
+    return pool.query('SELECT * FROM competitor;', []);
 }
 
 const get_competitor_by_id = (id) => {
-    
-//     //to run a query we just pass it to the pool
-//     //after we're done nothing has to be taken care of
-//     //we don't have to return any client to the pool or close a connection
-    return new Promise(function(resolve, reject) {
-        pool.query('SELECT * FROM competitor where id = $1::INT', [id], function(err, res) {
-        if(err) {
-            console.error('error running query', err);
-            reject(err);
-        }
-        console.log('Competitor ', id, ':', res.rows);
-        resolve(res.rows);
-        });
-    });
+    return pool.query(SQL`SELECT * FROM competitor WHERE id = ${id};`);
 }
 
 const get_competitor_by_email = (email) => {
-    
-//     //to run a query we just pass it to the pool
-//     //after we're done nothing has to be taken care of
-//     //we don't have to return any client to the pool or close a connection
-    return new Promise(function(resolve, reject) {
-        pool.query('SELECT * FROM competitor where email = $1', [email], function(err, res) {
-        if(err) {
-            console.error('error running query', err);
-            reject(err);
-        }
-        console.log('Competitor ', email, ':', res.rows);
-        resolve(res.rows);
-        });
-    });
+    return pool.query(SQL`SELECT * FROM competitor WHERE email = ${email};`);
 }
 
-const check_competitor_email_no_duplicate = (email) => {
-    
-//     //to run a query we just pass it to the pool
-//     //after we're done nothing has to be taken care of
-//     //we don't have to return any client to the pool or close a connection
-    return new Promise(function(resolve, reject) {
-        pool.query('SELECT COUNT(*) FROM competitor where email = $1', [email], function(err, res) {
-        if(err) {
-            console.error('error running query', err);
-            reject(err);
-        }
-        console.log('Competitor ', email, ':', res.rows[0]);
-        resolve(res.rows[0]==0);
-        });
-    });
+const check_competitor_email_exist = (email) => {
+    return pool.query_wrapped(SQL`SELECT * FROM competitor WHERE email = ${email};`)
+                .then(function(value){
+                    return (value.rowCount>0);
+                });
 }
-
 
 // INSERT
+const create_competitor = (firstname, lastname, email, mailingaddress, 
+    affiliationid, password) => {
+    return pool.query_wrapped(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress,
+                                                  affiliationid, password, hasregistered)
+                          VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
+                                  ${affiliationid}, ${password}, ${false});`);
+}
+
+// UPDATE
+const update_competitor_by_email = (email, firstname, lastname, mailingaddress, 
+    affiliationid, password, hasregistered) => {
+    return pool.query_wrapped(SQL`UPDATE competitor 
+                          SET firstname=${firstname} , lastname=${lastname},
+                              mailingaddress=${mailingaddress}, affiliationid=${affiliationid}, 
+                              password=${password}, hasregistered=${hasregistered}
+                          WHERE email=${email};`);
+}
+
+const update_competitor_by_id = (id, firstname, lastname, mailingaddress, 
+    affiliationid, password, hasregistered) => {
+    return pool.query_wrapped(SQL`UPDATE competitor 
+                          SET firstname=${firstname} , lastname=${lastname},
+                              mailingaddress=${mailingaddress}, affiliationid=${affiliationid}, 
+                              password=${password}, hasregistered=${hasregistered}
+                          WHERE id=${id};`);
+}
+//DELETE
+
+/**********************************************
+ ***  Query about paymentrecord START HERE ****
+ **********************************************/
+// SELECT
+const get_all_paymentrecords = () => {
+    return pool.query(SQL`SELECT * FROM paymentrecord;`);
+}
+
+
+const get_paymentrecords_by_competition = (id) => {
+    return pool.query(SQL`SELECT * FROM paymentrecord WHERE competitionid = ${id};`);
+}
+
+const get_paymentrecords_by_competitior = (id) => {
+    return pool.query(SQL`SELECT * FROM paymentrecord WHERE competitorid = ${id};`);
+}
+
+const get_paymentrecord_by_competition_competitor = (competitionid, competitorid) => {
+    return pool.query(SQL`SELECT * FROM paymentrecord 
+                          WHERE competitionid = ${competitionid} and competitorid = ${competitorid};`);
+}
+
+// INSERT
+const create_paymentrecord = (competitionid, competitorid, amount, online, paidwithaffiliation) => {
+    return pool.query_wrapped(SQL`INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, 
+                                                     online, paidwithaffiliation)
+                          VALUES (${competitionid}, now(), ${competitorid}, ${amount}, 
+                                  ${online}, ${paidwithaffiliation});`);
+}
+
+// UPDATE
+const update_paymentrecord = (competitionid, competitorid, amount, online, paidwithaffiliation) => {
+    return pool.query_wrapped(SQL`UPDATE paymentrecord 
+                          SET timestamp = now(), amount = ${amount},
+                              online = ${online}, paidwithaffiliation = ${paidwithaffiliation}
+                          WHERE competitionid = ${competitionid} AND competitorid = ${competitorid};`);
+}
 
 // DELETE
 
+/**********************************************
+ ***  Query about partnership START HERE ****
+ **********************************************/
+
+// SELECT
+const get_all_partnerships = () => {
+    return pool.query(SQL`SELECT * FROM partnership;`);
+}
+
+const get_partnerships_by_competitor = (competitorid) => {
+    return pool.query(SQL`SELECT * FROM partnership 
+                          WHERE leadcompetitorid = ${competitorid} OR followcompetitorid = ${competitorid};`);
+}
+
+const get_partnerships_by_competition_competitor = (competitionid, competitorid) => {
+    return pool.query(SQL`SELECT * FROM partnership 
+                          WHERE competitionid = ${competitionid} AND 
+                                (leadcompetitorid = ${competitionid} OR followcompetitorid = ${competitorid});`);
+}
+
+const get_partnership = (leadcompetitorid, followcompetitorid, eventid) => {
+    return pool.query(SQL`SELECT * FROM partnership 
+                          WHERE leadcompetitorid = ${leadcompetitorid} AND followcompetitorid = ${followcompetitorid}
+                                AND eventid = ${eventid};`
+                                );
+}
+
+const get_partnerships_by_event = eventid =>{
+    return pool.query(SQL`SELECT * FROM partnership 
+                          WHERE eventid = ${eventid};`);
+}
+
+const get_comfirmed_partnerships_by_event = eventid =>{
+    return pool.query(SQL`SELECT * FROM partnership 
+                          WHERE eventid = ${eventid} AND leadconfirmed = ${true} AND followconfirmed = ${true};`);
+}
+
+const get_partnership_by_number = (competitionid, number)=>{
+    return pool.query(SQL`SELECT * FROM partnership 
+                          WHERE competitionid = ${competitionid}AND number = ${number};`);
+}
+
+// INSERT
+const create_partnership = (leadcompetitorid, followcompetitorid, eventid, competitionid, number) => {
+    return pool.query_wrapped(SQL`INSERT INTO partnership (leadcompetitorid, followcompetitorid, eventid, 
+                                                   leadconfirmed, followconfirmed,
+                                                   competitionid, number, calledback, timestamp)
+                          VALUES (${leadcompetitorid}, ${followcompetitorid}, ${eventid}, ${false}, ${false}, ${competitionid},
+                                    ${number}, ${false}, now());`);
+}
+
+
+// UPDATE
+const update_partnership = (leadcompetitorid, followcompetitorid, eventid, leadconfirmed, followconfirmed, calledback, number) => {
+    return pool.query_wrapped(SQL`UPDATE partnership 
+                            SET timestamp = now(), leadconfirmed=${leadconfirmed},
+                                followconfirmed = ${followconfirmed}, calledback=${calledback}, number = ${number}
+                            WHERE leadcompetitorid=${leadcompetitorid} AND followcompetitorid = ${followcompetitorid}
+                                AND eventid = ${eventid};`);
+}
+
 module.exports = {
-    get_all_admins,
-    get_judges_by_competition,
-    get_judge,
-    get_affiliations,
-    add_new_judge
+    get_all_competitors,
+    get_competitor_by_id,
+    get_competitor_by_email,
+    check_competitor_email_exist,
+    create_competitor,
+    update_competitor_by_email,
+    update_competitor_by_id,
+    get_all_partnerships,
+    get_partnership,
+    get_partnership_by_number,
+    get_partnerships_by_competition_competitor,
+    get_partnerships_by_competitor,
+    get_partnerships_by_event,
+    get_comfirmed_partnerships_by_event,
+    create_partnership,
+    update_partnership,
+    get_all_paymentrecords,
+    get_paymentrecord_by_competition_competitor,
+    get_paymentrecords_by_competition,
+    get_paymentrecords_by_competitior,
+    create_paymentrecord,
+    update_paymentrecord
 }
