@@ -17,6 +17,7 @@ import EditCompetition      from '../PageEditCompetition.jsx'
 import EditOfficial         from '../PageEditOfficial.jsx'
 import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
+import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 
 const routes = {
   'home'                                                       : HomePage,
@@ -26,6 +27,7 @@ const routes = {
   'competition/:competition_id/editlevelsandstyles'            : EditLevelsAndStyles,
   'competition/:competition_id/editevents'                     : EditEvents,
   'competition/:competition_id/competitorslist'                : CompetitorsList,
+  'competition/:competition_id/seecompetitor/:competitor_id'   : SeeCompetitor,
   'competition/:competition_id/:competitor_id'                 : CompetitionPage,
   'competitions'                                               : CompetitionListPage,
   'admin/competition/:competition_id'                          : CompetitionHomeAdmin,
