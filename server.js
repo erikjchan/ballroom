@@ -42,29 +42,70 @@ app.post('*', (req, res) => {
 })
 
 app.get('/api/competition/:id', (req, res) => {
-  const id = parseInt(req.params.id)
-  const comps = data.competitions.filter(c => c.id === id)
-  res.send(comps[0])
+    query.get_competition_info(req.params.id).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/affiliations', (req, res) => {
+    query.get_affiliations_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/competitors', (req, res) => {
+    query.get_competitors_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/competitors_styles', (req, res) => {
+    query.get_num_competitors_per_style_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/competition/:cid/events', (req, res) => {
-  const cid = parseInt(req.params.cid)
-  const events = data.events.filter(e => e.competition_id === cid)
-  res.send(events)
+    query.get_events_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/judges', (req, res) => {
+    query.get_judges_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/levels', (req, res) => {
+    query.get_levels_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/rounds', (req, res) => {
+    query.get_rounds_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/styles', (req, res) => {
+    query.get_styles_for_competition(req.params.cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/competition/:cid/rounds', (req, res) => {
   res.send(data.rounds)
-})
-
-app.get('/api/competitors', (req, res) => {
-  res.send(data.competitors)
-})
-
-app.get('/api/competitors/competition/:id2', (req, res) => {
-  const id1 = parseInt(req.params.id1)
-  const id2 = parseInt(req.params.id2)
-  res.send(data.competitor_competition_information)
 })
 
 app.get('/api/competitors/:id', (req, res) => {
@@ -104,7 +145,7 @@ app.get('/api/event/:rid/rounds', (req, res) => {
 })
 
 app.get('/api/affiliations', (req, res) => {
-    query.get_affiliations().then(function (value) {
+    query.get_affiliations().then(value => {
         console.log(value);
         res.send(value);
     });
@@ -135,24 +176,17 @@ app.get('/api/callbacks', (req, res) => {
 })
 
 app.get('/api/admins', (req, res) => {
-  query.get_all_admins().then(function (value) {
+  query.get_all_admins().then(value => {
       console.log(value);
       res.send(value);
   });
 })
 
 app.get('/api/judges/:jid', (req, res) => {
-    query.get_judge(req.params.jid).then(function (value) {
+    query.get_judge(req.params.jid).then(value => {
         console.log(value);
         res.send(value);
     });
-})
-
-app.get('/api/competition/:cid/judges', (req, res) => {
-  query.get_judges_by_competition(req.params.cid).then(function (value) {
-      console.log(value);
-      res.send(value);
-  });
 })
 
 app.get('/api/', (req, res) => {
@@ -160,6 +194,8 @@ app.get('/api/', (req, res) => {
     '/api/affiliations',
     '/api/competitors',
     '/api/competitions',
+    '/api/levels',
+    '/api/styles',
     '/api/events',
     '/api/rounds',
     '/api/partnerships',
