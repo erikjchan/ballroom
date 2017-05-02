@@ -7,10 +7,10 @@ import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
-import connection from './common/connection'
+
 
 // editcompetition/:competition_id
-class PageEditCompetition extends React.Component {
+export default class PageEditCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -172,5 +172,3 @@ class PageEditCompetition extends React.Component {
   }
  }
 }
-
-export default connection(PageEditCompetition)

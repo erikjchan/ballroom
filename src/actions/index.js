@@ -1,5 +1,7 @@
 // The middleware to call the API for quotes
-import { CALL_API } from './middleware/api'
+import { CALL_API } from './middleware/ballroom_api'
+
+/*********************************** Login ***********************************/
 
 // There are two possible states for our login
 // process and we need actions for each of them.
@@ -31,6 +33,7 @@ export const login = () => {
   }
 }
 
+
 // Three possible states for our logout process as well.
 // Since we are using JWTs, we just need to remove the token
 // from localStorage. These actions are more useful if we
@@ -49,6 +52,8 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem('profile')
   dispatch(receiveLogout())
 }
+
+/*********************************** Quotes ***********************************/
 
 export const QUOTE_REQUEST = 'QUOTE_REQUEST'
 export const QUOTE_SUCCESS = 'QUOTE_SUCCESS'
@@ -76,3 +81,53 @@ export function fetchSecretQuote() {
     }
   }
 }
+
+
+/************************************ API ************************************/
+
+export const API_REQUEST = 'API_REQUEST'
+export const API_SUCCESS = 'API_SUCCESS'
+export const API_FAILURE = 'API_FAILURE'
+
+// // Uses the API middlware to get user profile
+// export function getUnauth() {
+//   return {
+//     [CALL_API]: {
+//       endpoint: 'random-quote',
+//       role: null,
+//       types: [API_REQUEST, API_SUCCESS, API_FAILURE]
+//     }
+//   }
+// }
+
+// Same API middlware is used to get a 
+// secret quote, but we set authenticated
+// to true so that the auth header is sent
+export function apiRequest(key, request) {
+  // Request is { endpoint, method, data }
+  return {
+    [CALL_API]: {
+      request,
+      key,
+      role: 'competitor',
+      types: [API_REQUEST, API_SUCCESS, API_FAILURE]
+    }
+  }
+}
+
+
+// // Same API middlware is used to get a 
+// // secret quote, but we set authenticated
+// // to true so that the auth header is sent
+// export function getAdmin() {
+//   return {
+//     [CALL_API]: {
+//       endpoint: 'protected/random-quote',
+//       role: 'admin', // unused?
+//       types: [API_REQUEST, API_SUCCESS, API_FAILURE]
+//     }
+//   }
+// }
+
+
+

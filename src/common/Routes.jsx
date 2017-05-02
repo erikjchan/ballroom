@@ -1,7 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import App from './App';
 
+import App from './App';
+import Authorization from './Authorization.jsx'
+
+/** All the routes */
 import LoginPage            from '../PageLogin.jsx'
 import HomePage             from '../PageHome.jsx'
 import CompetitionListPage  from '../PageCompetitionList.jsx'
@@ -18,21 +21,31 @@ import EditOfficial         from '../PageEditOfficial.jsx'
 import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
 
+/**
+ * Semantics:
+ *   User pages can be accessed by 'user', 'judge' and 'admin'
+ *   Judge pages can be accessed by 'judge' and 'admin'
+ *   Admin pages can be accessed by 'admin'
+ */
+const User  = Authorization(['user', 'judge', 'admin'])
+const Judge = Authorization(['judge', 'admin'])
+const Admin = Authorization(['admin'])
+
 const routes = {
   'home'                                                       : HomePage,
-  'competition/:competition_id/eventregistration'              : EventRegistration,
-  'competition/:competition_id/editschedule'                   : EditSchedule,
-  'competition/:competition_id/run'                            : RunCompetition,
-  'competition/:competition_id/editlevelsandstyles'            : EditLevelsAndStyles,
-  'competition/:competition_id/editevents'                     : EditEvents,
-  'competition/:competition_id/competitorslist'                : CompetitorsList,
-  'competition/:competition_id/:competitor_id'                 : CompetitionPage,
-  'competitions'                                               : CompetitionListPage,
-  'admin/competition/:competition_id'                          : CompetitionHomeAdmin,
-  'editprofile'                                                : EditProfile,
-  'competition/:competition_id/round/:round_id/entercallbacks' : EnterCallbacks,
-  'editcompetition/:competition_id'                            : EditCompetition,
-  'editofficial/:competition_id'                               : EditOfficial, 
+  'competition/:competition_id/eventregistration'              : User(EventRegistration),
+  'competition/:competition_id/editschedule'                   : Admin(EditSchedule),
+  'competition/:competition_id/run'                            : Judge(RunCompetition),
+  'competition/:competition_id/editlevelsandstyles'            : Admin(EditLevelsAndStyles),
+  'competition/:competition_id/editevents'                     : Admin(EditEvents),
+  'competition/:competition_id/competitorslist'                : Admin(CompetitorsList),
+  'competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
+  'competitions'                                               : User(CompetitionListPage),
+  'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
+  'editprofile'                                                : User(EditProfile),
+  'competition/:competition_id/round/:round_id/entercallbacks' : Judge(EnterCallbacks),
+  'editcompetition/:competition_id'                            : Admin(EditCompetition),
+  'editofficial/:competition_id'                               : Admin(EditOfficial), 
 }
 
 export default (

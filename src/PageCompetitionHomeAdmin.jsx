@@ -6,9 +6,8 @@ import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
 import Autocomplete from 'react-autocomplete'
 import { browserHistory } from 'react-router';
-import connection from './common/connection'
 
-class PageCompetitionHomeAdmin extends React.Component {
+export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -394,6 +393,3 @@ populate_expanded(box_name, lines_react, link){
   }
  }
 }
-
-
-export default connection(PageCompetitionHomeAdmin)

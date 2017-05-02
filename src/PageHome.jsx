@@ -1,9 +1,9 @@
 import styles from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
-import connection from './common/connection'
 
-class HomePage extends React.Component {
+
+export default class HomePage extends React.Component {
  render() {
    return (
     <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
@@ -13,6 +13,3 @@ class HomePage extends React.Component {
    );
  }
 }
-
-
-export default connection(HomePage)
