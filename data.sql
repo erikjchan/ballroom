@@ -33,7 +33,7 @@ INSERT INTO admin VALUES ('admin@email.edu', 'password');
 -- Data for Name: affiliation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO affiliation VALUES (1, 'Cornell Dance Team');
 
 --
 -- TOC entry 2265 (class 0 OID 0)
@@ -59,7 +59,9 @@ INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.0
 -- Data for Name: level; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO level VALUES (1, 'Bronze', 1, 1);
+INSERT INTO level VALUES (2, 'Silver', 1, 1);
+INSERT INTO level VALUES (3, 'Gold', 1, 1);
 
 --
 -- TOC entry 2260 (class 0 OID 17028)
@@ -67,7 +69,7 @@ INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.0
 -- Data for Name: style; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO style VALUES (1, 'Latin', 1, 1);
 
 --
 -- TOC entry 2249 (class 0 OID 16995)
@@ -75,7 +77,7 @@ INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.0
 -- Data for Name: event; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO event VALUES (1, 1, 1, 1, 'Waltz', 1);
 
 --
 -- TOC entry 2251 (class 0 OID 17001)
@@ -83,7 +85,12 @@ INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.0
 -- Data for Name: judge; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO judge VALUES (1, 'len@goodman.com', 'judgetoken', 'Len', 'Goodman', '626-555-5555', 1);
+INSERT INTO judge VALUES (2, 'bruno@tonioli.com', 'judgetoken', 'Bruno', 'Tonioli', '626-655-5555', 1);
+INSERT INTO judge VALUES (3, 'carrieann@inaba.com', 'judgetoken', 'Carrie Ann', 'Inaba', '626-565-5555', 1);
+INSERT INTO judge VALUES (4, 'julianne@hough.com', 'judgetoken', 'Julianne', 'Hough', '626-556-5555', 1);
+INSERT INTO judge VALUES (5, 'tom@bergeron.com', 'judgetoken', 'Tom', 'Bergeron', '626-555-6555', 1);
+INSERT INTO judge VALUES (6, 'erin@andrews.com', 'judgetoken', 'Erin', 'Andrews', '626-555-5655', 1);
 
 --
 -- TOC entry 2258 (class 0 OID 17022)
@@ -91,7 +98,11 @@ INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.0
 -- Data for Name: round; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO round VALUES (1, 1, 'Round 1', 1, 32, 2, 1, 2, 3, 4, 5, 6);
+INSERT INTO round VALUES (2, 1, 'Round 2', 1, 16, 3, 1, 2, 3, 4, 5, 6);
+INSERT INTO round VALUES (3, 1, 'Round 3', 1, 8, 4, 1, 2, 3, 4, 5, 6);
+INSERT INTO round VALUES (4, 1, 'Round 4', 1, 4, 5, 1, 2, 3, 4, 5, 6);
+INSERT INTO round VALUES (5, 1, 'Round 5', 1, 2, 6, 1, 2, 3, 4, 5, 6);
 
 --
 -- TOC entry 2243 (class 0 OID 16974)
@@ -99,7 +110,7 @@ INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.0
 -- Data for Name: callback; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO callback VALUES (1, '2017-05-10 00:00:00-04', 1, 1, 1, 1);
 
 --
 -- TOC entry 2266 (class 0 OID 0)
@@ -125,7 +136,9 @@ SELECT pg_catalog.setval('competition_id_seq', 1, true);
 -- Data for Name: competitor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO competitor VALUES (1, 'Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, 'powerconverters', true);
+INSERT INTO competitor VALUES (2, 'Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, 'myonlyhope', true);
+INSERT INTO competitor VALUES (3, 'Rey', null, 'rey@rey.com', 'Jakku', 1, 'thismuchgreen', false);
 
 --
 -- TOC entry 2268 (class 0 OID 0)
@@ -169,7 +182,7 @@ SELECT pg_catalog.setval('level_id_seq', 1, false);
 -- Data for Name: partnership; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
 
 --
 -- TOC entry 2256 (class 0 OID 17016)
@@ -177,7 +190,7 @@ SELECT pg_catalog.setval('level_id_seq', 1, false);
 -- Data for Name: paymentrecord; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
+INSERT INTO paymentrecord VALUES (1, 1, '2017-05-10 00:00:00-04', 1, 21.87, true, true);
 
 --
 -- TOC entry 2272 (class 0 OID 0)
