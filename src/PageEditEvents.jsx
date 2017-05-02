@@ -24,7 +24,7 @@ class EditEvents extends React.Component {
         <h1>Define Events</h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges} onClick={
-            () => this.confirmGoToUrl("/competition/0/editvents", "Are you sure you want to save changes?")  
+            () => this.confirmGoToUrl("/competition/0/editevents", "Are you sure you want to save changes?")  
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
             () => this.confirmGoToUrl("/competition/0/editlevelsandstyles", "Are you sure you want to leave this page without saving?")
