@@ -85,7 +85,7 @@ export default class CompetitorList extends React.Component {
                         <div>
                             <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
                             <input type="button"
-                                   value="Edit/See More" }  /></Link>
+                                   value="Edit/See More" /></Link>
       			        </div>
       		        )
       		    ]
@@ -203,7 +203,7 @@ export default class CompetitorList extends React.Component {
                              <div>
                                <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
                                <input type="button"
-                                      value="Edit/See More" } /></Link>
+                                      value="Edit/See More" /></Link>
       			             </div>
       		             )
       		         ]
@@ -266,15 +266,17 @@ export default class CompetitorList extends React.Component {
 		 })
     )(rows);
  
-    var totalOwed = 0;
+    var totalOwed = 0; var totalListed = 0;
     for (let i = 0; i < resolvedRows.length; i++) {
+        totalListed += 1;
         if (resolvedRows[i].amount_owed != 0)
             totalOwed += parseFloat((resolvedRows[i].amount_owed).substr(1));                             
     }  
 
     return (
       <div>
-      <b>The total amount owed by the listed competitors is: ${totalOwed}</b>
+      <p><b>Number of competitors listed: </b>{totalListed} ------- <b>Total amount owed: </b>${totalOwed}</p>
+
       <Table.Provider
         components={components}
         columns={columns}
