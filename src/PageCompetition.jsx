@@ -7,10 +7,10 @@ import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
-
+import connection from './common/connection'
 
 // competition/:competition_id/:competitor_id
-export default class PageCompetition extends React.Component {
+class PageCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -134,7 +134,7 @@ export default class PageCompetition extends React.Component {
     ]
 
     return (
-      <Page ref="page">
+      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
           <div className={styles.titles}>
             <p>{comp_name}</p>
           </div>
@@ -185,7 +185,9 @@ export default class PageCompetition extends React.Component {
     ); 
   }
   else {
-    return <Page ref="page" />
+    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
   }
  }
 }
+
+export default connection(PageCompetition)

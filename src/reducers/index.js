@@ -11,7 +11,6 @@ const { profile, isAuthenticated } = (() => {
   try {
     profile = JSON.parse(localStorage.getItem('profile'))
   } catch (e) { isAuthenticated = false }
-  console.log(profile, isAuthenticated)
   return { profile, isAuthenticated }
 })()
 
@@ -31,12 +30,14 @@ function auth(state = {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: ''
+        errorMessage: '',
+        profile: action.profile
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false
+        isAuthenticated: false,
+        profile: null
       })
     case LOCK_ERROR: {
         console.error('ERRORR', action.err)

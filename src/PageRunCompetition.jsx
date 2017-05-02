@@ -7,8 +7,9 @@ import Page from './Page.jsx'
 import Box from './common/BoxAdmin.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
+import connection from './common/connection'
 
-export default class RunCompetition extends React.Component {
+class RunCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -262,7 +263,7 @@ export default class RunCompetition extends React.Component {
           <Table.Body rows={this.getFutureRounds()} rowKey="id" />
         </Table.Provider>
 
-    return (<Page ref="page" isAdmin={true}>
+    return (<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
 
         <h1>Running: {this.state.competition.Name}</h1>
 
@@ -303,8 +304,7 @@ export default class RunCompetition extends React.Component {
         {/*<div className="container admin">
           <h2>Upcoming rounds</h2>
           {future_rounds_table}
-        </div>*/}
-
+        </div>*/}       
         <Link to={`/competition/${this.competition_id}/editschedule`}>Edit schedule</Link>
 
     </Page>
@@ -312,4 +312,4 @@ export default class RunCompetition extends React.Component {
   }
 }
 
-
+export default connection(RunCompetition)

@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 const data          = require('./api/data')
 const ip = require('ip');
+const query          = require('./query')
 
 
 /************************************************************
@@ -127,11 +128,21 @@ app.get('/api/callbacks', (req, res) => {
 })
 
 app.get('/api/admins', (req, res) => {
-  res.send(data.admins)
+  query.get_all_admins().then(function (value) {
+      console.log(value);
+      res.send(value);
+  });
 })
 
 app.get('/api/judges', (req, res) => {
   res.send(data.judges)
+})
+
+app.get('/api/competition/:cid/judges', (req, res) => {
+  query.get_judges_by_competition(req.params.cid).then(function (value) {
+      console.log(value);
+      res.send(value);
+  });
 })
 
 app.get('/api/', (req, res) => {

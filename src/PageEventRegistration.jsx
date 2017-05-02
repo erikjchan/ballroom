@@ -9,6 +9,7 @@ import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import {Button, IconButton} from 'react-toolbox/lib/button';
 import Box from './common/Box.jsx'
 import { Link } from 'react-router'
+import connection from './common/connection'
 /*
 
 
@@ -31,7 +32,7 @@ class RadioTest extends React.Component {
  */
 
 // competition/:competition_id/eventregistration
-export default class PageEventRegistration extends React.Component {
+class PageEventRegistration extends React.Component {
 
 
   constructor(props) {
@@ -193,7 +194,7 @@ export default class PageEventRegistration extends React.Component {
 
     return (
 
-    <Page ref="page">
+    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
       <h1>Event Registration</h1>
         <Box 
         title = {<div>Register for New Event</div>}
@@ -341,4 +342,7 @@ export default class PageEventRegistration extends React.Component {
    );
  }
 }
+
+export default connection(PageEventRegistration)
+
 

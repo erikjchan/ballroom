@@ -6,8 +6,9 @@ import Box from './common/BoxAdmin.jsx'
 import Page from './Page.jsx'
 import Autocomplete from 'react-autocomplete'
 import { browserHistory } from 'react-router';
+import connection from './common/connection'
 
-export default class PageCompetitionHomeAdmin extends React.Component {
+class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -357,7 +358,7 @@ populate_expanded(box_name, lines_react, link){
 
     if (this.state.expanded!=null){
         return (
-          <Page ref="page" isAdmin={true}>
+          <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
             <div className={styles.title}>
               <p>{comp_name}</p>
             </div>
@@ -368,7 +369,7 @@ populate_expanded(box_name, lines_react, link){
     }
     var num = 6
     return (
-      <Page ref="page" isAdmin={true}>
+      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
@@ -389,9 +390,10 @@ populate_expanded(box_name, lines_react, link){
     ); 
   }
   else {
-    return <Page ref="page" />
+    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
   }
  }
 }
 
 
+export default connection(PageCompetitionHomeAdmin)
