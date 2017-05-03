@@ -175,7 +175,8 @@ CREATE TABLE level (
     id SERIAL,
     name character varying(30),
     ordernumber integer,
-    competitionid integer
+    competitionid integer,
+	UNIQUE (name, competitionid)
 );
 
 
@@ -248,7 +249,8 @@ CREATE TABLE style (
     id SERIAL,
     name character varying(30),
     ordernumber integer,
-    competitionid integer
+    competitionid integer,
+	UNIQUE (name, competitionid)
 );
 
 
