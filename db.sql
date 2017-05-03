@@ -563,28 +563,26 @@ SELECT pg_catalog.setval('style_id_seq', 1, false);
 
 INSERT INTO admin VALUES ('admin@email.edu', 'password');
 
-INSERT INTO competition VALUES (1, 'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 0, 'description');
+INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 0, 'description');
 
-INSERT INTO affiliation VALUES ('Cornell Dance Team');
+INSERT INTO affiliation VALUES (1,'Cornell Dance Team');
 
-INSERT INTO level VALUES ('Bronze', 1, 1);
-INSERT INTO level VALUES ('Silver', 1, 1);
-INSERT INTO level VALUES ('Gold', 1, 1);
+INSERT INTO level VALUES (1,'Bronze', 1, 1);
+INSERT INTO level VALUES (2,'Silver', 1, 1);
+INSERT INTO level VALUES (3,'Gold', 1, 1);
 
-INSERT INTO competitor VALUES ('Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, 'powerconverters', true);
-INSERT INTO competitor VALUES ('Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, 'myonlyhope', true);
-INSERT INTO competitor VALUES ('Rey', null, 'rey@rey.com', 'Jakku', 1, 'thismuchgreen', false);
+INSERT INTO competitor VALUES (1,'Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, 'powerconverters', true);
+INSERT INTO competitor VALUES (2,'Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, 'myonlyhope', true);
+INSERT INTO competitor VALUES (3,'Rey', null, 'rey@rey.com', 'Jakku', 1, 'thismuchgreen', false);
 
-INSERT INTO judge VALUES ('len@goodman.com', 'judgetoken', 'Len', 'Goodman', '626-555-5555', 1);
-INSERT INTO judge VALUES ('bruno@tonioli.com', 'judgetoken', 'Bruno', 'Tonioli', '626-655-5555', 1);
-INSERT INTO judge VALUES ('carrieann@inaba.com', 'judgetoken', 'Carrie Ann', 'Inaba', '626-565-5555', 1);
-INSERT INTO judge VALUES ('julianne@hough.com', 'judgetoken', 'Julianne', 'Hough', '626-556-5555', 1);
-INSERT INTO judge VALUES ('tom@bergeron.com', 'judgetoken', 'Tom', 'Bergeron', '626-555-6555', 1);
-INSERT INTO judge VALUES ('erin@andrews.com', 'judgetoken', 'Erin', 'Andrews', '626-555-5655', 1);
+INSERT INTO judge VALUES (1,'len@goodman.com', 'judgetoken', 'Len', 'Goodman', '626-555-5555', 1);
+INSERT INTO judge VALUES (2,'bruno@tonioli.com', 'judgetoken', 'Bruno', 'Tonioli', '626-655-5555', 1);
+INSERT INTO judge VALUES (3,'carrieann@inaba.com', 'judgetoken', 'Carrie Ann', 'Inaba', '626-565-5555', 1);
+INSERT INTO judge VALUES (4,'julianne@hough.com', 'judgetoken', 'Julianne', 'Hough', '626-556-5555', 1);
+INSERT INTO judge VALUES (5,'tom@bergeron.com', 'judgetoken', 'Tom', 'Bergeron', '626-555-6555', 1);
+INSERT INTO judge VALUES (6,'erin@andrews.com', 'judgetoken', 'Erin', 'Andrews', '626-555-5655', 1);
 
 INSERT INTO style VALUES (1, 'Latin', 1, 1);
-
-INSERT INTO callback VALUES (1, '2017-05-10 00:00:00-04', 1, 1, 1, 1);
 
 INSERT INTO event VALUES (1, 1, 1, 1, 'Waltz', 1);
 
@@ -593,6 +591,8 @@ INSERT INTO round VALUES (2, 1, 'Round 2', 1, 16, 3, 1, 2, 3, 4, 5, 6);
 INSERT INTO round VALUES (3, 1, 'Round 3', 1, 8, 4, 1, 2, 3, 4, 5, 6);
 INSERT INTO round VALUES (4, 1, 'Round 4', 1, 4, 5, 1, 2, 3, 4, 5, 6);
 INSERT INTO round VALUES (5, 1, 'Round 5', 1, 2, 6, 1, 2, 3, 4, 5, 6);
+
+INSERT INTO callback VALUES (1, '2017-05-10 00:00:00-04', 1, 1, 1, 1);
 
 INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
 
