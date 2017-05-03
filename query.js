@@ -6,7 +6,6 @@ const SQL = require('sql-template-strings')
 //     //we don't have to return any client to the pool or close a connection
 
 const get_num_couples_per_event_for_competition = cid => {
-    console.log(cid);
     return pool.query(SQL`SELECT COUNT(p.number), e.id
         FROM partnership p
         LEFT JOIN event e ON (e.id = p.eventid)
@@ -23,39 +22,39 @@ const create_rounds_for_events_for_competition = cid => {
                   reject(err);
               } else {
                   let ordernumber = 1;
-                  for (let row in value) {
-                      let couples = row.count;
+                  for (let row of value) {
+                      let couples = parseInt(row.count);
                       let eventid = row.id;
                       let numRounds = Math.ceil(couples / 7.0);
                       for (let i = 1; i <= numRounds; i++) {
                           const size = Math.max(couples, (numRounds - i + 1) * 7);
                           if (i == numRounds) {
-                              client.query(SQL`INSERT INTO round VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
+                              client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
                                   if (err) {
                                       done(err);
-                                      //reject(err);
+                                      reject(err);
                                   }
                               });
                           } else if (i == numRounds - 1) {
-                              client.query(SQL`INSERT INTO round VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
+                              client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
                                   if (err) {
                                       done(err);
-                                      //reject(err);
+                                      reject(err);
                                   }
                               });
                           } else if (i == numRounds - 2) {
-                              client.query(SQL`INSERT INTO round VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
+                              client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
                                   if (err) {
                                       done(err);
-                                      //reject(err);
+                                      reject(err);
                                   }
                               });
                           } else {
                               const name = 'Round ' + i;
-                              client.query(SQL`INSERT INTO round VALUES (${eventid}, ${name}, ${ordernumber}, ${size})`, (err, result) => {
+                              client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, ${name}, ${ordernumber}, ${size})`, (err, result) => {
                                   if (err) {
                                       done(err);
-                                      //reject(err);
+                                      reject(err);
                                   }
                               });
                           }
@@ -63,7 +62,7 @@ const create_rounds_for_events_for_competition = cid => {
                       }
                   }
                   done(null);
-                  resolve({finished: true});
+                  resolve("{finished: true}");
               }
           })
        });
