@@ -54,11 +54,21 @@ app.post('/api/competition/generateRounds', (req, res) => {
 });
 
 app.post('/api/competition/updateEvents', (req, res) => {
-    const data = {
-        cid: req.body.cid,
-        rows: req.body.rows
-    };
-    query.update_events_for_competition(data).then(value => {
+    query.update_events_for_competition(req.body).then(value => {
+        console.log(value);
+        res.end(value);
+    });
+});
+
+app.post('/api/competition/updateCompetitionInfo', (req, res) => {
+    query.update_competition_info(req.body).then(value => {
+        console.log(value);
+        res.end(value);
+    });
+});
+
+app.post('/api/competition/updateCompetitionCurrentEventId', (req, res) => {
+    query.update_competition_current_event_id(req.body).then(value => {
         console.log(value);
         res.end(value);
     });
