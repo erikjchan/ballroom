@@ -171,6 +171,19 @@ const update_events_for_competition = data => {
     });
 }
 
+const update_competition_info = data => {
+    return pool.query(SQL`UPDATE competition SET name = ${data.name}, leadidstartnum = ${data.leadidstartnum},
+        locationname = ${data.locationname}, earlyprice = ${data.earlyprice}, regularprice = ${data.regularprice},
+        lateprice = ${data.lateprice}, startdate = ${data.startdate}, enddate = ${data.enddate}, 
+        regstartdate = ${data.regstartdate}, earlyregdeadline = ${data.earlyregdeadline}, 
+        regularregdeadline = ${data.regularregdeadline}, lateregdeadline = ${data.lateregdeadline},
+        description = ${data.description} WHERE id = ${data.cid}`);
+}
+
+const update_competition_current_event_id = data => {
+    return pool.query(SQL`UPDATE competition SET currenteventid = ${data.currenteventid} WHERE id = ${data.cid}`);
+}
+
 const get_all_admins = () => {
     return pool.query('SELECT * FROM admin', []);
 }
@@ -264,5 +277,7 @@ module.exports = {
     get_num_competitors_per_style_for_competition,
     add_new_judge,
     create_rounds_for_events_for_competition,
-    update_events_for_competition
+    update_events_for_competition,
+    update_competition_info,
+    update_competition_current_event_id
 }
