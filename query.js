@@ -136,7 +136,8 @@ const get_num_competitors_per_style_for_competition = cid => {
 }
 
 const add_new_judge = (judge) => {
-    return pool.query(SQL`INSERT INTO judge VALUES (${judge.email}, ${judge.token}, ${judge.firstName}, ${judge.lastName}, ${judge.phoneNumber}, ${judge.competitionId})`);
+    return pool.query(SQL`INSERT INTO judge (email, token, firstname, lastname, phonenumber, competitionid) 
+        VALUES (${judge.email}, ${judge.token}, ${judge.firstName}, ${judge.lastName}, ${judge.phoneNumber}, ${judge.competitionId})`);
 }
 
 // INSERT
