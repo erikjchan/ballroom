@@ -7,7 +7,8 @@ import lib from './common/lib'
 import Box from './common/BoxAdmin.jsx'
 import style from './style.css';
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
-import connection from './common/connection'
+import connection from './common/connection';
+import { browserHistory } from 'react-router';
 
 
 class PageSeeCompetitor extends React.Component {
@@ -58,11 +59,11 @@ class PageSeeCompetitor extends React.Component {
       .then(json => {
         for (let i = 0; i < json.length; i++) {
             if (json[i].leading) {
-                json[i].leader = "You"
+                json[i].leader = this.state.competitor.name
                 json[i].follower = json[i].partner
             } else {
                 json[i].leader = json[i].partner
-                json[i].follower = "You"
+                json[i].follower = this.state.competitor.name
             }
         }
         this.setState({competitor_events: json})
@@ -112,6 +113,14 @@ class PageSeeCompetitor extends React.Component {
             <EventTable
                 events={this.state.competitor_events} 
             /> 
+            <div className = {styles.comp_containers}>
+            <div className = {styles.addeditBtns}>
+                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/0/regcompetitor/0') }}> 
+                    Add/Edit Event
+                </button>
+            </div>
+            </div>
+
             </div>
           } />
       </Page>   
