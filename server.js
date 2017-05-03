@@ -53,6 +53,17 @@ app.post('/api/competition/generateRounds', (req, res) => {
     });
 });
 
+app.post('/api/competition/updateEvents', (req, res) => {
+    const data = {
+        cid: req.body.cid,
+        rows: req.body.rows
+    };
+    query.update_events_for_competition(data).then(value => {
+        console.log(value);
+        res.end(value);
+    });
+});
+
 app.get('/api/competition/:id', (req, res) => {
     query.get_competition_info(req.params.id).then(value => {
         console.log(value);

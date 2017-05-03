@@ -356,7 +356,7 @@ ALTER TABLE ONLY style
 --
 
 ALTER TABLE ONLY callback
-    ADD CONSTRAINT callback_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT callback_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -364,7 +364,7 @@ ALTER TABLE ONLY callback
 --
 
 ALTER TABLE ONLY callback
-    ADD CONSTRAINT callback_judgeid_fkey FOREIGN KEY (judgeid) REFERENCES judge(id);
+    ADD CONSTRAINT callback_judgeid_fkey FOREIGN KEY (judgeid) REFERENCES judge(id) ON DELETE CASCADE;
 
 
 --
@@ -372,7 +372,7 @@ ALTER TABLE ONLY callback
 --
 
 ALTER TABLE ONLY callback
-    ADD CONSTRAINT callback_roundid_fkey FOREIGN KEY (roundid) REFERENCES round(id);
+    ADD CONSTRAINT callback_roundid_fkey FOREIGN KEY (roundid) REFERENCES round(id) ON DELETE CASCADE;
 
 
 --
@@ -380,7 +380,7 @@ ALTER TABLE ONLY callback
 --
 
 ALTER TABLE ONLY competition
-    ADD CONSTRAINT competition_compadmin_fkey FOREIGN KEY (compadmin) REFERENCES admin(email);
+    ADD CONSTRAINT competition_compadmin_fkey FOREIGN KEY (compadmin) REFERENCES admin(email) ON DELETE CASCADE;
 
 
 --
@@ -388,7 +388,7 @@ ALTER TABLE ONLY competition
 --
 
 ALTER TABLE ONLY competitor
-    ADD CONSTRAINT competitor_affiliationid_fkey FOREIGN KEY (affiliationid) REFERENCES affiliation(id);
+    ADD CONSTRAINT competitor_affiliationid_fkey FOREIGN KEY (affiliationid) REFERENCES affiliation(id) ON DELETE CASCADE;
 
 
 --
@@ -396,7 +396,7 @@ ALTER TABLE ONLY competitor
 --
 
 ALTER TABLE ONLY event
-    ADD CONSTRAINT event_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT event_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -404,7 +404,7 @@ ALTER TABLE ONLY event
 --
 
 ALTER TABLE ONLY event
-    ADD CONSTRAINT event_levelid_fkey FOREIGN KEY (levelid) REFERENCES level(id);
+    ADD CONSTRAINT event_levelid_fkey FOREIGN KEY (levelid) REFERENCES level(id) ON DELETE CASCADE;
 
 
 --
@@ -412,7 +412,7 @@ ALTER TABLE ONLY event
 --
 
 ALTER TABLE ONLY event
-    ADD CONSTRAINT event_styleid_fkey FOREIGN KEY (styleid) REFERENCES style(id);
+    ADD CONSTRAINT event_styleid_fkey FOREIGN KEY (styleid) REFERENCES style(id) ON DELETE CASCADE;
 
 
 --
@@ -420,7 +420,7 @@ ALTER TABLE ONLY event
 --
 
 ALTER TABLE ONLY judge
-    ADD CONSTRAINT judge_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT judge_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -428,7 +428,7 @@ ALTER TABLE ONLY judge
 --
 
 ALTER TABLE ONLY level
-    ADD CONSTRAINT level_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT level_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -436,7 +436,7 @@ ALTER TABLE ONLY level
 --
 
 ALTER TABLE ONLY partnership
-    ADD CONSTRAINT partnership_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT partnership_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -444,7 +444,7 @@ ALTER TABLE ONLY partnership
 --
 
 ALTER TABLE ONLY partnership
-    ADD CONSTRAINT partnership_eventid_fkey FOREIGN KEY (eventid) REFERENCES event(id);
+    ADD CONSTRAINT partnership_eventid_fkey FOREIGN KEY (eventid) REFERENCES event(id) ON DELETE CASCADE;
 
 
 --
@@ -452,7 +452,7 @@ ALTER TABLE ONLY partnership
 --
 
 ALTER TABLE ONLY partnership
-    ADD CONSTRAINT partnership_followcompetitorid_fkey FOREIGN KEY (followcompetitorid) REFERENCES competitor(id);
+    ADD CONSTRAINT partnership_followcompetitorid_fkey FOREIGN KEY (followcompetitorid) REFERENCES competitor(id) ON DELETE CASCADE;
 
 
 --
@@ -460,7 +460,7 @@ ALTER TABLE ONLY partnership
 --
 
 ALTER TABLE ONLY partnership
-    ADD CONSTRAINT partnership_leadcompetitorid_fkey FOREIGN KEY (leadcompetitorid) REFERENCES competitor(id);
+    ADD CONSTRAINT partnership_leadcompetitorid_fkey FOREIGN KEY (leadcompetitorid) REFERENCES competitor(id) ON DELETE CASCADE;
 
 
 --
@@ -468,7 +468,7 @@ ALTER TABLE ONLY partnership
 --
 
 ALTER TABLE ONLY paymentrecord
-    ADD CONSTRAINT paymentrecord_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT paymentrecord_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -476,7 +476,7 @@ ALTER TABLE ONLY paymentrecord
 --
 
 ALTER TABLE ONLY paymentrecord
-    ADD CONSTRAINT paymentrecord_competitorid_fkey FOREIGN KEY (competitorid) REFERENCES competitor(id);
+    ADD CONSTRAINT paymentrecord_competitorid_fkey FOREIGN KEY (competitorid) REFERENCES competitor(id) ON DELETE CASCADE;
 
 
 --
@@ -484,7 +484,7 @@ ALTER TABLE ONLY paymentrecord
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_eventid_fkey FOREIGN KEY (eventid) REFERENCES event(id);
+    ADD CONSTRAINT round_eventid_fkey FOREIGN KEY (eventid) REFERENCES event(id) ON DELETE CASCADE;
 
 
 --
@@ -492,7 +492,7 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid1_fkey FOREIGN KEY (judgeid1) REFERENCES judge(id);
+    ADD CONSTRAINT round_judgeid1_fkey FOREIGN KEY (judgeid1) REFERENCES judge(id) ON DELETE SET NULL;
 
 
 --
@@ -500,7 +500,7 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid2_fkey FOREIGN KEY (judgeid2) REFERENCES judge(id);
+    ADD CONSTRAINT round_judgeid2_fkey FOREIGN KEY (judgeid2) REFERENCES judge(id) ON DELETE SET NULL;
 
 
 --
@@ -508,7 +508,7 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid3_fkey FOREIGN KEY (judgeid3) REFERENCES judge(id);
+    ADD CONSTRAINT round_judgeid3_fkey FOREIGN KEY (judgeid3) REFERENCES judge(id) ON DELETE SET NULL;
 
 
 --
@@ -516,7 +516,7 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid4_fkey FOREIGN KEY (judgeid4) REFERENCES judge(id);
+    ADD CONSTRAINT round_judgeid4_fkey FOREIGN KEY (judgeid4) REFERENCES judge(id) ON DELETE SET NULL;
 
 
 --
@@ -524,7 +524,7 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid5_fkey FOREIGN KEY (judgeid5) REFERENCES judge(id);
+    ADD CONSTRAINT round_judgeid5_fkey FOREIGN KEY (judgeid5) REFERENCES judge(id) ON DELETE SET NULL;
 
 
 --
@@ -532,7 +532,7 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid6_fkey FOREIGN KEY (judgeid6) REFERENCES judge(id);
+    ADD CONSTRAINT round_judgeid6_fkey FOREIGN KEY (judgeid6) REFERENCES judge(id) ON DELETE SET NULL;
 
 
 --
@@ -540,37 +540,36 @@ ALTER TABLE ONLY round
 --
 
 ALTER TABLE ONLY style
-    ADD CONSTRAINT style_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id);
+    ADD CONSTRAINT style_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-SELECT pg_catalog.setval('affiliation_id_seq', 1, false);
-SELECT pg_catalog.setval('callback_id_seq', 1, false);
-SELECT pg_catalog.setval('competition_id_seq', 1, false);
-SELECT pg_catalog.setval('competitor_id_seq', 1, false);
-SELECT pg_catalog.setval('event_id_seq', 1, false);
-SELECT pg_catalog.setval('judge_id_seq', 1, false);
-SELECT pg_catalog.setval('level_id_seq', 1, false);
-SELECT pg_catalog.setval('paymentrecord_id_seq', 1, false);
-SELECT pg_catalog.setval('round_id_seq', 1, false);
-SELECT pg_catalog.setval('style_id_seq', 1, false);
 
+SELECT pg_catalog.setval('callback_id_seq', 1, false);
+
+SELECT pg_catalog.setval('round_id_seq', 1, false);
 
 INSERT INTO admin VALUES ('admin@email.edu');
 
 INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 0, 'description');
+
+SELECT pg_catalog.setval('competition_id_seq', 1, true);
 
 INSERT INTO affiliation VALUES (1,'Cornell Dance Team');
 INSERT INTO affiliation VALUES (2,'Harvard Dance Team');
 INSERT INTO affiliation VALUES (3,'MIT Dance Team');
 INSERT INTO affiliation VALUES (4,'Princeton Dance Team');
 
+SELECT pg_catalog.setval('affiliation_id_seq', 4, true);
+
 INSERT INTO level VALUES (1,'Bronze', 1, 1);
 INSERT INTO level VALUES (2,'Silver', 2, 1);
 INSERT INTO level VALUES (3,'Gold', 3, 1);
+
+SELECT pg_catalog.setval('level_id_seq', 3, true);
 
 INSERT INTO competitor VALUES (1,'Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, true);
 INSERT INTO competitor VALUES (2,'Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, true);
@@ -623,6 +622,8 @@ INSERT INTO competitor VALUES (48,'fname48', 'lname48', 'email48@email.com', 'ma
 INSERT INTO competitor VALUES (49,'fname49', 'lname49', 'email49@email.com', 'mailingaddress49', 4, false);
 INSERT INTO competitor VALUES (50,'fname50', 'lname50', 'email50@email.com', 'mailingaddress50', 4, false);
 
+SELECT pg_catalog.setval('competitor_id_seq', 50, true);
+
 
 INSERT INTO judge VALUES (1,'len@goodman.com', 'judgetoken', 'Len', 'Goodman', '626-555-5555', 1);
 INSERT INTO judge VALUES (2,'bruno@tonioli.com', 'judgetoken', 'Bruno', 'Tonioli', '626-655-5555', 1);
@@ -631,9 +632,13 @@ INSERT INTO judge VALUES (4,'julianne@hough.com', 'judgetoken', 'Julianne', 'Hou
 INSERT INTO judge VALUES (5,'tom@bergeron.com', 'judgetoken', 'Tom', 'Bergeron', '626-555-6555', 1);
 INSERT INTO judge VALUES (6,'erin@andrews.com', 'judgetoken', 'Erin', 'Andrews', '626-555-5655', 1);
 
+SELECT pg_catalog.setval('judge_id_seq', 6, true);
+
 INSERT INTO style VALUES (1, 'Latin', 1, 1);
 INSERT INTO style VALUES (2, 'Smooth', 2, 1);
 INSERT INTO style VALUES (3, 'Rough', 3, 1);
+
+SELECT pg_catalog.setval('style_id_seq', 3, true);
 
 INSERT INTO event VALUES (1, 1, 1, 1, 'Waltz', 1);
 INSERT INTO event VALUES (2, 1, 2, 1, 'Waltz', 2);
@@ -641,6 +646,8 @@ INSERT INTO event VALUES (3, 1, 1, 2, 'Tango', 3);
 INSERT INTO event VALUES (4, 1, 2, 2, 'Tango', 4);
 INSERT INTO event VALUES (5, 1, 1, 3, 'Cha Cha', 5);
 INSERT INTO event VALUES (6, 1, 2, 3, 'Cha Cha', 6);
+
+SELECT pg_catalog.setval('event_id_seq', 6, true);
 
 INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
 INSERT INTO partnership VALUES (1, 2, 6, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
@@ -692,3 +699,5 @@ INSERT INTO partnership VALUES (47, 48, 1, true, true, 1, 1, true, '2017-05-10 0
 INSERT INTO partnership VALUES (49, 50, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
 
 INSERT INTO paymentrecord VALUES (1, 1, '2017-05-10 00:00:00-04', 1, 21.87, true, true);
+
+SELECT pg_catalog.setval('paymentrecord_id_seq', 1, true);
