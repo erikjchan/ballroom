@@ -102,7 +102,7 @@ const get_events_for_competition = cid => {
 }
 
 const get_rounds_for_competition = cid => {
-    return pool.query(SQL`SELECT r.id, e.level, e.style, e.dance, r.name, r.ordernumber, r.size, r.nextround, 
+    return pool.query(SQL`SELECT r.id, e.levelid, e.styleid, e.dance, r.name, r.ordernumber, r.size, r.nextround, 
         r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM event e
         LEFT JOIN round r ON (e.id = r.eventid) WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
 }
