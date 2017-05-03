@@ -103,8 +103,10 @@ class PageEditCompetition extends React.Component {
                     </label>
                 </div>
                 <div className = {styles.form_row}>
-                    <input className = {styles.competitionEditBtns} type="submit" value="Edit Levels and Styles" />
                     <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
+                    <button className={styles.competitionEditBtns} 
+                        onClick={() => {window.location.href = "/competition/"+this.competition_id+"/editlevelsandstyles";}}> 
+                         Edit Levels and Styles</button>
                 </div>
                 </div>
             </form>)
