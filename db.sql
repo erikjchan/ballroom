@@ -34,12 +34,30 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+
+---
+--- Clear up tables
+---
+DROP TABLE IF EXISTS affiliation CASCADE;
+DROP TABLE IF EXISTS competition CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
+DROP TABLE IF EXISTS callback CASCADE;
+DROP TABLE IF EXISTS competitor CASCADE;
+DROP TABLE IF EXISTS paymentrecord CASCADE;
+DROP TABLE IF EXISTS judge CASCADE;
+DROP TABLE IF EXISTS event CASCADE;
+DROP TABLE IF EXISTS level CASCADE;
+DROP TABLE IF EXISTS partnership CASCADE;
+DROP TABLE IF EXISTS round CASCADE;
+DROP TABLE IF EXISTS style CASCADE;
+
+
 --
 -- Name: admin; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE admin (
-    email character varying(100) NOT NULL,
+    email character varying(100) NOT NULL UNIQUE,
     password character varying(100) NOT NULL
 );
 
@@ -52,7 +70,7 @@ ALTER TABLE admin OWNER TO postgres;
 
 CREATE TABLE affiliation (
     id SERIAL,
-    name character varying(100)
+    name character varying(100) UNIQUE
 );
 
 
@@ -108,11 +126,11 @@ CREATE TABLE competitor (
     id SERIAL,
     firstname character varying(30),
     lastname character varying(30),
-    email character varying(100),
+    email character varying(100) NOT NULL UNIQUE,
     mailingaddress character varying(100),
     affiliationid integer,
     password character varying(100),
-    hasregistered boolean
+    hasregistered boolean NOT NULL
 );
 
 
@@ -195,7 +213,8 @@ CREATE TABLE paymentrecord (
     competitorid integer,
     amount numeric(6,2),
     online boolean,
-    paidwithaffiliation boolean
+    paidwithaffiliation boolean,
+    UNIQUE (competitionid, competitorid)
 );
 
 
