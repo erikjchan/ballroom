@@ -559,19 +559,70 @@ SELECT pg_catalog.setval('round_id_seq', 1, false);
 SELECT pg_catalog.setval('style_id_seq', 1, false);
 
 
-INSERT INTO admin VALUES ('admin@email.edu', 'password');
+INSERT INTO admin VALUES ('admin@email.edu');
 
 INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 0, 'description');
 
 INSERT INTO affiliation VALUES (1,'Cornell Dance Team');
+INSERT INTO affiliation VALUES (2,'Harvard Dance Team');
+INSERT INTO affiliation VALUES (3,'MIT Dance Team');
+INSERT INTO affiliation VALUES (4,'Princeton Dance Team');
 
 INSERT INTO level VALUES (1,'Bronze', 1, 1);
-INSERT INTO level VALUES (2,'Silver', 1, 1);
-INSERT INTO level VALUES (3,'Gold', 1, 1);
+INSERT INTO level VALUES (2,'Silver', 2, 1);
+INSERT INTO level VALUES (3,'Gold', 3, 1);
 
-INSERT INTO competitor VALUES (1,'Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, 'powerconverters', true);
-INSERT INTO competitor VALUES (2,'Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, 'myonlyhope', true);
-INSERT INTO competitor VALUES (3,'Rey', null, 'rey@rey.com', 'Jakku', 1, 'thismuchgreen', false);
+INSERT INTO competitor VALUES (1,'Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, true);
+INSERT INTO competitor VALUES (2,'Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, true);
+INSERT INTO competitor VALUES (3,'Rey', 'who knows', 'rey@rey.com', 'Jakku', 1, false);
+INSERT INTO competitor VALUES (4,'fname1', 'lname1', 'email1@email.com', 'mailingaddress1', 2, false);
+INSERT INTO competitor VALUES (5,'fname2', 'lname2', 'email2@email.com', 'mailingaddress2', 2, false);
+INSERT INTO competitor VALUES (6,'fname3', 'lname3', 'email3@email.com', 'mailingaddress3', 3, false);
+INSERT INTO competitor VALUES (7,'fname7', 'lname7', 'email7@email.com', 'mailingaddress7', 4, false);
+INSERT INTO competitor VALUES (8,'fname8', 'lname8', 'email8@email.com', 'mailingaddress8', 4, false);
+INSERT INTO competitor VALUES (9,'fname9', 'lname9', 'email9@email.com', 'mailingaddress9', 4, false);
+INSERT INTO competitor VALUES (10,'fname10', 'lname10', 'email10@email.com', 'mailingaddress10', 4, false);
+INSERT INTO competitor VALUES (11,'fname11', 'lname11', 'email11@email.com', 'mailingaddress11', 4, false);
+INSERT INTO competitor VALUES (12,'fname12', 'lname12', 'email12@email.com', 'mailingaddress12', 4, false);
+INSERT INTO competitor VALUES (13,'fname13', 'lname13', 'email13@email.com', 'mailingaddress13', 4, false);
+INSERT INTO competitor VALUES (14,'fname14', 'lname14', 'email14@email.com', 'mailingaddress14', 4, false);
+INSERT INTO competitor VALUES (15,'fname15', 'lname15', 'email15@email.com', 'mailingaddress15', 4, false);
+INSERT INTO competitor VALUES (16,'fname10', 'lname16', 'email16@email.com', 'mailingaddress16', 4, false);
+INSERT INTO competitor VALUES (17,'fname17', 'lname17', 'email17@email.com', 'mailingaddress17', 4, false);
+INSERT INTO competitor VALUES (18,'fname18', 'lname18', 'email18@email.com', 'mailingaddress18', 4, false);
+INSERT INTO competitor VALUES (19,'fname19', 'lname19', 'email19@email.com', 'mailingaddress19', 4, false);
+INSERT INTO competitor VALUES (20,'fname20', 'lname20', 'email20@email.com', 'mailingaddress20', 4, false);
+INSERT INTO competitor VALUES (21,'fname21', 'lname21', 'email21@email.com', 'mailingaddress21', 4, false);
+INSERT INTO competitor VALUES (22,'fname22', 'lname22', 'email22@email.com', 'mailingaddress22', 4, false);
+INSERT INTO competitor VALUES (23,'fname23', 'lname23', 'email23@email.com', 'mailingaddress23', 4, false);
+INSERT INTO competitor VALUES (24,'fname24', 'lname24', 'email24@email.com', 'mailingaddress24', 4, false);
+INSERT INTO competitor VALUES (25,'fname25', 'lname25', 'email25@email.com', 'mailingaddress25', 4, false);
+INSERT INTO competitor VALUES (26,'fname20', 'lname26', 'email26@email.com', 'mailingaddress26', 4, false);
+INSERT INTO competitor VALUES (27,'fname27', 'lname27', 'email27@email.com', 'mailingaddress27', 4, false);
+INSERT INTO competitor VALUES (28,'fname28', 'lname28', 'email28@email.com', 'mailingaddress28', 4, false);
+INSERT INTO competitor VALUES (29,'fname29', 'lname29', 'email29@email.com', 'mailingaddress29', 4, false);
+INSERT INTO competitor VALUES (30,'fname30', 'lname30', 'email30@email.com', 'mailingaddress30', 4, false);
+INSERT INTO competitor VALUES (31,'fname31', 'lname31', 'email31@email.com', 'mailingaddress31', 4, false);
+INSERT INTO competitor VALUES (32,'fname32', 'lname32', 'email32@email.com', 'mailingaddress32', 4, false);
+INSERT INTO competitor VALUES (33,'fname33', 'lname33', 'email33@email.com', 'mailingaddress33', 4, false);
+INSERT INTO competitor VALUES (34,'fname34', 'lname34', 'email34@email.com', 'mailingaddress34', 4, false);
+INSERT INTO competitor VALUES (35,'fname35', 'lname35', 'email35@email.com', 'mailingaddress35', 4, false);
+INSERT INTO competitor VALUES (36,'fname30', 'lname36', 'email36@email.com', 'mailingaddress36', 4, false);
+INSERT INTO competitor VALUES (37,'fname37', 'lname37', 'email37@email.com', 'mailingaddress37', 4, false);
+INSERT INTO competitor VALUES (38,'fname38', 'lname38', 'email38@email.com', 'mailingaddress38', 4, false);
+INSERT INTO competitor VALUES (39,'fname39', 'lname39', 'email39@email.com', 'mailingaddress39', 4, false);
+INSERT INTO competitor VALUES (40,'fname40', 'lname40', 'email40@email.com', 'mailingaddress40', 4, false);
+INSERT INTO competitor VALUES (41,'fname41', 'lname41', 'email41@email.com', 'mailingaddress41', 4, false);
+INSERT INTO competitor VALUES (42,'fname42', 'lname42', 'email42@email.com', 'mailingaddress42', 4, false);
+INSERT INTO competitor VALUES (43,'fname43', 'lname43', 'email43@email.com', 'mailingaddress43', 4, false);
+INSERT INTO competitor VALUES (44,'fname44', 'lname44', 'email44@email.com', 'mailingaddress44', 4, false);
+INSERT INTO competitor VALUES (45,'fname45', 'lname45', 'email45@email.com', 'mailingaddress45', 4, false);
+INSERT INTO competitor VALUES (46,'fname40', 'lname46', 'email46@email.com', 'mailingaddress46', 4, false);
+INSERT INTO competitor VALUES (47,'fname47', 'lname47', 'email47@email.com', 'mailingaddress47', 4, false);
+INSERT INTO competitor VALUES (48,'fname48', 'lname48', 'email48@email.com', 'mailingaddress48', 4, false);
+INSERT INTO competitor VALUES (49,'fname49', 'lname49', 'email49@email.com', 'mailingaddress49', 4, false);
+INSERT INTO competitor VALUES (50,'fname50', 'lname50', 'email50@email.com', 'mailingaddress50', 4, false);
+
 
 INSERT INTO judge VALUES (1,'len@goodman.com', 'judgetoken', 'Len', 'Goodman', '626-555-5555', 1);
 INSERT INTO judge VALUES (2,'bruno@tonioli.com', 'judgetoken', 'Bruno', 'Tonioli', '626-655-5555', 1);
@@ -581,17 +632,63 @@ INSERT INTO judge VALUES (5,'tom@bergeron.com', 'judgetoken', 'Tom', 'Bergeron',
 INSERT INTO judge VALUES (6,'erin@andrews.com', 'judgetoken', 'Erin', 'Andrews', '626-555-5655', 1);
 
 INSERT INTO style VALUES (1, 'Latin', 1, 1);
+INSERT INTO style VALUES (2, 'Smooth', 2, 1);
+INSERT INTO style VALUES (3, 'Rough', 3, 1);
 
 INSERT INTO event VALUES (1, 1, 1, 1, 'Waltz', 1);
-
-INSERT INTO round VALUES (1, 1, 'Round 1', 1, 32, 2, 1, 2, 3, 4, 5, 6);
-INSERT INTO round VALUES (2, 1, 'Round 2', 1, 16, 3, 1, 2, 3, 4, 5, 6);
-INSERT INTO round VALUES (3, 1, 'Round 3', 1, 8, 4, 1, 2, 3, 4, 5, 6);
-INSERT INTO round VALUES (4, 1, 'Round 4', 1, 4, 5, 1, 2, 3, 4, 5, 6);
-INSERT INTO round VALUES (5, 1, 'Round 5', 1, 2, 6, 1, 2, 3, 4, 5, 6);
-
-INSERT INTO callback VALUES (1, '2017-05-10 00:00:00-04', 1, 1, 1, 1);
+INSERT INTO event VALUES (2, 1, 2, 1, 'Waltz', 2);
+INSERT INTO event VALUES (3, 1, 1, 2, 'Tango', 3);
+INSERT INTO event VALUES (4, 1, 2, 2, 'Tango', 4);
+INSERT INTO event VALUES (5, 1, 1, 3, 'Cha Cha', 5);
+INSERT INTO event VALUES (6, 1, 2, 3, 'Cha Cha', 6);
 
 INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 2, 6, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 3, 2, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 3, 5, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 4, 3, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 4, 4, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 5, 3, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 5, 4, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 6, 2, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 6, 5, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 3, 6, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 5, 2, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 5, 5, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 6, 3, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 6, 4, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (3, 4, 3, true, true, 1, 3, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (3, 4, 4, true, true, 1, 3, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (3, 5, 5, true, true, 1, 3, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (3, 6, 1, true, true, 1, 3, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (3, 6, 6, true, true, 1, 3, true, '2017-05-10 00:00:00-04');
+
+INSERT INTO partnership VALUES (1, 3, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 4, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 5, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 6, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+
+INSERT INTO partnership VALUES (7, 8, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (9, 10, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (11, 12, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (13, 14, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (15, 16, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (17, 18, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (19, 20, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (21, 22, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (23, 24, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (25, 26, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (27, 28, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (29, 30, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (31, 32, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (33, 34, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (35, 36, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (37, 38, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (39, 40, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (41, 42, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (43, 44, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (45, 46, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (47, 48, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (49, 50, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
 
 INSERT INTO paymentrecord VALUES (1, 1, '2017-05-10 00:00:00-04', 1, 21.87, true, true);
