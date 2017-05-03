@@ -27,7 +27,7 @@ const create_rounds_for_events_for_competition = cid => {
                       let eventid = row.id;
                       let numRounds = Math.ceil(couples / 7.0);
                       for (let i = 1; i <= numRounds; i++) {
-                          const size = Math.max(couples, (numRounds - i + 1) * 7);
+                          let size = Math.min(couples, (numRounds - i + 1) * 7);
                           if (i == numRounds) {
                               client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
                                   if (err) {
