@@ -4,6 +4,7 @@ const data          = require('./api/data')
 const ip = require('ip');
 const query          = require('./query')
 const query2          = require('./query2')
+const bodyParser = require("body-parser")
 
 
 /************************************************************
@@ -36,11 +37,21 @@ app.get('/style.css', (req, res) => {
 
 const path = require('path')
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 /********************************* DATA PATHS *********************************/
 
-app.post('*', (req, res) => {
+/*app.post('*', (req, res) => {
   res.send({status: 'posted'})
-})
+})*/
+
+app.post('/api/competition/generateRounds', (req, res) => {
+   query.create_rounds_for_events_for_competition(req.body.cid).then(value => {
+        console.log(value);
+        res.end(value);
+   });
+});
 
 app.get('/api/competition/:id', (req, res) => {
     query.get_competition_info(req.params.id).then(value => {

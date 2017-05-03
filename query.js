@@ -5,6 +5,71 @@ const SQL = require('sql-template-strings')
 //     //after we're done nothing has to be taken care of
 //     //we don't have to return any client to the pool or close a connection
 
+const get_num_couples_per_event_for_competition = cid => {
+    console.log(cid);
+    return pool.query(SQL`SELECT COUNT(p.number), e.id
+        FROM partnership p
+        LEFT JOIN event e ON (e.id = p.eventid)
+        WHERE p.competitionid = ${cid}
+        GROUP BY e.id`);
+}
+
+const create_rounds_for_events_for_competition = cid => {
+    return new Promise(function(resolve, reject) {
+       get_num_couples_per_event_for_competition(cid).then(value => {
+          pool.connect(function(err, client, done) {
+              if (err) {
+                  console.error('error running query', err);
+                  reject(err);
+              } else {
+                  let ordernumber = 1;
+                  for (let row in value) {
+                      let couples = row.count;
+                      let eventid = row.id;
+                      let numRounds = Math.ceil(couples / 7.0);
+                      for (let i = 1; i <= numRounds; i++) {
+                          const size = Math.max(couples, (numRounds - i + 1) * 7);
+                          if (i == numRounds) {
+                              client.query(SQL`INSERT INTO round VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
+                                  if (err) {
+                                      done(err);
+                                      //reject(err);
+                                  }
+                              });
+                          } else if (i == numRounds - 1) {
+                              client.query(SQL`INSERT INTO round VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
+                                  if (err) {
+                                      done(err);
+                                      //reject(err);
+                                  }
+                              });
+                          } else if (i == numRounds - 2) {
+                              client.query(SQL`INSERT INTO round VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
+                                  if (err) {
+                                      done(err);
+                                      //reject(err);
+                                  }
+                              });
+                          } else {
+                              const name = 'Round ' + i;
+                              client.query(SQL`INSERT INTO round VALUES (${eventid}, ${name}, ${ordernumber}, ${size})`, (err, result) => {
+                                  if (err) {
+                                      done(err);
+                                      //reject(err);
+                                  }
+                              });
+                          }
+                          ordernumber++;
+                      }
+                  }
+                  done(null);
+                  resolve({finished: true});
+              }
+          })
+       });
+    });
+}
+
 const get_all_admins = () => {
     return pool.query('SELECT * FROM admin', []);
 }
@@ -92,5 +157,6 @@ module.exports = {
     get_competitors_for_competition,
     get_affiliations_for_competition,
     get_num_competitors_per_style_for_competition,
-    add_new_judge
+    add_new_judge,
+    create_rounds_for_events_for_competition
 }
