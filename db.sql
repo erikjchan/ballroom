@@ -57,8 +57,7 @@ DROP TABLE IF EXISTS style CASCADE;
 --
 
 CREATE TABLE admin (
-    email character varying(100) NOT NULL UNIQUE,
-    password character varying(100) NOT NULL
+    email character varying(100) NOT NULL UNIQUE
 );
 
 
