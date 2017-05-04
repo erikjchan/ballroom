@@ -84,7 +84,7 @@ app.post('/api/competition/updateCompetitionCurrentEventId', (req, res) => {
 app.get('/api/competition/:id', (req, res) => {
     query.get_competition_info(req.params.id).then(value => {
         console.log(value);
-        res.send(value);
+        res.send(value[0]);
     });
 })
 
@@ -150,22 +150,47 @@ app.get('/api/competition/:cid/rounds', (req, res) => {
 
 app.get('/api/competitors/:id', (req, res) => {
     const id = parseInt(req.params.id)
-    const comps = data.competitors.filter(c => c.id === id)
-    res.send(comps[0])
+    query2.get_competitor_by_id(req.params.id).then(value => {
+        console.log(value);
+        res.send(value[0]);
+    });
 })
 
-app.get('/api/competitors/:id1/competition/:id2', (req, res) => {
-    const id1 = parseInt(req.params.id1)
-    const id2 = parseInt(req.params.id2)
-    res.send(data.competitor_competition_information[id1])
-})
+// app.get('/api/competitors/:id1/competition/:id2', (req, res) => {
+//     const id1 = parseInt(req.params.id1)
+//     const id2 = parseInt(req.params.id2)
+//     res.send(data.competitor_competition_information[id1])
+// })
 
-app.get('/api/competitors/:id/events', (req, res) => {
-    res.send(data.competitor_events)
+app.get('/api/competitors/:id/:cid/events', (req, res) => {
+    const id = parseInt(req.params.id)
+    const cid = parseInt(req.params.cid)
+    query2.get_comfirmed_partnerships_by_competition_competitor(cid, id).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/competitions', (req, res) => {
-    res.send(data.competitions)
+    query.get_competitions().then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competitions/:cid', (req, res) => {
+    const cid = parseInt(req.params.cid)
+    query.get_your_competitions(cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+app.get('/api/competitions/:cid/unregistered', (req, res) => {
+    const cid = parseInt(req.params.cid)
+    query.get_other_competitions(cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/events', (req, res) => {
@@ -207,9 +232,39 @@ app.get('/api/organizations', (req, res) => {
     res.send(data.organizations)
 })
 
+
 app.get('/api/payment_records', (req, res) => {
-    res.send(data.payment_records)
+    query2.get_all_paymentrecords().then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
 })
+
+app.get('/api/payment_records/competition/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    query2.get_paymentrecords_by_competition(id).then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/payment_records/competitor/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    query2.get_paymentrecords_by_competitior(id).then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/payment_records/:competitionid/:competitorid', (req, res) => {
+    const competitionid = parseInt(req.params.competitionid)
+    const competitorid = parseInt(req.params.competitorid)
+    query2.get_paymentrecord_by_competition_competitor(competitionid, competitorid).then(function (value) {
+        console.log(value);
+        res.send(value[0]);
+    });
+})
+
 
 app.get('/api/callbacks', (req, res) => {
     res.send(data.callbacks)

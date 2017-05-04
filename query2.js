@@ -11,18 +11,22 @@ const get_all_competitors = () => {
     return pool.query('SELECT * FROM competitor;', []);
 }
 
-const get_competitors_by_competition = (id) => {
-    return pool.query(SQL`SELECT * FROM competitor 
-                          WHERE EXISTS 
-                                (SELECT * FROM partnership
-                                 WHERE partnership.competitionid = ${id} 
-                                       AND
-                                       (partnership.leadcompetitorid = competitor.id
-                                       OR partnership.followcompetitorid = competitor.id));`);
-}
+// const get_competitors_by_competition = (id) => {
+//     return pool.query(SQL`SELECT * FROM competitor 
+//                           WHERE EXISTS 
+//                                 (SELECT * FROM partnership
+//                                  WHERE partnership.competitionid = ${id} 
+//                                        AND
+//                                        (partnership.leadcompetitorid = competitor.id
+//                                        OR partnership.followcompetitorid = competitor.id));`);
+// }
 
 const get_competitor_by_id = (id) => {
-    return pool.query(SQL`SELECT * FROM competitor WHERE id = ${id};`);
+    return pool.query(SQL`SELECT DISTINCT competitor.*, affiliation.name as affiliationname, partnership.number as number
+                          FROM competitor
+                          LEFT JOIN affiliation ON competitor.affiliationid = affiliation.id
+                          LEFT JOIN partnership ON leadcompetitorid = competitor.id
+                          WHERE competitor.id = ${id};`);
 }
 
 const get_competitor_by_email = (email) => {
@@ -119,6 +123,27 @@ const get_partnerships_by_competitor = (competitorid) => {
                           WHERE leadcompetitorid = ${competitorid} OR followcompetitorid = ${competitorid};`);
 }
 
+const get_comfirmed_partnerships_by_competition_competitor = (competitionid, competitorid) => {
+    return pool.query(SQL`SELECT partnership.*, event.dance as dance,
+                                style.name as style, level.name as level,
+                                competitor1.firstname as leadfirstname, competitor1.lastname as leadlastname, 
+                                competitor2.firstname as followfirstname, competitor2.lastname as followlastname  
+                          FROM partnership
+                          LEFT JOIN event
+                          ON partnership.eventid = event.id
+                          LEFT JOIN style
+                          ON style.id = event.styleid
+                          LEFT JOIN level
+                          ON level.id = event.levelid
+                          LEFT JOIN competitor as competitor1
+                          ON competitor1.id = partnership.leadcompetitorid
+                          LEFT JOIN competitor as competitor2
+                          ON competitor2.id = partnership.followcompetitorid                     
+                          WHERE (leadcompetitorid = ${competitorid} OR followcompetitorid = ${competitorid})
+                                AND leadconfirmed = ${true} AND followconfirmed = ${true}
+                                AND partnership.competitionid = ${competitionid};`);
+}
+
 const get_partnerships_by_competition_competitor = (competitionid, competitorid) => {
     return pool.query(SQL`SELECT * FROM partnership 
                           WHERE competitionid = ${competitionid} AND 
@@ -168,7 +193,6 @@ const update_partnership = (leadcompetitorid, followcompetitorid, eventid, leadc
 
 module.exports = {
     get_all_competitors,
-    get_competitors_by_competition,
     get_competitor_by_id,
     get_competitor_by_email,
     check_competitor_email_exist,
@@ -180,6 +204,7 @@ module.exports = {
     get_partnership_by_number,
     get_partnerships_by_competition_competitor,
     get_partnerships_by_competitor,
+    get_comfirmed_partnerships_by_competition_competitor,
     get_partnerships_by_event,
     get_comfirmed_partnerships_by_event,
     create_partnership,
