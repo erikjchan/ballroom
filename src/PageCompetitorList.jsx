@@ -12,7 +12,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import Page from './Page.jsx'
-import SearchTable from './PageCompetitorList/competitors.jsx';
+import CompetitorList from './PageCompetitorList/competitors.jsx';
 import style from './style.css';
 
 // competition/:competition_id/competitorlist
@@ -32,7 +32,7 @@ export default class CompetitorsList extends React.Component {
       content=
       {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>
-          <SearchTable data={this.props.location.state}/>
+          <CompetitorList data={this.props.location.state}/>
         </div>
       </div>}
       />

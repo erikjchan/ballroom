@@ -20,6 +20,8 @@ import EditCompetition      from '../PageEditCompetition.jsx'
 import EditOfficial         from '../PageEditOfficial.jsx'
 import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
+import SeeCompetitor        from '../PageSeeCompetitor.jsx'
+import RegisterCompetitor        from '../PageRegisterCompetitor.jsx'
 
 /**
  * Semantics:
@@ -46,6 +48,8 @@ const routes = {
   'competition/:competition_id/round/:round_id/entercallbacks' : Judge(EnterCallbacks),
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
+  'competition/:competition_id/seecompetitor/:competitor_id'   : Admin(SeeCompetitor),
+  'competition/:competition_id/regcompetitor/:competitor_id'   : Admin(RegisterCompetitor),
 }
 
 export default (

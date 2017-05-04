@@ -6,6 +6,7 @@ import * as dnd from 'reactabular-dnd';
 import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
 import style from '../style.css';
+import { browserHistory, Link } from 'react-router';
 import { compose } from 'redux';
 
 
@@ -82,9 +83,9 @@ export default class CompetitorList extends React.Component {
       		    formatters: [
                     (value, { rowData }) => (
                         <div>
+                            <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
                             <input type="button"
-                                   value="Edit/See More"
-                                   onClick={() => alert(`${JSON.stringify(rowData, null, 2)}`)} />
+                                   value="Edit/See More" /></Link>
       			        </div>
       		        )
       		    ]
@@ -200,9 +201,9 @@ export default class CompetitorList extends React.Component {
       		         formatters: [
                          (value, { rowData }) => (
                              <div>
+                               <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
                                <input type="button"
-                                      value="Edit/See More"
-                                      onClick={() => alert(`${JSON.stringify(rowData, null, 2)}`)} />
+                                      value="Edit/See More" /></Link>
       			             </div>
       		             )
       		         ]
@@ -264,8 +265,18 @@ export default class CompetitorList extends React.Component {
             )
 		 })
     )(rows);
+ 
+    var totalOwed = 0; var totalListed = 0;
+    for (let i = 0; i < resolvedRows.length; i++) {
+        totalListed += 1;
+        if (resolvedRows[i].amount_owed != 0)
+            totalOwed += parseFloat((resolvedRows[i].amount_owed).substr(1));                             
+    }  
 
     return (
+      <div>
+      <p><b>Number of competitors listed: </b>{totalListed} ------- <b>Total amount owed: </b>${totalOwed}</p>
+
       <Table.Provider
         components={components}
         columns={columns}
@@ -288,6 +299,7 @@ export default class CompetitorList extends React.Component {
           onRow={this.onRow}
         />
       </Table.Provider>
+      </div>
     );
   }
 }
