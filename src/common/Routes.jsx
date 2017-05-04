@@ -19,6 +19,7 @@ import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor        from '../PageRegisterCompetitor.jsx'
+import AffiliationPayment   from '../PageAffiliationPayment.jsx'
 
 const routes = {
   'home'                                                       : HomePage,
@@ -37,6 +38,7 @@ const routes = {
   'competition/:competition_id/round/:round_id/entercallbacks' : EnterCallbacks,
   'editcompetition/:competition_id'                            : EditCompetition,
   'editofficial/:competition_id'                               : EditOfficial, 
+  'affiliationpayment/:competition_id'                         : AffiliationPayment,
 }
 
 export default (
