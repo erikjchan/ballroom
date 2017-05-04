@@ -165,7 +165,25 @@ app.get('/api/competitors/:id/events', (req, res) => {
 })
 
 app.get('/api/competitions', (req, res) => {
-    res.send(data.competitions)
+    query.get_competitions().then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competitions/:cid', (req, res) => {
+    const cid = parseInt(req.params.cid)
+    query.get_your_competitions(cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+app.get('/api/competitions/:cid/unregistered', (req, res) => {
+    const cid = parseInt(req.params.cid)
+    query.get_other_competitions(cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/events', (req, res) => {
