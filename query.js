@@ -32,13 +32,18 @@ const create_rounds_for_events_for_competition = cid => {
                           rollback(client, done);
                           return reject(err);
                       }
-                      let ordernumber = 1;
+                      let ordernumber = 0;
+                      for (let row of value) {
+                        let couples = parseInt(row.count);
+                        let numRounds = Math.ceil(couples / 7.0);
+                        ordernumber += numRounds;
+                      }
                       for (let row of value) {
                           let couples = parseInt(row.count);
                           let eventid = row.id;
                           let numRounds = Math.ceil(couples / 7.0);
                           let nextRound = null;
-                          for (let i = numRounds; i >= 1; i++) {
+                          for (let i = numRounds; i >= 1; i--) {
                               let size = Math.min(couples, (numRounds - i + 1) * 7);
                               if (i == numRounds) {
                                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size}) RETURNING id`, (err, result) => {
@@ -49,7 +54,7 @@ const create_rounds_for_events_for_competition = cid => {
                                       nextRound = result.rows[0].id;
                                   });
                               } else if (i == numRounds - 1) {
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size}, ${nextround}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size}, ${nextRound}) RETURNING id`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
@@ -57,7 +62,7 @@ const create_rounds_for_events_for_competition = cid => {
                                       nextRound = result.rows[0].id;
                                   });
                               } else if (i == numRounds - 2) {
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size}, ${nextround}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size}, ${nextRound}) RETURNING id`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
@@ -66,7 +71,7 @@ const create_rounds_for_events_for_competition = cid => {
                                   });
                               } else {
                                   const name = 'Round ' + i;
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, ${name}, ${ordernumber}, ${size}, ${nextround}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, ${name}, ${ordernumber}, ${size}, ${nextRound}) RETURNING id`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
@@ -74,7 +79,7 @@ const create_rounds_for_events_for_competition = cid => {
                                       nextRound = result.rows[0].id;
                                   });
                               }
-                              ordernumber++;
+                              ordernumber--;
                           }
                       }
                       client.query('COMMIT', (err) => {
@@ -177,6 +182,7 @@ const update_events_for_competition = data => {
 }
 
 const update_rounds_for_competition = data => {
+    console.log("data", data);
     return new Promise(function(resolve, reject) {
         pool.connect(function(err, client, done) {
            if (err) {
@@ -189,11 +195,12 @@ const update_rounds_for_competition = data => {
                        return reject(err);
                    }
                    client.query(SQL`CREATE TEMPORARY TABLE newrounds (
-                        id SERIAL,
+                        id integer,
                         levelid integer,
                         levelname character varying(100),
                         styleid integer,
                         stylename character varying(100),
+                        dance character varying(100),
                         eventid integer,
                         name character varying(100),
                         ordernumber integer,
@@ -212,8 +219,8 @@ const update_rounds_for_competition = data => {
                        }
                    });
                    for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) 
-                          VALUES (${row.id}, ${row.level}, ${row.style}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.nextround}, ${row.judgeid1}, ${row.judgeid2}, ${row.judgeid3}, ${row.judgeid4}, ${row.judgeid5}, ${row.judgeid6})`, (err, result) => {
+                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) 
+                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.nextround}, ${row.judgeid1}, ${row.judgeid2}, ${row.judgeid3}, ${row.judgeid4}, ${row.judgeid5}, ${row.judgeid6})`, (err, result) => {
                            if (err) {
                                rollback(client, done);
                                return reject(err);
@@ -233,7 +240,7 @@ const update_rounds_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   client.query(SQL`UPDATE newrounds SET eventid = e.id FROM event e WHERE newrounds.levelid = e.levelid AND newrounds.styleid = e.styleid AND e.competitionid = ${data.cid}`, (err, result) => {
+                   client.query(SQL`UPDATE newrounds SET eventid = e.id FROM event e WHERE newrounds.levelid = e.levelid AND newrounds.styleid = e.styleid AND newrounds.dance = e.dance AND e.competitionid = ${data.cid}`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
@@ -247,7 +254,7 @@ const update_rounds_for_competition = data => {
                        }
                    });
                    client.query(SQL`UPDATE round r SET ordernumber = n.ordernumber FROM newrounds n
-                    WHERE e.id = n.id`, (err, result) => {
+                    WHERE r.id = n.id`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
@@ -256,9 +263,10 @@ const update_rounds_for_competition = data => {
                    client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6)
                     SELECT eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6
                     FROM newrounds
-                    WHERE id = NULL`, (err, result) => {
+                    WHERE id IS NULL`, (err, result) => {
                        if (err) {
                            rollback(client, done);
+                           console.log(err);
                            return reject(err);
                        }
                    });
@@ -318,14 +326,14 @@ const get_competition_info = cid => {
 }
 
 const get_events_for_competition = cid => {
-    return pool.query(SQL`SELECT style.name, level.name, dance, event.ordernumber FROM event  
+    return pool.query(SQL`SELECT style.name as stylename, level.name as levelname, dance, event.ordernumber FROM event  
         LEFT JOIN style ON (style.id = event.styleid) 
         LEFT JOIN level ON (level.id = event.levelid)
         WHERE event.competitionid = ${cid} ORDER BY ordernumber`);
 }
 
 const get_rounds_for_competition = cid => {
-    return pool.query(SQL`SELECT r.id, l.name, s.name, e.dance, r.name, r.ordernumber, r.size, r.nextround, 
+    return pool.query(SQL`SELECT r.id, l.name as levelname, s.name as stylename, e.dance, r.name as round, r.ordernumber, r.size, r.nextround, 
         r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM event e
         LEFT JOIN round r ON (e.id = r.eventid) 
         LEFT JOIN level l ON (e.levelid = l.id)
