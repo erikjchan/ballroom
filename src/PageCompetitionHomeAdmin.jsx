@@ -286,7 +286,7 @@ populate_expanded(box_name, lines_react, link){
                         </div>)*/
 
     dict['Events'] = this.state.competition_events.map(event => {
-                            var title = event.name+" "+event.name+" "+event.dance
+                            var title = event.stylename+" "+event.levelname+" "+event.dance
                             return (<p key={title+" "+event.ordernumber}>{title}</p>)
                           })
     links["Events"] = "/competition/"+this.competition_id+"/editevents";
@@ -343,7 +343,7 @@ populate_expanded(box_name, lines_react, link){
                             //   event_name = ""
                             // }
                             /**TODO */
-                              return (<p key={round.id + " "+ i}><b>{(i+1)+": "}</b>{round.name+""}</p>)
+                              return (<p key={round.id + " "+ i}><b>{(i+1)+": "}</b>{round.stylename+" "+round.levelname+" "+round.dance+" "+round.round}</p>)
                           }))
     links["Schedule"] = "/competition/"+this.competition_id+"/editschedule";
 
