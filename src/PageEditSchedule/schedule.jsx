@@ -263,7 +263,7 @@ export default class DragAndDropTable extends React.Component {
         <Table.Body
           className={style.tableBody}
           rows={resolvedRows}
-          rowKey="id"
+          rowKey="ordernumber"
           onRow={this.onRow}
         />
       </Table.Provider>
@@ -284,18 +284,25 @@ export default class DragAndDropTable extends React.Component {
     }
 
     var earliestRound = null;
+    var finalRoundSize = null;
+    var numRounds = 0;
     for (let row of rows) {
     	if (row.levelname == selectedLevel && row.stylename == selectedStyle && row.dance == selectedDance) {
+    	    numRounds++;
     		if (earliestRound == null) {
     			earliestRound = row;
     		}
     		if (row.round.indexOf("Round") == 0) {
-    			let num = parseInt(row.round);
+    			let num = parseInt(row.round.replace( /^\D+/g, ''));
     			row.round = "Round " + (num + 1);
     		}
+    		if (row.round == "Final") {
+    		    finalRoundSize = row.round.size;
+            }
     	}
     }
     var newRowRound = "Round 1";
+    earliestRound.size = finalRoundSize * numRounds;
     var newRowSize = earliestRound.size <= 100 ? earliestRound.size * 2 : earliestRound.size; // TODO: Change to appropriate value
     if (earliestRound.round == "Final") {
     	newRowRound = "Semifinal";
@@ -311,7 +318,6 @@ export default class DragAndDropTable extends React.Component {
     	levelname: selectedLevel,
     	round: newRowRound,
     	size: newRowSize,
-    	nextround: earliestRound.id,
     	judgeid1: earliestRound.judgeid1,
     	judgeid2: earliestRound.judgeid2,
     	judgeid3: earliestRound.judgeid3, 
@@ -332,7 +338,7 @@ export default class DragAndDropTable extends React.Component {
 
   onRow(row) {
     return {
-      rowId: row.id,
+      rowId: row.ordernumber,
       onMove: this.onMoveRow
     };
   }

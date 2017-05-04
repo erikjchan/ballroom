@@ -32,54 +32,44 @@ const create_rounds_for_events_for_competition = cid => {
                           rollback(client, done);
                           return reject(err);
                       }
-                      let ordernumber = 0;
-                      for (let row of value) {
-                        let couples = parseInt(row.count);
-                        let numRounds = Math.ceil(couples / 7.0);
-                        ordernumber += numRounds;
-                      }
+                      let ordernumber = 1;
                       for (let row of value) {
                           let couples = parseInt(row.count);
                           let eventid = row.id;
                           let numRounds = Math.ceil(couples / 7.0);
-                          let nextRound = null;
-                          for (let i = numRounds; i >= 1; i--) {
+                          for (let i = 1; i <= numRounds; i++) {
                               let size = Math.min(couples, (numRounds - i + 1) * 7);
                               if (i == numRounds) {
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
                                       }
-                                      nextRound = result.rows[0].id;
                                   });
                               } else if (i == numRounds - 1) {
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size}, ${nextRound}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
                                       }
-                                      nextRound = result.rows[0].id;
                                   });
                               } else if (i == numRounds - 2) {
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size}, ${nextRound}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
                                       }
-                                      nextRound = result.rows[0].id;
                                   });
                               } else {
                                   const name = 'Round ' + i;
-                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround) VALUES (${eventid}, ${name}, ${ordernumber}, ${size}, ${nextRound}) RETURNING id`, (err, result) => {
+                                  client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, ${name}, ${ordernumber}, ${size})`, (err, result) => {
                                       if (err) {
                                           rollback(client, done);
                                           return reject(err);
                                       }
-                                      nextRound = result.rows[0].id;
                                   });
                               }
-                              ordernumber--;
+                              ordernumber++;
                           }
                       }
                       client.query('COMMIT', (err) => {
@@ -205,7 +195,6 @@ const update_rounds_for_competition = data => {
                         name character varying(100),
                         ordernumber integer,
                         size integer,
-                        nextround integer,
                         judgeid1 integer,
                         judgeid2 integer,
                         judgeid3 integer,
@@ -219,8 +208,8 @@ const update_rounds_for_competition = data => {
                        }
                    });
                    for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) 
-                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.nextround}, ${row.judgeid1}, ${row.judgeid2}, ${row.judgeid3}, ${row.judgeid4}, ${row.judgeid5}, ${row.judgeid6})`, (err, result) => {
+                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) 
+                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.judgeid1}, ${row.judgeid2}, ${row.judgeid3}, ${row.judgeid4}, ${row.judgeid5}, ${row.judgeid6})`, (err, result) => {
                            if (err) {
                                rollback(client, done);
                                return reject(err);
@@ -260,8 +249,8 @@ const update_rounds_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6)
-                    SELECT eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6
+                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6)
+                    SELECT eventid, name, ordernumber, size, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6
                     FROM newrounds
                     WHERE id IS NULL`, (err, result) => {
                        if (err) {

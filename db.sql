@@ -229,7 +229,6 @@ CREATE TABLE round (
     name character varying(100),
     ordernumber integer,
     size integer,
-    nextround integer,
     judgeid1 integer,
     judgeid2 integer,
     judgeid3 integer,
