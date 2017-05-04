@@ -11,6 +11,16 @@ const get_all_competitors = () => {
     return pool.query('SELECT * FROM competitor;', []);
 }
 
+const get_competitors_by_competition = (id) => {
+    return pool.query(SQL`SELECT * FROM competitor 
+                          WHERE EXISTS 
+                                (SELECT * FROM partnership
+                                 WHERE partnership.competitionid = ${id} 
+                                       AND
+                                       (partnership.leadcompetitorid = competitor.id
+                                       OR partnership.followcompetitorid = competitor.id));`);
+}
+
 const get_competitor_by_id = (id) => {
     return pool.query(SQL`SELECT * FROM competitor WHERE id = ${id};`);
 }
@@ -158,6 +168,7 @@ const update_partnership = (leadcompetitorid, followcompetitorid, eventid, leadc
 
 module.exports = {
     get_all_competitors,
+    get_competitors_by_competition,
     get_competitor_by_id,
     get_competitor_by_email,
     check_competitor_email_exist,

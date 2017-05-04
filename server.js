@@ -255,6 +255,14 @@ app.get('/test/competitors', (req, res) => {
     });
 })
 
+app.get('/test/competitors/competition/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    query2.get_competitors_by_competition(id).then(function (value) {
+        console.log(value);
+        res.send(value);
+    });
+})
+
 app.get('/test/competitors/id/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_competitor_by_id(id).then(function (value) {
@@ -482,27 +490,28 @@ app.get('/test/partnerships/update/:leadcompetitorid/:followcompetitorid/:eventi
 
 
 app.get('/test/', (req, res) => {
-    res.send({routes: [
-        '/test/competitors',
-        '/test/competitors/id/:id',
-        '/test/competitors/email/:email',
-        '/test/competitors/insert/:email/:firstname/:lastname/:mailingaddress/:affiliationid/:password',
-        '/test/payment_records',
-        '/test/payment_records/competition/:id',
-        '/test/payment_records/competitor/:id',
-        '/test/payment_records/:competitionid/:competitorid',
-        '/test/payment_records/insert/:competitionid/:competitorid/:amount/:online/:paidwithaffiliation',
-        '/test/payment_records/update/:competitionid/:competitorid/:amount/:online/:paidwithaffiliation',
-        '/test/partnerships/',
-        '/test/partnerships/competitor/:id',
-        '/test/partnerships/competition/:competitionid/competitor/:competitorid',
-        '/test/partnerships/lead/:competitiorid1/follow/:competitorid2/event/:eventid',
-        '/test/partnerships/event/:eventid',
-        '/test/partnerships/competition/:competitionid/number/:number',
-        '/test/partnerships/comfirmed/event/:eventid',
-        '/test/partnerships/insert/:leadcompetitorid/:followcompetitorid/:eventid/:competitionid/:number',
-        '/test/partnerships/update/:leadcompetitorid/:followcompetitorid/:eventid/:leadconfirmed/:followconfirmed/:calledback/:numbe',
-    ]})
+  res.send({routes: [
+    '/test/competitors',
+    '/test/competitors/competition/:id',
+    '/test/competitors/id/:id',
+    '/test/competitors/email/:email',
+    '/test/competitors/insert/:email/:firstname/:lastname/:mailingaddress/:affiliationid/:password',
+    '/test/payment_records',
+    '/test/payment_records/competition/:id',
+    '/test/payment_records/competitor/:id',
+    '/test/payment_records/:competitionid/:competitorid',
+    '/test/payment_records/insert/:competitionid/:competitorid/:amount/:online/:paidwithaffiliation',
+    '/test/payment_records/update/:competitionid/:competitorid/:amount/:online/:paidwithaffiliation',
+    '/test/partnerships/',
+    '/test/partnerships/competitor/:id',
+    '/test/partnerships/competition/:competitionid/competitor/:competitorid',
+    '/test/partnerships/lead/:competitiorid1/follow/:competitorid2/event/:eventid',
+    '/test/partnerships/event/:eventid',
+    '/test/partnerships/competition/:competitionid/number/:number',
+    '/test/partnerships/comfirmed/event/:eventid',
+    '/test/partnerships/insert/:leadcompetitorid/:followcompetitorid/:eventid/:competitionid/:number',
+    '/test/partnerships/update/:leadcompetitorid/:followcompetitorid/:eventid/:leadconfirmed/:followconfirmed/:calledback/:numbe',
+  ]})
 })
 
 

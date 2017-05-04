@@ -48,7 +48,7 @@ class EditOfficial extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/judges`)
+    fetch(`/api/competition/${this.competition_id}/judges`)
       .then(response => response.json()) // parse the result
       .then(json => {
         // update the state of our component
@@ -77,7 +77,6 @@ class EditOfficial extends React.Component {
                 <Table.Header />
                 <Table.Body rows={this.state.officials.slice(0,this.state.officials.length)} rowKey="id" />
                 </Table.Provider>*/
-
             return (<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
 
                 <h1>Edit Official: {this.state.competition.Name}</h1>
@@ -88,7 +87,7 @@ class EditOfficial extends React.Component {
                 <div >
                     <label>
                         Official Name: <br />
-                        <input type="text" name="name" value = {this.state.official.Name} size = '20'/>
+                        <input type="text" name="name" value = {this.state.official.firstname} size = '20'/>
                     </label>
                     <label>
                         Email:<br />
