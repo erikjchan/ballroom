@@ -27,6 +27,7 @@ export default class LoginPage extends React.Component {
         <p><Link to='editprofile'                    >EditProfile</Link></p>
         <p><Link to='editcompetition/0'              >EditCompetition</Link></p>
         <p><Link to='editofficial/0'                 >EditOfficial</Link></p>
+        <p><Link to='affiliationpayment/0/0'           >AffiliationPayment</Link></p>        
         <button onClick={() => this.props.dispatch(action) } />
         <pre>
           {JSON.stringify(this.props, null, 2)}

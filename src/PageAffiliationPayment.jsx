@@ -16,8 +16,7 @@ class PageAffiliationPayment extends React.Component {
     this.state = {
       /** We will populate this w/ data from the API */
       competition: null,
-      competitor_events: [],
-      competitor: [],
+      organization: null,
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -25,7 +24,9 @@ class PageAffiliationPayment extends React.Component {
     sure it's an integer */
     try {this.competition_id = parseInt(this.props.params.competition_id)}
     catch (e) { alert('Invalid competition ID!') }
-    this.competitor_id = 0
+    try {this.affiliation_id = parseInt(this.props.params.affiliation_id)}
+    catch (e) { alert('Invalid competition ID!') }
+    
  }
 
   componentDidMount() {
@@ -40,85 +41,57 @@ class PageAffiliationPayment extends React.Component {
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
+
+      /* Call the API for organization info */
+    fetch(`/api/organizations`)
+      .then(response => response.json()) // parse the result
+      .then(json => { 
+        // update the state of our component
+        this.setState({ organization : json })
+      })
+      // todo; display a nice (sorry, there's no connection!) error
+      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // connection comes back
+      .catch(err => { alert(err); console.log(err)})
   }
 
  render() {
-   if (this.state.competition){
+   if (this.state.organization && this.state.competition){
     var comp_name = this.state.competition.Name;
+    var affiliation = this.state.organization[this.affiliation_id];
+    var affiliation_name = affiliation.name;
+    var affiliation_owed = 0;
     var comp_info = (<form className = {styles.long_form}>
         <div>
-                <div className = {styles.form_row}>
-                    <label className = {styles.long_label}>
-                        Competition Name: <br />
-                        <input type="text" name="name" value = {this.state.competition.Name}/>
-                    </label>
+                 
+                 <div className = {styles.form_row}>
+                    <label> Competition name : {comp_name} </label>            
                 </div>
                 
                 <div className = {styles.form_row}>
-                    <label className = {styles.long_label}>
-                        Location:<br />
-                        <input type="text" name="location" value = {this.state.competition.LocationName}/>
-                    </label>
+                     <label> Affiliation number : {this.affiliation_id} </label>
                 </div>
-                <br />
+                     
                 <div className = {styles.form_row}>
-                    <label>
-                        Lead Start Number:<br />
-                        <input type="number" name="lead_number" />
-                    </label>
+                    <label> Affiliation name : {affiliation_name} </label>            
                 </div>
-                <div className = {styles.form_row}>
-                    <label >
-                        Early Price:<br />
-                        <input className = {styles.price} type="number" name="early_price" />
-                    </label>
 
-                    <label>
-                        Regular Price:<br />
-                        <input className = {styles.price} type="number" name="regular_price" />
-                    </label>
-                    <label>
-                        Late price:<br />
-                        <input  className = {styles.price} type="number" name="late_price" />
-                    </label>
+
+                <div className = {styles.form_row}>
+                    <label> Amount Owed : {affiliation_owed} </label>            
                 </div>
                 <div className = {styles.form_row}>
                     <label>
-                        Start Date:<br />
-                        <input type="date" name="start_date" value = {this.state.competition.EarlyRegDeadline}/>
+                        Enter New Payment Amount: 
+                        <input type="number" name="payment" />
                     </label>
-                    <label>
-                        End Date:<br />
-                        <input type="date" name="end_date" value = {this.state.competition.RegEndDate}/>
-                    </label>
-                </div>
-                <div className = {styles.form_row}>
-                    <label>
-                        Regular Start Date:<br />
-                        <input type="date" name="reg_start_date" />
-                    </label>
-                    <label>
-                        Regular End Date:
-                        <input type="date" name="reg_end_date" value = {this.state.competition.RegularRegDeadline}/>
-                    </label>
-                </div>
-                <div className = {styles.form_row}>
+                </div>               
+                 <div className = {styles.form_row}>
                     <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
-                    <button className={styles.competitionEditBtns} 
-                        onClick={() => {window.location.href = "/competition/"+this.competition_id+"/editlevelsandstyles";}}> 
-                         Edit Levels and Styles</button>
                 </div>
-                </div>
-            </form>)
-
-    
-    var event_titles = (<div className={styles.lines}>
-                          {this.state.competitor_events.sort(function (a, b){
-                          return a.id - b.id}).map((event, i) => {
-                            return (<p key={event.Title} key={i}>{event.Title}</p>)
-                          })}
-                        </div>)
-
+               
+            </div>
+        </form>)
 
     const event_table_columns = [
       {
@@ -150,14 +123,14 @@ class PageAffiliationPayment extends React.Component {
     return (
       <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
           <div className={styles.titles}>
-            <p>{comp_name}</p>
+            <p>{affiliation_name}</p>
           </div>
           <div className={styles.infoTables}>
           </div>
           <div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
+              <Box title={<div className={styles.titleContainers}><span>Edit Affiliation Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>
