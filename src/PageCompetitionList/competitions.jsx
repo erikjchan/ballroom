@@ -36,7 +36,7 @@ const schema = {
 class CompetitionsTable extends React.Component {
   constructor(props) {
 		super(props);
-  	  
+
 		this.rows = null;
 		this.state = {
 		  rows: [],
@@ -48,7 +48,7 @@ class CompetitionsTable extends React.Component {
   }
 
   componentWillMount() {
-      this.resizableHelper = resizable.helper({
+    this.resizableHelper = resizable.helper({
 	  globalId: uuid.v4(),
 	  getId: ({ id }) => id
 	  });
@@ -117,13 +117,13 @@ class CompetitionsTable extends React.Component {
 	}
 
   componentDidMount() {
-      fetch("api/competitions")
-		   .then(response => response.json())
-		   .then(json => {
-             this.rows = json;
-		     this.setState({ rows: json, }); 
-		 })
-		   .catch(err => alert(err));
+    fetch("api/competitions")
+		  .then(response => response.json())
+		  .then(json => {
+        this.rows = json;
+		    this.setState({ rows: json, })
+		  })
+		  .catch(err => alert(err));
   }
 
   render() {
@@ -179,10 +179,10 @@ class CompetitionsTable extends React.Component {
               onChange = {query => this.setState({ query })}
             />
           </Table.Header>
-          <Table.Body 
-            rows={visibleRows} 
-            rowKey="id" 
-            className={style.tableBody} 
+          <Table.Body
+            rows={visibleRows}
+            rowKey="id"
+            className={style.tableBody}
           />
         </Table.Provider>
       );
@@ -190,9 +190,7 @@ class CompetitionsTable extends React.Component {
 
   _onFilterChange(cellDataKey, event) {
     if (!event.target.value) {
-        this.setState({
-		    filteredDataList: this.rows,
-        });
+      this.setState({ filteredDataList: this.rows });
     }
     var filterBy = event.target.value.toString().toLowerCase();
     var size = this.rows.length;
@@ -209,6 +207,4 @@ class CompetitionsTable extends React.Component {
   }
 }
 
-<CompetitionsTable />
-		  
 export default CompetitionsTable

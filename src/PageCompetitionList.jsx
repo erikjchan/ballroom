@@ -40,82 +40,80 @@ class PageCompetitionList extends React.Component {
       .catch(this.refs.page.errorNotif(
         `There was an error fetching the competitions`))
   }
-
-  render() {
-    const yourColumns = [
-    {
-      property: 'Name',
-      header: {
-        label: 'Name',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'RegPrice',
-      header: {
-        label: 'Amount Owed',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'StartDate',
-      header: {
-        label: 'Date',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'Select',
-      header: {
-        label: '',
-        sortable: true,
-        resizable: true
-      }
-    }
-  ]
-
-  // Add a button to the competition corresponding to the competition in each row 
-  const expand_your_rows = (rows) => {
-    for (var i = 0; i < rows.length; i++) {
-      let temp = String(rows[i]['id']);
-      rows[i]['Select'] = <button className = {style.search}
-        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0')}}>Visit Page</button>;
-    }
-    return rows;
+  /**
+   * Selects a competition for browsing.
+   * All sidebar links will now point to pages
+   * relevant to this competition.
+   * Also, opens the competition home page for
+   * this competition.
+   */
+  browseCompetition (competition) {
+    console.log(this, competition)
+    this.props.dispatch(selectCompetition(competition))
+    browserHistory.push('competition/' + competition.id + '/0')
   }
 
-  return (
-   	<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
-      <div className = {style.content}>
-       	<h1>Competitions Page</h1>
-           <Box title="Your Competitions"
-           content = {
-       	  <Table.Provider
-          	className = "pure-table pure-table-striped event-table"
-          	columns = {yourColumns}>
-          	<Table.Header />
-          	<Table.Body
-              rows = {expand_your_rows(this.state.rows) || []}
+  /**
+   * Builds the table with the competitions you're registered to.
+   * @return {[type]} [description]
+   */
+  getYourCompetitionsTable () {
+    const yourColumns = [
+      { property: 'Name',
+        header: { label: 'Name' }
+      },
+      { property: 'RegPrice',
+        header: { label: 'Amount Owed' }
+      },
+      { property: 'StartDate',
+        header: { label: 'Date' }
+      },
+      { property: 'Select',
+        header: { label: '' }
+      }
+    ]
+
+    // TODO; filter to only my competitions
+
+    const rows = this.state.competitions.map(row => {
+      row['Select'] = <button
+        className = {style.search}
+        onClick = {() => this.browseCompetition(row)}>Browse</button>;
+      return row
+    })
+
+    return <Table.Provider
+            className="pure-table pure-table-striped event-table"
+            columns = {yourColumns}>
+            <Table.Header />
+            <Table.Body
+              rows = {rows || []}
               rowKey = "id"
             />
-      	  </Table.Provider>
-           } />
-        <hr />
-      	<div>
-          <Box title="Other Competitions"
-            content = {
-              <div id={style.otherCompetitionsTable}>
-                <CompetitionsTable />
-              </div>
-            }
-          />
-        </div>
-     	</div>
-    </Page>
-   );
+          </Table.Provider>
+  }
+
+  render() {
+  
+    return (
+     	<Page ref="page" {...this.props}>
+        <div className={style.content}>
+         	<h1>Competitions Page</h1>
+             <Box title="Your Competitions"
+             content={this.getYourCompetitionsTable()} />
+          <hr />
+        	<div>
+            <Box title="Other Competitions"
+              content = {
+                <div id={style.otherCompetitionsTable}>
+                  <CompetitionsTable />
+                </div>
+              }
+            />
+          </div>
+       	</div>
+      </Page>
+     );
   }
 }
 

@@ -94,7 +94,6 @@ export default class PageCompetition extends React.Component {
                       <p><b>Number:</b> {this.state.competitor.lead_number}</p>
                       <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
                       <p><b>Pay with Affiliation:</b> True </p>
-                      <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
     
     var event_titles = (<div className={styles.lines}>
