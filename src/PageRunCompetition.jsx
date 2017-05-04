@@ -263,7 +263,7 @@ export default class RunCompetition extends React.Component {
           <Table.Body rows={this.getFutureRounds()} rowKey="id" />
         </Table.Provider>
 
-    return (<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+    return (<Page ref="page" {...this.props}>
 
         <h1>Running: {this.state.competition.Name}</h1>
 

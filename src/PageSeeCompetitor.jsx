@@ -85,7 +85,7 @@ class PageSeeCompetitor extends React.Component {
   render() {    
     return (
 
-     <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+     <Page ref="page" {...this.props}>
       <Box title={"See Competitor"}
           content={
             <div className={style.lines}>

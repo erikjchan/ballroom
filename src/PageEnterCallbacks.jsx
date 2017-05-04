@@ -6,7 +6,7 @@ import Page from './Page.jsx'
 export default class PageEnterCallbacks extends React.Component {
   render() {
     return (
-     <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+     <Page ref="page" {...this.props}>
         <h1>Enter Callbacks</h1>
         <p>TODO!</p>
       </Page>
