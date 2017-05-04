@@ -15,7 +15,7 @@ import LevelTable from './PageEditLevelsAndStyles/LevelTable.jsx';
 import style from './style.css';
 
 // competition/:competition_id/editschedule
-export default class EditLevelsAndStyles extends React.Component {
+class EditLevelsAndStyles extends React.Component {
 
  render() {
   return (
@@ -79,3 +79,5 @@ export default class EditLevelsAndStyles extends React.Component {
   }
  }
 }
+
+export default DragDropContext(HTML5Backend)(EditLevelsAndStyles)
