@@ -295,14 +295,13 @@ export default class DragAndDropTable extends React.Component {
     		if (row.round.indexOf("Round") == 0) {
     			let num = parseInt(row.round.replace( /^\D+/g, ''));
     			row.round = "Round " + (num + 1);
-    		}
-    		if (row.round == "Final") {
-    		    finalRoundSize = row.round.size;
+    		} else if (row.round == "Final") {
+    		    finalRoundSize = row.size;
             }
     	}
     }
     var newRowRound = "Round 1";
-    earliestRound.size = finalRoundSize * Math.pow(2, numRounds);
+    earliestRound.size = finalRoundSize * Math.pow(2, numRounds - 1);
     var newRowSize = earliestRound.size <= 150 ? earliestRound.size * 2 : earliestRound.size; // TODO: Change to appropriate value
     if (earliestRound.round == "Final") {
     	newRowRound = "Semifinal";

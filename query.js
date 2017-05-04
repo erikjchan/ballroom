@@ -38,7 +38,7 @@ const create_rounds_for_events_for_competition = cid => {
                       for (let row of value) {
                           let couples = parseInt(row.count);
                           let eventid = row.id;
-                          let numRounds = Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1);
+                          let numRounds = Math.max(1, Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1));
                           for (let i = 1; i <= numRounds; i++) {
                               let size = Math.min(couples, NUM_COUPLES_FINAL_ROUND * Math.pow(2, numRounds - i));
                               if (i == numRounds) {
@@ -347,7 +347,7 @@ const get_events_for_competition = cid => {
 }
 
 const get_rounds_for_competition = cid => {
-    return pool.query(SQL`SELECT r.id, l.name as levelname, s.name as stylename, e.dance, r.name as round, r.ordernumber, r.size, r.nextround, 
+    return pool.query(SQL`SELECT r.id, l.name as levelname, s.name as stylename, e.dance, r.name as round, r.ordernumber, r.size, 
         r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM event e
         LEFT JOIN round r ON (e.id = r.eventid) 
         LEFT JOIN level l ON (e.levelid = l.id)
