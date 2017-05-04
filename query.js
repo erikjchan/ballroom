@@ -176,6 +176,106 @@ const update_events_for_competition = data => {
     });
 }
 
+const update_rounds_for_competition = data => {
+    return new Promise(function(resolve, reject) {
+        pool.connect(function(err, client, done) {
+           if (err) {
+               console.error('error getting client', err);
+               reject(err);
+           } else {
+               client.query('BEGIN', (err) => {
+                   if (err) {
+                       rollback(client, done);
+                       return reject(err);
+                   }
+                   client.query(SQL`CREATE TEMPORARY TABLE newrounds (
+                        id SERIAL,
+                        levelid integer,
+                        levelname character varying(100),
+                        styleid integer,
+                        stylename character varying(100),
+                        eventid integer,
+                        name character varying(100),
+                        ordernumber integer,
+                        size integer,
+                        nextround integer,
+                        judgeid1 integer,
+                        judgeid2 integer,
+                        judgeid3 integer,
+                        judgeid4 integer,
+                        judgeid5 integer,
+                        judgeid6 integer
+                        ) ON COMMIT DROP`, (err, result) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   for (let row of data.rows) {
+                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) 
+                          VALUES (${row.id}, ${row.level}, ${row.style}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.nextround}, ${row.judgeid1}, ${row.judgeid2}, ${row.judgeid3}, ${row.judgeid4}, ${row.judgeid5}, ${row.judgeid6})`, (err, result) => {
+                           if (err) {
+                               rollback(client, done);
+                               return reject(err);
+                           }
+                       });
+                   }
+                   client.query(SQL`UPDATE newrounds SET styleid = s.id FROM style s WHERE newrounds.stylename = s.name AND s.competitionid = ${data.cid}`, (err, result) => {
+                       if (err) {
+                           console.log(err);
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   client.query(SQL`UPDATE newrounds SET levelid = l.id FROM level l WHERE newrounds.levelname = l.name AND l.competitionid = ${data.cid}`, (err, result) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   client.query(SQL`UPDATE newrounds SET eventid = e.id FROM event e WHERE newrounds.levelid = e.levelid AND newrounds.styleid = e.styleid AND e.competitionid = ${data.cid}`, (err, result) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   client.query(SQL`DELETE FROM round WHERE id NOT IN 
+                    (SELECT id FROM newrounds)`, (err, result) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   client.query(SQL`UPDATE round r SET ordernumber = n.ordernumber FROM newrounds n
+                    WHERE e.id = n.id`, (err, result) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6)
+                    SELECT eventid, name, ordernumber, size, nextround, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6
+                    FROM newrounds
+                    WHERE id = NULL`, (err, result) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                   });
+                   client.query('COMMIT', (err) => {
+                       if (err) {
+                           rollback(client, done);
+                           return reject(err);
+                       }
+                       done(null);
+                       resolve("{finished: true}");
+                   });
+               });
+           }
+        });
+    });
+}
+
 const update_competition_info = data => {
     return pool.query(SQL`UPDATE competition SET name = ${data.name}, leadidstartnum = ${data.leadidstartnum},
         locationname = ${data.locationname}, earlyprice = ${data.earlyprice}, regularprice = ${data.regularprice},
@@ -225,9 +325,12 @@ const get_events_for_competition = cid => {
 }
 
 const get_rounds_for_competition = cid => {
-    return pool.query(SQL`SELECT r.id, e.levelid, e.styleid, e.dance, r.name, r.ordernumber, r.size, r.nextround, 
+    return pool.query(SQL`SELECT r.id, l.name, s.name, e.dance, r.name, r.ordernumber, r.size, r.nextround, 
         r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM event e
-        LEFT JOIN round r ON (e.id = r.eventid) WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
+        LEFT JOIN round r ON (e.id = r.eventid) 
+        LEFT JOIN level l ON (e.levelid = l.id)
+        LEFT JOIN style s ON (e.styleid = s.id) 
+        WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
 }
 
 const get_competitors_for_competition = cid => {
@@ -283,6 +386,7 @@ module.exports = {
     add_new_judge,
     create_rounds_for_events_for_competition,
     update_events_for_competition,
+    update_rounds_for_competition,
     update_competition_info,
     update_competition_current_event_id
 }
