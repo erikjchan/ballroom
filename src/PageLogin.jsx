@@ -39,6 +39,7 @@ export default class LoginPage extends React.Component {
         <p>Index of all pages, for the sake of development convenience</p>
         <p><Link to='home'                           >HomePage</Link></p>
         <p><Link to='competitions'                   >CompetitionListPage</Link></p>
+        <p><Link to='admin/competitions'             >CompetitionListPageAdmin</Link></p>
         <p><Link to='competition/0/0'                >CompetitionPage</Link></p>
         <p><Link to='competition/0/eventregistration'>EventRegistration</Link></p>
         <p><Link to='admin/competition/0'            >CompetitionHomeAdmin</Link></p>

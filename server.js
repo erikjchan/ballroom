@@ -86,6 +86,10 @@ app.get('/api/competitions', (req, res) => {
   res.send(data.competitions)
 })
 
+app.get('/api/admin/:id/competitions', (req, res) => {
+    res.send(data.competitions)
+})
+
 app.get('/api/events', (req, res) => {
   res.send(data.events)
 })

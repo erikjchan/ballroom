@@ -8,6 +8,7 @@ import Authorization from './Authorization.jsx'
 import LoginPage            from '../PageLogin.jsx'
 import HomePage             from '../PageHome.jsx'
 import CompetitionListPage  from '../PageCompetitionList.jsx'
+import CompetitionListAdmin from '../PageCompetitionListAdmin.jsx'
 import CompetitionPage      from '../PageCompetition.jsx'
 import EventRegistration    from '../PageEventRegistration.jsx'
 import EditSchedule         from '../PageEditSchedule.jsx'
@@ -47,6 +48,7 @@ const routes = {
   'competition/:competition_id/editlevelsandstyles'            : Admin(EditLevelsAndStyles),
   'competition/:competition_id/editevents'                     : Admin(EditEvents),
   'competition/:competition_id/competitorslist'                : Admin(CompetitorsList),
+  'admin/competitions'                                         : User(CompetitionListAdmin),
   'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
