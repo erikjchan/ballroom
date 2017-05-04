@@ -87,7 +87,6 @@ function quotes(state = {
 function app(state = {
     isFetching: false,
   }, action) {
-  console.log(action)
   switch (action.type) {
     case API_REQUEST:
       return Object.assign({}, state, {

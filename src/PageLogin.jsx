@@ -11,7 +11,7 @@ export default class LoginPage extends React.Component {
     const action = apiRequest('competition', { endpoint: `competition/${0}` } )
     // const b = login()
 
-    console.log(action, fetchQuote())
+    // console.log(action, fetchQuote())
     return (
      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
         <h1>Login Page</h1>

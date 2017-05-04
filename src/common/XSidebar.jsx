@@ -2,6 +2,7 @@ import styles from "./XSidebar.css"
 import React from 'react'
 import { Link } from 'react-router'
 import { login, logoutUser } from '../actions'
+import { browserHistory } from 'react-router';
 
 const competitor_links = [
     {
@@ -69,6 +70,15 @@ export default class OurSidebar extends React.Component {
     this.setState({sidebarOpen: open});
   }
 
+  loginUser() {
+    window.dispatch(login())
+  }
+
+  logoutUser() {
+    window.dispatch(logoutUser())
+    browserHistory.push('/?msg=logout')
+  }
+
   render() {
     var sidebarContent = <b>Sidebar content</b>;
     const { isAuthenticated, isAdmin, profile } = this.props
@@ -84,13 +94,13 @@ export default class OurSidebar extends React.Component {
             { isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
 
                 { !isAuthenticated &&
-                    <button onClick={() => window.dispatch(login())} className="btn btn-primary">
+                    <button onClick={this.loginUser.bind(this)} className="btn btn-primary">
                         Login
                     </button>
                 }
 
                 { isAuthenticated &&
-                    <button onClick={() => window.dispatch(logoutUser())} className="btn btn-primary">
+                    <button onClick={this.logoutUser.bind(this)} className="btn btn-primary">
                         Logout
                     </button>
                 }
