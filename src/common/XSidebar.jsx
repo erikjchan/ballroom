@@ -87,25 +87,22 @@ export default class OurSidebar extends React.Component {
     return [
 
       isAdmin && competition_selected &&
-      <Link key={0} to='/competition/0/competitorslist' > See Competitors     </Link>,
+      <Link key={0} to={`/competition/${competition_id}/competitorslist`} > See Competitors     </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={1} to='/competition/0/run'             > Run Competition     </Link>,
+      <Link key={1} to={`/competition/${competition_id}/run`}             > Run Competition     </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={3} to='/editcompetition/0'             > Edit Competition    </Link>,
+      <Link key={3} to={`/editcompetition/${competition_id}`}             > Edit Competition    </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={4} to='/editofficial/0'                > Edit Official       </Link>,
+      <Link key={4} to={`/editofficial/0`}                > Edit Official       </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={5} to='/affiliationpayment/0/0'        > Affiliation Payment </Link>,
+      <Link key={5} to={`/affiliationpayment/0/0`}        > Affiliation Payment </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={6} to='/competition/0/seecompetitor/0' > See Competitor      </Link>,
-
-      isAdmin && competition_selected &&
-      <Link key={7} to='/competition/0/regcompetitor/0' > Register Competitor </Link>,
+      <Link key={7} to={`/competition/${competition_id}/regcompetitor/0`} > Register Competitor </Link>,
 
       isAdmin &&
       <Link key={8} to="/competitions"                  > Manage Competitions </Link>,
