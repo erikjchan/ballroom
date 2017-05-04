@@ -236,19 +236,19 @@ export default class DragAndDropTable extends React.Component {
               </td>
               <td>
               	<select value={this.state.selectedLevel} onChange={(event) => this.setState({selectedLevel: event.target.value})}>
-              		<option disabled value=""></option>
+              		<option value=""></option>
               		{levelOptions}
               	</select>
               </td>
               <td>
               	<select value={this.state.selectedStyle} onChange={(event) => this.setState({selectedStyle: event.target.value})}>
-              		<option disabled value=""></option>
+              		<option value=""></option>
               		{styleOptions}
               	</select>
               </td>
                 <td>
                 	<select value={this.state.selectedDance} onChange={(event) => this.setState({selectedDance: event.target.value})}>
-                		<option disabled value=""></option>
+                		<option value=""></option>
                 		{danceOptions}
                 	</select>
                 </td>
