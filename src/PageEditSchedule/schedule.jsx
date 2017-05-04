@@ -370,25 +370,15 @@ export default class DragAndDropTable extends React.Component {
   	var _this = this;
   	var rows = this.state.rows;
   	rows.sort(function(a, b) {
-  		if (a.style != b.style) {
-  			const styles = ["Smooth", "Rhythm", "Standard", "Latin"];
-  			return styles.indexOf(a.style) - styles.indexOf(b.style);
+  		if (a.styleorder != b.styleorder) {
+  			return a.styleorder - b.styleorder;
   		}
-  		if (a.level != b.level) {
-  			return _this.state.levels.indexOf(a.level) - _this.state.levels.indexOf(b.level);
-  		}
-  		if (a.title != b.title) {
-  			if (a.title < b.title) {
-  				return -1;
-  			}
-  			if (a.title > b.title) {
-  				return 1;
-  			}
-  			return 0;
+  		if (a.levelorder != b.levelorder) {
+  			return a.levelorder - b.levelorder;
   		}
   		if (a.round != b.round) {
-  			const a_round = parseInt(a.round);
-  			const b_round = parseInt(b.round);
+  			const a_round = parseInt(a.round.replace( /^\D+/g, ''));
+  			const b_round = parseInt(b.round.replace( /^\D+/g, ''));
   			if (!isNaN(a_round) && !isNaN(b_round)) {
   				return a_round - b_round;
   			} 
@@ -398,8 +388,15 @@ export default class DragAndDropTable extends React.Component {
   			if (!isNaN(b_round)) {
   				return 1;
   			}
-  			const rounds = ["Quarterfinals", "Semifinals", "Finals"];
+  			const rounds = ["Quarter", "Semifinal", "Final"];
   			return rounds.indexOf(a.round) - rounds.indexOf(b.round);
+  		}
+  		if (a.eventorder != b.eventorder) {
+  			if (a.eventorder < b.eventorder) {
+  				return -1;
+  			} else {
+  				return 1;
+  			}
   		}
   		return 0;
   	});
