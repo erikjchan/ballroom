@@ -30,8 +30,8 @@ export default class CompetitorList extends React.Component {
             }
         },
         {
-          id: 'organization_name',
-          property: 'organization_name',
+          id: 'affiliationname',
+          property: 'affiliationname',
           props: {
             style: {
               width: 250
@@ -42,8 +42,8 @@ export default class CompetitorList extends React.Component {
           }
         },
         {
-          id: 'lead_number',
-          property: 'lead_number',
+          id: 'number',
+          property: 'number',
           props: {
             style: {
               width: 150
@@ -54,8 +54,8 @@ export default class CompetitorList extends React.Component {
           }
         },
         {
-          id: 'amount_owed',
-          property: 'amount_owed',
+          id: 'amount',
+          property: 'amount',
           props: {
             style: {
               width: 200
@@ -66,8 +66,8 @@ export default class CompetitorList extends React.Component {
           }
         },
         {
-          id: 'pay_w_org',
-          property: 'pay_w_org',
+          id: 'paidwithaffiliation',
+          property: 'paidwithaffiliation',
           props: {
             style: {
               width: 100
@@ -144,8 +144,8 @@ export default class CompetitorList extends React.Component {
       		    width: 250
       		 },
       		 {
-      		     id: 'organization_name',
-      		     property: 'organization_name',
+      		     id: 'affiliationname',
+      		     property: 'affiliationname',
       		     header: {
       		        label: 'Organization',
       		        sortable: true,
@@ -157,8 +157,8 @@ export default class CompetitorList extends React.Component {
       		    width: 250
       		 },
       		 {
-      		    id: 'lead_number',
-      		    property: 'lead_number',
+      		    id: 'number',
+      		    property: 'number',
       		    header: {
       		        label: 'Number',
       		        sortable: true,
@@ -170,8 +170,8 @@ export default class CompetitorList extends React.Component {
       		    width: 150
       		 },
       		 {
-      		    id: 'amount_owed',
-      		    property: 'amount_owed',
+      		    id: 'amount',
+      		    property: 'amount',
       		    header: {
       		        label: 'Owes',
       		        sortable: true,
@@ -183,8 +183,8 @@ export default class CompetitorList extends React.Component {
       		    width: 200
       		 },
       		 {
-      		     id: 'pay_w_org',
-      		     property: 'pay_w_org',
+      		     id: 'paidwithaffiliation',
+      		     property: 'paidwithaffiliation',
       		     header: {
       		         label: 'Paying w/ Organization?',
       		         sortable: true,
@@ -219,18 +219,18 @@ export default class CompetitorList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/competitors/competition/:id2")
+    fetch("/api/competition/1/competitors")
 	      .then(response => response.json())
 		  .then(json => {
+            console.log(json);
             this.rows = json;
             for (let i = 0; i < this.rows.length; i++) {
-                if (this.rows[i].amount_owed != 0) {
-                    this.rows[i].amount_owed = "$" + this.rows[i].amount_owed.toString();
+                  this.rows[i].amount = "$" + (this.rows[i].amount || 0);
 		        }
-                if (this.rows[i].pay_w_org) {
-                    this.rows[i].pay_w_org = "Yes";
+                if (this.rows[i].paidwithaffiliation) {
+                    this.rows[i].paidwithaffiliation = "Yes";
 		        } else {
-                    this.rows[i].pay_w_org = "No";
+                    this.rows[i].paidwithaffiliation = "No";
 		        }
 		    }
 		    this.setState({ rows: json, }); 
