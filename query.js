@@ -19,6 +19,8 @@ const get_num_couples_per_event_for_competition = cid => {
         GROUP BY e.id`);
 }
 
+const NUM_COUPLES_FINAL_ROUND = 7;
+
 const create_rounds_for_events_for_competition = cid => {
     return new Promise(function(resolve, reject) {
        get_num_couples_per_event_for_competition(cid).then(value => {
@@ -36,9 +38,9 @@ const create_rounds_for_events_for_competition = cid => {
                       for (let row of value) {
                           let couples = parseInt(row.count);
                           let eventid = row.id;
-                          let numRounds = Math.ceil(couples / 7.0);
+                          let numRounds = Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1);
                           for (let i = 1; i <= numRounds; i++) {
-                              let size = Math.min(couples, (numRounds - i + 1) * 7);
+                              let size = Math.min(couples, NUM_COUPLES_FINAL_ROUND * Math.pow(2, numRounds - i));
                               if (i == numRounds) {
                                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
                                       if (err) {

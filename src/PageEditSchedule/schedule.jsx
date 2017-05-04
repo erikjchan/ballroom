@@ -302,8 +302,8 @@ export default class DragAndDropTable extends React.Component {
     	}
     }
     var newRowRound = "Round 1";
-    earliestRound.size = finalRoundSize * numRounds;
-    var newRowSize = earliestRound.size <= 100 ? earliestRound.size * 2 : earliestRound.size; // TODO: Change to appropriate value
+    earliestRound.size = finalRoundSize * Math.pow(2, numRounds);
+    var newRowSize = earliestRound.size <= 150 ? earliestRound.size * 2 : earliestRound.size; // TODO: Change to appropriate value
     if (earliestRound.round == "Final") {
     	newRowRound = "Semifinal";
     } else if (earliestRound.round == "Semifinal") {
