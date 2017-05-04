@@ -74,7 +74,7 @@ export default class DragAndDropTable extends React.Component {
             formatters: [
               (value, { rowData }) => (
                 <span
-                  onClick={() => this.onRemove(rowData.id)} style={{ cursor: 'pointer' }}
+                  onClick={() => this.onRemove(rowData.ordernumber)} style={{ cursor: 'pointer' }}
                 >
                   &#10007;
                 </span>
@@ -353,12 +353,12 @@ export default class DragAndDropTable extends React.Component {
     }
   }
 
-  onRemove(id) {
+  onRemove(ordernumber) {
   	if (!confirm("Are you sure you want to delete this?")) {
   		return false;
   	}
     const rows = cloneDeep(this.state.rows);
-    const idx = findIndex(rows, { id });
+    const idx = findIndex(rows, { ordernumber });
 
     // this could go through flux etc.
     rows.splice(idx, 1);
