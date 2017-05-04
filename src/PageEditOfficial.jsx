@@ -7,9 +7,9 @@ import Box from './common/BoxAdmin.jsx'
 import EventTable from './common/OfficialTable.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
-import connection from './common/connection'
 
-class EditOfficial extends React.Component {
+
+export default class EditOfficial extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -147,6 +147,3 @@ class EditOfficial extends React.Component {
     }
   }
 }
-
-
-export default connection(EditOfficial)

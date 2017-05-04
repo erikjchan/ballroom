@@ -7,10 +7,9 @@ import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
-import connection from './common/connection'
 
 // competition/:competition_id/:competitor_id
-class PageCompetition extends React.Component {
+export default class PageCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -189,5 +188,3 @@ class PageCompetition extends React.Component {
   }
  }
 }
-
-export default connection(PageCompetition)

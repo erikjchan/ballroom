@@ -12,7 +12,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux'
 import { Router, browserHistory } from 'react-router';
 import thunkMiddleware from 'redux-thunk'
-import api from './actions/middleware/api'
+import api from './actions/middleware/ballroom_api'
+// import api from './actions/middleware/api'
 
 // Source files
 import Routes from './common/Routes.jsx';

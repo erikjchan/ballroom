@@ -7,9 +7,10 @@ import Page from './Page.jsx'
 import Box from './common/BoxAdmin.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
-import connection from './common/connection'
 
-class RunCompetition extends React.Component {
+import { apiRequest, login, fetchQuote } from './actions'
+
+export default class RunCompetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -29,7 +30,6 @@ class RunCompetition extends React.Component {
   }
 
   componentDidMount() {
-
 
     /* Call the API for competition info */
     fetch(`/api/competition/${this.competition_id}`)
@@ -311,5 +311,3 @@ class RunCompetition extends React.Component {
    )
   }
 }
-
-export default connection(RunCompetition)

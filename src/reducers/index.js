@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
 import {
   LOCK_SUCCESS, LOCK_ERROR, LOGOUT_SUCCESS,
-  QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE
+  QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE,
+  API_REQUEST, API_SUCCESS, API_FAILURE
+
 } from '../actions'
 
 // Get saved authentication info for state initalization
@@ -48,6 +50,10 @@ function auth(state = {
     }
 }
 
+// Thunk for nicer switching on objects
+const write = state => newstate => 
+  () => Object.assign({}, state, newstate)
+
 // The quotes reducer
 function quotes(state = {
     isFetching: false,
@@ -74,11 +80,40 @@ function quotes(state = {
   }
 }
 
+
+
+
+// Competition profile reducer
+function app(state = {
+    isFetching: false,
+  }, action) {
+  console.log(action)
+  switch (action.type) {
+    case API_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case API_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        [action.key]: action.response,
+      })
+    case API_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+    default:
+      return state
+  }
+}
+
+
 // We combine the reducers here so that they
 // can be left split apart above
 const quotesApp = combineReducers({
   auth,
-  quotes
+  quotes,
+  app
 })
 
 export default quotesApp
