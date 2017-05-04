@@ -48,17 +48,10 @@ export default class Page extends React.Component {
 
     return (
       <section className={styles.container}>
-
-        <XSidebar
-          profile={profile}
-          isAdmin={profile && profile.roles.admin }
-          isAuthenticated={ isAuthenticated}
-          />
-
+        <XSidebar profile={profile}/>
         <div className={styles.content}>
           {children}
         </div>
-
         <Snackbar
           action='Dismiss'
           active={this.state.sb_active}

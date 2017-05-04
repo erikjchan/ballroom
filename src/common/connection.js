@@ -9,13 +9,12 @@ import { connect } from 'react-redux'
  * state.
  */
 export default (component) => connect((state) => {
-  const { quotes, auth, app } = state
-  const { quote, authenticated } = quotes
-  const { isAuthenticated, errorMessage, profile, isAdmin } = auth
+  const { auth, app } = state
+  const { isAuthenticated, errorMessage, isAdmin } = auth
+  const profile = auth.profile || {}
+  const role = (auth.profile && Object.keys(auth.profile.roles)[0]) || 'none'
+  profile.role = role
   return {
-    // Sample, unused
-    quote,
-    isSecretQuote: authenticated,
     errorMessage,
     isAuthenticated,
     isAdmin,

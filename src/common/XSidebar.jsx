@@ -63,49 +63,54 @@ const admin_links = [
 export default class OurSidebar extends React.Component {
   constructor (p) {
     super(p)
-    this.state = {sidebarOpen: false, sidebarDocked: false};
   }
 
-  onSetSidebarOpen(open) {
-    this.setState({sidebarOpen: open});
-  }
-
+  /**
+   * Starts the login process.
+   */
   loginUser() {
     window.dispatch(login())
   }
 
+  /**
+   * Logs out the user and takes them
+   * to the home page
+   */
   logoutUser() {
     window.dispatch(logoutUser())
     browserHistory.push('/?msg=logout')
   }
 
+
   render() {
-    var sidebarContent = <b>Sidebar content</b>;
-    const { isAuthenticated, isAdmin, profile } = this.props
+    const isAuthenticated = this.props.profile.role !== 'none'
+    const isAdmin = this.props.profile.role === 'admin'
+
     return (
-      <div className = {styles.nav}>
-        <div className = {styles.circle}>
+      <div className={styles.nav}>
+        
+        <div className={styles.circle}>
           <p>EU</p>
         </div>
-        <div className = {styles.sub_menu_top}>
-            { isAdmin ? this.generateLinks(admin_links, true) : this.generateLinks(competitor_links, true)}
+
+        <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
+          { isAdmin ? this.generateLinks(admin_links, true) : this.generateLinks(competitor_links, true)}
         </div>
-        <div className = {styles.sub_menu_bottom}>
-            { isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
 
-                { !isAuthenticated &&
-                    <button onClick={this.loginUser.bind(this)} className="btn btn-primary">
-                        Login
-                    </button>
-                }
+        <div className={styles.sub_menu + ' ' + styles.sub_menu_bottom}>
+          { isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
 
-                { isAuthenticated &&
-                    <button onClick={this.logoutUser.bind(this)} className="btn btn-primary">
-                        Logout
-                    </button>
-                }
+          { !isAuthenticated &&
+              <a onClick={this.loginUser.bind(this)}>
+                  Login
+              </a>
+          }
 
-                { isAdmin && <pre>(admin)</pre> }
+          { isAuthenticated &&
+              <a onClick={this.logoutUser.bind(this)}>
+                  Logout
+              </a>
+          }
         
         </div>
 
@@ -115,18 +120,10 @@ export default class OurSidebar extends React.Component {
   }
 
   generateLinks(links, top) {
-    const list = links
-        .filter( i => i.isTopOfList === top)
-        .map(
-            (d, i) =>
-                <li className={styles.nav_sub} key={i}>
-                  <Link to={d.to} className={styles.nav_link}>{d.name}</Link>
-                </li>
-        );
-    return (
-        <ul className={styles.sub_menu}>
-            {list}
-        </ul>
-    );
+    return links
+      .filter(i => i.isTopOfList === top)
+      .map((d, i) =>
+        <Link to={d.to} className={styles.nav_link} key={i}>{d.name}</Link>
+      )
   }
 }
