@@ -14,7 +14,7 @@ export default class DragAndDropTable extends React.Component {
     this.state = {
       columns: [
         {
-          property: 'order_number',
+          property: 'ordernumber',
           props: {
             label: 'Number',
             style: {
@@ -26,7 +26,7 @@ export default class DragAndDropTable extends React.Component {
           }
         },
         {
-            property: 'level',
+            property: 'levelname',
             props: {
                 style: {
                     width: 300
@@ -37,7 +37,7 @@ export default class DragAndDropTable extends React.Component {
             }
         },
         {
-          property: 'style',
+          property: 'stylename',
           props: {
             style: {
               width: 300
@@ -48,7 +48,7 @@ export default class DragAndDropTable extends React.Component {
           }
         },
         {
-          property: 'title',
+          property: 'dance',
           props: {
             style: {
               width: 300
@@ -89,7 +89,7 @@ export default class DragAndDropTable extends React.Component {
         }
       ],
       rows: [],
-      levels: ["Newcomer", "Bronze", "Silver", "Gold", "Open"],
+      /*levels: [],
       styles: [
           {
             title: "Smooth",
@@ -108,12 +108,12 @@ export default class DragAndDropTable extends React.Component {
             dances: ["Cha Cha", "Rhumba", "Jive", "V. Samba"]
           }
       ],
-      rounds: ["Round 1", "Round 2", "Round 3", "Round 4", "Quarterfinals", "Semifinals", "Finals"],
+      styles: [],*/
+      events: [],
       selectedNumber: "",
       selectedLevel: "",
       selectedStyle: "",
-      selectedDance: "",
-      selectedRound: ""
+      selectedDance: ""
     };
 
 
@@ -122,10 +122,16 @@ export default class DragAndDropTable extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/schedule/")
+    fetch("/api/competition/1/rounds") // TODO: change 1 to cid
       .then(response => response.json())
       .then(json => {
         this.setState({rows: json})
+      })
+      .catch(err => alert(err));
+    fetch("/api/competition/1/events") // TODO: change 1 to cid
+      .then(response => response.json())
+      .then(json => {
+        this.setState({events: json})
       })
       .catch(err => alert(err));
 
@@ -144,7 +150,7 @@ export default class DragAndDropTable extends React.Component {
     };
     const { columns, rows } = this.state;
     for (let i = 0; i < rows.length; i++) {
-        rows[i].order_number = (i + 1);
+        rows[i].ordernumber = (i + 1);
     }
     //const resolvedColumns = resolve.columnChildren({ columns });
     const resolvedRows = resolve.resolve({
@@ -154,17 +160,61 @@ export default class DragAndDropTable extends React.Component {
 
     var numberOptions = [];
     for (let i = 1; i <= this.state.rows.length; i++) {
-        numberOptions.push(<option key={"order_number_" + i} value={i}>{i}</option>);
+        numberOptions.push(<option key={"ordernumber_" + i} value={i}>{i}</option>);
     }
-    var levelOptions = this.state.levels.map(level => (<option key={"level_" + level} value={level}>{level}</option>));
-    var styleOptions = this.state.styles.map(style => (<option key={"style_" + style.title} value={style.title}>{style.title}</option>));
-    var roundOptions = this.state.rounds.map(round => (<option key={"round_" + round} value={round} onChange={() => this.setState({selectedRound: level})}>{round}</option>));
+    var levelOptions = null;
+    var styleOptions = null;
     var danceOptions = null;
-    if (this.state.selectedStyle != "") {
-      const dances = this.state.styles.filter(style => this.state.selectedStyle == style.title)[0].dances;
-      danceOptions = dances.map(dance => (<option key={"dance_" + dance} value={dance}>{dance}</option>));
+    if (this.state.selectedStyle != "" && this.state.selectedDance != "") {
+    	levelOptions = this.state.events
+    		.filter(event => event.stylename == this.state.selectedStyle && event.dance == this.state.selectedDance)
+    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    } else if (this.state.selectedStyle != "") {
+    	levelOptions = this.state.events
+    		.filter(event => event.stylename == this.state.selectedStyle)
+    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    } else if (this.state.selectedDance != "") {
+    	levelOptions = this.state.events
+    		.filter(event => event.stylename == this.state.selectedDance)
+    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    } else {
+    	levelOptions = this.state.events
+    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
     }
 
+    if (this.state.selectedLevel != "" && this.state.selectedDance != "") {
+    	styleOptions = this.state.events
+    		.filter(event => event.levelname == this.state.selectedLevel && event.dance == this.state.selectedDance)
+    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    } else if (this.state.selectedLevel != "") {
+    	styleOptions = this.state.events
+    		.filter(event => event.levelname == this.state.selectedLevel)
+    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    } else if (this.state.selectedDance != "") {
+    	styleOptions = this.state.events
+    		.filter(event => event.dance == this.state.selectedDance)
+    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    } else {
+    	styleOptions = this.state.events
+    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    }
+
+    if (this.state.selectedLevel != "" && this.state.selectedStyle != "") {
+    	danceOptions = this.state.events
+    		.filter(event => event.levelname == this.state.selectedLevel && event.stylename == this.state.selectedStyle)
+    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    } else if (this.state.selectedLevel != "") {
+    	danceOptions = this.state.events
+    		.filter(event => event.levelname == this.state.selectedLevel)
+    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    } else if (this.state.selectedStyle != "") {
+    	danceOptions = this.state.events
+    		.filter(event => event.stylename == this.state.selectedStyle)
+    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    } else {
+    	danceOptions = this.state.events
+    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    }
 
     return (
       <Table.Provider
@@ -196,23 +246,13 @@ export default class DragAndDropTable extends React.Component {
               		{styleOptions}
               	</select>
               </td>
-              {this.state.selectedStyle != "" ? (
                 <td>
                 	<select value={this.state.selectedDance} onChange={(event) => this.setState({selectedDance: event.target.value})}>
                 		<option disabled value=""></option>
                 		{danceOptions}
                 	</select>
                 </td>
-              ) : (
-                <td>
-                	<select></select>
-                </td>
-              )}
               <td>
-              	<select value={this.state.selectedRound} onChange={(event) => this.setState({selectedRound: event.target.value})}>
-              		<option disabled value=""></option>
-              		{roundOptions}
-              	</select>
               </td>
               <td>
               	<div onClick={() =>this.addNewRow()}>&#43;</div>
@@ -236,20 +276,48 @@ export default class DragAndDropTable extends React.Component {
       selectedLevel,
       selectedStyle,
       selectedDance,
-      selectedRound,
     } = this.state;
     var rows = this.state.rows;
     if (selectedNumber == "" || selectedLevel == "" 
-    		|| selectedStyle == "" || selectedDance == "" || selectedRound == "") {
+    		|| selectedStyle == "" || selectedDance == "") {
     	return false;
     }
+
+    var earliestRound = null;
+    for (let row of rows) {
+    	if (row.levelname == selectedLevel && row.stylename == selectedStyle && row.dance == selectedDance) {
+    		if (earliestRound == null) {
+    			earliestRound = row;
+    		}
+    		if (row.round.indexOf("Round") == 0) {
+    			let num = parseInt(row.round);
+    			row.round = "Round " + (num + 1);
+    		}
+    	}
+    }
+    var newRowRound = "Round 1";
+    var newRowSize = earliestRound.size <= 100 ? earliestRound.size * 2 : earliestRound.size; // TODO: Change to appropriate value
+    if (earliestRound.round == "Final") {
+    	newRowRound = "Semifinal";
+    } else if (earliestRound.round == "Semifinal") {
+    	newRowRound = "Quarter";
+    }
+
     const newRow = {
-    	id: rows.length,
-    	order_number: selectedNumber,
-    	title: selectedDance,
-    	style: selectedStyle,
-    	level: selectedLevel,
-    	round: selectedRound
+    	id: null,
+    	ordernumber: selectedNumber,
+    	dance: selectedDance,
+    	stylename: selectedStyle,
+    	levelname: selectedLevel,
+    	round: newRowRound,
+    	size: newRowSize,
+    	nextround: earliestRound.id,
+    	judgeid1: earliestRound.judgeid1,
+    	judgeid2: earliestRound.judgeid2,
+    	judgeid3: earliestRound.judgeid3, 
+    	judgeid4: earliestRound.judgeid4,
+    	judgeid5: earliestRound.judgeid5,
+    	judgeid6: earliestRound.judgeid6
     };
     rows.splice(selectedNumber - 1, 0, newRow);
     this.setState({
@@ -257,8 +325,7 @@ export default class DragAndDropTable extends React.Component {
     	selectedNumber: "",
     	selectedLevel: "",
     	selectedStyle: "",
-    	selectedDance: "",
-    	selectedRound: ""
+    	selectedDance: ""
     });
     console.log(this.state.rows);
   }
