@@ -60,7 +60,7 @@ class PageAffiliationPayment extends React.Component {
     var comp_name = this.state.competition.Name;
     var affiliation = this.state.organization[this.affiliation_id];
     var affiliation_name = affiliation.name;
-    var affiliation_owed = 0;
+    var affiliation_owed = affiliation.amount_owed;
     var comp_info = (<form className = {styles.long_form}>
         <div>
                  
