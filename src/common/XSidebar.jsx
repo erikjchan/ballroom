@@ -33,6 +33,7 @@ export default class OurSidebar extends React.Component {
 
     return [
 
+      !isAdmin &&
       <Link to={"/competitions"} key={2}>
         Explore Competitions
       </Link>,
@@ -42,25 +43,24 @@ export default class OurSidebar extends React.Component {
         {this.props.selected.competition.Name}
       </h5></span>,
 
-      competition_selected &&
+      !isAdmin && competition_selected &&
       <Link to={`/competition/${competition_id}/0`} key={0}>
         - Competition Information
       </Link>,
-
-      competition_selected &&
-      <Link to={`/competition/${competition_id}/eventregistration`} key={1}>
-        - Event Registration
-      </Link>,
-
 
       isAdmin && competition_selected &&
       <Link to={`/admin/competition/${competition_id}`} key={0}>
         - Competition Information
       </Link>,
 
+      !isAdmin && competition_selected &&
+      <Link to={`/competition/${competition_id}/eventregistration`} key={1}>
+        - Event Registration
+      </Link>,
+
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/run`} key={1}>
-        - Run Competition
+      <Link to={`/admin/competition/${competition_id}`} key={0}>
+        - Competition Information
       </Link>,
 
       isAdmin && competition_selected &&
@@ -70,9 +70,18 @@ export default class OurSidebar extends React.Component {
 
       isAdmin && competition_selected &&
       <Link to={`/competition/${competition_id}/editschedule`} key={3}>
-        - Schedule Editor
-      </Link>
+        - Schedule Editors
+      </Link>,
 
+      isAdmin && competition_selected &&
+      <Link to={`/affiliationpayment/0/0`} key={5}>
+        - Affiliation Payment
+      </Link>,
+
+      isAdmin && competition_selected &&
+      <Link to={`/competition/${competition_id}/regcompetitor/0`} key={7}>
+        - Register Competitor
+      </Link>
 
     ]
   }
@@ -85,24 +94,6 @@ export default class OurSidebar extends React.Component {
     const isAuthenticated = this.props.profile.role !== 'none'
 
     return [
-
-      isAdmin && competition_selected &&
-      <Link key={0} to={`/competition/${competition_id}/competitorslist`} > See Competitors     </Link>,
-
-      isAdmin && competition_selected &&
-      <Link key={1} to={`/competition/${competition_id}/run`}             > Run Competition     </Link>,
-
-      isAdmin && competition_selected &&
-      <Link key={3} to={`/editcompetition/${competition_id}`}             > Edit Competition    </Link>,
-
-      isAdmin && competition_selected &&
-      <Link key={4} to={`/editofficial/0`}                > Edit Official       </Link>,
-
-      isAdmin && competition_selected &&
-      <Link key={5} to={`/affiliationpayment/0/0`}        > Affiliation Payment </Link>,
-
-      isAdmin && competition_selected &&
-      <Link key={7} to={`/competition/${competition_id}/regcompetitor/0`} > Register Competitor </Link>,
 
       isAdmin &&
       <Link key={8} to="/competitions"                  > Manage Competitions </Link>,
