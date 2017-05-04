@@ -145,7 +145,7 @@ app.get('/api/', (req, res) => {
     '/api/payment_records',
     '/api/callbacks',
     '/api/admins',
-    '/api/judges'
+    '/api/judges',
   ]})
 })
 
@@ -161,7 +161,8 @@ const routes = [
   "/admin/competition/:competition_id",
   '/editprofile',
   '/editcompetition/:competition_id',
-  '/editofficial/:competition_id'
+  '/editofficial/:competition_id',
+  'affiliationpayment/:competition_id/:affiliation_id'
 ]
 
 // Serve index page
