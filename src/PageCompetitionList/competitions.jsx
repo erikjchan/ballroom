@@ -106,7 +106,7 @@ class CompetitionsTable extends React.Component {
               <div>
                 <input type="button"
                 	value="Register"
-                	onClick={() => browserHistory.push('competition/0/eventregistration')} />
+                	onClick={() => browserHistory.push('competition/1/eventregistration')} />
 			        </div>
 		          )
 		 			]
@@ -117,7 +117,7 @@ class CompetitionsTable extends React.Component {
 	}
 
   componentDidMount() {
-      fetch("api/competitions")
+      fetch("api/competitions/1/unregistered")
 		   .then(response => response.json())
 		   .then(json => {
              this.rows = json;
