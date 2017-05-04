@@ -21,7 +21,7 @@ import EditOfficial         from '../PageEditOfficial.jsx'
 import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
-import RegisterCompetitor        from '../PageRegisterCompetitor.jsx'
+import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
 
 /**
  * Semantics:

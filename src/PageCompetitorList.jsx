@@ -16,7 +16,7 @@ import CompetitorList from './PageCompetitorList/competitors.jsx';
 import style from './style.css';
 
 // competition/:competition_id/competitorlist
-export default class CompetitorsList extends React.Component {
+class CompetitorsList extends React.Component {
 
  render() {
   console.log(this.props.location.state);
@@ -41,3 +41,4 @@ export default class CompetitorsList extends React.Component {
  }
 }
 
+export default DragDropContext(HTML5Backend)(CompetitorsList)

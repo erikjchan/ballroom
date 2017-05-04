@@ -1,5 +1,7 @@
 import React from 'react';
 import connection from './connection'
+import { Redirect } from 'react-router'
+
 /**
  * Authorizaiton guard for pages.
  * Note, this not only handles authorization, but it also
@@ -21,7 +23,7 @@ const Authorization = allowedRoles => WrappedComponent => {
       if (permission) {
         return <WrappedComponent {...this.props} />
       } else {
-        return <h1>Permission denied.</h1>
+        return <Redirect to="/"/>
       }
     }
   }
