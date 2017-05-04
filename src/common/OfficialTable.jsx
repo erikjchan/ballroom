@@ -48,7 +48,7 @@ export default class YourEvents extends React.Component {
           }
       },
       {
-          property: 'First Name',
+          property: 'firstname',
           header: {
               label: 'Official Name',
               sortable: true,
@@ -56,7 +56,7 @@ export default class YourEvents extends React.Component {
           }
       },
       {
-        property: 'Email address',
+        property: 'email',
         header: {
           label: 'Email',
           sortable: true,
@@ -64,17 +64,9 @@ export default class YourEvents extends React.Component {
         }
       },
       {
-        property: 'Token',
+        property: 'token',
         header: {
           label: 'Number',
-          sortable: true,
-          resizable: true
-        }
-      },
-      {
-        property: 'Last Name',
-        header: {
-          label: 'Position',
           sortable: true,
           resizable: true
         }
