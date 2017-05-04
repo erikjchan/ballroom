@@ -170,7 +170,7 @@ export default class PageEditCompetition extends React.Component {
     ); 
   }
   else {
-    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+    return <Page ref="page" {...this.props}/>
   }
  }
 }
