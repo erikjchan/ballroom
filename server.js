@@ -151,18 +151,22 @@ app.get('/api/', (req, res) => {
 
 const routes = [
   "/",
-  "/home",
-  "/competition/:competition_id/",
-  "/competition/:competition_id/eventregistration",
-  "/competition/:competition_id/editschedule",
-  "/competition/:competition_id/run",
-  "/competition/:competition_id/:competitor_id",
-  "/competitions",
-  "/admin/competition/:competition_id",
-  '/editprofile',
-  '/editcompetition/:competition_id',
-  '/editofficial/:competition_id',
-  'affiliationpayment/:competition_id/:affiliation_id'
+    '/competition/:competition_id/eventregistration'             ,
+    '/competition/:competition_id/:competitor_id'                ,
+    '/competitions'                                              ,
+    '/editprofile'                                               ,
+    '/competition/:competition_id/run'                           ,
+    '/competition/:competition_id/round/:round_id/entercallbacks',
+    '/competition/:competition_id/editschedule'                  ,
+    '/competition/:competition_id/editlevelsandstyles'           ,
+    '/competition/:competition_id/editevents'                    ,
+    '/competition/:competition_id/competitorslist'               ,
+    '/admin/competition/:competition_id'                         ,
+    '/editcompetition/:competition_id'                           ,
+    '/editofficial/:competition_id'                              ,
+    '/competition/:competition_id/seecompetitor/:competitor_id'  ,
+    '/competition/:competition_id/regcompetitor/:competitor_id'  ,
+    '/affiliationpayment/:competition_id/:affiliation_id'        
 ]
 
 // Serve index page
