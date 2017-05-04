@@ -100,6 +100,7 @@ const update_events_for_competition = data => {
                        return reject(err);
                    }
                    client.query(SQL`CREATE TEMPORARY TABLE newevents (
+                        id integer,
                         styleid integer,
                         stylename character varying(30),
                         levelid integer,
@@ -113,7 +114,7 @@ const update_events_for_competition = data => {
                        }
                    });
                    for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newevents (stylename, levelname, dance, ordernumber) VALUES (${row.style}, ${row.level}, ${row.dance}, ${row.ordernumber})`, (err, result) => {
+                       client.query(SQL`INSERT INTO newevents (id, stylename, levelname, dance, ordernumber) VALUES (${row.id}, ${row.style}, ${row.level}, ${row.dance}, ${row.ordernumber})`, (err, result) => {
                            if (err) {
                                rollback(client, done);
                                return reject(err);
@@ -133,16 +134,15 @@ const update_events_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   client.query(SQL`DELETE FROM event WHERE competitionid = ${data.cid} AND (styleid, levelid, dance) NOT IN 
-                    (SELECT styleid, levelid, dance FROM newevents)`, (err, result) => {
+                   client.query(SQL`DELETE FROM event WHERE id NOT IN 
+                    (SELECT id FROM newevents)`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
                        }
                    });
                    client.query(SQL`UPDATE event e SET ordernumber = n.ordernumber FROM newevents n
-                    WHERE e.styleid = n.styleid AND e.levelid = n.levelid AND e.dance = n.dance
-                        AND e.competitionid = ${data.cid}`, (err, result) => {
+                    WHERE e.id = n.id`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
@@ -151,7 +151,7 @@ const update_events_for_competition = data => {
                    client.query(SQL`INSERT INTO event (competitionid, styleid, levelid, dance, ordernumber)
                     SELECT ${data.cid} AS competitionid, styleid, levelid, dance, ordernumber
                     FROM newevents
-                    WHERE (styleid, levelid, dance) NOT IN (SELECT styleid, levelid, dance FROM event WHERE competitionid = ${data.cid})`, (err, result) => {
+                    WHERE id = NULL`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
