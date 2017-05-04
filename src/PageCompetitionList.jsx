@@ -44,7 +44,7 @@ class PageCompetitionList extends React.Component {
   render() {
     const yourColumns = [
     {
-      property: 'Name',
+      property: 'name',
       header: {
         label: 'Name',
         sortable: true,
@@ -52,7 +52,7 @@ class PageCompetitionList extends React.Component {
       }
     },
     {
-      property: 'RegPrice',
+      property: 'regularprice',
       header: {
         label: 'Amount Owed',
         sortable: true,
@@ -60,7 +60,7 @@ class PageCompetitionList extends React.Component {
       }
     },
     {
-      property: 'StartDate',
+      property: 'startdate',
       header: {
         label: 'Date',
         sortable: true,

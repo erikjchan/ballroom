@@ -205,6 +205,10 @@ const get_affiliations = () => {
     return pool.query('SELECT * FROM affiliation', []);
 }
 
+const get_competitions = () => {
+    return pool.query('SELECT * FROM competition', []);
+}
+
 const get_levels_for_competition = cid => {
     return pool.query(SQL`SELECT id, name, ordernumber FROM level WHERE competitionid = ${cid}`);
 }
@@ -272,6 +276,7 @@ module.exports = {
     get_judges_for_competition,
     get_judge,
     get_affiliations,
+    get_competitions,
     get_levels_for_competition,
     get_styles_for_competition,
     get_competition_info,

@@ -158,7 +158,10 @@ app.get('/api/competitors/:id/events', (req, res) => {
 })
 
 app.get('/api/competitions', (req, res) => {
-    res.send(data.competitions)
+    query.get_competitions().then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/events', (req, res) => {

@@ -62,7 +62,7 @@ class CompetitionsTable extends React.Component {
 	  return [
       {
       	id: 'name',
-		    property: 'Name',
+		    property: 'name',
 		    header: {
 		        label: 'Name',
 		        sortable: true,
@@ -75,7 +75,7 @@ class CompetitionsTable extends React.Component {
 		 	},
 		 	{
 		    id: 'price',
-		    property: 'RegPrice',
+		    property: 'regularprice',
 		    header: {
 		      label: 'Price',
 		      sortable: true,
@@ -88,7 +88,7 @@ class CompetitionsTable extends React.Component {
 		 	},
 		 	{
 		    id: 'reg_deadline',
-		    property: 'RegEndDate',
+		    property: 'regularregdeadline',
 		    header: {
 		      label: 'Reg Deadline',
 		      sortable: true,
