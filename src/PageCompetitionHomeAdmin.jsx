@@ -357,7 +357,7 @@ populate_expanded(box_name, lines_react, link){
 
     if (this.state.expanded!=null){
         return (
-          <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+          <Page ref="page" {...this.props}>
             <div className={styles.title}>
               <p>{comp_name}</p>
             </div>
@@ -368,7 +368,7 @@ populate_expanded(box_name, lines_react, link){
     }
     var num = 6
     return (
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+      <Page ref="page" {...this.props}>
           <div className={styles.title}>
             <p>{comp_name}</p>
           </div>
@@ -389,7 +389,7 @@ populate_expanded(box_name, lines_react, link){
     ); 
   }
   else {
-    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+    return <Page ref="page" {...this.props} />
   }
  }
 }

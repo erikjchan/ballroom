@@ -25,7 +25,6 @@ export default class OurSidebar extends React.Component {
 
   /** Returns the links at the top of the sidebar */
   getTopLinks() {
-    console.log(this.props)
     const competition_selected = !!this.props.selected.competition
     const competition_id = this.props.selected.competition && this.props.selected.competition.id
     const isAdmin = this.props.profile.role === 'admin'
@@ -131,12 +130,13 @@ export default class OurSidebar extends React.Component {
 
 
   render() {
+    console.log(this.props)
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
     return (
       <div className={styles.nav}>
-        
+
         <div className={styles.circle}>
           <p>EU</p>
         </div>
@@ -149,9 +149,7 @@ export default class OurSidebar extends React.Component {
           {this.getBottomLinks()}
         
         </div>
-
-
       </div>
-    );
+    )
   }
 }

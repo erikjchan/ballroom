@@ -121,7 +121,7 @@ class PageAffiliationPayment extends React.Component {
     ]
 
     return (
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+      <Page ref="page" {...this.props}>
           <div className={styles.titles}>
             <p>{affiliation_name}</p>
           </div>
@@ -143,7 +143,7 @@ class PageAffiliationPayment extends React.Component {
     ); 
   }
   else {
-    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+    return <Page ref="page" {...this.props}/>
   }
  }
 }

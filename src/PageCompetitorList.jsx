@@ -21,7 +21,7 @@ class CompetitorsList extends React.Component {
  render() {
   console.log(this.props.location.state);
   return (
-    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+    <Page ref="page" {...this.props}>
       <div id={style.titleContainer}>
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>

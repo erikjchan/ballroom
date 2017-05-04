@@ -82,6 +82,13 @@ export function fetchSecretQuote() {
   }
 }
 
+export const SELECT_COMPETITION = 'SELECT_COMPETITION'
+export function selectCompetition(competition) {
+  return {
+    type: SELECT_COMPETITION,
+    competition: Object.assign({}, competition),
+  }
+}
 
 /************************************ API ************************************/
 

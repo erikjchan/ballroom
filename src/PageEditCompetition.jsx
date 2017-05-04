@@ -148,7 +148,7 @@ export default class PageEditCompetition extends React.Component {
     ]
 
     return (
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+      <Page ref="page" {...this.props}>
           <div className={styles.titles}>
             <p>{comp_name}</p>
           </div>
@@ -170,7 +170,7 @@ export default class PageEditCompetition extends React.Component {
     ); 
   }
   else {
-    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+    return <Page ref="page" {...this.props}/>
   }
  }
 }

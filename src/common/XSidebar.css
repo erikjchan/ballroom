@@ -23,14 +23,22 @@
     bottom: 0;
 }
 
+.sub_menu > span {
+    border-bottom: 2px solid #F64747;
+    color: #F64747;
+}
+
 .sub_menu > a {
+    cursor: pointer;
+    color: white;
+}
+
+.sub_menu > a, .sub_menu > span {
     margin-left: 20px;
     display: block;
     margin-bottom: 36px;
-    color: white;
     text-decoration: none;
     font-size: 17px;
-    cursor: pointer;
 }
 
 .sub_menu a:link, .sub_menu a:visited{

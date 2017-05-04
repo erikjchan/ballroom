@@ -8,11 +8,11 @@ import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/Box.jsx'
-
-
+import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
+
 
 // /competitions
 class PageCompetitionList extends React.Component {
@@ -20,19 +20,17 @@ class PageCompetitionList extends React.Component {
     super(props)
     this.state = {
       /** We will populate this w/ data from the API */
-      rows: [],
+      competitions: [],
     }
   }
 
   componentDidMount() {
-    console.log('this', this)
-
     /* Call the API for competitions info */
     fetch(`/api/competitions`)
       .then(response => response.json()) // parse the result
       .then(json => { 
         // update the state of our component
-        this.setState({ rows : json })
+        this.setState({ competitions : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 

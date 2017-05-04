@@ -78,7 +78,7 @@ export default class EditOfficial extends React.Component {
                 <Table.Body rows={this.state.officials.slice(0,this.state.officials.length)} rowKey="id" />
                 </Table.Provider>*/
 
-            return (<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+            return (<Page ref="page" {...this.props}>
 
                 <h1>Edit Official: {this.state.competition.Name}</h1>
                 <Box title={"Add Official"}
@@ -143,7 +143,7 @@ export default class EditOfficial extends React.Component {
         )
     }
     else{
-        return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+        return <Page ref="page" {...this.props}/>
     }
   }
 }

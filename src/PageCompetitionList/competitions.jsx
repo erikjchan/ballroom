@@ -138,11 +138,8 @@ class CompetitionsTable extends React.Component {
       }
     };
 
-    const {
-      columns, rows, query
-	} = this.state;
+    const { columns, rows, query } = this.state;
     const cols = columns;
-
     const visibleRows = compose(
       search.multipleColumns({ columns: cols, query }),
       resolve.resolve({
@@ -206,5 +203,4 @@ class CompetitionsTable extends React.Component {
     });
   }
 }
-
 export default CompetitionsTable
