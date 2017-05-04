@@ -60,6 +60,13 @@ app.post('/api/competition/updateEvents', (req, res) => {
     });
 });
 
+app.post('/api/competition/updateRounds', (req, res) => {
+    query.update_rounds_for_competition(req.body).then(value => {
+        console.log(value);
+        res.end(value);
+    });
+});
+
 app.post('/api/competition/updateCompetitionInfo', (req, res) => {
     query.update_competition_info(req.body).then(value => {
         console.log(value);
@@ -165,7 +172,25 @@ app.get('/api/competitors/:id/:cid/events', (req, res) => {
 })
 
 app.get('/api/competitions', (req, res) => {
-    res.send(data.competitions)
+    query.get_competitions().then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competitions/:cid', (req, res) => {
+    const cid = parseInt(req.params.cid)
+    query.get_your_competitions(cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+app.get('/api/competitions/:cid/unregistered', (req, res) => {
+    const cid = parseInt(req.params.cid)
+    query.get_other_competitions(cid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/events', (req, res) => {

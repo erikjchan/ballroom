@@ -62,7 +62,7 @@ class CompetitionsTable extends React.Component {
 	  return [
       {
       	id: 'name',
-		    property: 'Name',
+		    property: 'name',
 		    header: {
 		        label: 'Name',
 		        sortable: true,
@@ -75,7 +75,7 @@ class CompetitionsTable extends React.Component {
 		 	},
 		 	{
 		    id: 'price',
-		    property: 'RegPrice',
+		    property: 'regularprice',
 		    header: {
 		      label: 'Price',
 		      sortable: true,
@@ -88,7 +88,7 @@ class CompetitionsTable extends React.Component {
 		 	},
 		 	{
 		    id: 'reg_deadline',
-		    property: 'RegEndDate',
+		    property: 'regularregdeadline',
 		    header: {
 		      label: 'Reg Deadline',
 		      sortable: true,
@@ -106,7 +106,7 @@ class CompetitionsTable extends React.Component {
               <div>
                 <input type="button"
                 	value="Register"
-                	onClick={() => browserHistory.push('competition/0/eventregistration')} />
+                	onClick={() => browserHistory.push('competition/1/eventregistration')} />
 			        </div>
 		          )
 		 			]
@@ -117,7 +117,7 @@ class CompetitionsTable extends React.Component {
 	}
 
   componentDidMount() {
-      fetch("api/competitions")
+      fetch("api/competitions/1/unregistered")
 		   .then(response => response.json())
 		   .then(json => {
              this.rows = json;

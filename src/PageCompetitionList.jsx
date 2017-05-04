@@ -28,7 +28,7 @@ class PageCompetitionList extends React.Component {
     console.log('this', this)
 
     /* Call the API for competitions info */
-    fetch(`/api/competitions`)
+    fetch(`/api/competitions/1`)
       .then(response => response.json()) // parse the result
       .then(json => { 
         // update the state of our component
@@ -44,7 +44,7 @@ class PageCompetitionList extends React.Component {
   render() {
     const yourColumns = [
     {
-      property: 'Name',
+      property: 'name',
       header: {
         label: 'Name',
         sortable: true,
@@ -52,7 +52,7 @@ class PageCompetitionList extends React.Component {
       }
     },
     {
-      property: 'RegPrice',
+      property: 'regularprice',
       header: {
         label: 'Amount Owed',
         sortable: true,
@@ -60,7 +60,7 @@ class PageCompetitionList extends React.Component {
       }
     },
     {
-      property: 'StartDate',
+      property: 'startdate',
       header: {
         label: 'Date',
         sortable: true,
@@ -82,7 +82,7 @@ class PageCompetitionList extends React.Component {
     for (var i = 0; i < rows.length; i++) {
       let temp = String(rows[i]['id']);
       rows[i]['Select'] = <button className = {style.search}
-        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0')}}>Visit Page</button>;
+        onClick = {()=>{ browserHistory.push('competition/' + temp + '/1')}}>Visit Page</button>;
     }
     return rows;
   }
