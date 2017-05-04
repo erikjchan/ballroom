@@ -5,10 +5,9 @@ import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
 import Box from './common/BoxAdmin.jsx'
 import style from './style.css';
-import connection from './common/connection'
 
 
-class PageEditProfile extends React.Component {
+export default class PageEditProfile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -78,7 +77,6 @@ class PageEditProfile extends React.Component {
   }
 }
 
-export default connection(PageEditProfile)
 
 // const get_competitors = n => collection(n)(i => ({
 //   "id" : i,

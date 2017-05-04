@@ -9,11 +9,11 @@ import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import {Button, IconButton} from 'react-toolbox/lib/button';
 import Box from './common/Box.jsx'
 import { Link } from 'react-router'
-import connection from './common/connection'
+
 /*
 
 
-class RadioTest extends React.Component {
+export default class RadioTest extends React.Component {
   state = {
     value: 'vvendetta'
   };
@@ -32,7 +32,7 @@ class RadioTest extends React.Component {
  */
 
 // competition/:competition_id/eventregistration
-class PageEventRegistration extends React.Component {
+export default class PageEventRegistration extends React.Component {
 
 
   constructor(props) {
@@ -342,7 +342,4 @@ class PageEventRegistration extends React.Component {
    );
  }
 }
-
-export default connection(PageEventRegistration)
-
 

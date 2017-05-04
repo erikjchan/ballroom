@@ -8,14 +8,14 @@ import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/Box.jsx'
-import connection from './common/connection'
+
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
 
 // /competitions
-class PageCompetitionList extends React.Component {
+export default class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)
     this.state = {
@@ -118,4 +118,3 @@ class PageCompetitionList extends React.Component {
    );
   }
 }
-export default connection(DragDropContext(HTML5Backend)(PageCompetitionList))

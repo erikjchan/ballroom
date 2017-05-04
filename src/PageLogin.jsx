@@ -3,10 +3,15 @@ import styles from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
 import { Link } from 'react-router'
-import connection from './common/connection'
 
-class LoginPage extends React.Component {
+import { apiRequest, login, fetchQuote } from './actions'
+
+export default class LoginPage extends React.Component {
   render() {
+    const action = apiRequest('competition', { endpoint: `competition/${0}` } )
+    // const b = login()
+
+    console.log(action, fetchQuote())
     return (
      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
         <h1>Login Page</h1>
@@ -22,12 +27,12 @@ class LoginPage extends React.Component {
         <p><Link to='editprofile'                    >EditProfile</Link></p>
         <p><Link to='editcompetition/0'              >EditCompetition</Link></p>
         <p><Link to='editofficial/0'                 >EditOfficial</Link></p>
+        <button onClick={() => this.props.dispatch(action) } />
         <pre>
           {JSON.stringify(this.props, null, 2)}
         </pre>
+
       </Page>
     );
   }
 }
-
-export default connection(LoginPage)

@@ -6,7 +6,7 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
 import Box from './common/BoxAdmin.jsx'
-import connection from './common/connection'
+
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -16,7 +16,7 @@ import CompetitorList from './PageCompetitorList/competitors.jsx';
 import style from './style.css';
 
 // competition/:competition_id/competitorlist
-class CompetitorsList extends React.Component {
+export default class CompetitorsList extends React.Component {
 
  render() {
   console.log(this.props.location.state);
@@ -40,7 +40,4 @@ class CompetitorsList extends React.Component {
   );
  }
 }
-
-export default connection(DragDropContext(HTML5Backend)(CompetitorsList))
-
 

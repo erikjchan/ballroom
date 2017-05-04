@@ -6,7 +6,7 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
 import Box from './common/BoxAdmin.jsx'
-import connection from './common/connection'
+
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -15,7 +15,7 @@ import LevelTable from './PageEditLevelsAndStyles/LevelTable.jsx';
 import style from './style.css';
 
 // competition/:competition_id/editschedule
-class EditLevelsAndStyles extends React.Component {
+export default class EditLevelsAndStyles extends React.Component {
 
  render() {
   return (
@@ -79,5 +79,3 @@ class EditLevelsAndStyles extends React.Component {
   }
  }
 }
-
-export default connection(DragDropContext(HTML5Backend)(EditLevelsAndStyles))
