@@ -11,7 +11,7 @@ export default class LoginPage extends React.Component {
     const action = apiRequest('competition', { endpoint: `competition/${0}` } )
     // const b = login()
 
-    console.log(action, fetchQuote())
+    // console.log(action, fetchQuote())
     return (
      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
         <h1>Login Page</h1>
@@ -28,6 +28,8 @@ export default class LoginPage extends React.Component {
         <p><Link to='editcompetition/0'              >EditCompetition</Link></p>
         <p><Link to='editofficial/0'                 >EditOfficial</Link></p>
         <p><Link to='affiliationpayment/0/0'           >AffiliationPayment</Link></p>        
+        <p><Link to='competition/0/seecompetitor/0'  >SeeCompetitor</Link></p>
+        <p><Link to='competition/0/regcompetitor/0'  >RegisterCompetitor</Link></p>
         <button onClick={() => this.props.dispatch(action) } />
         <pre>
           {JSON.stringify(this.props, null, 2)}

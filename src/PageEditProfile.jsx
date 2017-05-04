@@ -40,7 +40,7 @@ export default class PageEditProfile extends React.Component {
   render() {
     return (
 
-     <Page ref="page" >
+     <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
               <Box title={"Edit profile"}
       content={
         <div className={style.lines}>

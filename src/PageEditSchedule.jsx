@@ -15,7 +15,7 @@ import DragAndDropTable from './PageEditSchedule/schedule.jsx';
 import style from './style.css';
 
 // competition/:competition_id/editschedule
-export default class EditSchedule extends React.Component {
+class EditSchedule extends React.Component {
 
  render() {
   return (
@@ -60,3 +60,5 @@ export default class EditSchedule extends React.Component {
   }
  }
 }
+
+export default DragDropContext(HTML5Backend)(EditSchedule)

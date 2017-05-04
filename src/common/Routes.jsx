@@ -30,12 +30,13 @@ import AffiliationPayment   from '../PageAffiliationPayment.jsx'
  *   Judge pages can be accessed by 'judge' and 'admin'
  *   Admin pages can be accessed by 'admin'
  */
+const Any   = Authorization(Authorization.ALL)
 const User  = Authorization(['user', 'judge', 'admin'])
 const Judge = Authorization(['judge', 'admin'])
 const Admin = Authorization(['admin'])
 
 const routes = {
-  'home'                                                       : HomePage,
+  'home'                                                       : Any(HomePage),
   'competition/:competition_id/eventregistration'              : User(EventRegistration),
   'competition/:competition_id/editschedule'                   : Admin(EditSchedule),
   'competition/:competition_id/run'                            : Judge(RunCompetition),
@@ -57,7 +58,7 @@ const routes = {
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LoginPage} />
+    <IndexRoute component={Any(LoginPage)} />
     { Object.keys(routes)
       .map((route, i) => <Route key={i} path={route} component={routes[route]} />) }
   </Route>

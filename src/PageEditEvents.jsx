@@ -15,7 +15,7 @@ import EventTable from './PageEditEvents/EventTable.jsx';
 import style from './style.css';
 
 // competition/:competition_id/editschedule 
-export default class EditEvents extends React.Component {
+class EditEvents extends React.Component {
 
  render() {
   return (
@@ -60,3 +60,4 @@ export default class EditEvents extends React.Component {
   }
  }
 }
+export default DragDropContext(HTML5Backend)(EditEvents)
