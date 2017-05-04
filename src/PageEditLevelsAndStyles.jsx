@@ -19,7 +19,7 @@ class EditLevelsAndStyles extends React.Component {
 
  render() {
   return (
-    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+    <Page ref="page" {...this.props}>
       <div id={style.titleContainer}>
         <h1>Define Levels and Styles</h1>
         <div id={style.buttonsContainer}>

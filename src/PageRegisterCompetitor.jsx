@@ -219,7 +219,7 @@ class PageEventRegistration extends React.Component {
 
     return (
 
-    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+    <Page ref="page" {...this.props}>
       <h1>Register Competitor for Events: </h1>
         <Box 
         title = {<div>Register for New Event</div>}

@@ -4,61 +4,6 @@ import { Link } from 'react-router'
 import { login, logoutUser } from '../actions'
 import { browserHistory } from 'react-router';
 
-const competitor_links = [
-    {
-        name: "Competition Information",
-        to: "/competition/0/0",
-        isTopOfList: true
-    },
-    {
-        name: "Event Registration",
-        to: "/competition/0/eventregistration",
-        isTopOfList: true
-    },
-    {
-        name: "Edit Payment Method",
-        to: "#",
-        isTopOfList: true
-    },
-    {
-        name: "Explore Competitions",
-        to: "/competitions",
-        isTopOfList: false
-    }
-]
-
-const admin_links = [
-    {
-        name: "Competition Information",
-        to: "/admin/competition/0",
-        isTopOfList: true
-    },
-    {
-        name: "Run Competition",
-        to: "/competition/0/run",
-        isTopOfList: true
-    },
-    {
-        name: "Competitor List",
-        to: "/competition/0/competitorslist",
-        isTopOfList: true
-    },
-    {
-        name: "Schedule Editor",
-        to: "/competition/0/editschedule",
-        isTopOfList: true
-    },
-    {
-        name: "Switch Competition",
-        to: "/competitions",
-        isTopOfList: false
-    },
-    {
-        name: "New Competition",
-        to: "/competitions",
-        isTopOfList: false
-    }
-]
 
 export default class OurSidebar extends React.Component {
   constructor (p) {
@@ -81,49 +26,113 @@ export default class OurSidebar extends React.Component {
     browserHistory.push('/?msg=logout')
   }
 
+  getTopLinks() {
+    const competition_selected = !!this.props.selected.competition
+    const competition_id = this.props.selected.competition && this.props.selected.competition.id
+    const isAdmin = this.props.profile.role === 'admin'
+
+    console.log(isAdmin, competition_selected)
+
+    return [
+
+      <Link to={"/competitions"} key={2}>
+        Explore Competitions
+      </Link>,
+
+      competition_selected &&
+      <span key={230}><h5>
+        {this.props.selected.competition.Name}
+      </h5></span>,
+
+      competition_selected &&
+      <Link to={`/competition/${competition_id}/0`} key={0}>
+        - Competition Information
+      </Link>,
+
+      competition_selected &&
+      <Link to={`/competition/${competition_id}/eventregistration`} key={1}>
+        - Event Registration
+      </Link>,
+
+
+      isAdmin && competition_selected &&
+      <Link to={`/admin/competition/${competition_id}`} key={0}>
+        - Competition Information
+      </Link>,
+
+      isAdmin && competition_selected &&
+      <Link to={`/competition/${competition_id}/run`} key={1}>
+        - Run Competition
+      </Link>,
+
+      isAdmin && competition_selected &&
+      <Link to={`/competition/${competition_id}/competitorslist`} key={2}>
+        - Competitor List
+      </Link>,
+
+      isAdmin && competition_selected &&
+      <Link to={`/competition/${competition_id}/editschedule`} key={3}>
+        - Schedule Editor
+      </Link>
+
+
+    ]
+  }
+
+  getBottomLinks() {
+    const competition_selected = !!this.props.selected.competition
+    const competition_id = this.props.selected.competition && this.props.selected.competition.id
+    const isAdmin = this.props.profile.role === 'admin'
+    const isAuthenticated = this.props.profile.role !== 'none'
+
+    return [
+
+      isAdmin &&
+      <Link to={"/competitions"} key={4}>
+        Manage Competitions
+      </Link>,
+
+      !isAuthenticated &&
+      <a onClick={this.loginUser.bind(this)} key={1}>
+        Login / Signup
+      </a>,
+
+      isAuthenticated &&
+      <a onClick={this.logoutUser.bind(this)} key={2}>
+        Logout
+      </a>
+    ]
+  }
+
 
   render() {
+    console.log(this.props)
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
     return (
       <div className={styles.nav}>
-        
+
         <div className={styles.circle}>
           <p>EU</p>
         </div>
 
         <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
-          { isAdmin ? this.generateLinks(admin_links, true) : this.generateLinks(competitor_links, true)}
+          { this.getTopLinks() }
         </div>
 
         <div className={styles.sub_menu + ' ' + styles.sub_menu_bottom}>
-          { isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
-
-          { !isAuthenticated &&
-              <a onClick={this.loginUser.bind(this)}>
-                  Login
-              </a>
-          }
-
-          { isAuthenticated &&
-              <a onClick={this.logoutUser.bind(this)}>
-                  Logout
-              </a>
-          }
-        
+          { this.getBottomLinks() }
         </div>
-
-
       </div>
-    );
+    )
   }
 
   generateLinks(links, top) {
     return links
       .filter(i => i.isTopOfList === top)
       .map((d, i) =>
-        <Link to={d.to} className={styles.nav_link} key={i}>{d.name}</Link>
+        <Link to={d.to} key={i}>{d.name}</Link>
       )
   }
 }
