@@ -227,14 +227,13 @@ export default class CompetitorList extends React.Component {
             this.rows = json;
             for (let i = 0; i < this.rows.length; i++) {
                   this.rows[i].amount = "$" + (this.rows[i].amount || 0);
+                  if (this.rows[i].paidwithaffiliation) {
+                          this.rows[i].paidwithaffiliation = "Yes";
+                  } else {
+                          this.rows[i].paidwithaffiliation = "No";
+                  }
 		        }
-                if (this.rows[i].paidwithaffiliation) {
-                    this.rows[i].paidwithaffiliation = "Yes";
-		        } else {
-                    this.rows[i].paidwithaffiliation = "No";
-		        }
-		    }
-		    this.setState({ rows: json, }); 
+		        this.setState({ rows: json, }); 
 		 })
 		 .catch(err => alert(err));
   }
