@@ -18,7 +18,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       competitors: [],
       searched_competitors: [],
       keyword: "",
-      partnerships: [],
+      style_statistics: [],
       organizations: [],
       judges: [],
       expanded: null,
@@ -46,19 +46,15 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
 
     /**  Call the API for event schedule  */
-    fetch(`/api/events`)
+    fetch(`/api/competition/${this.competition_id}/events`)
       .then(response => response.json())
-      .then(json => json.filter(event => {
-        console.log(event.competition_id, this.competition_id)
-        return event.competition_id === this.competition_id
-      }))
       .then(json => {
         this.setState({ competition_events : json})
       })
       .catch(err => alert(err))
 
     /**  Call the API for round schedule  */
-    fetch(`/api/rounds`)
+    fetch(`/api/competition/${this.competition_id}/rounds`)
       .then(response => response.json())
       .then(json => {
         this.setState({ competition_rounds : json})
@@ -67,28 +63,25 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
 
 
-    /** Fetch competitors 
-     * TODO: Currently fetch all competitors in database, but need to 
-     * fetch competitors registered for this competition. 
+    /** Fetch competitors  
     */
-    fetch(`http://localhost:8080/api/competitors/competition/`+this.state.competition_id)
+    fetch(`/api/competition/${this.competition_id}/competitors`)
       .then(response => {
         return response.json()
       })
       .then(json => {
-
         this.setState({competitors: json})
       })
       .catch(err => alert(err))
 
     /** fetch partnerships */
-    fetch(`http://localhost:8080/api/partnerships`)
+    fetch(`/api/competition/${this.competition_id}/competitors_styles`)
       .then(response => {
         return response.json()
       })
       .then(json => {
 
-        this.setState({partnerships: json})
+        this.setState({style_statistics: json})
 
         // /** Filter registered competitors */
         // var all_competitors = this.state.partnerships.map(item => {
@@ -112,18 +105,17 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
 
     /** Fetch judges */
-    fetch(`http://localhost:8080/api/judges`)
+    fetch(`/api/competition/${this.competition_id}/judges`)
       .then(response => {
         return response.json()
       })
       .then(json => {
-
         this.setState({judges: json})
       })
       .catch(err => alert(err))
 
     /** Fetch organizations */
-    fetch(`http://localhost:8080/api/organizations`)
+    fetch(`/api/competition/${this.competition_id}/affiliations`)
       .then(response => {
         return response.json()
       })
@@ -177,14 +169,15 @@ populate_expanded(box_name, lines_react, link){
 
     var links = {}
 
-    var comp_name = this.state.competition.Name;
+    var comp_name = this.state.competition.name;
 
-    dict['Competiton Info'] = [<p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>,
-                      <p><b>Location:</b> {this.state.competition.LocationName}</p>,
-                      <p><b>Registration Start Date:</b> {this.state.competition.RegStartDate}</p>,
-                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>,
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>,
-                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>,
+    dict['Competiton Info'] = [
+                      <p><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
+                      <p><b>Location:</b> {this.state.competition.locationname}</p>,
+                      <p><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>,
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
                     ]
     links["Competiton Info"] = "/editcompetition/" + this.competition_id;
 /*
@@ -205,25 +198,25 @@ populate_expanded(box_name, lines_react, link){
     //                   <p><b>Total Competitors:</b> {this.state.competitors.length}</p>
     //                 </div>)*/
   
-    var buckets ={};
-    this.state.competition_events.forEach(function(element) {
-      if (!(element.style in buckets)){
-        buckets[element.style]=0;
-      }
-      this.state.partnerships.forEach(
-        function(p) {
-          if (p["Event Category"] == element.id){
-            buckets[element.style] = buckets[element.style]+2;
-          }
-        }, this);
-    }, this);
+    // var buckets ={};
+    // this.state.competition_events.forEach(function(element) {
+    //   if (!(element.style in buckets)){
+    //     buckets[element.style]=0;
+    //   }
+    //   this.state.partnerships.forEach(
+    //     function(p) {
+    //       if (p["Event Category"] == element.id){
+    //         buckets[element.style] = buckets[element.style]+2;
+    //       }
+    //     }, this);
+    // }, this);
 
-    var competitor_stats = Object.keys(buckets).map(
-        (key) => {
-          return <p><b>{key+": "}</b> {buckets[key]}</p>
+    var competitor_stats = this.state.style_statistics.map(
+        (item) => {
+          return <p><b>{item.name+": "}</b> {item.count}</p>
         }
     );
-    console.log(buckets)
+
     console.log(competitor_stats)
 
     const search_competitor = (list, query) => {
@@ -292,9 +285,9 @@ populate_expanded(box_name, lines_react, link){
                           })}
                         </div>)*/
 
-    dict['Events'] = this.state.competition_events.sort(function (a, b){
-                          return a.id - b.id}).map(event => {
-                            return (<p key={event.title}>{event.title}</p>)
+    dict['Events'] = this.state.competition_events.map(event => {
+                            var title = event.name+" "+event.name+" "+event.dance
+                            return (<p key={title+" "+event.ordernumber}>{title}</p>)
                           })
     links["Events"] = "/competition/"+this.competition_id+"/editevents";
 
@@ -310,9 +303,9 @@ populate_expanded(box_name, lines_react, link){
 
     dict['Judges'] = [<p><b>Total Judges:</b> {total_judges}</p>].concat(
                           this.state.judges.map(judge => {
-                            var name = judge['Last Name']+" "+judge['First Name']
-                            var email = "mailto:"+judge['Email address'];
-                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
+                            var name = judge.firstname+" "+judge.lastname
+                            var email = "mailto:"+judge.email;
+                            return (<p key={name}>{name} (<a href={email}>{judge.email}</a>) </p>)
                           }))
     links["Judges"] = "/editofficial/" + this.competition_id;
 
@@ -326,7 +319,7 @@ populate_expanded(box_name, lines_react, link){
 
     dict['Organizations'] = [<p><b>Total Organizations:</b> {total_orgs}</p>].concat(
                           this.state.organizations.map(org => {
-                            return (<p key={org.id}>{org.name}</p>)
+                            return (<p key={org.affiliationname}>{org.affiliationname}</p>)
                           }))
     links["Organizations"] = "";
 
@@ -341,17 +334,16 @@ populate_expanded(box_name, lines_react, link){
 
     dict['Schedule'] = [<p><b>Total Rounds:</b> {total_rounds}</p>].concat(
                           this.state.competition_rounds
-                            .sort(function (a, b){
-                                  return a.order_number - b.order_number})
                             .map((round,i) => {
-                            var event_name = this.state.competition_events.filter(event=> {return event.id == round.event})
-                            if (event_name.length > 0){
-                              event_name = event_name[0].title+" "
-                            }
-                            else{
-                              event_name = ""
-                            }
-                              return (<p key={round.id}><b>{(i+1)+": "}</b>{event_name+round.name}</p>)
+                            // var event_name = this.state.competition_events.filter(event=> {return event.id == round.eventid})
+                            // if (event_name.length > 0){
+                            //   event_name = event_name[0].title+" "
+                            // }
+                            // else{
+                            //   event_name = ""
+                            // }
+                            /**TODO */
+                              return (<p key={round.id + " "+ i}><b>{(i+1)+": "}</b>{round.name+""}</p>)
                           }))
     links["Schedule"] = "/competition/"+this.competition_id+"/editschedule";
 
