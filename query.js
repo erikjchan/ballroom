@@ -116,7 +116,7 @@ const update_events_for_competition = data => {
                        }
                    });
                    for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newevents (id, stylename, levelname, dance, ordernumber) VALUES (${row.id}, ${row.style}, ${row.level}, ${row.dance}, ${row.ordernumber})`, (err, result) => {
+                       client.query(SQL`INSERT INTO newevents (id, stylename, levelname, dance, ordernumber) VALUES (${row.id}, ${row.stylename}, ${row.levelname}, ${row.dance}, ${row.ordernumber})`, (err, result) => {
                            if (err) {
                                rollback(client, done);
                                return reject(err);
@@ -137,11 +137,12 @@ const update_events_for_competition = data => {
                        }
                    });
                    client.query(SQL`DELETE FROM event WHERE id NOT IN 
-                    (SELECT id FROM newevents)`, (err, result) => {
+                    (SELECT id FROM newevents WHERE id IS NOT NULL) returning id`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
                        }
+                       console.log("deleted ids", result.rows);
                    });
                    client.query(SQL`UPDATE event e SET ordernumber = n.ordernumber FROM newevents n
                     WHERE e.id = n.id`, (err, result) => {
@@ -205,7 +206,7 @@ const update_levels_and_styles_for_competition = data => {
                         });
                     }
                     client.query(SQL`DELETE FROM level WHERE id NOT IN 
-                    (SELECT id FROM newrows)`, (err, result) => {
+                    (SELECT id FROM newrows WHERE id IS NOT NULL)`, (err, result) => {
                         if (err) {
                             rollback(client, done);
                             return reject(err);
@@ -242,7 +243,7 @@ const update_levels_and_styles_for_competition = data => {
                         });
                     }
                     client.query(SQL`DELETE FROM style WHERE id NOT IN 
-                    (SELECT id FROM newrows)`, (err, result) => {
+                    (SELECT id FROM newrows WHERE id IS NOT NULL)`, (err, result) => {
                         if (err) {
                             rollback(client, done);
                             return reject(err);
@@ -343,7 +344,7 @@ const update_rounds_for_competition = data => {
                        }
                    });
                    client.query(SQL`DELETE FROM round WHERE id NOT IN 
-                    (SELECT id FROM newrounds)`, (err, result) => {
+                    (SELECT id FROM newrounds WHERE id IS NOT NULL)`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
@@ -433,11 +434,11 @@ const get_other_competitions = (cid) => {
 
 
 const get_levels_for_competition = cid => {
-    return pool.query(SQL`SELECT id, name, ordernumber FROM level WHERE competitionid = ${cid}`);
+    return pool.query(SQL`SELECT id, name, ordernumber FROM level WHERE competitionid = ${cid} ORDER BY ordernumber`);
 }
 
 const get_styles_for_competition = cid => {
-    return pool.query(SQL`SELECT id, name, ordernumber FROM style WHERE competitionid = ${cid}`);
+    return pool.query(SQL`SELECT id, name, ordernumber FROM style WHERE competitionid = ${cid} ORDER BY ordernumber`);
 }
 
 const get_competition_info = cid => {
@@ -445,7 +446,7 @@ const get_competition_info = cid => {
 }
 
 const get_events_for_competition = cid => {
-    return pool.query(SQL`SELECT style.name as stylename, level.name as levelname, dance, event.ordernumber FROM event  
+    return pool.query(SQL`SELECT event.id, style.name as stylename, level.name as levelname, dance, event.ordernumber FROM event  
         LEFT JOIN style ON (style.id = event.styleid) 
         LEFT JOIN level ON (level.id = event.levelid)
         WHERE event.competitionid = ${cid} ORDER BY ordernumber`);

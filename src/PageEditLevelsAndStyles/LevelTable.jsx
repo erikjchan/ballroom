@@ -144,7 +144,7 @@ export default class LevelTable extends React.Component {
     const newRow = {
         id: null,
         ordernumber: rows.length + 1,
-    	name: userData,
+    	  name: userData,
         key: keyCounter
     };
     rows.push(newRow);
