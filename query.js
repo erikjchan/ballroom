@@ -454,8 +454,8 @@ const get_events_for_competition = cid => {
 
 const get_rounds_for_competition = cid => {
     return pool.query(SQL`SELECT r.id, l.name as levelname, l.ordernumber as levelorder, s.name as stylename, s.ordernumber as styleorder, e.dance, e.ordernumber as eventorder, r.name as round, r.ordernumber, r.size, 
-        r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM event e
-        LEFT JOIN round r ON (e.id = r.eventid) 
+        r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM round r
+        LEFT JOIN event e ON (e.id = r.eventid) 
         LEFT JOIN level l ON (e.levelid = l.id)
         LEFT JOIN style s ON (e.styleid = s.id) 
         WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
