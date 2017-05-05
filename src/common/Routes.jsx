@@ -39,7 +39,6 @@ const Admin = Authorization(['admin'])
 const routes = {
   'home'                                                       : Any(HomePage),
   'competition/:competition_id/eventregistration'              : User(EventRegistration),
-  'competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
   'competitions'                                               : User(CompetitionListPage),
   'editprofile'                                                : User(EditProfile),
   'competition/:competition_id/run'                            : Judge(RunCompetition),
@@ -48,12 +47,13 @@ const routes = {
   'competition/:competition_id/editlevelsandstyles'            : Admin(EditLevelsAndStyles),
   'competition/:competition_id/editevents'                     : Admin(EditEvents),
   'competition/:competition_id/competitorslist'                : Admin(CompetitorsList),
+  'competition/:competition_id/seecompetitor/:competitor_id'   : Admin(SeeCompetitor),
+  'competition/:competition_id/regcompetitor/:competitor_id'   : Admin(RegisterCompetitor),
+  'competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
   'admin/competitions'                                         : User(CompetitionListAdmin),
   'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
-  'competition/:competition_id/seecompetitor/:competitor_id'   : Admin(SeeCompetitor),
-  'competition/:competition_id/regcompetitor/:competitor_id'   : Admin(RegisterCompetitor),
   'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
 
 }
