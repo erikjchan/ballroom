@@ -5,6 +5,8 @@ import lib from './common/lib.js'
 import Page from './Page.jsx'
 import Box from './common/BoxAdmin.jsx'
 import EventTable from './common/OfficialTable.jsx'
+import cloneDeep from 'lodash/cloneDeep';
+import findIndex from 'lodash/findIndex';
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
@@ -61,6 +63,19 @@ export default class EditOfficial extends React.Component {
 
   }
 
+  onRemove(id) {
+      if (!confirm("Are you sure you want to delete this?")) {
+          return false;
+      }
+      const rows = cloneDeep(this.state.officials);
+      const idx = findIndex(rows, { id });
+
+      // this could go through flux etc.
+      rows.splice(idx, 1);
+
+      this.setState({ officials: rows });
+  }
+
 
 
   /********************************** Render **********************************/
@@ -115,18 +130,9 @@ export default class EditOfficial extends React.Component {
           extra_columns={[{
             content: (value, {rowData}) => (
                 <div>
-              <div>
-                  <span
-                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
-                  style={{ marginLeft: '1em', cursor: 'pointer' }}
-                >
-                  &#10004; Edit
-                </span>
-                </div>
-
                 <div>
                 <span
-                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
+                  onClick={() => this.onRemove(rowData.id)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop
