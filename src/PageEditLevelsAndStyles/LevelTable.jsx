@@ -141,6 +141,11 @@ export default class LevelTable extends React.Component {
     if (userData == "") {
     	return false;
     }
+    for (let row of rows) {
+      if (row.name.toLowerCase() == userData.toLowerCase()) {
+        return false;
+      }
+    }
     const newRow = {
         id: null,
         ordernumber: rows.length + 1,

@@ -213,6 +213,12 @@ export default class EventTable extends React.Component {
     		|| selectedStyle == "" || danceInput == "") {
     	return false;
     }
+    for (let row of rows) {
+      if (row.stylename == selectedStyle && row.levelname == selectedLevel
+          && row.dance.toLowerCase() == danceInput.toLowerCase()) {
+        return false;
+      }
+    }
 
     const newRow = {
     	id: null,
