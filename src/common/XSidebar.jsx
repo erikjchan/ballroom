@@ -86,6 +86,7 @@ export default class OurSidebar extends React.Component {
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
+    if (isAdmin) {
     return (
       <div className={styles.nav}>
         
@@ -117,6 +118,40 @@ export default class OurSidebar extends React.Component {
 
       </div>
     );
+    }
+    else {
+      return (
+      <div className={styles.nav}>
+        
+        <div className={styles.circle}>
+          <p>EU</p>
+        </div>
+
+        <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
+          { isAdmin ? this.generateLinks(admin_links, true) : this.generateLinks(competitor_links, true)}
+        </div>
+
+        <div className={styles.sub_menu + ' ' + styles.sub_menu_bottom}>
+          { isAdmin ? this.generateLinks(admin_links, false) : this.generateLinks(competitor_links, false)}
+
+          { !isAuthenticated &&
+              <a onClick={this.loginUser.bind(this)}>
+                  Login
+              </a>
+          }
+
+          { isAuthenticated &&
+              <a onClick={this.logoutUser.bind(this)}>
+                  Logout
+              </a>
+          }
+        
+        </div>
+
+
+      </div>
+    );
+    }
   }
 
   generateLinks(links, top) {
