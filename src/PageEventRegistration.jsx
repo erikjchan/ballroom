@@ -143,10 +143,19 @@ export default class PageEventRegistration extends React.Component {
       this.setState({isLeading});
   };
 
+  checkIfExists = (reg) => {
+      const { level, style, event } = this.state;
+      return (reg["level"] !== level) || (reg["style"] !== style) || (reg["title"] !== event);
+  };
+
   registerEventHandler = () => {
       const { level, style, event, partner, isLeading, user_competition_events } = this.state;
       const button_enabled = (event != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
+          if (!user_competition_events.every(this.checkIfExists)) {
+              alert('You are already registered for this event!');
+              return false
+          }
           console.log(isLeading);
           if (isLeading == 'Leading') {
               user_competition_events.push(
