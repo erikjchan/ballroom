@@ -103,19 +103,31 @@ export default class EditOfficial extends React.Component {
                 <div >
                     <label>
                         Official Name: <br />
-                        <input type="text" name="name" value = {this.state.official.Name} size = '20'/>
+                        <input type="text" name="name" size = '20'
+                               value = {this.state.official.name} 
+                               onChange = {(e) => { var o = this.state.official; o.name = e.value; this.setState({official: o});}}
+                        />
                     </label>
                     <label>
                         Email:<br />
-                        <input type="text" name="location" value = {this.state.official.email}  size = '20'/>
+                        <input type="text" name="email" size = '20'
+                               value = {this.state.official.email}  
+                               onChange = {(e) => { var o = this.state.official; o.email = e.value; this.setState({email: o});}} 
+                        />
                     </label>
                     <label>
                         Number:<br />
-                        <input type="tel" name="number" value = {this.state.official.number}  size = '10'/>
+                        <input type="tel" name="number" size = '10'
+                               value = {this.state.official.number}  
+                               onChange = {(e) => { var o = this.state.official; o.number = e.value; this.setState({number: o});}} 
+                        />
                     </label>
                     <label>
                         Position:<br />
-                        <input type="text" name="position" value = {this.state.official.position}  size = '20'/>
+                        <input type="text" name="position" size = '20'
+                               value = {this.state.official.position}  
+                               onChange = {(e) => { var o = this.state.official; o.position = e.value; this.setState({position: o});}} 
+                        />
                     </label>
                 </div>
                 <input className = {style.judgeEditBtns} type="submit" value="Save Changes" />
