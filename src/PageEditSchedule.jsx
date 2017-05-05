@@ -60,6 +60,13 @@ class EditSchedule extends React.Component {
         cid: 1, // TODO: change in production
         rows: this.refs.ddTable.state.rows
       })
+    }).then(() => {
+        fetch("/api/competition/1/rounds") // TODO: change 1 to cid
+            .then(response => response.json())
+            .then(json => {
+                this.refs.ddTable.setState({rows: json})
+            })
+            .catch(err => alert(err));
     });
   }
  }

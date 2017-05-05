@@ -89,33 +89,12 @@ export default class DragAndDropTable extends React.Component {
         }
       ],
       rows: [],
-      /*levels: [],
-      styles: [
-          {
-            title: "Smooth",
-            dances: ["Waltz", "Tango", "Foxtrot", "V. Waltz"]
-          },
-          {
-            title: "Standard",
-            dances: ["Waltz", "Tango", "Foxtrot", "Quickstep"]
-          },
-          {
-            title: "Rhythm",
-            dances: ["Cha Cha", "Rhumba", "Swing", "Mambo"]
-          },
-          {
-            title: "Latin",
-            dances: ["Cha Cha", "Rhumba", "Jive", "V. Samba"]
-          }
-      ],
-      styles: [],*/
       events: [],
       selectedNumber: "",
       selectedLevel: "",
       selectedStyle: "",
       selectedDance: ""
     };
-
 
     this.onRow = this.onRow.bind(this);
     this.onMoveRow = this.onMoveRow.bind(this);
@@ -148,7 +127,9 @@ export default class DragAndDropTable extends React.Component {
         row: dnd.Row
       }
     };
+
     const { columns, rows } = this.state;
+
     for (let i = 0; i < rows.length; i++) {
         rows[i].ordernumber = (i + 1);
     }
@@ -361,7 +342,38 @@ export default class DragAndDropTable extends React.Component {
     const idx = findIndex(rows, { ordernumber });
 
     // this could go through flux etc.
+    const rowToRemove = rows[idx];
+    const roundName = rowToRemove.round;
     rows.splice(idx, 1);
+
+    let numberRowToChange = null;
+    for (let row of rows) {
+        if (row.levelname == rowToRemove.levelname && row.stylename == rowToRemove.stylename && row.dance == rowToRemove.dance) {
+            if (roundName.indexOf("Round") == 0 && row.round.indexOf("Round") == 0) {
+                if (row.round > roundName) {
+                    let num = parseInt(row.round.replace(/^\D+/g, ''));
+                    row.round = "Round " + (num - 1);
+                }
+            } else if (roundName.indexOf("Round") == -1) {
+                if (roundName == "Final") {
+                    if (row.round == "Semifinal") {
+                        row.round = "Final";
+                    } else if (row.round == "Quarter") {
+                        row.round == "Semifinal";
+                    }
+                } else if (roundName == "Semifinal" && row.round == "Quarter") {
+                    row.round = "Semifinal";
+                } else if (roundName == "Quarter" && row.round.indexOf("Round") == 0) {
+                    if (numberRowToChange == null || numberRowToChange.round < row.round) {
+                        numberRowToChange = row;
+                    }
+                }
+            }
+        }
+    }
+    if (numberRowToChange != null) {
+        numberRowToChange.round = "Quarter";
+    }
 
     this.setState({ rows });
   }

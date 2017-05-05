@@ -244,7 +244,7 @@ const update_rounds_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   client.query(SQL`UPDATE round r SET ordernumber = n.ordernumber FROM newrounds n
+                   client.query(SQL`UPDATE round r SET name = n.name, ordernumber = n.ordernumber FROM newrounds n
                     WHERE r.id = n.id`, (err, result) => {
                        if (err) {
                            rollback(client, done);
