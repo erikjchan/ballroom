@@ -83,7 +83,7 @@ export default class CompetitorList extends React.Component {
       		    formatters: [
                     (value, { rowData }) => (
                         <div>
-                            <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
+                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
                             <input type="button"
                                    value="Edit/See More" /></Link>
       			        </div>
@@ -100,32 +100,7 @@ export default class CompetitorList extends React.Component {
           }
         }
       ],
-      rows: [],
-      levels: ["Newcomer", "Bronze", "Silver", "Gold", "Open"],
-      styles: [
-          {
-            title: "Smooth",
-            dances: ["Waltz", "Tango", "Foxtrot", "V. Waltz"]
-          },
-          {
-            title: "Standard",
-            dances: ["Waltz", "Tango", "Foxtrot", "Quickstep"]
-          },
-          {
-            title: "Rhythm",
-            dances: ["Cha Cha", "Rhumba", "Swing", "Mambo"]
-          },
-          {
-            title: "Latin",
-            dances: ["Cha Cha", "Rhumba", "Jive", "V. Samba"]
-          }
-      ],
-      rounds: ["Round 1", "Round 2", "Round 3", "Round 4", "Quarterfinals", "Semifinals", "Finals"],
-      selectedNumber: "",
-      selectedLevel: "",
-      selectedStyle: "",
-      selectedDance: "",
-      selectedRound: ""
+      rows: []
     };
   }
 
@@ -201,7 +176,7 @@ export default class CompetitorList extends React.Component {
       		         formatters: [
                          (value, { rowData }) => (
                              <div>
-                               <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
+                               <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
                                <input type="button"
                                       value="Edit/See More" /></Link>
       			             </div>
@@ -268,8 +243,8 @@ export default class CompetitorList extends React.Component {
     var totalOwed = 0; var totalListed = 0;
     for (let i = 0; i < resolvedRows.length; i++) {
         totalListed += 1;
-        if (resolvedRows[i].amount_owed != 0)
-            totalOwed += parseFloat((resolvedRows[i].amount_owed).substr(1));                             
+        if (resolvedRows[i].amount != 0)
+            totalOwed += parseFloat((resolvedRows[i].amount).substr(1));
     }  
 
     return (
