@@ -150,6 +150,7 @@ const get_schedule = n => collection(n) (i => ({
 }))
 
 const get_competitor_events = n => collection(n) (i => ({
+  "id" : i,
   "title" : randomEventTitle(),
   "style" : randomStyle(),
   "level" : randomLevel(),
