@@ -1,4 +1,3 @@
-
 import styles from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
@@ -9,6 +8,8 @@ import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import {Button, IconButton} from 'react-toolbox/lib/button';
 import Box from './common/Box.jsx'
 import { Link } from 'react-router'
+import cloneDeep from 'lodash/cloneDeep';
+import findIndex from 'lodash/findIndex';
 
 /*
 
@@ -162,6 +163,19 @@ export default class PageEventRegistration extends React.Component {
           alert('Please finish selecting a event and your partner!');
       }
   };
+
+  onRemove(id) {
+      if (!confirm("Are you sure you want to delete this?")) {
+          return false;
+      }
+      const rows = cloneDeep(this.state.user_competition_events);
+      const idx = findIndex(rows, { id });
+
+      // this could go through flux etc.
+      rows.splice(idx, 1);
+
+      this.setState({ user_competition_events: rows });
+  }
 
   render() {
     const search_competitor = (list, query) => {
@@ -327,7 +341,7 @@ export default class PageEventRegistration extends React.Component {
             content: (value, {rowData}) => (
               <div>
                 <span
-                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
+                  onClick={() => this.onRemove(rowData.id)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop
