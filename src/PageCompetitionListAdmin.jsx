@@ -8,11 +8,11 @@ import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/BoxAdmin.jsx'
-
-
+import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
+
 
 // /competitions
 class PageCompetitionList extends React.Component {
@@ -20,19 +20,17 @@ class PageCompetitionList extends React.Component {
     super(props)
     this.state = {
       /** We will populate this w/ data from the API */
-      rows: [],
+      competitions: [],
     }
   }
 
   componentDidMount() {
-    console.log('this', this)
-
     /* Call the API for competitions info */
-    fetch(`/api/admin/${this.props.profile.user_id}/competitions`)
+    fetch(`/api/competitions`)
       .then(response => response.json()) // parse the result
       .then(json => { 
         // update the state of our component
-        this.setState({ rows : json })
+        this.setState({ competitions : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
@@ -40,62 +38,66 @@ class PageCompetitionList extends React.Component {
       .catch(this.refs.page.errorNotif(
         `There was an error fetching the competitions`))
   }
-
-  render() {
-    const yourColumns = [
-    {
-      property: 'Name',
-      header: {
-        label: 'Name',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'StartDate',
-      header: {
-        label: 'Date',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'Select',
-      header: {
-        label: '',
-        sortable: true,
-        resizable: true
-      }
-    }
-  ]
-
-  // Add a button to the competition corresponding to the competition in each row 
-  const expand_your_rows = (rows) => {
-    for (var i = 0; i < rows.length; i++) {
-      let temp = String(rows[i]['id']);
-      rows[i]['Select'] = <button className = {style.search}
-        onClick = {()=>{ alert("Are you sure?"); browserHistory.push('competition/' + temp + '/0')}}>Visit Page</button>;
-    }
-    return rows;
+  /**
+   * Selects a competition for browsing.
+   * All sidebar links will now point to pages
+   * relevant to this competition.
+   * Also, opens the competition home page for
+   * this competition.
+   */
+  browseCompetition (competition) {
+    console.log(this, competition)
+    this.props.dispatch(selectCompetition(competition))
+    browserHistory.push('admin/competition/' + competition.id)
   }
 
-  return (
-   	<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
-      <div className = {style.content}>
-       	<h1>Competitions Page</h1>
-           <Box title="Your Competitions"
-           content = {
-       	  <Table.Provider
-          	className = "pure-table pure-table-striped event-table"
-          	columns = {yourColumns}>
-          	<Table.Header />
-          	<Table.Body
-              rows = {expand_your_rows(this.state.rows) || []}
+  /**
+   * Builds the table with the competitions you're registered to.
+   * @return {[type]} [description]
+   */
+  getYourCompetitionsTable () {
+    const yourColumns = [
+      { property: 'Name',
+        header: { label: 'Name' }
+      },
+      { property: 'StartDate',
+        header: { label: 'Date' }
+      },
+      { property: 'Select',
+        header: { label: '' }
+      }
+    ]
+
+    // TODO; filter to only my competitions
+
+    const rows = this.state.competitions.map(row => {
+      row['Select'] = <button
+        className = {style.search}
+        onClick = {() => this.browseCompetition(row)}>Browse</button>;
+      return row
+    })
+
+    return <Table.Provider
+            className="pure-table pure-table-striped event-table"
+            columns = {yourColumns}>
+            <Table.Header />
+            <Table.Body
+              rows = {rows || []}
               rowKey = "id"
             />
-      	  </Table.Provider>
-           } />
-        <hr />
+          </Table.Provider>
+  }
+
+  render() {
+  
+    return (
+     	<Page ref="page" {...this.props}>
+        <div className={style.content}>
+         	<h1>Competitions Page</h1>
+             <Box title="Your Competitions"
+             content={this.getYourCompetitionsTable()} />
+          <hr />
+        	<div>
         <div className = {style.addeditBtns}>
             <button 
                 className={style.editBtns} 
@@ -103,10 +105,10 @@ class PageCompetitionList extends React.Component {
                 Add/Edit Event
             </button>
      	</div>
-      </div>
-
-    </Page>
-   );
+          </div>
+       	</div>
+      </Page>
+     );
   }
 }
 
