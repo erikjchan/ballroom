@@ -3,7 +3,8 @@ import React from 'react'
 import Page from './Page.jsx'
 import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
+import BoxAdmin from './common/BoxAdmin.jsx'
 import style from './style.css';
 
 
@@ -38,10 +39,15 @@ export default class PageEditProfile extends React.Component {
 
 
   render() {
+    const isAdmin = this.props.profile.role === 'admin'
+
+    if (!isAdmin) {
+
     return (
 
-     <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
-              <Box title={"Edit profile"}
+      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+
+      <Box title={"Edit profile"}
       content={
         <div className={style.lines}>
         <br />
@@ -72,8 +78,50 @@ export default class PageEditProfile extends React.Component {
         <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
         </div>
       } />
+
       </Page>
     );
+
+    } else {
+      return (
+
+      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+
+      <BoxAdmin title={"Edit profile"}
+        content={
+        <div className={style.lines}>
+        <br />
+        <h5>First Name</h5>
+        <div id='editProfileContainer'></div>
+        <input
+          type='text'
+          name='first_name'
+          value={this.state.competitor.first_name}
+          onChange={this.handleChange.bind(this, 'first_name')}
+          maxLength={16} /><br/>
+        <h5>Last Name</h5>
+        <input
+          type='text'
+          name='last_name'
+          value={this.state.competitor.last_name}
+          onChange={this.handleChange.bind(this, 'last_name')} /><br/>
+        <h5>Email address</h5>
+        <input 
+          type='email' 
+          value={this.state.competitor.email} 
+          onChange={this.handleChange.bind(this, 'email')} /><br/>
+        <h5>Mailing Address</h5>
+        <input 
+          type='text' 
+          value={this.state.competitor.mailing_address} 
+          onChange={this.handleChange.bind(this, 'mailing_address')} />
+        <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
+        </div>
+      } />
+
+      </Page>
+    );
+  }
   }
 }
 
