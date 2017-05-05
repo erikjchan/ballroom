@@ -14,7 +14,7 @@ import Page from './Page.jsx';
 import EventTable from './PageEditEvents/EventTable.jsx';
 import style from './style.css';
 
-// competition/:competition_id/editschedule 
+// competition/:competition_id/editevents
 class EditEvents extends React.Component {
 
  render() {

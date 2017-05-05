@@ -10,7 +10,7 @@ import findIndex from 'lodash/findIndex';
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
-
+// editofficial/:competition_id
 export default class EditOfficial extends React.Component {
   constructor(props) {
     super(props)

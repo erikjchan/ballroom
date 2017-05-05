@@ -7,6 +7,7 @@ import Page from './Page.jsx'
 import Autocomplete from 'react-autocomplete'
 import { browserHistory } from 'react-router';
 
+// admin/competition/:competition_id
 export default class PageCompetitionHomeAdmin extends React.Component {
   constructor(props) {
     super(props)

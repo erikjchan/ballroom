@@ -14,7 +14,7 @@ import Page from './Page.jsx';
 import LevelTable from './PageEditLevelsAndStyles/LevelTable.jsx';
 import style from './style.css';
 
-// competition/:competition_id/editschedule
+// competition/:competition_id/editlevelsandstyles
 class EditLevelsAndStyles extends React.Component {
 
  render() {

@@ -7,6 +7,7 @@ import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import { browserHistory, Link } from 'react-router';
 
+// competition/:competition_id/round/:round_id/entercallbacks
 export default class PageEnterCallbacks extends React.Component {
   constructor(props) {
     super(props);
