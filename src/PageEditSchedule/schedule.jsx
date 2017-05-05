@@ -74,7 +74,7 @@ export default class DragAndDropTable extends React.Component {
             formatters: [
               (value, { rowData }) => (
                 <span
-                  onClick={() => this.onRemove(rowData.ordernumber)} style={{ cursor: 'pointer' }}
+                  onClick={() => this.onRemove(rowData.key)} style={{ cursor: 'pointer' }}
                 >
                   &#10007;
                 </span>
@@ -93,7 +93,8 @@ export default class DragAndDropTable extends React.Component {
       selectedNumber: "",
       selectedLevel: "",
       selectedStyle: "",
-      selectedDance: ""
+      selectedDance: "",
+      keyCounter: 0
     };
 
     this.onRow = this.onRow.bind(this);
@@ -104,7 +105,11 @@ export default class DragAndDropTable extends React.Component {
     fetch("/api/competition/1/rounds") // TODO: change 1 to cid
       .then(response => response.json())
       .then(json => {
-        this.setState({rows: json})
+          const rows = json.map((value, index) => {value.key = index; return value;});
+          this.setState({
+              rows: rows,
+              keyCounter: rows.length
+          });
       })
       .catch(err => alert(err));
     fetch("/api/competition/1/events") // TODO: change 1 to cid
@@ -236,7 +241,7 @@ export default class DragAndDropTable extends React.Component {
               <td>
               </td>
               <td>
-              	<div onClick={() =>this.addNewRow()}>&#43;</div>
+              	<div onClick={() => this.addNewRow()}>&#43;</div>
               </td>
             </tr>
           </tbody>
@@ -244,7 +249,7 @@ export default class DragAndDropTable extends React.Component {
         <Table.Body
           className={style.tableBody}
           rows={resolvedRows}
-          rowKey="ordernumber"
+          rowKey="key"
           onRow={this.onRow}
         />
       </Table.Provider>
@@ -253,10 +258,11 @@ export default class DragAndDropTable extends React.Component {
 
   addNewRow() {
     const {
-    	selectedNumber,
+      selectedNumber,
       selectedLevel,
       selectedStyle,
       selectedDance,
+      keyCounter
     } = this.state;
     var rows = this.state.rows;
     if (selectedNumber == "" || selectedLevel == "" 
@@ -303,7 +309,8 @@ export default class DragAndDropTable extends React.Component {
     	judgeid3: earliestRound.judgeid3, 
     	judgeid4: earliestRound.judgeid4,
     	judgeid5: earliestRound.judgeid5,
-    	judgeid6: earliestRound.judgeid6
+    	judgeid6: earliestRound.judgeid6,
+        key: keyCounter
     };
     rows.splice(selectedNumber - 1, 0, newRow);
     this.setState({
@@ -311,14 +318,14 @@ export default class DragAndDropTable extends React.Component {
     	selectedNumber: "",
     	selectedLevel: "",
     	selectedStyle: "",
-    	selectedDance: ""
+    	selectedDance: "",
+        keyCounter: keyCounter + 1
     });
-    console.log(this.state.rows);
   }
 
   onRow(row) {
     return {
-      rowId: row.ordernumber,
+      rowId: row.key,
       onMove: this.onMoveRow
     };
   }
@@ -326,7 +333,8 @@ export default class DragAndDropTable extends React.Component {
   onMoveRow({ sourceRowId, targetRowId }) {
     const rows = dnd.moveRows({
       sourceRowId,
-      targetRowId
+      targetRowId,
+      idField: "key"
     })(this.state.rows);
 
     if (rows) {
@@ -334,12 +342,12 @@ export default class DragAndDropTable extends React.Component {
     }
   }
 
-  onRemove(ordernumber) {
+  onRemove(key) {
   	if (!confirm("Are you sure you want to delete this?")) {
   		return false;
   	}
     const rows = cloneDeep(this.state.rows);
-    const idx = findIndex(rows, { ordernumber });
+    const idx = findIndex(rows, { key });
 
     // this could go through flux etc.
     const rowToRemove = rows[idx];

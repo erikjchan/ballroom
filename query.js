@@ -153,7 +153,7 @@ const update_events_for_competition = data => {
                    client.query(SQL`INSERT INTO event (competitionid, styleid, levelid, dance, ordernumber)
                     SELECT ${data.cid} AS competitionid, styleid, levelid, dance, ordernumber
                     FROM newevents
-                    WHERE id = NULL`, (err, result) => {
+                    WHERE id IS NULL`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
@@ -169,6 +169,111 @@ const update_events_for_competition = data => {
                    });
                });
            }
+        });
+    });
+}
+
+const update_levels_and_styles_for_competition = data => {
+    return new Promise(function(resolve, reject) {
+        pool.connect(function(err, client, done) {
+            if (err) {
+                console.error('error getting client', err);
+                reject(err);
+            } else {
+                client.query('BEGIN', (err) => {
+                    if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                    }
+                    client.query(SQL`CREATE TEMPORARY TABLE newrows (
+                        id integer,
+                        name character varying(30),
+                        ordernumber integer
+                        ) ON COMMIT DROP`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    console.log("levels", data.levels);
+                    for (let row of data.levels) {
+                        client.query(SQL`INSERT INTO newrows (id, name, ordernumber) VALUES (${row.id}, ${row.name}, ${row.ordernumber})`, (err, result) => {
+                            if (err) {
+                                rollback(client, done);
+                                return reject(err);
+                            }
+                        });
+                    }
+                    client.query(SQL`DELETE FROM level WHERE id NOT IN 
+                    (SELECT id FROM newrows)`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    client.query(SQL`UPDATE level l SET ordernumber = n.ordernumber FROM newrows n
+                    WHERE l.id = n.id`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    client.query(SQL`INSERT INTO level (name, ordernumber, competitionid)
+                    SELECT name, ordernumber, ${data.cid} AS competitionid
+                    FROM newrows
+                    WHERE id IS NULL`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    client.query('TRUNCATE newrows', (err) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    for (let row of data.styles) {
+                        client.query(SQL`INSERT INTO newrows (id, name, ordernumber) VALUES (${row.id}, ${row.name}, ${row.ordernumber})`, (err, result) => {
+                            if (err) {
+                                rollback(client, done);
+                                return reject(err);
+                            }
+                        });
+                    }
+                    client.query(SQL`DELETE FROM style WHERE id NOT IN 
+                    (SELECT id FROM newrows)`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    client.query(SQL`UPDATE style s SET ordernumber = n.ordernumber FROM newrows n
+                    WHERE s.id = n.id`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    client.query(SQL`INSERT INTO style (name, ordernumber, competitionid)
+                    SELECT name, ordernumber, ${data.cid} AS competitionid
+                    FROM newrows
+                    WHERE id IS NULL`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                    });
+                    client.query('COMMIT', (err) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                        done(null);
+                        resolve("{finished: true}");
+                    });
+                });
+            }
         });
     });
 }
@@ -411,6 +516,7 @@ module.exports = {
     add_new_judge,
     create_rounds_for_events_for_competition,
     update_events_for_competition,
+    update_levels_and_styles_for_competition,
     update_rounds_for_competition,
     update_competition_info,
     update_competition_current_event_id

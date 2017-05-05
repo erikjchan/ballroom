@@ -60,6 +60,13 @@ app.post('/api/competition/updateEvents', (req, res) => {
     });
 });
 
+app.post('/api/competition/updateLevelsStyles', (req, res) => {
+    query.update_levels_and_styles_for_competition(req.body).then(value => {
+        console.log(value);
+        res.end(value);
+    });
+});
+
 app.post('/api/competition/updateRounds', (req, res) => {
     query.update_rounds_for_competition(req.body).then(value => {
         console.log(value);

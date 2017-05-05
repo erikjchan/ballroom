@@ -14,7 +14,7 @@ export default class LevelTable extends React.Component {
     this.state = {
       columns: [
         {
-          property: 'order_number',
+          property: 'ordernumber',
           props: {
             label: 'Number',
             style: {
@@ -41,7 +41,7 @@ export default class LevelTable extends React.Component {
             formatters: [
               (value, { rowData }) => (
                 <span
-                  onClick={() => this.onRemove(rowData.id)} style={{ cursor: 'pointer' }}
+                  onClick={() => this.onRemove(rowData.key)} style={{ cursor: 'pointer' }}
                 >
                   &#10007;
                 </span>
@@ -57,6 +57,7 @@ export default class LevelTable extends React.Component {
       ],
       rows: [],
       userData: "",
+      keyCounter: 0
     };
 
 
@@ -65,6 +66,16 @@ export default class LevelTable extends React.Component {
   }
 
   componentDidMount() {
+      fetch("/api/competition/1/" + this.props.type) // TODO: change 1 to cid
+          .then(response => response.json())
+          .then(json => {
+              const rows = json.map((value, index) => {value.key = index; return value;});
+              this.setState({
+                rows: rows,
+                keyCounter: rows.length
+              });
+          })
+          .catch(err => alert(err));
   }
 
   render() {
@@ -80,7 +91,7 @@ export default class LevelTable extends React.Component {
     };
     const { columns, rows } = this.state;
     for (let i = 0; i < rows.length; i++) {
-        rows[i].order_number = (i + 1);
+        rows[i].ordernumber = (i + 1);
     }
     //const resolvedColumns = resolve.columnChildren({ columns });
     const resolvedRows = resolve.resolve({
@@ -114,7 +125,7 @@ export default class LevelTable extends React.Component {
         <Table.Body
           className={style.tableBody}
           rows={resolvedRows}
-          rowKey="id"
+          rowKey="key"
           onRow={this.onRow}
         />
       </Table.Provider>
@@ -123,29 +134,31 @@ export default class LevelTable extends React.Component {
 
   addNewRow() {
     const {
-    	userData
+    	userData,
+        keyCounter
     } = this.state;
     var rows = this.state.rows;
     if (userData == "") {
     	return false;
     }
     const newRow = {
-        id: rows.length,
-        order_number: rows.length + 1,
+        id: null,
+        ordernumber: rows.length + 1,
     	name: userData,
+        key: keyCounter
     };
-    rows.splice(rows.length, 0, newRow);
+    rows.push(newRow);
     this.setState({
     	rows: rows,
     	userData: "",
+        keyCounter: keyCounter + 1
     });
-    console.log(this.state.rows);
     this.refs.input.value = '';
   }
 
   onRow(row) {
     return {
-      rowId: row.id,
+      rowId: row.key,
       onMove: this.onMoveRow
     };
   }
@@ -153,7 +166,8 @@ export default class LevelTable extends React.Component {
   onMoveRow({ sourceRowId, targetRowId }) {
     const rows = dnd.moveRows({
       sourceRowId,
-      targetRowId
+      targetRowId,
+      idField: "key"
     })(this.state.rows);
 
     if (rows) {
@@ -161,12 +175,12 @@ export default class LevelTable extends React.Component {
     }
   }
 
-  onRemove(id) {
+  onRemove(key) {
   	if (!confirm("Are you sure you want to delete this?")) {
   		return false;
   	}
     const rows = cloneDeep(this.state.rows);
-    const idx = findIndex(rows, { id });
+    const idx = findIndex(rows, { key });
 
     // this could go through flux etc.
     rows.splice(idx, 1);
