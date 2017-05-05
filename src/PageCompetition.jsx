@@ -6,7 +6,7 @@ import CompEventTable from './common/CompEventTable.jsx'
 import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 // competition/:competition_id/:competitor_id
 export default class PageCompetition extends React.Component {
@@ -145,7 +145,9 @@ export default class PageCompetition extends React.Component {
             </div>
             <div className={styles.infoBoxRight}>
               <Box title={<div className={styles.titleContainers}><span>User Info</span> 
-                              <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit</button>
+                            <Link to={`/editprofile`}>
+                            <input type="button" className={styles.editBtns}
+                                      value="Edit" /></Link>
                           </div>}
                     content={competitor_info}/>
             </div>
