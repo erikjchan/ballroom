@@ -102,7 +102,7 @@ class PageCompetitionList extends React.Component {
             <button 
                 className={style.editBtns} 
                 onClick={()=>{ browserHistory.push('/editcompetition/0/') }}> 
-                Add/Edit Event
+                Create New Competition
             </button>
      	</div>
           </div>
