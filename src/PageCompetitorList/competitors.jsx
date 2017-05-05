@@ -201,7 +201,7 @@ export default class CompetitorList extends React.Component {
       		         formatters: [
                          (value, { rowData }) => (
                              <div>
-                               <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
+                               <Link to={`/editprofile`}>
                                <input type="button"
                                       value="Edit/See More" /></Link>
       			             </div>
