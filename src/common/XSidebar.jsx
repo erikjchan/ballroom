@@ -96,7 +96,7 @@ export default class OurSidebar extends React.Component {
     return [
 
       isAdmin &&
-      <Link key={8} to="/competitions"                  > Manage Competitions </Link>,
+      <Link key={8} to="admin/competitions"             > Manage Competitions </Link>,
 
       competition_selected &&
       <Link key={2} to='/editprofile'                   > Edit Profile        </Link>,
