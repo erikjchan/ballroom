@@ -96,13 +96,15 @@ class PageCompetitionList extends React.Component {
       	  </Table.Provider>
            } />
         <hr />
-                              <div className = {styles.addeditBtns}>
-                              <button 
-                                className={styles.editBtns} 
-                                onClick={()=>{ browserHistory.push('editcompetition/0/') }}> 
-                                  Add/Edit Event
-                              </button>
+        <div className = {style.addeditBtns}>
+            <button 
+                className={style.editBtns} 
+                onClick={()=>{ browserHistory.push('/editcompetition/0/') }}> 
+                Add/Edit Event
+            </button>
      	</div>
+      </div>
+
     </Page>
    );
   }
