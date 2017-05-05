@@ -9,7 +9,7 @@ import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 import connection from './common/connection'
 
-// editcompetition/:competition_id
+// affiliationpayment/:competition_id/:affiliation_id
 class PageAffiliationPayment extends React.Component {
   constructor(props) {
     super(props)

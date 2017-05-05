@@ -6,7 +6,7 @@ import lib from './common/lib'
 import Box from './common/BoxAdmin.jsx'
 import style from './style.css';
 
-
+// editprofile
 export default class PageEditProfile extends React.Component {
 
   constructor(props) {

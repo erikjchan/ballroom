@@ -14,7 +14,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
 
 
-// /competitions
+// competitions
 class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)

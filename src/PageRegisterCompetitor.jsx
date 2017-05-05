@@ -33,7 +33,7 @@ class RadioTest extends React.Component {
 
  */
 
-// competition/:competition_id/eventregistration
+// competition/:competition_id/regcompetitor/:competitor_id
 class PageEventRegistration extends React.Component {
 
 

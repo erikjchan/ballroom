@@ -10,6 +10,7 @@ import { browserHistory } from 'react-router';
 
 import { apiRequest, login, fetchQuote } from './actions'
 
+// competition/:competition_id/run
 export default class RunCompetition extends React.Component {
   constructor(props) {
     super(props)
