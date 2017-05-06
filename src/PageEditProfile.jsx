@@ -7,7 +7,7 @@ import Box from './common/Box.jsx'
 import BoxAdmin from './common/BoxAdmin.jsx'
 import style from './style.css';
 
-
+// editprofile
 export default class PageEditProfile extends React.Component {
 
   constructor(props) {
@@ -45,9 +45,8 @@ export default class PageEditProfile extends React.Component {
 
     return (
 
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
-
-      <Box title={"Edit profile"}
+     <Page ref="page" {...this.props}>
+              <Box title={"Edit profile"}
       content={
         <div className={style.lines}>
         <br />

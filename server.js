@@ -200,6 +200,10 @@ app.get('/api/competitions/:cid/unregistered', (req, res) => {
     });
 })
 
+app.get('/api/admin/:id/competitions', (req, res) => {
+    res.send(data.competitions)
+})
+
 app.get('/api/events', (req, res) => {
     res.send(data.events)
 })
@@ -577,6 +581,7 @@ app.get('/test/', (req, res) => {
 
 /*********************** ROUTES **************************/
 const routes = [
+<<<<<<< HEAD
     "/",
     "/home",
     "/competition/:competition_id/",
@@ -589,6 +594,25 @@ const routes = [
     '/editprofile',
     '/editcompetition/:competition_id',
     '/editofficial/:competition_id'
+=======
+  "/",
+    '/competition/:competition_id/eventregistration'             ,
+    '/competition/:competition_id/:competitor_id'                ,
+    '/competitions'                                              ,
+    '/editprofile'                                               ,
+    '/competition/:competition_id/run'                           ,
+    '/competition/:competition_id/round/:round_id/entercallbacks',
+    '/competition/:competition_id/editschedule'                  ,
+    '/competition/:competition_id/editlevelsandstyles'           ,
+    '/competition/:competition_id/editevents'                    ,
+    '/competition/:competition_id/competitorslist'               ,
+    '/admin/competition/:competition_id'                         ,
+    '/editcompetition/:competition_id'                           ,
+    '/editofficial/:competition_id'                              ,
+    '/competition/:competition_id/seecompetitor/:competitor_id'  ,
+    '/competition/:competition_id/regcompetitor/:competitor_id'  ,
+    '/affiliationpayment/:competition_id/:affiliation_id'        
+>>>>>>> master
 ]
 
 // Serve index page

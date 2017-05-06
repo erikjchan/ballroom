@@ -114,6 +114,7 @@ const get_partnerships = n => collection(n)(i => ({
 const get_organizations = n => collection(n)(i => ({
   "id" : i,
   "name" : randomData(1).company,
+  "amount_owed": randomInt(0,100),
 }))
 
 const get_admins = n => collection(n)(i => ({
@@ -149,6 +150,7 @@ const get_schedule = n => collection(n) (i => ({
 }))
 
 const get_competitor_events = n => collection(n) (i => ({
+  "id" : i,
   "title" : randomEventTitle(),
   "style" : randomStyle(),
   "level" : randomLevel(),

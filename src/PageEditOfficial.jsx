@@ -5,10 +5,12 @@ import lib from './common/lib.js'
 import Page from './Page.jsx'
 import Box from './common/BoxAdmin.jsx'
 import EventTable from './common/OfficialTable.jsx'
+import cloneDeep from 'lodash/cloneDeep';
+import findIndex from 'lodash/findIndex';
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
-
+// editofficial/:competition_id
 export default class EditOfficial extends React.Component {
   constructor(props) {
     super(props)
@@ -61,6 +63,19 @@ export default class EditOfficial extends React.Component {
 
   }
 
+  onRemove(id) {
+      if (!confirm("Are you sure you want to delete this?")) {
+          return false;
+      }
+      const rows = cloneDeep(this.state.officials);
+      const idx = findIndex(rows, { id });
+
+      // this could go through flux etc.
+      rows.splice(idx, 1);
+
+      this.setState({ officials: rows });
+  }
+
 
 
   /********************************** Render **********************************/
@@ -77,7 +92,8 @@ export default class EditOfficial extends React.Component {
                 <Table.Header />
                 <Table.Body rows={this.state.officials.slice(0,this.state.officials.length)} rowKey="id" />
                 </Table.Provider>*/
-            return (<Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+
+            return (<Page ref="page" {...this.props}>
 
                 <h1>Edit Official: {this.state.competition.Name}</h1>
                 <Box title={"Add Official"}
@@ -87,19 +103,31 @@ export default class EditOfficial extends React.Component {
                 <div >
                     <label>
                         Official Name: <br />
-                        <input type="text" name="name" value = {this.state.official.firstname} size = '20'/>
+                        <input type="text" name="name" size = '20'
+                               value = {this.state.official.name} 
+                               onChange = {(e) => { var o = this.state.official; o.name = e.value; this.setState({official: o});}}
+                        />
                     </label>
                     <label>
                         Email:<br />
-                        <input type="text" name="location" value = {this.state.official.email}  size = '20'/>
+                        <input type="text" name="email" size = '20'
+                               value = {this.state.official.email}  
+                               onChange = {(e) => { var o = this.state.official; o.email = e.value; this.setState({email: o});}} 
+                        />
                     </label>
                     <label>
                         Number:<br />
-                        <input type="tel" name="number" value = {this.state.official.number}  size = '10'/>
+                        <input type="tel" name="number" size = '10'
+                               value = {this.state.official.number}  
+                               onChange = {(e) => { var o = this.state.official; o.number = e.value; this.setState({number: o});}} 
+                        />
                     </label>
                     <label>
                         Position:<br />
-                        <input type="text" name="position" value = {this.state.official.position}  size = '20'/>
+                        <input type="text" name="position" size = '20'
+                               value = {this.state.official.position}  
+                               onChange = {(e) => { var o = this.state.official; o.position = e.value; this.setState({position: o});}} 
+                        />
                     </label>
                 </div>
                 <input className = {style.judgeEditBtns} type="submit" value="Save Changes" />
@@ -114,18 +142,9 @@ export default class EditOfficial extends React.Component {
           extra_columns={[{
             content: (value, {rowData}) => (
                 <div>
-              <div>
-                  <span
-                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
-                  style={{ marginLeft: '1em', cursor: 'pointer' }}
-                >
-                  &#10004; Edit
-                </span>
-                </div>
-
                 <div>
                 <span
-                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
+                  onClick={() => this.onRemove(rowData.id)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop
@@ -142,7 +161,7 @@ export default class EditOfficial extends React.Component {
         )
     }
     else{
-        return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+        return <Page ref="page" {...this.props}/>
     }
   }
 }
