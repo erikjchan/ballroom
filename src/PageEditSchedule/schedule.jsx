@@ -145,7 +145,7 @@ export default class DragAndDropTable extends React.Component {
     })(rows);
 
     var numberOptions = [];
-    for (let i = 1; i <= this.state.rows.length; i++) {
+    for (let i = 1; i <= this.state.rows.length + 1; i++) {
         numberOptions.push(<option key={"ordernumber_" + i} value={i}>{i}</option>);
     }
     var levelOptions = null;
@@ -319,7 +319,7 @@ export default class DragAndDropTable extends React.Component {
     	selectedLevel: "",
     	selectedStyle: "",
     	selectedDance: "",
-        keyCounter: keyCounter + 1
+      keyCounter: keyCounter + 1
     });
   }
 
