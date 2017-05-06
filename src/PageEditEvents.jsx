@@ -24,7 +24,7 @@ class EditEvents extends React.Component {
         <h1>Define Events</h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges} onClick={
-            () => this.confirmGoToUrl("/competition/0/editevents", "Are you sure you want to save changes?")  
+            () => this.saveChanges("Are you sure you want to save changes?")  
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
             () => this.confirmGoToUrl("/competition/0/editlevelsandstyles", "Are you sure you want to leave this page without saving?")
@@ -46,6 +46,30 @@ class EditEvents extends React.Component {
         />
     </Page>
   );
+ }
+
+ saveChanges(message) {
+  if (confirm(message)) {
+    console.log(this.refs.ddTable.state.rows);
+    fetch("/api/competition/updateEvents", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cid: 1, // TODO: change in production
+        rows: this.refs.ddTable.state.rows
+      })
+    }).then(() => {
+        fetch("/api/competition/1/events") // TODO: change 1 to cid
+            .then(response => response.json())
+            .then(json => {
+                this.refs.ddTable.setState({rows: json})
+            })
+            .catch(err => alert(err));
+    });
+  }
  }
 
  confirmGoToUrl(url, message) {

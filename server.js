@@ -47,6 +47,33 @@ app.use(bodyParser.json());
  res.send({status: 'posted'})
  })*/
 
+app.post('/api/create_partnership', (req, res) => {
+    const leadcompetitorid = parseInt(req.body.leadcompetitorid)
+    const followcompetitorid = parseInt(req.body.followcompetitorid)
+    const eventid = parseInt(req.body.eventid)
+    const competitionid = parseInt(req.body.competitionid)
+    query2.create_partnership(leadcompetitorid, followcompetitorid, eventid, competitionid).then(function (value) {
+            console.log(value);
+            res.send(value);
+        },
+        function (err){
+            res.send(err);
+        });
+});
+
+app.post('/api/delete_partnership', (req, res) => {
+    const leadcompetitorid = parseInt(req.body.leadcompetitorid)
+    const followcompetitorid = parseInt(req.body.followcompetitorid)
+    const eventid = parseInt(req.body.eventid)
+    query2.delete_partnership(leadcompetitorid, followcompetitorid, eventid).then(function (value) {
+            console.log(value);
+            res.send(value);
+        },
+        function (err){
+            res.send(err);
+        });
+});
+
 app.post('/api/competition/generateRounds', (req, res) => {
     query.create_rounds_for_events_for_competition(req.body.cid).then(value => {
         console.log(value);
@@ -138,6 +165,20 @@ app.get('/api/competition/:cid/levels', (req, res) => {
     });
 })
 
+app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
+    query2.get_styles_for_competition_level(req.params.cid, req.params.lid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/level/:lid/style/:sid', (req, res) => {
+    query2.get_events_for_competition_level_style(req.params.cid, req.params.lid, req.params.sid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
 app.get('/api/competition/:cid/rounds', (req, res) => {
     query.get_rounds_for_competition(req.params.cid).then(value => {
         console.log(value);
@@ -161,6 +202,13 @@ app.get('/api/competitors/:id', (req, res) => {
     query2.get_competitor_by_id(req.params.id).then(value => {
         console.log(value);
         res.send(value[0]);
+    });
+})
+
+app.get('/api/competitors/', (req, res) => {
+    query2.get_all_competitors().then(value => {
+        console.log(value);
+        res.send(value);
     });
 })
 
@@ -520,13 +568,12 @@ app.get('/test/partnerships/comfirmed/event/:eventid', (req, res) => {
     });
 })
 
-app.get('/test/partnerships/insert/:leadcompetitorid/:followcompetitorid/:eventid/:competitionid/:number', (req, res) => {
+app.get('/test/partnerships/insert/:leadcompetitorid/:followcompetitorid/:eventid/:competitionid', (req, res) => {
     const leadcompetitorid = parseInt(req.params.leadcompetitorid)
     const followcompetitorid = parseInt(req.params.followcompetitorid)
     const eventid = parseInt(req.params.eventid)
     const competitionid = parseInt(req.params.competitionid)
-    const number = parseInt(req.params.number)
-    query2.create_partnership(leadcompetitorid, followcompetitorid, eventid, competitionid, number).then(function (value) {
+    query2.create_partnership(leadcompetitorid, followcompetitorid, eventid, competitionid).then(function (value) {
             console.log(value);
             res.send(value);
         },
