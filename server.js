@@ -5,6 +5,7 @@ const ip = require('ip');
 const query          = require('./query')
 const query2          = require('./query2')
 const bodyParser = require("body-parser")
+const test = require('./test')
 
 
 /************************************************************
@@ -353,7 +354,8 @@ app.get('/api/', (req, res) => {
         '/api/payment_records',
         '/api/callbacks',
         '/api/admins',
-        '/api/judges'
+        '/api/judges',
+        'api/querytest'
     ]})
 })
 
@@ -636,7 +638,8 @@ const routes = [
     "/admin/competition/:competition_id",
     '/editprofile',
     '/editcompetition/:competition_id',
-    '/editofficial/:competition_id'
+    '/editofficial/:competition_id',
+    '/querytest',
 ]
 
 // Serve index page
@@ -702,4 +705,15 @@ const server = app.listen(port, () => {
     const port = server.address().port;
 
     console.log('Essential React listening at http://%s:%s', host, port);
+});
+
+
+
+
+/****************TEST *****************/
+app.get('/api/querytest', (req, res) => {
+    test.get_test_result(req.body).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 });

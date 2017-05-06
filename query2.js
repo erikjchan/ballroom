@@ -55,7 +55,7 @@ const create_competitor = (firstname, lastname, email, mailingaddress,
 
 // UPDATE
 const update_competitor_by_email = (email, firstname, lastname, mailingaddress, 
-    affiliationid, hasregistered) => {
+    affiliationid,  hasregistered) => {
     return pool.query_wrapped(SQL`UPDATE competitor 
                           SET firstname=${firstname} , lastname=${lastname},
                               mailingaddress=${mailingaddress}, affiliationid=${affiliationid}, 
@@ -68,7 +68,7 @@ const update_competitor_by_id = (id, firstname, lastname, mailingaddress,
     return pool.query_wrapped(SQL`UPDATE competitor 
                           SET firstname=${firstname} , lastname=${lastname},
                               mailingaddress=${mailingaddress}, affiliationid=${affiliationid}, 
-                              hasregistered=${hasregistered}
+                               hasregistered=${hasregistered}
                           WHERE id=${id};`);
 }
 //DELETE

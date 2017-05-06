@@ -1,3 +1,4 @@
+import pg from 'pg'
 var Pool = require('pg').Pool;
 
 // create a config to configure both pooling behavior
