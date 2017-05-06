@@ -687,25 +687,6 @@ app.get(routes, (req, res) => {
 });
 
 
-/*************** **************************/
-
-var jwt = require('express-jwt');
-
-app.use('/api/protected', function (req, res, next) {
-    console.log(req)
-    next()
-});
-
-app.use('/api/protected', jwt({
-    secret: 'W8p06kShQyGZjHXWfv56C1hQDuzYsPf6OucdEq36JHd9pPYtkUcYnss_bLachbyW',
-    audience: 'Dl30IRGbXkkPlENLT4nR9QIWLHiMAxxF'
-}));
-
-app.get('/api/protected/random-quote', function(req, res) {
-    res.status(200).send("quoter.getRandomOne()");
-});
-
-
 /*************************************************************
  *
  * Webpack Dev Server
