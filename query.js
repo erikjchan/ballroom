@@ -385,8 +385,8 @@ const update_competition_info = data => {
         description = ${data.description} WHERE id = ${data.cid}`);
 }
 
-const update_competition_current_event_id = data => {
-    return pool.query(SQL`UPDATE competition SET currenteventid = ${data.currenteventid} WHERE id = ${data.cid}`);
+const update_competition_current_round_id = data => {
+    return pool.query(SQL`UPDATE competition SET currentroundid = ${data.rid} WHERE id = ${data.cid}`);
 }
 
 const get_all_admins = () => {
@@ -449,11 +449,15 @@ const get_events_for_competition = cid => {
 
 const get_rounds_for_competition = cid => {
     return pool.query(SQL`SELECT r.id, l.name as levelname, l.ordernumber as levelorder, s.name as stylename, s.ordernumber as styleorder, e.dance, e.ordernumber as eventorder, r.name as round, r.ordernumber, r.size, 
-        r.callbackscalculated FROM round r
+        r.callbackscalculated, r.eventid FROM round r
         LEFT JOIN event e ON (e.id = r.eventid) 
         LEFT JOIN level l ON (e.levelid = l.id)
         LEFT JOIN style s ON (e.styleid = s.id) 
         WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
+}
+
+const get_current_round_for_competition = cid => {
+  return pool.query(SQL`SELECT currentroundid FROM competition where id = ${cid}`);
 }
 
 const get_competitors_for_competition = cid => {
@@ -464,6 +468,10 @@ const get_competitors_for_competition = cid => {
         LEFT JOIN paymentrecord pr ON (c.id = pr.competitorid) 
         LEFT JOIN  affiliation a ON (c.affiliationid = a.id) 
         WHERE p.competitionid = ${cid}`);
+}
+
+const get_competitors_for_round = rid => {
+  return pool.query(SQL`SELECT number FROM partnership WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) AND calledback = true`);
 }
 
 const get_affiliations_for_competition = cid => {
@@ -507,6 +515,7 @@ module.exports = {
     get_events_for_competition,
     get_rounds_for_competition,
     get_competitors_for_competition,
+    get_competitors_for_round,
     get_affiliations_for_competition,
     get_num_competitors_per_style_for_competition,
     add_new_judge,
@@ -515,5 +524,5 @@ module.exports = {
     update_levels_and_styles_for_competition,
     update_rounds_for_competition,
     update_competition_info,
-    update_competition_current_event_id
+    update_competition_current_round_id
 }

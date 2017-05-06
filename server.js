@@ -81,8 +81,8 @@ app.post('/api/competition/updateCompetitionInfo', (req, res) => {
     });
 });
 
-app.post('/api/competition/updateCompetitionCurrentEventId', (req, res) => {
-    query.update_competition_current_event_id(req.body).then(value => {
+app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
+    query.update_competition_current_round_id(req.body).then(value => {
         console.log(value);
         res.end(value);
     });
@@ -151,15 +151,18 @@ app.get('/api/competition/:cid/styles', (req, res) => {
     });
 })
 
-app.get('/api/competition/:cid/rounds', (req, res) => {
-    res.send(data.rounds)
-})
-
 app.get('/api/competitors/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_competitor_by_id(req.params.id).then(value => {
         console.log(value);
         res.send(value[0]);
+    });
+})
+
+app.get('/api/competitors/round/:rid', (req, res) => {
+    query.get_competitors_for_round(req.params.rid).then(value => {
+        console.log(value);
+        res.send(value);
     });
 })
 

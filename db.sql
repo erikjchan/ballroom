@@ -229,7 +229,7 @@ CREATE TABLE round (
     name character varying(100),
     ordernumber integer,
     size integer,
-    callbackscalculated boolean
+    callbackscalculated boolean NOT NULL DEFAULT false
 );
 
 
@@ -484,54 +484,6 @@ ALTER TABLE ONLY round
 
 
 --
--- Name: round round_judgeid1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid1_fkey FOREIGN KEY (judgeid1) REFERENCES judge(id) ON DELETE SET NULL;
-
-
---
--- Name: round round_judgeid2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid2_fkey FOREIGN KEY (judgeid2) REFERENCES judge(id) ON DELETE SET NULL;
-
-
---
--- Name: round round_judgeid3_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid3_fkey FOREIGN KEY (judgeid3) REFERENCES judge(id) ON DELETE SET NULL;
-
-
---
--- Name: round round_judgeid4_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid4_fkey FOREIGN KEY (judgeid4) REFERENCES judge(id) ON DELETE SET NULL;
-
-
---
--- Name: round round_judgeid5_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid5_fkey FOREIGN KEY (judgeid5) REFERENCES judge(id) ON DELETE SET NULL;
-
-
---
--- Name: round round_judgeid6_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY round
-    ADD CONSTRAINT round_judgeid6_fkey FOREIGN KEY (judgeid6) REFERENCES judge(id) ON DELETE SET NULL;
-
-
---
 -- Name: style style_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -550,7 +502,7 @@ SELECT pg_catalog.setval('round_id_seq', 1, false);
 
 INSERT INTO admin VALUES ('admin@email.edu');
 
-INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 0, 'description');
+INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 1, 'description');
 
 SELECT pg_catalog.setval('competition_id_seq', 1, true);
 
