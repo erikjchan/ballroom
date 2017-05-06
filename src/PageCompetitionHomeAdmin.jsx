@@ -329,7 +329,7 @@ populate_expanded(box_name, lines_react, link){
                           this.state.organizations.map(org => {
                             return (<p key={org.id}>{org.name}</p>)
                           }))
-    links["Organizations"] = "";
+    links["Organizations"] = "/affiliationpayment/" + this.competition_id + "/0";
 
     var total_rounds = this.state.competition_rounds.length;
     /*var rounds_titles = (<div className={styles.lines}>
