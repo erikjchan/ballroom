@@ -194,6 +194,7 @@ const create_partnership = (leadcompetitorid, followcompetitorid, eventid, compe
                 client.query('BEGIN', (err) => {
                     if (err) {
                         rollback(client, done);
+                        console.log(err);
                         return reject(err);
                     }
                     client.query(SQL`SELECT DISTINCT competitor.*, affiliation.name as affiliationname, partnership.number as number
@@ -203,27 +204,57 @@ const create_partnership = (leadcompetitorid, followcompetitorid, eventid, compe
                           WHERE competitor.id = ${leadcompetitorid};`, (err, result) => {
                         if (err) {
                             rollback(client, done);
+                            console.log(err);
                             return reject(err);
                         }
                         var comp = result.rows[0]
                         if (comp.number == null){
-                            // TODO: UPDATE lead number of competition
-                            comp.number = 100;
-                        }   
-                        client.query(SQL`INSERT INTO partnership (leadcompetitorid, followcompetitorid, eventid, 
-                                                   leadconfirmed, followconfirmed,
-                                                   competitionid, number, calledback, timestamp)
-                                             VALUES (${leadcompetitorid}, ${followcompetitorid}, ${eventid}, ${true}, 
-                                                    ${true}, ${competitionid},${comp.number}, ${false}, now());`, 
-                                    (err, result) => {
-                                        if (err) {
-                                            rollback(client, done);
-                                            return reject(err);
-                                        }
-                                    });        
+                             // TODO: UPDATE lead number of competition
+                             client.query(SQL`SELECT * FROM competition WHERE id = ${competitionid};`, (err, result) => {
+                                if (err) {
+                                    rollback(client, done);
+                                    return reject(err);
+                                }
+                                console.log("The lead number is" + result.rows[0].leadidstartnum);
+                                var new_number = result.rows[0].leadidstartnum
+                                client.query(SQL`UPDATE competition SET leadidstartnum = ${new_number+1} WHERE id = ${competitionid};`, (err, result) => {
+                                    if (err) {
+                                        rollback(client, done);
+                                        return reject(err);
+                                    }
+                                });
+                                client.query(SQL`INSERT INTO partnership (leadcompetitorid, followcompetitorid, eventid, 
+                                                    leadconfirmed, followconfirmed,
+                                                    competitionid, number, calledback, timestamp)
+                                                VALUES (${leadcompetitorid}, ${followcompetitorid}, ${eventid}, ${true}, 
+                                                        ${true}, ${competitionid},${new_number}, ${false}, now());`, 
+                                        (err, result) => {
+                                            if (err) {
+                                                console.log(err);
+                                                rollback(client, done);
+                                                return reject(err);
+                                            }
+                                        }); 
+                            });
+                        } 
+                        else{
+                            client.query(SQL`INSERT INTO partnership (leadcompetitorid, followcompetitorid, eventid, 
+                                                    leadconfirmed, followconfirmed,
+                                                    competitionid, number, calledback, timestamp)
+                                                VALUES (${leadcompetitorid}, ${followcompetitorid}, ${eventid}, ${true}, 
+                                                        ${true}, ${competitionid},${comp.number}, ${false}, now());`, 
+                                        (err, result) => {
+                                            if (err) {
+                                                console.log(err);
+                                                rollback(client, done);
+                                                return reject(err);
+                                            }
+                                        }); 
+                        }
                         client.query('COMMIT', (err) => {
                             if (err) {
                                 rollback(client, done);
+                                console.log(err);
                                 return reject(err);
                             }
                             done(null);

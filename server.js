@@ -576,6 +576,7 @@ app.get('/test/partnerships/insert/:leadcompetitorid/:followcompetitorid/:eventi
             res.send(value);
         },
         function (err){
+            console.log(err);
             res.send(err);
         });
 })

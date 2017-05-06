@@ -162,10 +162,9 @@ export default class PageEventRegistration extends React.Component {
     });
   };
 
-  handleEventChange = (eventid, eventinfo) => {
+  handleEventChange = (eventid) => {
     this.setState({
-      eventid: eventid,
-      eventinfo: eventinfo
+      eventid: eventid
     });
   };
 
@@ -179,10 +178,10 @@ export default class PageEventRegistration extends React.Component {
       if (button_enabled) {
           console.log(isLeading);
           var leadcompetitorid = partner;
-          var followcompetitorid = this.competition_id;
+          var followcompetitorid = this.competitor_id;
           if (isLeading == 'Leading') {
-            leadcompetitorid = this.competition_id;
-            followcompetitorid = this.partner;
+            leadcompetitorid = this.competitor_id;
+            followcompetitorid = partner;
           }
             fetch("/api/create_partnership", {
                 method: 'POST',
