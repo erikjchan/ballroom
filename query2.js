@@ -42,29 +42,29 @@ const check_competitor_email_exist = (email) => {
 
 // INSERT
 const create_competitor = (firstname, lastname, email, mailingaddress, 
-    affiliationid, password) => {
+    affiliationid) => {
     return pool.query_wrapped(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress,
-                                                  affiliationid, password, hasregistered)
+                                                  affiliationid, hasregistered)
                           VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
-                                  ${affiliationid}, ${password}, ${false});`);
+                                  ${affiliationid}, ${false});`);
 }
 
 // UPDATE
 const update_competitor_by_email = (email, firstname, lastname, mailingaddress, 
-    affiliationid, password, hasregistered) => {
+    affiliationid,  hasregistered) => {
     return pool.query_wrapped(SQL`UPDATE competitor 
                           SET firstname=${firstname} , lastname=${lastname},
                               mailingaddress=${mailingaddress}, affiliationid=${affiliationid}, 
-                              password=${password}, hasregistered=${hasregistered}
+                              hasregistered=${hasregistered}
                           WHERE email=${email};`);
 }
 
 const update_competitor_by_id = (id, firstname, lastname, mailingaddress, 
-    affiliationid, password, hasregistered) => {
+    affiliationid, hasregistered) => {
     return pool.query_wrapped(SQL`UPDATE competitor 
                           SET firstname=${firstname} , lastname=${lastname},
                               mailingaddress=${mailingaddress}, affiliationid=${affiliationid}, 
-                              password=${password}, hasregistered=${hasregistered}
+                               hasregistered=${hasregistered}
                           WHERE id=${id};`);
 }
 //DELETE
