@@ -14,6 +14,7 @@ export default (component) => connect((state) => {
   const profile = auth.profile || {}
   const role = (auth.profile && Object.keys(auth.profile.roles)[0]) || 'none'
   profile.role = role
+
   return {
     errorMessage,
     isAuthenticated,

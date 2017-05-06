@@ -1,9 +1,18 @@
 const BASE_URL = 'http://localhost:3001/api/'
 
+
 function callApi(endpoint, authenticated) {
   
   let token = localStorage.getItem('id_token') || null
+  let profile = (localStorage.getItem('profile') && JSON.parse(localStorage.getItem('profile'))) || null
   let config = {}
+
+  var url = new URL(BASE_URL + endpoint),
+      params = {access_token:profile.access_token}
+  
+  Object
+    .keys(params)
+    .forEach(key => url.searchParams.append(key, params[key]))
   
   if(authenticated) {
     if(token) {
@@ -15,7 +24,7 @@ function callApi(endpoint, authenticated) {
     }
   }
   
-  return fetch(BASE_URL + endpoint, config)
+  return fetch(url, config)
     .then(response =>
       response.text()
       .then(text => ({ text, response }))
