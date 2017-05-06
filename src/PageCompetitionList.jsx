@@ -91,25 +91,12 @@ class PageCompetitionList extends React.Component {
     }
     ]
 
-  // Add a button to the competition corresponding to the competition in each row 
-  const expand_your_rows = (rows) => {
-    for (var i = 0; i < rows.length; i++) {
-      let temp = String(rows[i]['id']);
-      rows[i]['Select'] = <button className = {style.search}
-        onClick = {()=>{ browserHistory.push('competition/' + temp + '/1')}}>Visit Page</button>;
-    }
-    return rows;
-  }
-/*
-    // TODO; filter to only my competitions
-
     const rows = this.state.competitions.map(row => {
       row['Select'] = <button
         className = {style.search}
         onClick = {() => this.browseCompetition(row)}>Browse</button>;
       return row
     })
-*/
 
     return <Table.Provider
             className="pure-table pure-table-striped event-table"
