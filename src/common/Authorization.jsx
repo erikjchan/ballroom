@@ -3,6 +3,7 @@ import connection from './connection'
 import { Redirect } from 'react-router'
 import { browserHistory } from 'react-router';
 import LoginPage from '../PageLogin.jsx'
+import { selectCompetition } from '../actions'
 
 /**
  * Authorizaiton guard for pages.
@@ -27,6 +28,14 @@ const Authorization = allowedRoles => WrappedComponent => {
         (acc,role) => allowedRoles.includes(role) || acc, false)
 
       return permission
+    }
+
+    // TO persist state across urls
+    componentDidMount() {
+      if (localStorage.getItem('competition')) {
+        const competition = JSON.parse(localStorage.getItem('competition'))
+        this.props.dispatch(selectCompetition(competition))
+      }
     }
 
     componentWillMount() {

@@ -74,10 +74,9 @@ class PageCompetitionList extends React.Component {
     // TODO; filter to only my competitions
 
     const rows = this.state.competitions.map(row => {
-      row['Select'] = <button
+      return Object.assign({}, row, { Select: <button
         className = {style.search}
-        onClick = {() => this.browseCompetition(row)}>Browse</button>;
-      return row
+        onClick = {() => this.browseCompetition(row)}>Browse</button>})
     })
 
     return <Table.Provider
