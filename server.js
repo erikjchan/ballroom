@@ -37,14 +37,9 @@ app.use('/api/protected', jwtCheck, function (req, res, next) {
 });
 
 app.get('/api/protected/random-quote', function(req, res) {
-  res.status(200).send(quoter.getRandomOne());
-});
-
-app.use('/api/protected', authorizationCheck);
-
-app.get('/api/protected/random-quote', function(req, res) {
   res.status(200).send("quoter.getRandomOne()");
 });
+
 
 // TODO: Acutally protect the quotes. Expects access_token=xxxx in query string.
 

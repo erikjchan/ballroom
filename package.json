@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@types/express-jwt": "0.0.34",
+    "auth0": "^2.6.0",
     "babel-core": "^6.5.2",
     "babel-polyfill": "^6.5.0",
     "babel-runtime": "^6.5.0",
@@ -76,6 +77,7 @@
     "react-helmet": "^4.0.0",
     "react-redux": "^5.0.3",
     "react-router": "^3.0.2",
+    "react-select": "^1.0.0-rc.3",
     "react-sidebar": "^2.3.0",
     "react-toolbox": "^2.0.0-beta.7",
     "react-visibility-toggles": "^1.1.1",
