@@ -88,6 +88,7 @@ class PageCompetitionList extends React.Component {
         sortable: true,
         resizable: true
       }
+    }
     ]
 
   // Add a button to the competition corresponding to the competition in each row 
