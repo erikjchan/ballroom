@@ -1,6 +1,7 @@
-
+import Autocomplete from 'react-autocomplete'
 import styles from "./style.css"
 import React from 'react'
+import Select from 'react-select'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
 import Box from './common/BoxAdmin.jsx'
@@ -17,6 +18,9 @@ class PageAffiliationPayment extends React.Component {
       /** We will populate this w/ data from the API */
       competition: null,
       organization: null,
+      organizations: [],
+      selectedOrg: "",
+      selectedOrgID: "-1"
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -46,8 +50,8 @@ class PageAffiliationPayment extends React.Component {
     fetch(`/api/organizations`)
       .then(response => response.json()) // parse the result
       .then(json => { 
-        // update the state of our component
-        this.setState({ organization : json })
+          // update the state of our component
+        this.setState({ organization : json, organizations: json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
@@ -56,29 +60,90 @@ class PageAffiliationPayment extends React.Component {
   }
 
  render() {
-   if (this.state.organization && this.state.competition){
-    var comp_name = this.state.competition.Name;
-    var affiliation = this.state.organization[this.affiliation_id];
-    var affiliation_name = affiliation.name;
-    var affiliation_owed = affiliation.amount_owed;
-    var comp_info = (<form className = {styles.long_form}>
-        <div>
-                 
-                 <div className = {styles.form_row}>
-                    <label> Competition name : {comp_name} </label>            
+     if (this.state.organization && this.state.competition){
+         const search_org = (list, query) => {
+             if (query === '') return []
+             return list.filter(org => 
+                 {console.log(org.name);
+                  return org.name.toLowerCase().indexOf(query) != -1;}
+             )
+         }
+         const myMenuStyle = {
+             borderRadius: '3px',
+             boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+             background: 'rgba(255, 255, 255, 0.9)',
+             padding: '2px 0',
+             fontSize: '90%',
+             overflow: 'auto',
+             maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+             zIndex: 200
+         };
+        var comp_name = this.state.competition.Name;
+        var affiliation = this.state.organization[this.affiliation_id];
+        var affiliation_name = affiliation.name;
+        var affiliation_owed = affiliation.amount_owed;
+        var comp_info = (
+            <form className = {styles.long_form}>
+                <div>
+
+                <h3>Search for another organization:</h3>
+                <div className = {styles.label}>
+                    <Autocomplete
+                      menuStyle={myMenuStyle}
+                      inputProps={{name: "US state", id: "states-autocomplete"}}
+                      ref="autocomplete"
+                      value={this.state.selectedOrg}
+                      items={this.state.organizations}
+                      getItemValue={(item) => item.id}
+                      onSelect={(value, item) => {
+                          // set the menu to only the selected item
+                        console.log("setting stuff to stuff");
+                      console.log(item.id);
+                        this.setState({ selectedOrg: item.name, selectedOrgID: item.id })
+                        // or you could reset it to a default list again
+                        // this.setState({ unitedStates: getStates() })
+                      }}
+                      onChange={(event, value) => { 
+                        var json = search_org(this.state.organization, value)
+                        this.setState({organizations: json, selectedOrg: value, selectedOrgID: "-1" })
+                      }}
+                      renderItem={(item, isHighlighted) => (
+                        <div
+                          key={item.abbr}
+                          id={item.abbr}
+                        >{item.name}</div>
+                      )}
+                    />
+                    <button onClick={(event) => 
+                        {
+                            if (this.state.selectedOrgID != "-1") {
+                               this.props.router.push("/affiliationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
+                            } else {
+                                event.preventDefault();
+                                alert("Please select an organization first!");
+                                return false;
+                            }
+                        }}>
+                        Go To
+                    </button>
+                </div>
+                
+                <h2>Current Organization Information:</h2>
+                <div className = {styles.form_row}>
+                    <label> Competition name: {comp_name} </label>            
                 </div>
                 
                 <div className = {styles.form_row}>
-                     <label> Affiliation number : {this.affiliation_id} </label>
+                     <label> Affiliation number: {this.affiliation_id} </label>
                 </div>
                      
                 <div className = {styles.form_row}>
-                    <label> Affiliation name : {affiliation_name} </label>            
+                    <label> Affiliation name: {affiliation_name} </label>            
                 </div>
 
 
                 <div className = {styles.form_row}>
-                    <label> Amount Owed : {affiliation_owed} </label>            
+                    <label> Amount Owed: {affiliation_owed} </label>            
                 </div>
                 <div className = {styles.form_row}>
                     <label>
@@ -93,33 +158,6 @@ class PageAffiliationPayment extends React.Component {
             </div>
         </form>)
 
-    const event_table_columns = [
-      {
-        property: 'name',
-        header: {
-          label: 'Name',
-          sortable: true,
-          resizable: true
-        }
-      },
-      {
-        property: 'partner',
-        header: {
-          label: 'Partner',
-          sortable: true,
-          resizable: true
-        }
-      },
-      {
-        property: 'amount awed',
-        header: {
-          label: 'Amount awed',
-          sortable: true,
-          resizable: true
-        }
-      }
-    ]
-
     return (
       <Page ref="page" {...this.props}>
           <div className={styles.titles}>
@@ -130,7 +168,7 @@ class PageAffiliationPayment extends React.Component {
           <div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box title={<div className={styles.titleContainers}><span>Edit Affiliation Payment</span> 
+              <Box title={<div className={styles.titleContainers}><span>See/Edit Affiliation Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>

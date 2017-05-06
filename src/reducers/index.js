@@ -104,11 +104,15 @@ function selected(state = {
   competition: null
 }, action) {
   switch (action.type) {
-    case SELECT_COMPETITION:
+    case SELECT_COMPETITION: {
+      console.log(action.competition)
+      localStorage.setItem('competition', JSON.stringify(action.competition))
       return Object.assign({}, state, {
         competition: action.competition
       })
+    }
     case LOGOUT_SUCCESS:
+      localStorage.removeItem('competition')
       return Object.assign({}, state, {
         competition: null
       })

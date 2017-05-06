@@ -11,8 +11,6 @@ import Box from './common/BoxAdmin.jsx'
 import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-// max flow overflow hidden for scrollbar
-
 
 // admin/competitions
 class PageCompetitionList extends React.Component {
