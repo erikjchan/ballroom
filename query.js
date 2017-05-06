@@ -401,6 +401,13 @@ const get_judge = id => {
     return pool.query(SQL`SELECT * FROM judge WHERE id = ${id}`);
 }
 
+const get_callbacks_for_round = (rid) => {
+    return pool.query(SQL`SELECT judgeid, firstname, lastname, number FROM callback
+     LEFT JOIN judge ON (judgeid = judge.id)
+     WHERE roundid = ${rid}`);
+}
+
+
 const get_affiliations = () => {
     return pool.query('SELECT * FROM affiliation', []);
 }
@@ -456,8 +463,8 @@ const get_rounds_for_competition = cid => {
         WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
 }
 
-const get_current_round_for_competition = cid => {
-  return pool.query(SQL`SELECT currentroundid FROM competition where id = ${cid}`);
+const get_rounds_in_same_event_as_round = rid => {
+  return pool.query(SQL`SELECT * FROM round WHERE eventid IN (SELECT eventid FROM round WHERE id = ${cid}) ORDER BY ordernumber`);
 }
 
 const get_competitors_for_competition = cid => {
@@ -505,6 +512,7 @@ module.exports = {
     get_all_admins,
     get_judges_for_competition,
     get_judge,
+    get_callbacks_for_round,
     get_affiliations,
     get_competitions,
     get_your_competitions,
@@ -514,6 +522,7 @@ module.exports = {
     get_competition_info,
     get_events_for_competition,
     get_rounds_for_competition,
+    get_rounds_in_same_event_as_round,
     get_competitors_for_competition,
     get_competitors_for_round,
     get_affiliations_for_competition,

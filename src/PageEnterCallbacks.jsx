@@ -43,13 +43,11 @@ export default class PageEnterCallbacks extends React.Component {
                                 }
                               }
                             }],
-                  value: '',
-                  competition: null,
-                  officials: [],
-                  official: "",
-                  rows: [],
-                  // LOAD FROM API
-                  numberToRecall: 7,
+                  callbacks: [],
+                  judges: [],
+                  selectedJudgeId: null,
+                  rounds: [],
+                  competitors: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -70,36 +68,38 @@ export default class PageEnterCallbacks extends React.Component {
     
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-        var { rows, value, numberToRecall } = this.state;
-        const newRow = { number: value }; 
-
-        if (isNaN(parseInt(value)) || parseInt(value) > 999 || parseInt(value) < 100) {
-            alert("Invalid input!");
-        } else if (rows.length >= numberToRecall) {
-            alert("Too many numbers entered!");
-        } else {
-            rows.push(newRow);
-        }
-        this.setState({ rows: rows, value: '' });
+        
     }
   }
 
   componentDidMount() {
-      fetch(`/api/judges`)
+      fetch(`/api/competition/${1}/judges`) // TODO: Change 1 to cid
         .then(response => response.json()) // parse the result
         .then(json => {
-            // update the state of our component
-            var judges = []
-            for (var j in json) {
-                judges.push(json[j]["First Name"] + " " + json[j]["Last Name"])
-            }
-            this.setState({ officials : judges })
+            this.setState({judges: json});
         })
         // todo; setup a timer to retry. Fingers crossed, hopefully the
         // connection comes back
         .catch(this.refs.page.errorNotif(
-          `There was an error fetching the competition`))
+          `There was an error fetching the judges`))
 
+      fetch(`/api/competitors/round/${this.props.params.round_id}`)
+        .then(response => response.json())
+        .then(json => {
+            this.setState({competitors: json});
+        })
+        .catch(this.refs.page.errorNotif("There was an error fetching the competitors"));
+      fetch(`/api/callbacks/${this.props.params.round_id}`)
+        .then(response => response.json())
+        .then(json => {
+            this.setState({callbacks: json});
+        })
+        .catch(this.refs.page.errorNotif("There was an error fetching the callbacks"));
+      fetch(`/api/event/rounds/${this.props.params.round_id}`)
+          .then(response => response.json())
+          .then(json => {
+              this.setState({rounds: json});
+          })
   }
 
   onRemove(id) {
@@ -112,6 +112,28 @@ export default class PageEnterCallbacks extends React.Component {
       this.setState({ rows });
   }
 
+  getCurrentRound() {
+      for (let r of this.state.rounds) {
+          if (r.id == this.props.params.round_id) {
+              return r;
+          }
+      }
+      return null;
+  }
+
+  stringifyCallbacks() {
+      var callbacks = "";
+      if (this.state.selectedJudgeId == null) {
+          return "";
+      }
+      for (let c of this.state.callbacks) {
+          if (c.judgeid == this.state.selectedJudgeId) {
+              callbacks += (c.number + "\n");
+          }
+      }
+      return callbacks;
+  }
+
   render() {
     const components = {
       header: {
@@ -121,24 +143,26 @@ export default class PageEnterCallbacks extends React.Component {
       }
     };
 
-    const officials = this.state.officials;
-    const { columns, rows, numberToRecall } = this.state;
+    const judges = this.state.judges;
+    const { columns, rows } = this.state;
 
     const resolvedRows = resolve.resolve({
         columns: columns,
         method: resolve.nested
     })(rows);
 
+    const judgeOptions = judges.map(judge => (<option value={judge.id}>{`${judge.firstname} ${judge.lastname}`}</option>))
+
     return (
      <Page ref="page" {...this.props}>
         <h1>Enter Callbacks</h1>
         <h4>Select Judge:</h4>
-        <select value={this.state.official} onChange={(event) => this.setState({official: event.target.value})}>
+        <select value={this.state.selectedJudgeId} onChange={(event) => this.setState({selectedJudgeId: event.target.value})}>
             <option disabled value=""></option>
-            {officials}
+            {judgeOptions}
         </select>    
         <h4>Enter Number:</h4>
-        <input type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleKeyPress} style={{width: 100}} />
+        <textarea value={this.stringifyCallbacks()} onChange={this.handleChange} onKeyPress={this.handleKeyPress} style={{width: 100}}></textarea>
         <h4>Entered Numbers:</h4>
         <Link to={`/competition/${0}/round/${0}/entercallbacks`}>
             <input type="button"

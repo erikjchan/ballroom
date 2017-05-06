@@ -83,7 +83,7 @@ CREATE TABLE callback (
     id SERIAL,
     "timestamp" timestamp with time zone,
     judgeid integer,
-    leadcompetitornumber integer,
+    number integer,
     roundid integer,
     competitionid integer
 );
@@ -194,7 +194,7 @@ CREATE TABLE partnership (
     followconfirmed boolean,
     competitionid integer,
     number integer,
-    calledback boolean,
+    calledback boolean DEFAULT true,
     "timestamp" timestamp with time zone
 );
 

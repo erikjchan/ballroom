@@ -217,10 +217,12 @@ app.get('/api/event/:eid/', (req, res) => {
     res.send(events[0])
 })
 
-app.get('/api/event/:rid/rounds', (req, res) => {
+app.get('/api/event/rounds/:rid', (req, res) => {
     const rid = parseInt(req.params.rid)
-    const rounds = data.rounds.filter(e => e.id === rid)
-    res.send(rounds)
+    query.get_rounds_in_same_event_as_round(rid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/affiliations', (req, res) => {
@@ -280,8 +282,12 @@ app.get('/api/payment_records/:competitionid/:competitorid', (req, res) => {
 })
 
 
-app.get('/api/callbacks', (req, res) => {
-    res.send(data.callbacks)
+app.get('/api/callbacks/:rid', (req, res) => {
+    const rid = parseInt(req.params.rid)
+    query.get_callbacks_for_round(rid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/admins', (req, res) => {
