@@ -10,6 +10,8 @@ import {Button, IconButton} from 'react-toolbox/lib/button';
 import Box from './common/BoxAdmin.jsx'
 import { Link } from 'react-router'
 import connection from './common/connection'
+import cloneDeep from 'lodash/cloneDeep';
+import findIndex from 'lodash/findIndex';
 /*
 
 
@@ -31,7 +33,7 @@ class RadioTest extends React.Component {
 
  */
 
-// competition/:competition_id/eventregistration
+// competition/:competition_id/regcompetitor/:competitor_id
 class PageEventRegistration extends React.Component {
 
 
@@ -188,6 +190,19 @@ class PageEventRegistration extends React.Component {
       }
   };
 
+  onRemove(id) {
+      if (!confirm("Are you sure you want to delete this?")) {
+          return false;
+      }
+      const rows = cloneDeep(this.state.user_competition_events);
+      const idx = findIndex(rows, { id });
+
+      // this could go through flux etc.
+      rows.splice(idx, 1);
+
+      this.setState({ user_competition_events: rows });
+  }
+
   render() {
     const search_competitor = (list, query) => {
     if (query === '') return []
@@ -219,7 +234,7 @@ class PageEventRegistration extends React.Component {
 
     return (
 
-    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+    <Page ref="page" {...this.props}>
       <h1>Register Competitor for Events: </h1>
         <Box 
         title = {<div>Register for New Event</div>}
@@ -352,7 +367,7 @@ class PageEventRegistration extends React.Component {
             content: (value, {rowData}) => (
               <div>
                 <span
-                  onClick={() => alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)}
+                  onClick={() => this.onRemove(rowData.id)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop

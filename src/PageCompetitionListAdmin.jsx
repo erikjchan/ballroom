@@ -7,14 +7,14 @@ import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
-import Box from './common/Box.jsx'
+import Box from './common/BoxAdmin.jsx'
 import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 // max flow overflow hidden for scrollbar
 
 
-// competitions
+// admin/competitions
 class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)
@@ -26,7 +26,7 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    fetch(`/api/competitions/1`)
+    fetch(`/api/competitions`)
       .then(response => response.json()) // parse the result
       .then(json => { 
         // update the state of our component
@@ -48,7 +48,7 @@ class PageCompetitionList extends React.Component {
   browseCompetition (competition) {
     console.log(this, competition)
     this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('competition/' + competition.id + '/0')
+    browserHistory.push('admin/competition/' + competition.id)
   }
 
   /**
@@ -57,39 +57,18 @@ class PageCompetitionList extends React.Component {
    */
   getYourCompetitionsTable () {
     const yourColumns = [
-    {
-      property: 'name',
-      header: {
-        label: 'Name',
-        sortable: true,
-        resizable: true
+      { property: 'Name',
+        header: { label: 'Name' }
+      },
+      { property: 'StartDate',
+        header: { label: 'Date' }
+      },
+      { property: 'Select',
+        header: { label: '' }
       }
-    },
-    {
-      property: 'regularprice',
-      header: {
-        label: 'Amount Owed',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'startdate',
-      header: {
-        label: 'Date',
-        sortable: true,
-        resizable: true
-      }
-    },
-    {
-      property: 'Select',
-      header: {
-        label: '',
-        sortable: true,
-        resizable: true
-      }
-    }
     ]
+
+    // TODO; filter to only my competitions
 
     const rows = this.state.competitions.map(row => {
       row['Select'] = <button
@@ -119,13 +98,13 @@ class PageCompetitionList extends React.Component {
              content={this.getYourCompetitionsTable()} />
           <hr />
         	<div>
-            <Box title="Other Competitions"
-              content = {
-                <div id={style.otherCompetitionsTable}>
-                  <CompetitionsTable />
-                </div>
-              }
-            />
+        <div className = {style.addeditBtns}>
+            <button 
+                className={style.editBtns} 
+                onClick={()=>{ browserHistory.push('/editcompetition/0/') }}> 
+                Create New Competition
+            </button>
+     	</div>
           </div>
        	</div>
       </Page>

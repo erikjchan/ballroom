@@ -9,7 +9,7 @@ import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 import connection from './common/connection'
 
-// editcompetition/:competition_id
+// affiliationpayment/:competition_id/:affiliation_id
 class PageAffiliationPayment extends React.Component {
   constructor(props) {
     super(props)
@@ -60,7 +60,7 @@ class PageAffiliationPayment extends React.Component {
     var comp_name = this.state.competition.Name;
     var affiliation = this.state.organization[this.affiliation_id];
     var affiliation_name = affiliation.name;
-    var affiliation_owed = 0;
+    var affiliation_owed = affiliation.amount_owed;
     var comp_info = (<form className = {styles.long_form}>
         <div>
                  
@@ -121,7 +121,7 @@ class PageAffiliationPayment extends React.Component {
     ]
 
     return (
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+      <Page ref="page" {...this.props}>
           <div className={styles.titles}>
             <p>{affiliation_name}</p>
           </div>
@@ -143,7 +143,7 @@ class PageAffiliationPayment extends React.Component {
     ); 
   }
   else {
-    return <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }} />
+    return <Page ref="page" {...this.props}/>
   }
  }
 }

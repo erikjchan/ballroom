@@ -8,6 +8,7 @@ import Authorization from './Authorization.jsx'
 import LoginPage            from '../PageLogin.jsx'
 import HomePage             from '../PageHome.jsx'
 import CompetitionListPage  from '../PageCompetitionList.jsx'
+import CompetitionListAdmin from '../PageCompetitionListAdmin.jsx'
 import CompetitionPage      from '../PageCompetition.jsx'
 import EventRegistration    from '../PageEventRegistration.jsx'
 import EditSchedule         from '../PageEditSchedule.jsx'
@@ -39,20 +40,21 @@ const Admin = Authorization(['admin'])
 const routes = {
   'home'                                                       : Any(HomePage),
   'competition/:competition_id/eventregistration'              : User(EventRegistration),
-  'competition/:competition_id/editschedule'                   : Admin(EditSchedule),
+  'competitions'                                               : User(CompetitionListPage),
+  'editprofile'                                                : User(EditProfile),
   'competition/:competition_id/run'                            : Judge(RunCompetition),
+  'competition/:competition_id/round/:round_id/entercallbacks' : Judge(EnterCallbacks),
+  'competition/:competition_id/editschedule'                   : Admin(EditSchedule),
   'competition/:competition_id/editlevelsandstyles'            : Admin(EditLevelsAndStyles),
   'competition/:competition_id/editevents'                     : Admin(EditEvents),
   'competition/:competition_id/competitorslist'                : Admin(CompetitorsList),
-  'competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
-  'competitions'                                               : User(CompetitionListPage),
-  'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
-  'editprofile'                                                : User(EditProfile),
-  'competition/:competition_id/round/:round_id/entercallbacks' : Judge(EnterCallbacks),
-  'editcompetition/:competition_id'                            : Admin(EditCompetition),
-  'editofficial/:competition_id'                               : Admin(EditOfficial), 
   'competition/:competition_id/seecompetitor/:competitor_id'   : Admin(SeeCompetitor),
   'competition/:competition_id/regcompetitor/:competitor_id'   : Admin(RegisterCompetitor),
+  'competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
+  'admin/competitions'                                         : User(CompetitionListAdmin),
+  'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
+  'editcompetition/:competition_id'                            : Admin(EditCompetition),
+  'editofficial/:competition_id'                               : Admin(EditOfficial), 
   'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
   'querytest'                                                 : Any(QueryTest)
 }

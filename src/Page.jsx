@@ -43,12 +43,11 @@ export default class Page extends React.Component {
   }}
 
   render () {
-    const { profile, isAuthenticated } = this.props.auth
     const { children } = this.props
 
     return (
       <section className={styles.container}>
-        <XSidebar profile={profile}/>
+        <XSidebar profile={this.props.profile} selected={this.props.selected}/>
         <div className={styles.content}>
           {children}
         </div>

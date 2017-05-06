@@ -1,4 +1,3 @@
-
 import styles from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
@@ -9,6 +8,8 @@ import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import {Button, IconButton} from 'react-toolbox/lib/button';
 import Box from './common/Box.jsx'
 import { Link } from 'react-router'
+import cloneDeep from 'lodash/cloneDeep';
+import findIndex from 'lodash/findIndex';
 
 /*
 
@@ -172,10 +173,19 @@ export default class PageEventRegistration extends React.Component {
       this.setState({isLeading});
   };
 
+  checkIfExists = (reg) => {
+      const { level, style, event } = this.state;
+      return (reg["level"] !== level) || (reg["style"] !== style) || (reg["title"] !== event);
+  };
+
   registerEventHandler = () => {
       const { levelid, styleid, eventid, partner, isLeading, user_competition_events } = this.state;
       const button_enabled = (eventid != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
+          if (!user_competition_events.every(this.checkIfExists)) {
+              alert('You are already registered for this event!');
+              return false
+          }
           console.log(isLeading);
           var leadcompetitorid = partner;
           var followcompetitorid = this.competitor_id;
@@ -203,9 +213,10 @@ export default class PageEventRegistration extends React.Component {
       }
   };
 
-
-  dropEventHandler = (rowData) => {
-        alert(`should remove: ${JSON.stringify(rowData, null, 2)}`)
+dropEventHandler = (rowData) => {
+        if (!confirm("Are you sure you want to delete this?")) {
+            return false;
+        }
         fetch("/api/delete_partnership", {
             method: 'POST',
             headers: {
@@ -221,7 +232,7 @@ export default class PageEventRegistration extends React.Component {
             window.location.reload();
         });
   };
-
+  
   render() {
     const search_competitor = (list, query) => {
     if (query === '') return []
@@ -250,7 +261,7 @@ export default class PageEventRegistration extends React.Component {
 
     return (
 
-    <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+    <Page ref="page" {...this.props}>
       <h1>Event Registration</h1>
         <Box 
         title = {<div>Register for New Event</div>}

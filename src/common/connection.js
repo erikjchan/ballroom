@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
  * state.
  */
 export default (component) => connect((state) => {
-  const { auth, app } = state
+  const { auth, app, selected } = state
   const { isAuthenticated, errorMessage, isAdmin } = auth
   const profile = auth.profile || {}
   const role = (auth.profile && Object.keys(auth.profile.roles)[0]) || 'none'
@@ -19,6 +19,7 @@ export default (component) => connect((state) => {
     isAuthenticated,
     isAdmin,
     profile,
-    app
+    app,
+    selected
   }
 })(component)

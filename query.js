@@ -303,12 +303,7 @@ const update_rounds_for_competition = data => {
                         name character varying(100),
                         ordernumber integer,
                         size integer,
-                        judgeid1 integer,
-                        judgeid2 integer,
-                        judgeid3 integer,
-                        judgeid4 integer,
-                        judgeid5 integer,
-                        judgeid6 integer
+                        callbackscalculated boolean
                         ) ON COMMIT DROP`, (err, result) => {
                        if (err) {
                            rollback(client, done);
@@ -316,8 +311,8 @@ const update_rounds_for_competition = data => {
                        }
                    });
                    for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6) 
-                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.judgeid1}, ${row.judgeid2}, ${row.judgeid3}, ${row.judgeid4}, ${row.judgeid5}, ${row.judgeid6})`, (err, result) => {
+                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, callbackscalculated) 
+                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.callbackscalculated})`, (err, result) => {
                            if (err) {
                                rollback(client, done);
                                return reject(err);
@@ -357,8 +352,8 @@ const update_rounds_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6)
-                    SELECT eventid, name, ordernumber, size, judgeid1, judgeid2, judgeid3, judgeid4, judgeid5, judgeid6
+                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, callbackscalculated)
+                    SELECT eventid, name, ordernumber, size, callbackscalculated
                     FROM newrounds
                     WHERE id IS NULL`, (err, result) => {
                        if (err) {
@@ -390,8 +385,8 @@ const update_competition_info = data => {
         description = ${data.description} WHERE id = ${data.cid}`);
 }
 
-const update_competition_current_event_id = data => {
-    return pool.query(SQL`UPDATE competition SET currenteventid = ${data.currenteventid} WHERE id = ${data.cid}`);
+const update_competition_current_round_id = data => {
+    return pool.query(SQL`UPDATE competition SET currentroundid = ${data.rid} WHERE id = ${data.cid}`);
 }
 
 const get_all_admins = () => {
@@ -454,11 +449,15 @@ const get_events_for_competition = cid => {
 
 const get_rounds_for_competition = cid => {
     return pool.query(SQL`SELECT r.id, l.name as levelname, l.ordernumber as levelorder, s.name as stylename, s.ordernumber as styleorder, e.dance, e.ordernumber as eventorder, r.name as round, r.ordernumber, r.size, 
-        r.judgeid1, r.judgeid2, r.judgeid3, r.judgeid4, r.judgeid5, r.judgeid6 FROM round r
+        r.callbackscalculated, r.eventid FROM round r
         LEFT JOIN event e ON (e.id = r.eventid) 
         LEFT JOIN level l ON (e.levelid = l.id)
         LEFT JOIN style s ON (e.styleid = s.id) 
         WHERE e.competitionid = ${cid} ORDER BY r.ordernumber`);
+}
+
+const get_current_round_for_competition = cid => {
+  return pool.query(SQL`SELECT currentroundid FROM competition where id = ${cid}`);
 }
 
 const get_competitors_for_competition = cid => {
@@ -469,6 +468,10 @@ const get_competitors_for_competition = cid => {
         LEFT JOIN paymentrecord pr ON (c.id = pr.competitorid) 
         LEFT JOIN  affiliation a ON (c.affiliationid = a.id) 
         WHERE p.competitionid = ${cid}`);
+}
+
+const get_competitors_for_round = rid => {
+  return pool.query(SQL`SELECT number FROM partnership WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) AND calledback = true`);
 }
 
 const get_affiliations_for_competition = cid => {
@@ -512,6 +515,7 @@ module.exports = {
     get_events_for_competition,
     get_rounds_for_competition,
     get_competitors_for_competition,
+    get_competitors_for_round,
     get_affiliations_for_competition,
     get_num_competitors_per_style_for_competition,
     add_new_judge,
@@ -520,5 +524,5 @@ module.exports = {
     update_levels_and_styles_for_competition,
     update_rounds_for_competition,
     update_competition_info,
-    update_competition_current_event_id
+    update_competition_current_round_id
 }

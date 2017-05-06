@@ -304,13 +304,8 @@ export default class DragAndDropTable extends React.Component {
     	levelname: selectedLevel,
     	round: newRowRound,
     	size: newRowSize,
-    	judgeid1: earliestRound.judgeid1,
-    	judgeid2: earliestRound.judgeid2,
-    	judgeid3: earliestRound.judgeid3, 
-    	judgeid4: earliestRound.judgeid4,
-    	judgeid5: earliestRound.judgeid5,
-    	judgeid6: earliestRound.judgeid6,
-        key: keyCounter
+    	callbackscalculated: false,
+      key: keyCounter
     };
     rows.splice(selectedNumber - 1, 0, newRow);
     this.setState({

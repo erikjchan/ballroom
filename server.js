@@ -109,8 +109,8 @@ app.post('/api/competition/updateCompetitionInfo', (req, res) => {
     });
 });
 
-app.post('/api/competition/updateCompetitionCurrentEventId', (req, res) => {
-    query.update_competition_current_event_id(req.body).then(value => {
+app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
+    query.update_competition_current_round_id(req.body).then(value => {
         console.log(value);
         res.end(value);
     });
@@ -193,10 +193,6 @@ app.get('/api/competition/:cid/styles', (req, res) => {
     });
 })
 
-app.get('/api/competition/:cid/rounds', (req, res) => {
-    res.send(data.rounds)
-})
-
 app.get('/api/competitors/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_competitor_by_id(req.params.id).then(value => {
@@ -207,6 +203,13 @@ app.get('/api/competitors/:id', (req, res) => {
 
 app.get('/api/competitors/', (req, res) => {
     query2.get_all_competitors().then(value => {
+        console.log(value);
+        res.send(value);
+    });
+})
+
+app.get('/api/competitors/round/:rid', (req, res) => {
+    query.get_competitors_for_round(req.params.rid).then(value => {
         console.log(value);
         res.send(value);
     });
@@ -247,6 +250,10 @@ app.get('/api/competitions/:cid/unregistered', (req, res) => {
         console.log(value);
         res.send(value);
     });
+})
+
+app.get('/api/admin/:id/competitions', (req, res) => {
+    res.send(data.competitions)
 })
 
 app.get('/api/events', (req, res) => {
@@ -628,17 +635,22 @@ app.get('/test/', (req, res) => {
 /*********************** ROUTES **************************/
 const routes = [
     "/",
-    "/home",
-    "/competition/:competition_id/",
-    "/competition/:competition_id/eventregistration",
-    "/competition/:competition_id/editschedule",
-    "/competition/:competition_id/run",
-    "/competition/:competition_id/:competitor_id",
-    "/competitions",
-    "/admin/competition/:competition_id",
-    '/editprofile',
-    '/editcompetition/:competition_id',
-    '/editofficial/:competition_id',
+    '/competition/:competition_id/eventregistration'             ,
+    '/competition/:competition_id/:competitor_id'                ,
+    '/competitions'                                              ,
+    '/editprofile'                                               ,
+    '/competition/:competition_id/run'                           ,
+    '/competition/:competition_id/round/:round_id/entercallbacks',
+    '/competition/:competition_id/editschedule'                  ,
+    '/competition/:competition_id/editlevelsandstyles'           ,
+    '/competition/:competition_id/editevents'                    ,
+    '/competition/:competition_id/competitorslist'               ,
+    '/admin/competition/:competition_id'                         ,
+    '/editcompetition/:competition_id'                           ,
+    '/editofficial/:competition_id'                              ,
+    '/competition/:competition_id/seecompetitor/:competitor_id'  ,
+    '/competition/:competition_id/regcompetitor/:competitor_id'  ,
+    '/affiliationpayment/:competition_id/:affiliation_id'        ,
     '/querytest',
 ]
 
@@ -706,10 +718,6 @@ const server = app.listen(port, () => {
 
     console.log('Essential React listening at http://%s:%s', host, port);
 });
-
-
-
-
 /****************TEST *****************/
 app.get('/api/querytest', (req, res) => {
     test.get_test_result(req.body).then(value => {
