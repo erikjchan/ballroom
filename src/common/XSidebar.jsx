@@ -30,56 +30,54 @@ export default class OurSidebar extends React.Component {
     const isAdmin = this.props.profile.role === 'admin'
 
     console.log(isAdmin, competition_selected)
-
     return [
 
-      !isAdmin &&
-      <Link to={"/competitions"} key={2}>
+      <Link to={"/competitions"} key={0}>
         Explore Competitions
       </Link>,
 
       competition_selected &&
-      <span key={230}><h5>
+      <span key={1}><h5>
         {this.props.selected.competition.Name}
       </h5></span>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/0`} key={0}>
+      <Link to={`/competition/${competition_id}/0`} key={2}>
         - Competition Information
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/admin/competition/${competition_id}`} key={0}>
+      <Link to={`/admin/competition/${competition_id}`} key={3}>
         - Competition Information
       </Link>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/eventregistration`} key={1}>
+      <Link to={`/competition/${competition_id}/eventregistration`} key={4}>
         - Event Registration
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/admin/competition/${competition_id}`} key={0}>
+      <Link to={`/admin/competition/${competition_id}`} key={5}>
         - Competition Information
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/competitorslist`} key={2}>
+      <Link to={`/competition/${competition_id}/competitorslist`} key={6}>
         - Competitor List
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/editschedule`} key={3}>
+      <Link to={`/competition/${competition_id}/editschedule`} key={7}>
         - Schedule Editors
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/affiliationpayment/0/0`} key={5}>
+      <Link to={`/affiliationpayment/0/0`} key={0}>
         - Affiliation Payment
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/regcompetitor/0`} key={7}>
+      <Link to={`/competition/${competition_id}/regcompetitor/0`} key={9}>
         - Register Competitor
       </Link>
 
