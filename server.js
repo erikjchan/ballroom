@@ -581,20 +581,6 @@ app.get('/test/', (req, res) => {
 
 /*********************** ROUTES **************************/
 const routes = [
-<<<<<<< HEAD
-    "/",
-    "/home",
-    "/competition/:competition_id/",
-    "/competition/:competition_id/eventregistration",
-    "/competition/:competition_id/editschedule",
-    "/competition/:competition_id/run",
-    "/competition/:competition_id/:competitor_id",
-    "/competitions",
-    "/admin/competition/:competition_id",
-    '/editprofile',
-    '/editcompetition/:competition_id',
-    '/editofficial/:competition_id'
-=======
   "/",
     '/competition/:competition_id/eventregistration'             ,
     '/competition/:competition_id/:competitor_id'                ,
@@ -612,7 +598,6 @@ const routes = [
     '/competition/:competition_id/seecompetitor/:competitor_id'  ,
     '/competition/:competition_id/regcompetitor/:competitor_id'  ,
     '/affiliationpayment/:competition_id/:affiliation_id'        
->>>>>>> master
 ]
 
 // Serve index page
