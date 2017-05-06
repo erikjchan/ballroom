@@ -31,8 +31,8 @@ export default class CompetitorList extends React.Component {
             }
         },
         {
-          id: 'organization_name',
-          property: 'organization_name',
+          id: 'affiliationname',
+          property: 'affiliationname',
           props: {
             style: {
               width: 250
@@ -43,8 +43,8 @@ export default class CompetitorList extends React.Component {
           }
         },
         {
-          id: 'lead_number',
-          property: 'lead_number',
+          id: 'number',
+          property: 'number',
           props: {
             style: {
               width: 150
@@ -55,8 +55,8 @@ export default class CompetitorList extends React.Component {
           }
         },
         {
-          id: 'amount_owed',
-          property: 'amount_owed',
+          id: 'amount',
+          property: 'amount',
           props: {
             style: {
               width: 200
@@ -67,8 +67,8 @@ export default class CompetitorList extends React.Component {
           }
         },
         {
-          id: 'pay_w_org',
-          property: 'pay_w_org',
+          id: 'paidwithaffiliation',
+          property: 'paidwithaffiliation',
           props: {
             style: {
               width: 100
@@ -83,7 +83,7 @@ export default class CompetitorList extends React.Component {
       		    formatters: [
                     (value, { rowData }) => (
                         <div>
-                            <Link to={`/competition/${0}/seecompetitor/${rowData.id}`}>
+                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
                             <input type="button"
                                    value="Edit/See More" /></Link>
       			        </div>
@@ -100,32 +100,7 @@ export default class CompetitorList extends React.Component {
           }
         }
       ],
-      rows: [],
-      levels: ["Newcomer", "Bronze", "Silver", "Gold", "Open"],
-      styles: [
-          {
-            title: "Smooth",
-            dances: ["Waltz", "Tango", "Foxtrot", "V. Waltz"]
-          },
-          {
-            title: "Standard",
-            dances: ["Waltz", "Tango", "Foxtrot", "Quickstep"]
-          },
-          {
-            title: "Rhythm",
-            dances: ["Cha Cha", "Rhumba", "Swing", "Mambo"]
-          },
-          {
-            title: "Latin",
-            dances: ["Cha Cha", "Rhumba", "Jive", "V. Samba"]
-          }
-      ],
-      rounds: ["Round 1", "Round 2", "Round 3", "Round 4", "Quarterfinals", "Semifinals", "Finals"],
-      selectedNumber: "",
-      selectedLevel: "",
-      selectedStyle: "",
-      selectedDance: "",
-      selectedRound: ""
+      rows: []
     };
   }
 
@@ -145,8 +120,8 @@ export default class CompetitorList extends React.Component {
       		    width: 250
       		 },
       		 {
-      		     id: 'organization_name',
-      		     property: 'organization_name',
+      		     id: 'affiliationname',
+      		     property: 'affiliationname',
       		     header: {
       		        label: 'Organization',
       		        sortable: true,
@@ -158,8 +133,8 @@ export default class CompetitorList extends React.Component {
       		    width: 250
       		 },
       		 {
-      		    id: 'lead_number',
-      		    property: 'lead_number',
+      		    id: 'number',
+      		    property: 'number',
       		    header: {
       		        label: 'Number',
       		        sortable: true,
@@ -171,8 +146,8 @@ export default class CompetitorList extends React.Component {
       		    width: 150
       		 },
       		 {
-      		    id: 'amount_owed',
-      		    property: 'amount_owed',
+      		    id: 'amount',
+      		    property: 'amount',
       		    header: {
       		        label: 'Owes',
       		        sortable: true,
@@ -184,8 +159,8 @@ export default class CompetitorList extends React.Component {
       		    width: 200
       		 },
       		 {
-      		     id: 'pay_w_org',
-      		     property: 'pay_w_org',
+      		     id: 'paidwithaffiliation',
+      		     property: 'paidwithaffiliation',
       		     header: {
       		         label: 'Paying w/ Organization?',
       		         sortable: true,
@@ -201,7 +176,7 @@ export default class CompetitorList extends React.Component {
       		         formatters: [
                          (value, { rowData }) => (
                              <div>
-                               <Link to={`/editprofile`}>
+                               <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
                                <input type="button"
                                       value="Edit/See More" /></Link>
       			             </div>
@@ -220,21 +195,20 @@ export default class CompetitorList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/competitors/competition/:id2")
+    fetch("/api/competition/1/competitors")
 	      .then(response => response.json())
 		  .then(json => {
+            console.log(json);
             this.rows = json;
             for (let i = 0; i < this.rows.length; i++) {
-                if (this.rows[i].amount_owed != 0) {
-                    this.rows[i].amount_owed = "$" + this.rows[i].amount_owed.toString();
+                  this.rows[i].amount = "$" + (this.rows[i].amount || 0);
+                  if (this.rows[i].paidwithaffiliation) {
+                          this.rows[i].paidwithaffiliation = "Yes";
+                  } else {
+                          this.rows[i].paidwithaffiliation = "No";
+                  }
 		        }
-                if (this.rows[i].pay_w_org) {
-                    this.rows[i].pay_w_org = "Yes";
-		        } else {
-                    this.rows[i].pay_w_org = "No";
-		        }
-		    }
-		    this.setState({ rows: json, }); 
+		        this.setState({ rows: json, }); 
 		 })
 		 .catch(err => alert(err));
   }
@@ -269,8 +243,8 @@ export default class CompetitorList extends React.Component {
     var totalOwed = 0; var totalListed = 0;
     for (let i = 0; i < resolvedRows.length; i++) {
         totalListed += 1;
-        if (resolvedRows[i].amount_owed != 0)
-            totalOwed += parseFloat((resolvedRows[i].amount_owed).substr(1));                             
+        if (resolvedRows[i].amount != 0)
+            totalOwed += parseFloat((resolvedRows[i].amount).substr(1));
     }  
 
     return (

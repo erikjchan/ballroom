@@ -18,9 +18,8 @@ export default class RunCompetition extends React.Component {
       /** We will populate this w/ data from the API */
       competition: lib.flat_loading_proxy,
       rounds: [],
-      callbacks: [],
       competitors: [],
-      current_round: 0, // Index of currently running event
+      current_round: null
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -36,56 +35,32 @@ export default class RunCompetition extends React.Component {
     fetch(`/api/competition/${this.competition_id}`)
       .then(response => response.json()) // parse the result
       .then(json => {
-        // update the state of our component
-        this.setState({ competition : json })
+        fetch(`/api/competition/${this.competition_id}/rounds`)
+          .then(response => response.json()) // parse the result
+          .then(json2 => {
+            // update the state of our component
+            this.setState({
+              competition: json, 
+              rounds: json2,
+              current_round: json2.filter(round => round.id == json.currentroundid)[0] 
+            });
+            console.log(json2);
+          })
+          // todo; display a nice (sorry, there's no connection!) error
+          // and setup a timer to retry. Fingers crossed, hopefully the
+          // connection comes back
+          .catch(this.refs.page.errorNotif(
+            `There was an error fetching the rounds`))
+        fetch(`/api/competitors/round/${json.currentroundid}`)
+          .then(response => response.json())
+          .then(json => {
+            this.setState({competitors: json.map(c => c.number)});
+          });  
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(this.refs.page.errorNotif(
         `There was an error fetching the competition`))
-
-    /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}/rounds`)
-      .then(response => response.json()) // parse the result
-      .then(json => {
-        // update the state of our component
-        this.setState({ rounds : json.splice(0,5) })
-
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the
-      // connection comes back
-      .catch(this.refs.page.errorNotif(
-        `There was an error fetching the rounds`))
-
-    /* Call the API for competition info */
-    fetch(`/api/callbacks`)
-      .then(response => response.json()) // parse the result
-      .then(json => {
-        // update the state of our component
-        this.setState({ callbacks : json })
-
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the
-      // connection comes back
-      .catch(this.refs.page.errorNotif(
-        `There was an error fetching the callbacks`))
-
-
-    /* Call the API for competition info */
-    fetch(`/api/competitors`)
-      .then(response => response.json()) // parse the result
-      .then(json => {
-        // update the state of our component
-        this.setState({ competitors : json })
-
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the
-      // connection comes back
-      .catch(this.refs.page.errorNotif(
-        `There was an error fetching the callbacks`))
   }
 
   /***************************** Round selection. *****************************/
@@ -93,7 +68,7 @@ export default class RunCompetition extends React.Component {
   /**
    * Returns the round information for the currently selected round
    */
-  getCurrentRound () { return this.state.rounds[this.state.current_round] || null }
+  getCurrentRound () { return this.state.current_round }
 
 
   /**
@@ -101,7 +76,10 @@ export default class RunCompetition extends React.Component {
    * to be shown on the past-rounds table
    */
   getPastRounds () {
-    return this.state.rounds.slice(0, this.state.current_round)
+    if (this.state.current_round == null) {
+      return null;
+    }
+    return this.state.rounds.slice(0, this.state.current_round.ordernumber - 1)
   }
 
   /**
@@ -109,7 +87,10 @@ export default class RunCompetition extends React.Component {
    * to be shown on the future-rounds table
    */
   getFutureRounds () {
-    return this.state.rounds.slice(this.state.current_round + 1, this.state.rounds.length)
+    if (this.state.current_round == null) {
+      return null;
+    }
+    return this.state.rounds.slice(this.state.current_round.ordernumber, this.state.rounds.length)
   }
 
   /**
@@ -117,13 +98,20 @@ export default class RunCompetition extends React.Component {
    */
   nextRound () {
     // We've reached the last round. Do nothing.
-    if (this.state.current_round + 1 >= this.state.rounds.length) return;
+    if (this.state.current_round.ordernumber + 1 >= this.state.rounds.length) return;
 
     // Acutally switch rounds?
     if (!confirm("This will start the next round.\nDo you want to continue?")) return;
 
     // Increment the round number
-    this.setState({ current_round : this.state.current_round += 1 })
+    const next_round = this.state.rounds[this.state.current_round.ordernumber];
+    this.updateDBCurrentRoundId(next_round.id);
+    this.setState({ current_round : next_round });
+    fetch(`/api/competitors/round/${next_round.id}`)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({competitors: json.map(c => c.number)});
+      });
   }
 
   /**
@@ -131,13 +119,47 @@ export default class RunCompetition extends React.Component {
    */
   prevRound () {
     // We're on the first round! Exit.
-    if (this.state.current_round === 0) return;
+    if (this.state.current_round.ordernumber === 1) return;
 
     // Acutally switch rounds?
     if (!confirm("This will return to a previous round.\nDo you want to continue?")) return;
 
     // Decrement the round number
-    this.setState({ current_round : this.state.current_round -= 1 })
+    const prev_round = this.state.rounds[this.state.current_round.ordernumber - 2];
+    this.updateDBCurrentRoundId(prev_round.id);
+    this.setState({ current_round: prev_round });
+    fetch(`/api/competitors/round/${prev_round.id}`)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({competitors: json.map(c => c.number)});
+      });
+  }
+
+  prevRoundSameEventCallbacksCalculated() {
+    if (this.state.current_round == null) {
+      return false;
+    }
+    for (let i = this.state.current_round.ordernumber - 2; i >= 0; i--) {
+      let prevRound = this.state.rounds[i];
+      if (prevRound.eventid == this.state.current_round.eventid) {
+        return prevRound.callbackscalculated;
+      }
+    }
+    return true;
+  }
+
+  updateDBCurrentRoundId(rid) {
+    fetch("/api/competition/updateCompetitionCurrentRoundId", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cid: this.competition_id,
+        rid: rid
+      })
+    });
   }
 
   /******************************** Management ********************************/
@@ -145,13 +167,18 @@ export default class RunCompetition extends React.Component {
   enterCallbacksFor(round) {
 
     // Confirm with the user
-    if (!confirm(`Are you sure you want to enter callbacks for ${round.name}?`)) return;
+    if (!confirm(`Are you sure you want to enter callbacks for ${this.getRoundName(round)}?`)) return;
 
     browserHistory.push(`competition/${this.competition_id}/round/${round.id}/entercallbacks`);
 
   }
 
   /******************************** UI Helpers ********************************/
+
+
+  getRoundName(round) {
+    return round.levelname + " " + round.stylename + " " + round.dance + " " + round.round;
+  }
 
   /**
    * Returns the columns that will be displayed on the
@@ -165,6 +192,11 @@ export default class RunCompetition extends React.Component {
           label: 'Name',
           sortable: true,
           resizable: true
+        },
+        cell: {
+          formatters: [
+            (value, {rowData}) => this.getRoundName(rowData)
+          ]
         }
       },
       {
@@ -174,12 +206,12 @@ export default class RunCompetition extends React.Component {
           resizable: true,
         },
         cell: { formatters: [
-          (value, {rowData}) => `${rowData.callbacks_recieved}/${rowData.judges.length}`   
+          (value, {rowData}) => rowData.callbackscalculated ? "Yes" : "No"   
         ]}
       },
       {
         cell: { formatters: [
-          (value, {rowData}) => (
+          (value, {rowData}) => !rowData.callbackscalculated && (
             <button
               onClick={() => this.enterCallbacksFor(rowData)}
             > Enter Callbacks
@@ -201,6 +233,11 @@ export default class RunCompetition extends React.Component {
           label: 'Name',
           sortable: true,
           resizable: true
+        },
+        cell: {
+          formatters: [
+            (value, {rowData}) => this.getRoundName(rowData)
+          ]
         }
       },
       {
@@ -218,14 +255,27 @@ export default class RunCompetition extends React.Component {
    * Returns a list of spans with the lead number
    * for each couple in a given round
    */
-  getCouplesInRound(round) {
+  getNumCouplesInRound(round) {
     // Things haven't loaded yet!
-    if (!round) return [];
-    if (!!round.is_loading) return [];
-    if (this.state.competitors.length === 0) return [];
+    if (!round) return 0;
+    if (!!round.is_loading) return 0;
+    if (this.state.competitors.length === 0) return 0;
 
     // We have all the info we need
-    else return round.competitors
+    else return round.size;
+  }
+
+  getNextRoundSameEventSize() {
+    if (this.state.current_round == null) {
+      return "Loading..."
+    }
+    for (let i = this.state.current_round.ordernumber; i < this.state.rounds.length; i++) {
+      let futureRound = this.state.rounds[i];
+      if (futureRound.eventid == this.state.current_round.eventid) {
+        return futureRound.size;
+      }
+    }
+    return "N/A";
   }
 
   /**
@@ -244,7 +294,8 @@ export default class RunCompetition extends React.Component {
 
     const current_round = this.getCurrentRound() || lib.flat_loading_proxy;
 
-    const past_rounds_table = (this.getPastRounds().length === 0)
+    const pastRounds = this.getPastRounds();
+    const past_rounds_table = (pastRounds == null || this.getPastRounds().length === 0)
       ? <div className={style.lines}> <h2>Empty</h2> </div>
       : <Table.Provider
           style={{width: '100%'}}
@@ -254,7 +305,8 @@ export default class RunCompetition extends React.Component {
           <Table.Body rows={this.getPastRounds()} rowKey="id" />
         </Table.Provider>
 
-    const future_rounds_table = (this.getFutureRounds().length === 0)
+    const futureRounds = this.getFutureRounds();
+    const future_rounds_table = (futureRounds == null || this.getFutureRounds().length === 0)
       ? <div className="container-content"> Empty </div>
       : <Table.Provider
           style={{width: '100%'}}
@@ -266,7 +318,7 @@ export default class RunCompetition extends React.Component {
 
     return (<Page ref="page" {...this.props}>
 
-        <h1>Running: {this.state.competition.Name}</h1>
+        <h1>Running: {this.state.competition.name}</h1>
 
        <Box title={"Past Rounds"}
             content ={past_rounds_table} />
@@ -278,15 +330,15 @@ export default class RunCompetition extends React.Component {
        <Box title={"Current Round"}
             content ={
           <div className={style.lines}>
-            <h3>{current_round.name}</h3>
+            <h3>{this.getRoundName(current_round)}</h3>
 
             <div>
               <h5>Couples in round:</h5>
-              {this.getCouplesInRound(current_round).map(id => <span key={id}> {this.state.competitors[id].lead_number} </span>)}
+              {this.prevRoundSameEventCallbacksCalculated() && this.state.competitors.map(id => <span key={id}> {id} </span>)}
             </div>
             <ul>
-              <li>Total number of couples : {this.getCouplesInRound(current_round).length}</li>
-              <li>Number to recall: {current_round.next_round}</li>
+              <li>Total number of couples : {this.prevRoundSameEventCallbacksCalculated() && this.getNumCouplesInRound(current_round)}</li>
+              <li>Number to recall: {this.getNextRoundSameEventSize()}</li>
             </ul>
 
             <span className="right_align">

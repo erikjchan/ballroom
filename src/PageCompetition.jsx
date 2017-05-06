@@ -16,7 +16,8 @@ export default class PageCompetition extends React.Component {
       /** We will populate this w/ data from the API */
       competition: null,
       competitor_events: [],
-      competitor: [],
+      competitor: {},
+      competitor_paymentrecord: {}
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -42,28 +43,41 @@ export default class PageCompetition extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
     /** Fetch competitor */
-    fetch(`/api/competitors/${this.competitor_id}/competition/${this.competitor_id}`)
+    fetch(`/api/competitors/${this.competitor_id}`)
       .then(response => {
         return response.json()
       })
       .then(json => {
         this.setState({competitor: json})
+        console.log(this.state.competitor)
       })
       .catch(err => { alert(err); console.log(err)})
 
-    /**  Call the API for events that the competitor is in */
-    fetch(`/api/competitors/${this.competitor_id}/events`)
+    fetch(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
       .then(response => {
         return response.json()
       })
       .then(json => {
+        this.setState({competitor_paymentrecord: json})
+        console.log(this.state.competitor_paymentrecord)
+      })
+      .catch(err => { alert(err); console.log(err)})
+
+    /**  Call the API for events that the competitor is in */
+    fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+        console.log(json)
         for (let i = 0; i < json.length; i++) {
-            if (json[i].leading) {
+            json[i].title = json[i].dance;
+            if (json[i].leadcompetitorid == this.competitor_id) {
                 json[i].leader = "You"
-                json[i].follower = json[i].partner
+                json[i].follower = json[i].followfirstname+" "+json[i].followlastname
             } else {
-                json[i].leader = json[i].partner
                 json[i].follower = "You"
+                json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
             }
         }
         this.setState({competitor_events: json})
@@ -71,15 +85,20 @@ export default class PageCompetition extends React.Component {
       .catch(err => { alert(err); console.log(err)})
   }
 
+ format_date(datestring){
+   d = new Date(datestring)
+   return ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+    d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+ }
  render() {
    if (this.state.competition){
-    var comp_name = this.state.competition.Name;
+    var comp_name = this.state.competition.name;
     var comp_info = (<div className={styles.lines}>
-                      <p><b>Date:</b> {this.state.competition.StartDate}</p>
-                      <p><b>Location:</b> {this.state.competition.LocationName}</p>
-                      <p><b>Early Registration Deadline:</b> {this.state.competition.EarlyRegDeadline} (${this.state.competition.EarlyPrice})</p>
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.RegularRegDeadline} (${this.state.competition.RegPrice})</p>
-                      <p><b>Late Registration Deadline:</b> {this.state.competition.RegEndDate} (${this.state.competition.LatePrice})</p>
+                      <p><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>
+                      <p><b>Location:</b> {this.state.competition.locationname}</p>
+                      <p><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>
+                      <p><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>
+                      <p><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
                     </div>)
     /* TODO: How to get numbe rof competitors in different styles?*/
     // var style_category={}
@@ -88,12 +107,13 @@ export default class PageCompetition extends React.Component {
     // })
 
     var competitor_info = (<div className={styles.lines}>
-                      <p><b>Name:</b> {this.state.competitor.name}</p>
+                      <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname}</p>
                       <p><b>Email:</b> {this.state.competitor.email}</p>
-                      <p><b>Organization:</b> {this.state.competitor.organization_name}</p>
-                      <p><b>Number:</b> {this.state.competitor.lead_number}</p>
-                      <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
-                      <p><b>Pay with Affiliation:</b> True </p>
+                      <p><b>Organization:</b> {this.state.competitor.affiliationname}</p>
+                      <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number}</p>
+                      <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount}</p>
+                      <p><b>Pay with Affiliation:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
+                      <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
     
     var event_titles = (<div className={styles.lines}>

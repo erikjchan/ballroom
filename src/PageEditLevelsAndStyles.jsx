@@ -24,10 +24,10 @@ class EditLevelsAndStyles extends React.Component {
         <h1>Define Levels and Styles</h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges} onClick={
-            () => this.confirmGoToUrl("/competition/0/editlevelsandstyles", "Are you sure you want to save changes?")  
+            () => this.saveChanges("Are you sure you want to save changes?")
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
-            () => this.confirmGoToUrl("/competition/0/editevents", "Are you sure you wish to leave this page without saving?")
+            () => this.confirmGoToUrl("/competition/1/editevents", "Are you sure you wish to leave this page without saving?")
           }>Define Events</div>
         </div>
       </div>
@@ -41,7 +41,7 @@ class EditLevelsAndStyles extends React.Component {
                         }
                  content={
                           <div id={style.scheduleWrapper}>
-                              <LevelTable ref="levelsTable" />
+                              <LevelTable ref="levelsTable" type="levels" />
                           </div>
                          } 
             />
@@ -54,7 +54,7 @@ class EditLevelsAndStyles extends React.Component {
                         }
                  content={
                           <div id={style.scheduleWrapper}>
-                              <LevelTable ref="levelsTable" />
+                              <LevelTable ref="stylesTable" type="styles" />
                           </div>
                          } 
             />
@@ -67,6 +67,37 @@ class EditLevelsAndStyles extends React.Component {
   );
  }
 
+    saveChanges(message) {
+        if (confirm(message)) {
+            fetch("/api/competition/updateLevelsStyles", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cid: 1, // TODO: change in production
+                    levels: this.refs.levelsTable.state.rows,
+                    styles: this.refs.stylesTable.state.rows
+                })
+            }).then(() => {
+                fetch("/api/competition/1/levels") // TODO: change 1 to cid
+                    .then(response => response.json())
+                    .then(json => {
+                        this.refs.levelsTable.setState({rows: json})
+                    })
+                    .catch(err => alert(err));
+                fetch("/api/competition/1/styles") // TODO: change 1 to cid
+                    .then(response => response.json())
+                    .then(json => {
+                        this.refs.stylesTable.setState({rows: json})
+                    })
+                    .catch(err => alert(err));
+            });
+        }
+    }
+
+
  confirmGoToUrl(url, message) {
   if (confirm(message)) {
     this.props.router.push(url);
@@ -74,8 +105,9 @@ class EditLevelsAndStyles extends React.Component {
  }
 
  confirmAutoSortRows() {
-  if(confirm("Are you sure you want to autosort the schedule?")) {
-    this.refs.ddTable.autoSortRows();
+  if(confirm("Are you sure you want to autosort the levels and styles?")) {
+    this.refs.levelsTable.autoSortRows();
+    this.refs.stylesTable.autoSortRows();
   }
  }
 }

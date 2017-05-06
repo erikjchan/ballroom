@@ -115,22 +115,22 @@ export default class OurSidebar extends React.Component {
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
-    return (
-      <div className={styles.nav}>
-
-        <div className={styles.circle}>
-          <p>EU</p>
+    // if (isAdmin) {
+      return (
+        <div className={styles.nav}>
+          <div className={styles.circle}>
+            <p>EU</p>
+          </div>
+  
+          <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
+            {this.getTopLinks()}
+          </div>
+  
+          <div className={styles.sub_menu + ' ' + styles.sub_menu_bottom}>
+            {this.getBottomLinks()}
+          </div>
         </div>
-
-        <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
-          {this.getTopLinks()}
-        </div>
-
-        <div className={styles.sub_menu + ' ' + styles.sub_menu_bottom}>
-          {this.getBottomLinks()}
-        
-        </div>
-      </div>
-    )
+      )
+    // };
   }
-}
+  }

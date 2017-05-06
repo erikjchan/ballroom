@@ -50,7 +50,7 @@ export default class EditOfficial extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/judges`)
+    fetch(`/api/competition/${this.competition_id}/judges`)
       .then(response => response.json()) // parse the result
       .then(json => {
         // update the state of our component
