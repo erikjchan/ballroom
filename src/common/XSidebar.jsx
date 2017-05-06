@@ -46,11 +46,6 @@ export default class OurSidebar extends React.Component {
         - Competition Information
       </Link>,
 
-      isAdmin && competition_selected &&
-      <Link to={`/admin/competition/${competition_id}`} key={3}>
-        - Competition Information
-      </Link>,
-
       !isAdmin && competition_selected &&
       <Link to={`/competition/${competition_id}/eventregistration`} key={4}>
         - Event Registration
