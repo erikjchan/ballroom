@@ -57,7 +57,7 @@ export default class EditOfficial extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/judges`)
+    fetch(`/api/competition/${this.competition_id}/judges`)
       .then(response => response.json()) // parse the result
       .then(json => {
         // update the state of our component
@@ -65,7 +65,7 @@ export default class EditOfficial extends React.Component {
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
-      .catch(this.refs.page.errorNotif(
+      .catch(err => alert(
         `There was an error fetching the competition`))
 
   }

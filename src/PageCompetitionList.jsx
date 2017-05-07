@@ -33,7 +33,7 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    fetch(`/api/competitions`)
+    fetch(`/api/competitions/1`)
       .then(response => response.json()) // parse the result
       .then(json => { 
         // update the state of our component
@@ -42,8 +42,7 @@ class PageCompetitionList extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(this.refs.page.errorNotif(
-        `There was an error fetching the competitions`))
+      .catch(err => alert(`There was an error fetching the competitions`))
   }
   /**
    * Selects a competition for browsing.
@@ -63,21 +62,39 @@ class PageCompetitionList extends React.Component {
    */
   getYourCompetitionsTable () {
     const yourColumns = [
-      { property: 'Name',
-        header: { label: 'Name' }
-      },
-      { property: 'RegPrice',
-        header: { label: 'Amount Owed' }
-      },
-      { property: 'StartDate',
-        header: { label: 'Date' }
-      },
-      { property: 'Select',
-        header: { label: '' }
+    {
+      property: 'name',
+      header: {
+        label: 'Name',
+        sortable: true,
+        resizable: true
       }
+    },
+    {
+      property: 'regularprice',
+      header: {
+        label: 'Amount Owed',
+        sortable: true,
+        resizable: true
+      }
+    },
+    {
+      property: 'startdate',
+      header: {
+        label: 'Date',
+        sortable: true,
+        resizable: true
+      }
+    },
+    {
+      property: 'Select',
+      header: {
+        label: '',
+        sortable: true,
+        resizable: true
+      }
+    }
     ]
-
-    // TODO; filter to only my competitions
 
     const rows = this.state.competitions.map(row => {
       return Object.assign({}, row, { Select: <button
