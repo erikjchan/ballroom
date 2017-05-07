@@ -84,7 +84,7 @@ export default class PageEditProfile extends React.Component {
     } else {
       return (
 
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+      <Page ref="page" {...this.props}>
 
       <BoxAdmin title={"Edit profile"}
         content={

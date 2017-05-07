@@ -26,7 +26,7 @@ export const login = () => {
         dispatch(lockError(err))
         return
       }
-      console.log(profile, token)
+      // console.log(profile, token)
       localStorage.setItem('profile', JSON.stringify(profile))
       localStorage.setItem('id_token', token)
       dispatch(lockSuccess(profile, token))
