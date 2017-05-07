@@ -40,7 +40,21 @@ export default class PageCompetition extends React.Component {
     /* Call the API for competition info */
     fetch(`/api/competition/${this.competition_id}`)
       .then(response => response.json()) // parse the result
-      .then(json => { 
+      .then(json => {
+        this.competition = json;
+        var startdate = new Date(this.competition.startdate);
+        var enddate = new Date(this.competition.enddate);
+        var regstartdate = new Date(this.competition.regstartdate);
+        var earlyregdeadline = new Date(this.competition.earlyregdeadline);
+        var regularregdeadline = new Date(this.competition.regularregdeadline);
+        var lateregdeadline = new Date(this.competition.lateregdeadline);
+        this.competition.startdate = startdate.toUTCString();
+        this.competition.enddate = enddate.toUTCString();
+        this.competition.regstartdate = regstartdate.toUTCString();
+        this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
+        this.competition.regularregdeadline = regularregdeadline.toUTCString();
+        this.competition.lateregdeadline = lateregdeadline.toUTCString();
+        
         // update the state of our component
         this.setState({ competition : json })
       })

@@ -35,6 +35,11 @@ class PageCompetitionList extends React.Component {
     fetch(`/api/competitions`)
       .then(response => response.json()) // parse the result
       .then(json => { 
+        this.competitions = json;
+        for (let i = 0; i < this.competitions.length; i++) {
+          var date = new Date(this.competitions[i].startdate);
+          this.competitions[i].startdate = date.toUTCString();
+        }
         // update the state of our component
         this.setState({ competitions : json })
       })
