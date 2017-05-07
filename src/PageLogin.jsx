@@ -14,6 +14,19 @@ export default class LoginPage extends React.Component {
     window.dispatch(login())
   }
 
+  generateRounds() {
+    fetch('/api/competition/generateRounds', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cid: 1, // TODO: change in production
+      })
+    })
+  }
+
   render() {
     const params = new URLSearchParams(window.location.search)
     const msg = params.get('msg')
@@ -53,6 +66,7 @@ export default class LoginPage extends React.Component {
         <p><Link to='competition/1/regcompetitor/1'  >RegisterCompetitor</Link></p>
         <p><Link to='querytest'                      >QueryTest</Link></p>        
         <button onClick={() => this.props.dispatch(action) } />
+        <button onClick={() => this.generateRounds()}>Create rounds for events</button>
         <pre>
           {JSON.stringify(this.props, function(key, value) {
               if (typeof value === 'object' && value !== null) {
