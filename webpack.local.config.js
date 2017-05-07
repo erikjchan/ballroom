@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ip = require('ip');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 /**
  * This is the Webpack configuration file for local development. It contains
@@ -34,6 +35,7 @@ module.exports = {
 
   // Necessary plugins for hot load
   plugins: [
+    new ProgressBarPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin({filename: 'style.css', allChunks: true }),

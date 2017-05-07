@@ -522,9 +522,9 @@ SELECT pg_catalog.setval('level_id_seq', 3, true);
 INSERT INTO competitor VALUES (1,'Luke', 'Skywalker', 'luke@skywalker.com', 'Tatooine', 1, true);
 INSERT INTO competitor VALUES (2,'Leia', 'Organa', 'leia@organa.com', 'Alderaan', 1, true);
 INSERT INTO competitor VALUES (3,'Rey', 'who knows', 'rey@rey.com', 'Jakku', 1, false);
-INSERT INTO competitor VALUES (4,'fname1', 'lname1', 'email1@email.com', 'mailingaddress1', 2, false);
-INSERT INTO competitor VALUES (5,'fname2', 'lname2', 'email2@email.com', 'mailingaddress2', 2, false);
-INSERT INTO competitor VALUES (6,'fname3', 'lname3', 'email3@email.com', 'mailingaddress3', 3, false);
+INSERT INTO competitor VALUES (4,'fname4', 'lname4', 'email4@email.com', 'mailingaddress4', 2, false);
+INSERT INTO competitor VALUES (5,'fname5', 'lname5', 'email5@email.com', 'mailingaddress5', 2, false);
+INSERT INTO competitor VALUES (6,'fname6', 'lname7', 'email6@email.com', 'mailingaddress6', 3, false);
 INSERT INTO competitor VALUES (7,'fname7', 'lname7', 'email7@email.com', 'mailingaddress7', 4, false);
 INSERT INTO competitor VALUES (8,'fname8', 'lname8', 'email8@email.com', 'mailingaddress8', 4, false);
 INSERT INTO competitor VALUES (9,'fname9', 'lname9', 'email9@email.com', 'mailingaddress9', 4, false);
@@ -534,7 +534,7 @@ INSERT INTO competitor VALUES (12,'fname12', 'lname12', 'email12@email.com', 'ma
 INSERT INTO competitor VALUES (13,'fname13', 'lname13', 'email13@email.com', 'mailingaddress13', 4, false);
 INSERT INTO competitor VALUES (14,'fname14', 'lname14', 'email14@email.com', 'mailingaddress14', 4, false);
 INSERT INTO competitor VALUES (15,'fname15', 'lname15', 'email15@email.com', 'mailingaddress15', 4, false);
-INSERT INTO competitor VALUES (16,'fname10', 'lname16', 'email16@email.com', 'mailingaddress16', 4, false);
+INSERT INTO competitor VALUES (16,'fname16', 'lname16', 'email16@email.com', 'mailingaddress16', 4, false);
 INSERT INTO competitor VALUES (17,'fname17', 'lname17', 'email17@email.com', 'mailingaddress17', 4, false);
 INSERT INTO competitor VALUES (18,'fname18', 'lname18', 'email18@email.com', 'mailingaddress18', 4, false);
 INSERT INTO competitor VALUES (19,'fname19', 'lname19', 'email19@email.com', 'mailingaddress19', 4, false);
@@ -544,7 +544,7 @@ INSERT INTO competitor VALUES (22,'fname22', 'lname22', 'email22@email.com', 'ma
 INSERT INTO competitor VALUES (23,'fname23', 'lname23', 'email23@email.com', 'mailingaddress23', 4, false);
 INSERT INTO competitor VALUES (24,'fname24', 'lname24', 'email24@email.com', 'mailingaddress24', 4, false);
 INSERT INTO competitor VALUES (25,'fname25', 'lname25', 'email25@email.com', 'mailingaddress25', 4, false);
-INSERT INTO competitor VALUES (26,'fname20', 'lname26', 'email26@email.com', 'mailingaddress26', 4, false);
+INSERT INTO competitor VALUES (26,'fname26', 'lname26', 'email26@email.com', 'mailingaddress26', 4, false);
 INSERT INTO competitor VALUES (27,'fname27', 'lname27', 'email27@email.com', 'mailingaddress27', 4, false);
 INSERT INTO competitor VALUES (28,'fname28', 'lname28', 'email28@email.com', 'mailingaddress28', 4, false);
 INSERT INTO competitor VALUES (29,'fname29', 'lname29', 'email29@email.com', 'mailingaddress29', 4, false);
@@ -554,7 +554,7 @@ INSERT INTO competitor VALUES (32,'fname32', 'lname32', 'email32@email.com', 'ma
 INSERT INTO competitor VALUES (33,'fname33', 'lname33', 'email33@email.com', 'mailingaddress33', 4, false);
 INSERT INTO competitor VALUES (34,'fname34', 'lname34', 'email34@email.com', 'mailingaddress34', 4, false);
 INSERT INTO competitor VALUES (35,'fname35', 'lname35', 'email35@email.com', 'mailingaddress35', 4, false);
-INSERT INTO competitor VALUES (36,'fname30', 'lname36', 'email36@email.com', 'mailingaddress36', 4, false);
+INSERT INTO competitor VALUES (36,'fname36', 'lname36', 'email36@email.com', 'mailingaddress36', 4, false);
 INSERT INTO competitor VALUES (37,'fname37', 'lname37', 'email37@email.com', 'mailingaddress37', 4, false);
 INSERT INTO competitor VALUES (38,'fname38', 'lname38', 'email38@email.com', 'mailingaddress38', 4, false);
 INSERT INTO competitor VALUES (39,'fname39', 'lname39', 'email39@email.com', 'mailingaddress39', 4, false);
@@ -564,7 +564,7 @@ INSERT INTO competitor VALUES (42,'fname42', 'lname42', 'email42@email.com', 'ma
 INSERT INTO competitor VALUES (43,'fname43', 'lname43', 'email43@email.com', 'mailingaddress43', 4, false);
 INSERT INTO competitor VALUES (44,'fname44', 'lname44', 'email44@email.com', 'mailingaddress44', 4, false);
 INSERT INTO competitor VALUES (45,'fname45', 'lname45', 'email45@email.com', 'mailingaddress45', 4, false);
-INSERT INTO competitor VALUES (46,'fname40', 'lname46', 'email46@email.com', 'mailingaddress46', 4, false);
+INSERT INTO competitor VALUES (46,'fname46', 'lname46', 'email46@email.com', 'mailingaddress46', 4, false);
 INSERT INTO competitor VALUES (47,'fname47', 'lname47', 'email47@email.com', 'mailingaddress47', 4, false);
 INSERT INTO competitor VALUES (48,'fname48', 'lname48', 'email48@email.com', 'mailingaddress48', 4, false);
 INSERT INTO competitor VALUES (49,'fname49', 'lname49', 'email49@email.com', 'mailingaddress49', 4, false);
