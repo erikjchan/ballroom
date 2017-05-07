@@ -278,13 +278,21 @@ export default class DragAndDropTable extends React.Component {
     	    numRounds++;
     		if (earliestRound == null) {
     			earliestRound = row;
+    		} else if (earliestRound.round.indexOf("Round") == 0 && row.round.indexOf("Round") == 0 && earliestRound.round < row.round) {
+    			earliestRound = row;
+    		} else if (earliestRound.round.indexOf("Round") == -1 && row.round.indexOf("Round") == 0) {
+    			earliestRound = row;
+    		} else if (earliestRound.round == "Semifinal" && row.round == "Quarter") {
+    			earliestRound = row;
+    		} else if (earliestRound.round == "Final" && row.round == "Semifinal") {
+    			earliestRound = row;
     		}
     		if (row.round.indexOf("Round") == 0) {
     			let num = parseInt(row.round.replace( /^\D+/g, ''));
     			row.round = "Round " + (num + 1);
     		} else if (row.round == "Final") {
     		    finalRoundSize = row.size;
-            }
+        }
     	}
     }
     var newRowRound = "Round 1";
