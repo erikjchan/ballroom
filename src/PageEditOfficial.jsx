@@ -58,7 +58,7 @@ export default class EditOfficial extends React.Component {
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
-      .catch(this.refs.page.errorNotif(
+      .catch(err => alert(
         `There was an error fetching the competition`))
 
   }

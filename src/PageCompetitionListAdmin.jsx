@@ -33,8 +33,7 @@ class PageCompetitionList extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(this.refs.page.errorNotif(
-        `There was an error fetching the competitions`))
+      .catch(err => alert(`There was an error fetching the competitions`))
   }
   /**
    * Selects a competition for browsing.
