@@ -1,17 +1,16 @@
-import styles from "./XSidebar.css"
 import React from 'react'
 import { Link } from 'react-router'
 import { login, logoutUser } from '../actions'
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router'
+import styles from "./XSidebar.css"
 
 export default class OurSidebar extends React.Component {
-  constructor (p) { super(p) }
 
   /**
    * Starts the login process.
    */
   loginUser() {
-    window.dispatch(login())
+    this.props.dispatch(login())
   }
 
   /**
@@ -19,7 +18,7 @@ export default class OurSidebar extends React.Component {
    * to the home page
    */
   logoutUser() {
-    window.dispatch(logoutUser())
+    this.props.dispatch(logoutUser())
     browserHistory.push('/?msg=logout')
   }
 
@@ -28,17 +27,18 @@ export default class OurSidebar extends React.Component {
     const competition_selected = !!this.props.selected.competition
     const competition_id = this.props.selected.competition && this.props.selected.competition.id
     const isAdmin = this.props.profile.role === 'admin'
+    const isAuthenticated = this.props.profile.role !== 'none'
 
-    console.log(isAdmin, competition_selected)
     return [
 
+      isAuthenticated &&
       <Link key={0} to={"/competitions"}>
         Explore Competitions
       </Link>,
 
       competition_selected &&
       <span key={1}><h5>
-        {this.props.selected.competition.Name}
+        {this.props.selected.competition.name}
       </h5></span>,
 
       !isAdmin && competition_selected &&
@@ -93,7 +93,7 @@ export default class OurSidebar extends React.Component {
         Manage Competitions
       </Link>,
 
-      competition_selected &&
+      isAuthenticated &&
       <Link key={2} to='/editprofile'>
         Edit Profile
       </Link>,
@@ -115,15 +115,16 @@ export default class OurSidebar extends React.Component {
 
 
   render() {
-    console.log(this.props)
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
       return (
         <div className={styles.nav}>
+          
+          { isAuthenticated &&
           <div className={styles.circle}>
-            <p>EU</p>
-          </div>
+            <p>{this.props.profile.nickname.substring(0,2).toUpperCase()}</p>
+          </div> }
   
           <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
             {this.getTopLinks()}

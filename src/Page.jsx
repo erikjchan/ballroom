@@ -9,10 +9,9 @@ export default class Page extends React.Component {
 
   render () {
     const { children } = this.props
-    console.log(this.props)
     return (
       <section className={styles.container}>
-        <XSidebar profile={this.props.profile} selected={this.props.selected}/>
+        <XSidebar {...this.props}/>
         <div className={styles.content}>
           {children}
         </div>

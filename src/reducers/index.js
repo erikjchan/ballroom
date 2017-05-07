@@ -105,7 +105,7 @@ function selected(state = {
 }, action) {
   switch (action.type) {
     case SELECT_COMPETITION: {
-      console.log(action.competition)
+      // console.log(action.competition)
       localStorage.setItem('competition', JSON.stringify(action.competition))
       return Object.assign({}, state, {
         competition: action.competition
