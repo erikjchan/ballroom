@@ -90,11 +90,10 @@ class PageSeeCompetitor extends React.Component {
     return (
 
      <Page ref="page" {...this.props}>
-      <Box title={"See Competitor"}
+      <Box title={"Competitor Info"}
           content={
             <div className={style.lines}>
             <br />
-            <h2>Competitor Summary:</h2>
             <div className={styles.lines}>
                     <p><b>Name:</b> {this.state.competitor.name}</p>
                     <p><b>Email:</b> {this.state.competitor.email}</p>
