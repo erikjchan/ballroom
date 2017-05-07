@@ -110,10 +110,10 @@ export default class PageCompetitorPayment extends React.Component {
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.long_label}>
-                            Paying With Affiliation<br />
+                            Paying With Organization<br />
                         </label><br />
-                        <br /><input type="radio" name="affiliation" value = "true" /> True <br />
-                        <input type="radio" name="affiliation" value = "false" /> False
+                        <br /><input type="radio" name="organization" value = "true" /> True <br />
+                        <input type="radio" name="organization" value = "false" /> False
                     </div>
                     <div className = {styles.form_row}>
                         <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />

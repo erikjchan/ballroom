@@ -67,8 +67,8 @@ export default class OurSidebar extends React.Component {
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={8} to={`/affiliationpayment/0/0`}>
-        - Affiliation Payment
+      <Link key={8} to={`/organization/0/0`}>
+        - Organization Payment
       </Link>,
 
       isAdmin && competition_selected &&
