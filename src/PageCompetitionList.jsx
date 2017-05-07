@@ -21,7 +21,9 @@ class PageCompetitionList extends React.Component {
     this.state = {
       /** We will populate this w/ data from the API */
       competitions: [],
+      
     }
+    this.competitor_id = 1;
   }
 
   componentDidMount() {
@@ -48,7 +50,7 @@ class PageCompetitionList extends React.Component {
   browseCompetition (competition) {
     console.log(this, competition)
     this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('competition/' + competition.id + '/0')
+    browserHistory.push('competition/' + competition.id + '/'+ this.competitor_id)
   }
 
   /**
