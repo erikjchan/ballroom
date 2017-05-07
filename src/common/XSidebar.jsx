@@ -1,17 +1,16 @@
-import styles from "./XSidebar.css"
 import React from 'react'
 import { Link } from 'react-router'
 import { login, logoutUser } from '../actions'
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router'
+import styles from "./XSidebar.css"
 
 export default class OurSidebar extends React.Component {
-  constructor (p) { super(p) }
 
   /**
    * Starts the login process.
    */
   loginUser() {
-    window.dispatch(login())
+    this.props.dispatch(login())
   }
 
   /**
@@ -19,7 +18,7 @@ export default class OurSidebar extends React.Component {
    * to the home page
    */
   logoutUser() {
-    window.dispatch(logoutUser())
+    this.props.dispatch(logoutUser())
     browserHistory.push('/?msg=logout')
   }
 
@@ -28,51 +27,52 @@ export default class OurSidebar extends React.Component {
     const competition_selected = !!this.props.selected.competition
     const competition_id = this.props.selected.competition && this.props.selected.competition.id
     const isAdmin = this.props.profile.role === 'admin'
+    const isAuthenticated = this.props.profile.role !== 'none'
 
-    console.log(isAdmin, competition_selected)
     return [
 
-      <Link to={"/competitions"} key={0}>
+      isAuthenticated &&
+      <Link key={0} to={"/competitions"}>
         Explore Competitions
       </Link>,
 
       competition_selected &&
       <span key={1}><h5>
-        {this.props.selected.competition.Name}
+        {this.props.selected.competition.name}
       </h5></span>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/1`} key={2}>
+      <Link key={2} to={`/competition/${competition_id}/1`}>
         - Competition Information
       </Link>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/eventregistration`} key={4}>
+      <Link key={4} to={`/competition/${competition_id}/eventregistration`}>
         - Event Registration
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/admin/competition/${competition_id}`} key={5}>
+      <Link key={5} to={`/admin/competition/${competition_id}`}>
         - Competition Information
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/competitorslist`} key={6}>
+      <Link key={6} to={`/competition/${competition_id}/competitorslist`}>
         - Competitor List
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/editschedule`} key={7}>
-        - Schedule Editors
+      <Link key={7} to={`/competition/${competition_id}/editschedule`}>
+        - Schedule Editor
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/affiliationpayment/1/1`} key={0}>
-        - Affiliation Payment
+      <Link key={8} to={`/organization/1/1`}>
+        - Organization Payment
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/regcompetitor/1`} key={9}>
+      <Link key={9} to={`/competition/${competition_id}/regcompetitor/1`}>
         - Register Competitor
       </Link>
 
@@ -89,21 +89,25 @@ export default class OurSidebar extends React.Component {
     return [
 
       isAdmin &&
-      <Link key={8} to="admin/competitions"             > Manage Competitions </Link>,
+      <Link key={8} to="admin/competitions">
+        Manage Competitions
+      </Link>,
 
-      competition_selected &&
-      <Link key={2} to='/editprofile'                   > Edit Profile        </Link>,
+      isAuthenticated &&
+      <Link key={2} to='/editprofile'>
+        Edit Profile
+      </Link>,
 
 
       // Login / Logout 
 
       !isAuthenticated &&
-      <a onClick={this.loginUser.bind(this)} key={9}>
+      <a key={9} onClick={this.loginUser.bind(this)}>
         Login / Signup
       </a>,
 
       isAuthenticated &&
-      <a onClick={this.logoutUser.bind(this)} key={10}>
+      <a key={10} onClick={this.logoutUser.bind(this)}>
         Logout
       </a>
     ]
@@ -111,16 +115,16 @@ export default class OurSidebar extends React.Component {
 
 
   render() {
-    console.log(this.props)
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
-    // if (isAdmin) {
       return (
         <div className={styles.nav}>
+          
+          { isAuthenticated &&
           <div className={styles.circle}>
-            <p>EU</p>
-          </div>
+            <p>{this.props.profile.nickname.substring(0,2).toUpperCase()}</p>
+          </div> }
   
           <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
             {this.getTopLinks()}
@@ -131,6 +135,5 @@ export default class OurSidebar extends React.Component {
           </div>
         </div>
       )
-    // };
   }
-  }
+}

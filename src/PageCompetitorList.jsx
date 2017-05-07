@@ -1,3 +1,10 @@
+/* 
+ * COMPETITOR LIST  
+ *
+ * This page allows admins to search through all of the competitors
+ * which are registered for their competition and access edit 
+ * pages for those competitors.
+ */
 
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
@@ -19,7 +26,6 @@ import style from './style.css';
 class CompetitorsList extends React.Component {
 
  render() {
-  console.log(this.props.location.state);
   return (
     <Page ref="page" {...this.props}>
       <div id={style.titleContainer}>

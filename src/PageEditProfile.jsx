@@ -1,3 +1,10 @@
+/* 
+ * EDIT PROFILE
+ *
+ * This page allows users to change their user information across
+ * multiple competitions
+ */
+
 import styles from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
@@ -110,7 +117,7 @@ export default class PageEditProfile extends React.Component {
     } else {
       return (
 
-      <Page ref="page" auth={{ profile: this.props.profile, isAuthenticated: this.props.isAuthenticated }}>
+      <Page ref="page" {...this.props}>
 
       <BoxAdmin title={"Edit profile"}
         content={

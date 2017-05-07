@@ -1,3 +1,10 @@
+/* 
+ * EDIT COMPETITION
+ *
+ * This page will be used by admins to edit the parameters of 
+ * competitions they have created.
+ */
+
 
 import styles from "./style.css"
 import React from 'react'

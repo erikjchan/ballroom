@@ -1,3 +1,12 @@
+/* 
+ * SEE/EDIT ORGANIZATION
+ *
+ * This page will be used by admins to see details about the 
+ * affiliations that are registered to their competition. They will
+ * be able to mark the oganizations as paid from this page.
+ */
+
+
 import Autocomplete from 'react-autocomplete'
 import styles from "./style.css"
 import React from 'react'
@@ -10,8 +19,8 @@ import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 import connection from './common/connection'
 
-// affiliationpayment/:competition_id/:affiliation_id
-class PageAffiliationPayment extends React.Component {
+// organizationpayment/:competition_id/:organization_id
+class PageOrganizationPayment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -28,7 +37,7 @@ class PageAffiliationPayment extends React.Component {
     sure it's an integer */
     try {this.competition_id = parseInt(this.props.params.competition_id)}
     catch (e) { alert('Invalid competition ID!') }
-    try {this.affiliation_id = parseInt(this.props.params.affiliation_id)}
+    try {this.organization_id = parseInt(this.props.params.organization_id)}
     catch (e) { alert('Invalid competition ID!') }
     
  }
@@ -64,8 +73,7 @@ class PageAffiliationPayment extends React.Component {
          const search_org = (list, query) => {
              if (query === '') return []
              return list.filter(org => 
-                 {console.log(org.name);
-                  return org.name.toLowerCase().indexOf(query) != -1;}
+                 {return org.name.toLowerCase().indexOf(query) != -1;}
              )
          }
          const myMenuStyle = {
@@ -79,7 +87,7 @@ class PageAffiliationPayment extends React.Component {
              zIndex: 200
          };
         var comp_name = this.state.competition.Name;
-        var affiliation = this.state.organization[this.affiliation_id];
+        var affiliation = this.state.organization[this.organization_id];
         var affiliation_name = affiliation.name;
         var affiliation_owed = affiliation.amount_owed;
         var comp_info = (
@@ -97,8 +105,6 @@ class PageAffiliationPayment extends React.Component {
                       getItemValue={(item) => item.id}
                       onSelect={(value, item) => {
                           // set the menu to only the selected item
-                        console.log("setting stuff to stuff");
-                      console.log(item.id);
                         this.setState({ selectedOrg: item.name, selectedOrgID: item.id })
                         // or you could reset it to a default list again
                         // this.setState({ unitedStates: getStates() })
@@ -117,7 +123,7 @@ class PageAffiliationPayment extends React.Component {
                     <button onClick={(event) => 
                         {
                             if (this.state.selectedOrgID != "-1") {
-                               this.props.router.push("/affiliationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
+                               this.props.router.push("/organizationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
                             } else {
                                 event.preventDefault();
                                 alert("Please select an organization first!");
@@ -130,15 +136,15 @@ class PageAffiliationPayment extends React.Component {
                 
                 <h2>Current Organization Information:</h2>
                 <div className = {styles.form_row}>
-                    <label> Competition name: {comp_name} </label>            
+                    <label> Competition Name: {comp_name} </label>            
                 </div>
                 
                 <div className = {styles.form_row}>
-                     <label> Affiliation number: {this.affiliation_id} </label>
+                     <label> Organization Number: {this.organization_id} </label>
                 </div>
                      
                 <div className = {styles.form_row}>
-                    <label> Affiliation name: {affiliation_name} </label>            
+                    <label> Organization Name: {affiliation_name} </label>            
                 </div>
 
 
@@ -168,7 +174,7 @@ class PageAffiliationPayment extends React.Component {
           <div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box title={<div className={styles.titleContainers}><span>See/Edit Affiliation Payment</span> 
+              <Box title={<div className={styles.titleContainers}><span>See/Edit Organization Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>
@@ -186,4 +192,4 @@ class PageAffiliationPayment extends React.Component {
  }
 }
 
-export default connection(PageAffiliationPayment)
+export default connection(PageOrganizationPayment)

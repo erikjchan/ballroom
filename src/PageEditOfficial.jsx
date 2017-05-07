@@ -1,3 +1,10 @@
+/* 
+ * EDIT JUDGES  
+ *
+ * This page allows admins to define the information about the judges who will
+ * partake in the competition.
+ */
+
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';
@@ -58,7 +65,7 @@ export default class EditOfficial extends React.Component {
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
-      .catch(this.refs.page.errorNotif(
+      .catch(err => alert(
         `There was an error fetching the competition`))
 
   }

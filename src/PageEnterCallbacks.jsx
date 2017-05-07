@@ -1,3 +1,9 @@
+/* 
+ * ENTER CALLBACKS
+ *
+ * This page allows admins to add callbacks for selected round
+ */
+
 import styles from "./style.css"
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
@@ -58,8 +64,6 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   handleChange(event) {
-    console.log("DOING THING CHANGE")
-    console.log(this);
     this.setState({value: event.target.value});
   }
 
@@ -97,7 +101,7 @@ export default class PageEnterCallbacks extends React.Component {
         })
         // todo; setup a timer to retry. Fingers crossed, hopefully the
         // connection comes back
-        .catch(this.refs.page.errorNotif(
+        .catch(err => alert(
           `There was an error fetching the competition`))
 
   }

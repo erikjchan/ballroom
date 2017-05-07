@@ -1,3 +1,10 @@
+/* 
+ * COMPETITION HOME PAGE (USERS)
+ *
+ * This page is the main hub for users when seeing information about
+ * a specific competition they have been registered for.
+ */
+
 
 import styles from "./style.css"
 import React from 'react'
@@ -112,7 +119,7 @@ export default class PageCompetition extends React.Component {
                       <p><b>Organization:</b> {this.state.competitor.affiliationname}</p>
                       <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number}</p>
                       <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount}</p>
-                      <p><b>Pay with Affiliation:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
+                      <p><b>Paying with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                       <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
     
@@ -188,7 +195,7 @@ export default class PageCompetition extends React.Component {
                               <div className = {styles.addeditBtns}>
                               <button 
                                 className={styles.editBtns} 
-                                onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+                                onClick={()=>{ browserHistory.push('/competition/0/eventregistration') }}> 
                                   Add/Edit Event
                               </button>
                             </div>
