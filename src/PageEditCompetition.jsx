@@ -85,7 +85,7 @@ export default class PageEditCompetition extends React.Component {
             <input className = {styles.price} type="number" name="regular_price" />
         </label>
         <label>
-            Late price:<br />
+            Late Price:<br />
             <input  className = {styles.price} type="number" name="late_price" />
         </label>
     </div>

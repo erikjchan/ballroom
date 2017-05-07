@@ -56,7 +56,7 @@ class PageOrganizationPayment extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
       /* Call the API for organization info */
-    fetch(`/api/organizations`)
+    fetch(`/api/affiliations`)
       .then(response => response.json()) // parse the result
       .then(json => { 
           // update the state of our component
@@ -87,9 +87,9 @@ class PageOrganizationPayment extends React.Component {
              zIndex: 200
          };
         var comp_name = this.state.competition.Name;
-        var affiliation = this.state.organization[this.organization_id];
-        var affiliation_name = affiliation.name;
-        var affiliation_owed = affiliation.amount_owed;
+        var organization = this.state.organization[this.organization_id];
+        var organization_name = organization.name;
+        var organization_owed = organization.amount_owed;
         var comp_info = (
             <form className = {styles.long_form}>
                 <div>
@@ -144,12 +144,12 @@ class PageOrganizationPayment extends React.Component {
                 </div>
                      
                 <div className = {styles.form_row}>
-                    <label> Organization Name: {affiliation_name} </label>            
+                    <label> Organization Name: {organization_name} </label>            
                 </div>
 
 
                 <div className = {styles.form_row}>
-                    <label> Amount Owed: {affiliation_owed} </label>            
+                    <label> Amount Owed: {organization_owed} </label>            
                 </div>
                 <div className = {styles.form_row}>
                     <label>
@@ -167,7 +167,7 @@ class PageOrganizationPayment extends React.Component {
     return (
       <Page ref="page" {...this.props}>
           <div className={styles.titles}>
-            <p>{affiliation_name}</p>
+            <p>{organization_name}</p>
           </div>
           <div className={styles.infoTables}>
           </div>
