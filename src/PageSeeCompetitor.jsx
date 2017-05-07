@@ -97,7 +97,7 @@ class PageSeeCompetitor extends React.Component {
                     <p><b>Organization:</b> {this.state.competitor.organization_name}</p>
                     <p><b>Number:</b> {this.state.competitor.lead_number}</p>
                     <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
-                    <p><b>Pay with Affiliation:</b> {this.state.competitor.pay_w_org} </p>
+                    <p><b>Pay with Organization:</b> {this.state.competitor.pay_w_org} </p>
                     <h3>Mark as Paid?</h3>
                         <span>
                             <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>

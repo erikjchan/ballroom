@@ -10,8 +10,8 @@ import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 import connection from './common/connection'
 
-// affiliationpayment/:competition_id/:affiliation_id
-class PageAffiliationPayment extends React.Component {
+// organizationpayment/:competition_id/:organization_id
+class PageOrganizationPayment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -28,7 +28,7 @@ class PageAffiliationPayment extends React.Component {
     sure it's an integer */
     try {this.competition_id = parseInt(this.props.params.competition_id)}
     catch (e) { alert('Invalid competition ID!') }
-    try {this.affiliation_id = parseInt(this.props.params.affiliation_id)}
+    try {this.organization_id = parseInt(this.props.params.organization_id)}
     catch (e) { alert('Invalid competition ID!') }
     
  }
@@ -79,7 +79,7 @@ class PageAffiliationPayment extends React.Component {
              zIndex: 200
          };
         var comp_name = this.state.competition.Name;
-        var affiliation = this.state.organization[this.affiliation_id];
+        var affiliation = this.state.organization[this.organization_id];
         var affiliation_name = affiliation.name;
         var affiliation_owed = affiliation.amount_owed;
         var comp_info = (
@@ -117,7 +117,7 @@ class PageAffiliationPayment extends React.Component {
                     <button onClick={(event) => 
                         {
                             if (this.state.selectedOrgID != "-1") {
-                               this.props.router.push("/affiliationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
+                               this.props.router.push("/organizationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
                             } else {
                                 event.preventDefault();
                                 alert("Please select an organization first!");
@@ -130,15 +130,15 @@ class PageAffiliationPayment extends React.Component {
                 
                 <h2>Current Organization Information:</h2>
                 <div className = {styles.form_row}>
-                    <label> Competition name: {comp_name} </label>            
+                    <label> Competition Name: {comp_name} </label>            
                 </div>
                 
                 <div className = {styles.form_row}>
-                     <label> Affiliation number: {this.affiliation_id} </label>
+                     <label> Organization Number: {this.organization_id} </label>
                 </div>
                      
                 <div className = {styles.form_row}>
-                    <label> Affiliation name: {affiliation_name} </label>            
+                    <label> Organization Name: {affiliation_name} </label>            
                 </div>
 
 
@@ -168,7 +168,7 @@ class PageAffiliationPayment extends React.Component {
           <div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box title={<div className={styles.titleContainers}><span>See/Edit Affiliation Payment</span> 
+              <Box title={<div className={styles.titleContainers}><span>See/Edit Organization Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>
@@ -186,4 +186,4 @@ class PageAffiliationPayment extends React.Component {
  }
 }
 
-export default connection(PageAffiliationPayment)
+export default connection(PageOrganizationPayment)

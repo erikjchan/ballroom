@@ -659,7 +659,7 @@ const routes = [
     '/editofficial/:competition_id'                              ,
     '/competition/:competition_id/seecompetitor/:competitor_id'  ,
     '/competition/:competition_id/regcompetitor/:competitor_id'  ,
-    '/affiliationpayment/:competition_id/:affiliation_id'        ,
+    '/organizationpayment/:competition_id/:organization_id'      ,
     '/querytest',
     '/competitorpayment/:competition_id/:competitor_id'
 ]
