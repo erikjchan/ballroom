@@ -68,6 +68,7 @@ export default class PageEnterCallbacks extends React.Component {
     
   handleKeyPress(event) {
     if (event.key === 'Enter') {
+        let callbacks = event.target.value.replace(/\n/g, " ").split(" ");
         
     }
   }
