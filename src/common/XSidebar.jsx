@@ -32,7 +32,7 @@ export default class OurSidebar extends React.Component {
     console.log(isAdmin, competition_selected)
     return [
 
-      <Link to={"/competitions"} key={0}>
+      <Link key={0} to={"/competitions"}>
         Explore Competitions
       </Link>,
 
@@ -42,37 +42,37 @@ export default class OurSidebar extends React.Component {
       </h5></span>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/0`} key={2}>
+      <Link key={2} to={`/competition/${competition_id}/0`}>
         - Competition Information
       </Link>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/eventregistration`} key={4}>
+      <Link key={4} to={`/competition/${competition_id}/eventregistration`}>
         - Event Registration
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/admin/competition/${competition_id}`} key={5}>
+      <Link key={5} to={`/admin/competition/${competition_id}`}>
         - Competition Information
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/competitorslist`} key={6}>
+      <Link key={6} to={`/competition/${competition_id}/competitorslist`}>
         - Competitor List
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/editschedule`} key={7}>
+      <Link key={7} to={`/competition/${competition_id}/editschedule`}>
         - Schedule Editor
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/affiliationpayment/0/0`} key={0}>
+      <Link key={8} to={`/affiliationpayment/0/0`}>
         - Affiliation Payment
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/regcompetitor/0`} key={9}>
+      <Link key={9} to={`/competition/${competition_id}/regcompetitor/0`}>
         - Register Competitor
       </Link>
 
@@ -89,21 +89,25 @@ export default class OurSidebar extends React.Component {
     return [
 
       isAdmin &&
-      <Link key={8} to="admin/competitions"             > Manage Competitions </Link>,
+      <Link key={8} to="admin/competitions">
+        Manage Competitions
+      </Link>,
 
       competition_selected &&
-      <Link key={2} to='/editprofile'                   > Edit Profile        </Link>,
+      <Link key={2} to='/editprofile'>
+        Edit Profile
+      </Link>,
 
 
       // Login / Logout 
 
       !isAuthenticated &&
-      <a onClick={this.loginUser.bind(this)} key={9}>
+      <a key={9} onClick={this.loginUser.bind(this)}>
         Login / Signup
       </a>,
 
       isAuthenticated &&
-      <a onClick={this.logoutUser.bind(this)} key={10}>
+      <a key={10} onClick={this.logoutUser.bind(this)}>
         Logout
       </a>
     ]
