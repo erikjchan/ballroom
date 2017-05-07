@@ -25,6 +25,7 @@ import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
 import AffiliationPayment   from '../PageAffiliationPayment.jsx'
 import QueryTest            from '../../test.js'
+import CompetitorPayment    from '../PageCompetitorPayment.jsx'
 
 /**
  * Semantics:
@@ -56,7 +57,8 @@ const routes = {
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
   'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
-  'querytest'                                                 : Any(QueryTest)
+  'querytest'                                                 : Any(QueryTest),
+  'competitorpayment/:competition_id/:competitor_id'                          : User(CompetitorPayment),
 }
 
 export default (

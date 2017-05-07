@@ -661,6 +661,7 @@ const routes = [
     '/competition/:competition_id/regcompetitor/:competitor_id'  ,
     '/affiliationpayment/:competition_id/:affiliation_id'        ,
     '/querytest',
+    '/competitorpayment/:competition_id/:competitor_id'
 ]
 
 /*********************************** Assets ***********************************/

@@ -64,7 +64,8 @@ export default class LoginPage extends React.Component {
         <p><Link to='affiliationpayment/1/1'           >AffiliationPayment</Link></p>        
         <p><Link to='competition/1/seecompetitor/1'  >SeeCompetitor</Link></p>
         <p><Link to='competition/1/regcompetitor/1'  >RegisterCompetitor</Link></p>
-        <p><Link to='querytest'                      >QueryTest</Link></p>        
+        <p><Link to='querytest'                      >QueryTest</Link></p>   
+        <p><Link to='competitorpayment/1/1'              >CompetitorPayment</Link></p>      
         <button onClick={() => this.props.dispatch(action) } />
         <button onClick={() => this.generateRounds()}>Create rounds for events</button>
         <pre>
