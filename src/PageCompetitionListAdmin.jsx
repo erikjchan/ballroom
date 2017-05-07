@@ -1,3 +1,11 @@
+/* 
+ * COMPETITIONS LIST (ADMINS)
+ *
+ * This page will be used by users to see all the competitions they have created,
+ * as well as to create new competitions
+ */
+
+
 import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';

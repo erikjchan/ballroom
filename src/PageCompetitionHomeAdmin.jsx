@@ -1,3 +1,9 @@
+/* 
+ * COMPETITION HOME PAGE (ADMIN)
+ *
+ * This page is the main hub for admins to see information about the
+ * competitions that they have created and selected.
+ */
 
 import styles from "./style.css"
 import React from 'react'

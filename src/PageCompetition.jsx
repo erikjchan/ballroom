@@ -1,3 +1,10 @@
+/* 
+ * COMPETITION HOME PAGE (USERS)
+ *
+ * This page is the main hub for users when seeing information about
+ * a specific competition they have been registered for.
+ */
+
 
 import styles from "./style.css"
 import React from 'react'

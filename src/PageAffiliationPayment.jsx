@@ -1,3 +1,12 @@
+/* 
+ * SEE/EDIT ORGANIZATION
+ *
+ * This page will be used by admins to see details about the 
+ * affiliations that are registered to their competition. They will
+ * be able to mark the oganizations as paid from this page.
+ */
+
+
 import Autocomplete from 'react-autocomplete'
 import styles from "./style.css"
 import React from 'react'

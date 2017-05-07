@@ -1,3 +1,9 @@
+/* 
+ * REGISTER COMPETITOR
+ *
+ * This page allows admins to register a competitor for events 
+ * in their competition.
+ */
 
 import styles from "./style.css"
 import React from 'react'

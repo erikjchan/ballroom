@@ -1,3 +1,10 @@
+/* 
+ * EDIT JUDGES  
+ *
+ * This page allows admins to define the information about the judges who will
+ * partake in the competition.
+ */
+
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';

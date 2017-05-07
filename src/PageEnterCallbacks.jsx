@@ -1,3 +1,9 @@
+/* 
+ * ENTER CALLBACKS
+ *
+ * This page allows admins to add callbacks for selected round
+ */
+
 import styles from "./style.css"
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';

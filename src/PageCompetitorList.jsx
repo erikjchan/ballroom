@@ -1,3 +1,10 @@
+/* 
+ * COMPETITOR LIST  
+ *
+ * This page allows admins to search through all of the competitors
+ * which are registered for their competition and access edit 
+ * pages for those competitors.
+ */
 
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'

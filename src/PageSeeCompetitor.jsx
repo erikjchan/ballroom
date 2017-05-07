@@ -1,3 +1,10 @@
+/* 
+ * SEE COMPETITOR
+ *
+ * This page allows admins to see detailed information about the 
+ * selected competitor as well as mark them as paid or not paid
+ */
+
 import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'

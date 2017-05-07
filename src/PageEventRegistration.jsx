@@ -1,3 +1,11 @@
+/* 
+ * EVENT REGISTRATION
+ *
+ * This page will be used by users to register for events in a 
+ * specific selected competition
+ */
+
+
 import styles from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'

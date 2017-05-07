@@ -1,3 +1,10 @@
+/* 
+ * EDIT SCHEDULE
+ *
+ * This page allows admins to alter the default schedule of the competition by
+ * dragging and dropping the rounds. It also allows admins to create and remove 
+ * rounds.
+ */
 
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
