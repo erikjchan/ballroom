@@ -1,5 +1,7 @@
 [Google Drive Files](https://drive.google.com/drive/u/1/folders/0B_QgKIp964MaRkFIa2RBTE10OEU)
 
+To set up database, run `psql -U postgres -d postgres -1 -f <path/to/db.sql>`
+
 # Background
 The client describes the goals of the project as follows:
 
