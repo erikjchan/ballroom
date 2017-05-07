@@ -63,7 +63,7 @@ export default class OurSidebar extends React.Component {
 
       isAdmin && competition_selected &&
       <Link to={`/competition/${competition_id}/editschedule`} key={7}>
-        - Schedule Editors
+        - Schedule Editor
       </Link>,
 
       isAdmin && competition_selected &&
@@ -115,7 +115,6 @@ export default class OurSidebar extends React.Component {
     const isAuthenticated = this.props.profile.role !== 'none'
     const isAdmin = this.props.profile.role === 'admin'
 
-    // if (isAdmin) {
       return (
         <div className={styles.nav}>
           <div className={styles.circle}>
@@ -131,6 +130,5 @@ export default class OurSidebar extends React.Component {
           </div>
         </div>
       )
-    // };
   }
-  }
+}
