@@ -64,8 +64,6 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   handleChange(event) {
-    console.log("DOING THING CHANGE")
-    console.log(this);
     this.setState({value: event.target.value});
   }
 

@@ -73,8 +73,7 @@ class PageAffiliationPayment extends React.Component {
          const search_org = (list, query) => {
              if (query === '') return []
              return list.filter(org => 
-                 {console.log(org.name);
-                  return org.name.toLowerCase().indexOf(query) != -1;}
+                 {return org.name.toLowerCase().indexOf(query) != -1;}
              )
          }
          const myMenuStyle = {
@@ -106,8 +105,6 @@ class PageAffiliationPayment extends React.Component {
                       getItemValue={(item) => item.id}
                       onSelect={(value, item) => {
                           // set the menu to only the selected item
-                        console.log("setting stuff to stuff");
-                      console.log(item.id);
                         this.setState({ selectedOrg: item.name, selectedOrgID: item.id })
                         // or you could reset it to a default list again
                         // this.setState({ unitedStates: getStates() })

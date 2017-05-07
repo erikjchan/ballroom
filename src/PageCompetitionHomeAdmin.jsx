@@ -56,7 +56,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     fetch(`/api/events`)
       .then(response => response.json())
       .then(json => json.filter(event => {
-        console.log(event.competition_id, this.competition_id)
         return event.competition_id === this.competition_id
       }))
       .then(json => {
@@ -69,7 +68,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .then(response => response.json())
       .then(json => {
         this.setState({ competition_rounds : json})
-        console.log(this.state.competition_rounds)
       })
       .catch(err => alert(err))
 
@@ -230,8 +228,6 @@ populate_expanded(box_name, lines_react, link){
           return <p><b>{key+": "}</b> {buckets[key]}</p>
         }
     );
-    console.log(buckets)
-    console.log(competitor_stats)
 
     const search_competitor = (list, query) => {
     if (query === '') return []

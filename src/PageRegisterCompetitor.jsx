@@ -79,7 +79,6 @@ class PageEventRegistration extends React.Component {
       .then(response => { return response.json() }) // parse the result
       .then(json => { 
           // update the state of our component
-          console.log("WE DOING STUFF")
           if (json.pay_w_org)
               json.pay_w_org = "True"
           else
@@ -112,7 +111,6 @@ class PageEventRegistration extends React.Component {
     fetch(`/api/events`)
       .then(response => response.json())
       .then(json => json.filter(event => {
-        console.log(event.competitionId, this.competition_id)
         return event.competitionId === this.competition_id
       }))
       .then(json => {
@@ -135,7 +133,6 @@ class PageEventRegistration extends React.Component {
                 json[i].follower = this.state.competitor.name
             }
         }
-        console.log('JSON', json)
         this.setState({user_competition_events: json.splice(0,3)})
       })
       .catch(err => alert(err))
@@ -179,7 +176,6 @@ class PageEventRegistration extends React.Component {
       const { level, style, event, partner, isLeading, user_competition_events, competitor } = this.state;
       const button_enabled = (event != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
-          console.log(isLeading);
           if (isLeading == 'Leading') {
               user_competition_events.push(
                   {level: level, style: style, title: event, round: '', leader: "You", follower: partner}

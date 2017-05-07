@@ -88,7 +88,6 @@ export default class PageEventRegistration extends React.Component {
     fetch(`/api/events`)
       .then(response => response.json())
       .then(json => json.filter(event => {
-        console.log(event.competitionId, this.competition_id)
         return event.competitionId === this.competition_id
       }))
       .then(json => {
@@ -111,7 +110,6 @@ export default class PageEventRegistration extends React.Component {
                 json[i].follower = "You"
             }
         }
-        console.log('JSON', json)
         this.setState({user_competition_events: json.splice(0,3)})
       })
       .catch(err => alert(err))
@@ -164,7 +162,6 @@ export default class PageEventRegistration extends React.Component {
               alert('You are already registered for this event!');
               return false
           }
-          console.log(isLeading);
           if (isLeading == 'Leading') {
               user_competition_events.push(
                   {level: level, style: style, title: event, round: '', leader: "You", follower: partner}

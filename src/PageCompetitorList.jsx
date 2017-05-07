@@ -26,7 +26,6 @@ import style from './style.css';
 class CompetitorsList extends React.Component {
 
  render() {
-  console.log(this.props.location.state);
   return (
     <Page ref="page" {...this.props}>
       <div id={style.titleContainer}>
