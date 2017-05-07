@@ -56,6 +56,23 @@ app.use(bodyParser.json());
  res.send({status: 'posted'})
  })*/
 
+app.post('/api/update_competitor', (req, res) => {
+    const id = req.body.id
+    const firstname = req.body.firstname
+    const lastname = req.body.lastname
+    const affiliationid = req.body.affiliationid
+    const mailingaddress = req.body.mailingaddress
+    const hasregistered = req.body.hasregistered
+    query2.update_competitor_by_id(id, firstname, lastname, mailingaddress, affiliationid, hasregistered)
+        .then(function (value) {
+                console.log(value);
+                res.send(value);
+            },
+            function (err){
+                res.send(err);
+            });
+})
+
 app.post('/api/create_partnership', (req, res) => {
     const leadcompetitorid = parseInt(req.body.leadcompetitorid)
     const followcompetitorid = parseInt(req.body.followcompetitorid)

@@ -42,7 +42,7 @@ export default class OurSidebar extends React.Component {
       </h5></span>,
 
       !isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/0`} key={2}>
+      <Link to={`/competition/${competition_id}/1`} key={2}>
         - Competition Information
       </Link>,
 
@@ -67,12 +67,12 @@ export default class OurSidebar extends React.Component {
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/affiliationpayment/0/0`} key={0}>
+      <Link to={`/affiliationpayment/1/1`} key={0}>
         - Affiliation Payment
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link to={`/competition/${competition_id}/regcompetitor/0`} key={9}>
+      <Link to={`/competition/${competition_id}/regcompetitor/1`} key={9}>
         - Register Competitor
       </Link>
 
