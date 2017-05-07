@@ -388,9 +388,6 @@ export default class DragAndDropTable extends React.Component {
   		if (a.styleorder != b.styleorder) {
   			return a.styleorder - b.styleorder;
   		}
-  		if (a.levelorder != b.levelorder) {
-  			return a.levelorder - b.levelorder;
-  		}
   		if (a.round != b.round) {
   			const a_round = parseInt(a.round.replace( /^\D+/g, ''));
   			const b_round = parseInt(b.round.replace( /^\D+/g, ''));
@@ -405,6 +402,9 @@ export default class DragAndDropTable extends React.Component {
   			}
   			const rounds = ["Quarter", "Semifinal", "Final"];
   			return rounds.indexOf(a.round) - rounds.indexOf(b.round);
+  		}
+  		if (a.levelorder != b.levelorder) {
+  			return a.levelorder - b.levelorder;
   		}
   		if (a.eventorder != b.eventorder) {
   			if (a.eventorder < b.eventorder) {
