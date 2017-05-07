@@ -31,9 +31,14 @@ export default class OurSidebar extends React.Component {
 
     return [
 
-      isAuthenticated &&
+      isAuthenticated && !isAdmin &&
       <Link key={0} to={"/competitions"}>
-        Explore Competitions
+        All Competitions
+      </Link>,
+
+      isAuthenticated && isAdmin &&
+      <Link key={3} to={"/admin/competitions"}>
+        All Competitions
       </Link>,
 
       competition_selected &&
@@ -67,7 +72,7 @@ export default class OurSidebar extends React.Component {
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={8} to={`/organization/1/1`}>
+      <Link key={8} to={`/organizationpayment/1/1`}>
         - Organization Payment
       </Link>,
 
@@ -87,11 +92,6 @@ export default class OurSidebar extends React.Component {
     const isAuthenticated = this.props.profile.role !== 'none'
 
     return [
-
-      isAdmin &&
-      <Link key={8} to="admin/competitions">
-        Manage Competitions
-      </Link>,
 
       isAuthenticated &&
       <Link key={2} to='/editprofile'>

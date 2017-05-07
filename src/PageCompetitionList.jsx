@@ -38,6 +38,12 @@ class PageCompetitionList extends React.Component {
     fetch(`/api/competitions/1`)
       .then(response => response.json()) // parse the result
       .then(json => { 
+        console.log(json);
+            this.competitions = json;
+            for (let i = 0; i < this.competitions.length; i++) {
+              this.competitions[i].regularprice = "$" + (this.competitions[i].regularprice || 0);
+              this.competitions[i].lateprice = "$" + (this.competitions[i].lateprice || 0);
+            }
         // update the state of our component
         this.setState({ competitions : json })
       })

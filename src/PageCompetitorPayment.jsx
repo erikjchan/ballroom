@@ -84,13 +84,13 @@ export default class PageCompetitorPayment extends React.Component {
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.full_label}>
-                            Last payment change: 
+                            Last Payment Change: 
                             {this.state.payment_record.timestamp}
                         </label>
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.full_label}>
-                            Registration time: 
+                            Registration Time: 
                             {/*todo*/}
                             {this.state.payment_record.timestamp}
                         </label>
@@ -103,14 +103,14 @@ export default class PageCompetitorPayment extends React.Component {
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.long_label}>
-                            Paying online
+                            Paying Online
                         </label><br />
                         <br /><input type="radio" name="online" value = "true" /> True <br />
                         <input type="radio" name="online" value = "false" /> False 
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.long_label}>
-                            Paying With Organization<br />
+                            Paying with Organization<br />
                         </label><br />
                         <br /><input type="radio" name="organization" value = "true" /> True <br />
                         <input type="radio" name="organization" value = "false" /> False

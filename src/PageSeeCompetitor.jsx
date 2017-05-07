@@ -118,7 +118,7 @@ class PageSeeCompetitor extends React.Component {
             /> 
             <div className = {styles.comp_containers}>
             <div className = {styles.addeditBtns}>
-                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/0/regcompetitor/0') }}> 
+                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/1/regcompetitor/1') }}> 
                     Add/Edit Event
                 </button>
             </div>

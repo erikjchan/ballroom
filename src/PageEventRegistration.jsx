@@ -395,11 +395,11 @@ dropEventHandler = (rowData) => {
             >{item.firstname} {item.lastname} ({item.email})</div>
           )}
         />
-      <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register!</button></p>
+      <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register</button></p>
               </div>
         }/>
 
-      <Box title={<div>You're already registered to these:</div>}
+      <Box title={<div>Your Current Registrations</div>}
       content = {
         <EventTable
           events={this.state.user_competition_events}

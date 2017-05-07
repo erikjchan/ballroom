@@ -73,7 +73,7 @@ class EditEvents extends React.Component {
       this.api.post("/api/competition/updateEvents", send_object)
       /** Fetch the events to reload the table */
       .then(() => this.api.get(`/api/competition/${cid}/events`))
-      /** Update hte state */
+      /** Update the state */
       .then(json => this.refs.ddTable.setState({rows: json}))
     }
   }

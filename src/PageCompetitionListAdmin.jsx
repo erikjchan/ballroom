@@ -51,8 +51,8 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('admin/competition/' + competition.id)
+    // this.props.dispatch(selectCompetition(competition))
+    browserHistory.push('/admin/competition/' + competition.id)
   }
 
   /**
@@ -61,10 +61,10 @@ class PageCompetitionList extends React.Component {
    */
   getYourCompetitionsTable () {
     const yourColumns = [
-      { property: 'Name',
+      { property: 'name',
         header: { label: 'Name' }
       },
-      { property: 'StartDate',
+      { property: 'startdate',
         header: { label: 'Date' }
       },
       { property: 'Select',
@@ -98,14 +98,14 @@ class PageCompetitionList extends React.Component {
      	<Page ref="page" {...this.props}>
         <div className={style.content}>
          	<h1>Competitions Page</h1>
-             <Box title="Your Competitions"
+             <Box title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
         	<div>
         <div className = {style.addeditBtns}>
             <button 
                 className={style.editBtns} 
-                onClick={()=>{ browserHistory.push('/editcompetition/0/') }}> 
+                onClick={()=>{ browserHistory.push('/editcompetition/1/') }}> 
                 Create New Competition
             </button>
      	</div>

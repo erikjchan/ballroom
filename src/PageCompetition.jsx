@@ -195,7 +195,7 @@ export default class PageCompetition extends React.Component {
                               <div className = {styles.addeditBtns}>
                               <button 
                                 className={styles.editBtns} 
-                                onClick={()=>{ browserHistory.push('/competition/0/eventregistration') }}> 
+                                onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}> 
                                   Add/Edit Event
                               </button>
                             </div>

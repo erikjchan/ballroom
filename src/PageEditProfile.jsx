@@ -71,7 +71,7 @@ export default class PageEditProfile extends React.Component {
     return (
 
      <Page ref="page" {...this.props}>
-              <Box title={"Edit profile"}
+              <Box title={"Edit Profile"}
       content={
         <div className={style.lines}>
         <br />
@@ -119,7 +119,7 @@ export default class PageEditProfile extends React.Component {
 
       <Page ref="page" {...this.props}>
 
-      <BoxAdmin title={"Edit profile"}
+      <BoxAdmin title={"Edit Profile"}
         content={
         <div className={style.lines}>
         <br />
