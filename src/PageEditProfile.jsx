@@ -1,3 +1,10 @@
+/* 
+ * EDIT PROFILE
+ *
+ * This page allows users to change their user information across
+ * multiple competitions
+ */
+
 import styles from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'

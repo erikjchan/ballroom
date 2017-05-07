@@ -1,3 +1,10 @@
+/* 
+ * COMPETITIONS LIST (USER)
+ *
+ * This page will be used by users to see all the competitions they are registered
+ * for, as well as to register for new competitions
+ */
+
 import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
@@ -45,7 +52,6 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    console.log(this, competition)
     this.props.dispatch(selectCompetition(competition))
     browserHistory.push('competition/' + competition.id + '/0')
   }

@@ -1,3 +1,9 @@
+/* 
+ * RUN COMPETITION  
+ *
+ * This page lets admins progress their competition though the selected rounds.
+ */
+
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';

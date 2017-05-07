@@ -1,3 +1,12 @@
+/* 
+ * SEE/EDIT ORGANIZATION
+ *
+ * This page will be used by admins to see details about the 
+ * affiliations that are registered to their competition. They will
+ * be able to mark the oganizations as paid from this page.
+ */
+
+
 import Autocomplete from 'react-autocomplete'
 import styles from "./style.css"
 import React from 'react'
@@ -64,8 +73,7 @@ class PageOrganizationPayment extends React.Component {
          const search_org = (list, query) => {
              if (query === '') return []
              return list.filter(org => 
-                 {console.log(org.name);
-                  return org.name.toLowerCase().indexOf(query) != -1;}
+                 {return org.name.toLowerCase().indexOf(query) != -1;}
              )
          }
          const myMenuStyle = {
@@ -97,8 +105,6 @@ class PageOrganizationPayment extends React.Component {
                       getItemValue={(item) => item.id}
                       onSelect={(value, item) => {
                           // set the menu to only the selected item
-                        console.log("setting stuff to stuff");
-                      console.log(item.id);
                         this.setState({ selectedOrg: item.name, selectedOrgID: item.id })
                         // or you could reset it to a default list again
                         // this.setState({ unitedStates: getStates() })

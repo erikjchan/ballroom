@@ -1,3 +1,10 @@
+/* 
+ * EDIT LEVELS AND STYLES  
+ *
+ * This page allows admins to define the levels and styles they will
+ * support at their competition, as well as the order in which they should
+ * occur by default
+ */
 
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'

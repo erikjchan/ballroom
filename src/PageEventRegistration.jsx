@@ -1,3 +1,11 @@
+/* 
+ * EVENT REGISTRATION
+ *
+ * This page will be used by users to register for events in a 
+ * specific selected competition
+ */
+
+
 import styles from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
@@ -186,7 +194,6 @@ export default class PageEventRegistration extends React.Component {
               alert('You are already registered for this event!');
               return false
           }
-          console.log(isLeading);
           var leadcompetitorid = partner;
           var followcompetitorid = this.competitor_id;
           if (isLeading == 'Leading') {

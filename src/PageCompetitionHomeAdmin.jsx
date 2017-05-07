@@ -1,3 +1,9 @@
+/* 
+ * COMPETITION HOME PAGE (ADMIN)
+ *
+ * This page is the main hub for admins to see information about the
+ * competitions that they have created and selected.
+ */
 
 import styles from "./style.css"
 import React from 'react'
@@ -59,7 +65,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .then(response => response.json())
       .then(json => {
         this.setState({ competition_rounds : json})
-        console.log(this.state.competition_rounds)
       })
       .catch(err => alert(err))
 
@@ -217,8 +222,6 @@ populate_expanded(box_name, lines_react, link){
           return <p><b>{item.name+": "}</b> {item.count}</p>
         }
     );
-
-    console.log(competitor_stats)
 
     const search_competitor = (list, query) => {
     if (query === '') return []

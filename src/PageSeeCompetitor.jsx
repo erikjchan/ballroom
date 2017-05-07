@@ -1,3 +1,10 @@
+/* 
+ * SEE COMPETITOR
+ *
+ * This page allows admins to see detailed information about the 
+ * selected competitor as well as mark them as paid or not paid
+ */
+
 import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
@@ -28,14 +35,11 @@ class PageSeeCompetitor extends React.Component {
   }
 
     componentDidMount() {
-        console.log("ARE WE DOING STUFF");
-
     /* Call the API for competition info */
     fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
       .then(response => { return response.json() }) // parse the result
       .then(json => { 
           // update the state of our component
-          console.log("WE DOING STUFF")
           if (json.pay_w_org)
               json.pay_w_org = "True"
           else

@@ -1,3 +1,11 @@
+/* 
+ * EDIT EVENTS  
+ *
+ * This page allows admins to define the events they will
+ * support at their competition, as well as the order in which they should
+ * occur by default
+ */
+
 import React from 'react'
 import Box from './common/BoxAdmin.jsx'
 import { DragDropContext } from 'react-dnd';
