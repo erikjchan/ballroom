@@ -93,7 +93,7 @@ export default class OurSidebar extends React.Component {
 
     return [
 
-      isAuthenticated &&
+      isAuthenticated && !isAdmin &&
       <Link key={2} to='/editprofile'>
         Edit Profile
       </Link>,

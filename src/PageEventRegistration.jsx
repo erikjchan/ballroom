@@ -310,43 +310,9 @@ dropEventHandler = (rowData) => {
                   return (<RadioButton value={item.id} label={`${item.levelname} ${item.stylename} ${item.dance}`}/>);
                 })
               }
-              {/*<RadioButton label={`${this.state.level} ${this.state.style} Waltz`} value='Waltz'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Tango`} value='Tango'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Foxtrot`} value='Foxtrot'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} V. Waltz`} value='V. Waltz'/>*/}
             </RadioGroup>
           </span>
         }
-        {/*{ show_standard && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Waltz`} value='Waltz'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Tango`} value='Tango'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Foxtrot`} value='Foxtrot'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Quickstep`} value='Quickstep'/>
-            </RadioGroup>
-          </span>
-        }*/}
-        {/*{ show_rhythm && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Cha Cha`} value='Cha Cha'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Rhumba`} value='Rhumba'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Swing`} value='Swing'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Mambo`} value='Mambo'/>
-            </RadioGroup>
-          </span>
-        }*/}
-        {/*{ show_latin && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Cha Cha`} value='Cha Cha'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Rhumba`} value='Rhumba'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Jive`} value='Jive'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Samba`} value='Samba'/>
-            </RadioGroup>
-          </span>
-              }*/}
           <br/>
         </div>}
 
@@ -380,7 +346,7 @@ dropEventHandler = (rowData) => {
           onChange={(event, value) => {
             this.setState({ value, loading: true })
 
-            fetch(`http://localhost:8080/api/competitors`)
+            fetch(`/api/competitors`)
               .then(response => response.json())
               .then(json => {
                 json = search_competitor(json, value)

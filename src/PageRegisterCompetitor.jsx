@@ -52,15 +52,24 @@ class PageEventRegistration extends React.Component {
       user_competition_events: [],
       competitors: [],
       competitor: [],
+      levels: [],
+      level_styles: [],
+      level_style_events: [],
 
       value: '',
       loading: false,
       partner: null,
 
+      // // Selected stuff
+      // level: null,
+      // style: null,
+      // event: null,
+      // isLeading: null,
+
       // Selected stuff
-      level: null,
-      style: null,
-      event: null,
+      levelid: null,
+      styleid: null,
+      eventid: null,
       isLeading: null,
     }
 
@@ -75,27 +84,27 @@ class PageEventRegistration extends React.Component {
 
     componentDidMount() {
     /* Call the API for competitor info */
-    fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
-      .then(response => { return response.json() }) // parse the result
-      .then(json => { 
-          // update the state of our component
-          if (json.pay_w_org)
-              json.pay_w_org = "True"
-          else
-              json.pay_w_org = "False"
+    // fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
+    //   .then(response => { return response.json() }) // parse the result
+    //   .then(json => { 
+    //       // update the state of our component
+    //       if (json.pay_w_org)
+    //           json.pay_w_org = "True"
+    //       else
+    //           json.pay_w_org = "False"
 
-          if (json.amount_owed == 0) {
-              this.setState({ paid: "True" });
-          }
-        this.setState({ competitor : json })
-      })
+    //       if (json.amount_owed == 0) {
+    //           this.setState({ paid: "True" });
+    //       }
+    //     this.setState({ competitor : json })
+    //   })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      // .catch(err => { alert(err); console.log(err)})
 
 
-    /* Call the API for competition data */
+/* Call the API for competition data */
     fetch(`/api/competition/${this.competition_id}`)
       .then(response => response.json()) // parse the result
       .then(json => { 
@@ -106,34 +115,43 @@ class PageEventRegistration extends React.Component {
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
       .catch(err => alert(err))
-        
+
     /** Pretty similar to above! */
-    fetch(`/api/events`)
+    fetch(`/api/competition/${this.competition_id}/events`)
       .then(response => response.json())
-      .then(json => json.filter(event => {
-        return event.competitionId === this.competition_id
-      }))
       .then(json => {
         this.setState({ competition_events : json})
       })
       .catch(err => alert(err))
 
-    /** Fetch the events a user is already registered to */
-    fetch(`/api/competitors/0/events`)
+  fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(response => {
         return response.json()
       })
       .then(json => {
+        console.log(json)
         for (let i = 0; i < json.length; i++) {
-            if (json[i].leading) {
-                json[i].leader = this.state.competitor.name
-                json[i].follower = json[i].partner
+            json[i].title = json[i].dance;
+            if (json[i].leadcompetitorid == this.competitor_id) {
+                json[i].leader = "You"
+                json[i].follower = json[i].followfirstname+" "+json[i].followlastname
             } else {
-                json[i].leader = json[i].partner
-                json[i].follower = this.state.competitor.name
+                json[i].follower = "You"
+                json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
             }
         }
-        this.setState({user_competition_events: json.splice(0,3)})
+        this.setState({user_competition_events: json})
+      })
+      .catch(err => { alert(err); console.log(err)})
+
+    /** Fetch levels in a competition */
+    fetch(`/api/competition/${this.competition_id}/levels`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+
+        this.setState({levels: json})
       })
       .catch(err => alert(err))
 
@@ -149,78 +167,119 @@ class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
   }
 
-  handleLevelChange = (level) => {
+  handleLevelChange = (levelid) => {
+    fetch(`/api/competition/${this.competition_id}/level/${levelid}/styles`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+        this.setState({level_styles: json})
+      })
+      .catch(err => alert(err))
     this.setState({
-        level: level,
-        style: null,
-        event: null 
+        levelid: levelid,
+        styleid: null,
+        eventid: null 
     });
   };
 
-  handleStyleChange = (style) => {
+  handleStyleChange = (styleid) => {
+    fetch(`/api/competition/${this.competition_id}/level/${this.state.levelid}/style/${styleid}`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+        this.setState({level_style_events: json})
+      })
+      .catch(err => alert(err))
     this.setState({
-        style: style,
-        event: null
+        styleid: styleid,
+        eventid: null
     });
   };
 
-  handleEventChange = (event) => {
-    this.setState({event});
+  handleEventChange = (eventid) => {
+    this.setState({
+      eventid: eventid
+    });
   };
 
   handleLeadChange = (isLeading) => {
       this.setState({isLeading});
   };
 
-  registerEventHandler = () => {
-      const { level, style, event, partner, isLeading, user_competition_events, competitor } = this.state;
-      const button_enabled = (event != null) && (isLeading != null) && (partner != null)
-      if (button_enabled) {
-          if (isLeading == 'Leading') {
-              user_competition_events.push(
-                  {level: level, style: style, title: event, round: '', leader: "You", follower: partner}
-              );
-          } else {
-              user_competition_events.push(
-                  {level: level, style: style, title: event, round: '', leader: partner, follower: "You"}
-              );
-          }
+  checkIfExists = (reg) => {
+      const { level, style, event } = this.state;
+      return (reg["level"] !== level) || (reg["style"] !== style) || (reg["title"] !== event);
+  };
 
-          this.setState({user_competition_events});
+  registerEventHandler = () => {
+      const { levelid, styleid, eventid, partner, isLeading, user_competition_events } = this.state;
+      const button_enabled = (eventid != null) && (isLeading != null) && (partner != null)
+      if (button_enabled) {
+          if (!user_competition_events.every(this.checkIfExists)) {
+              alert('You are already registered for this event!');
+              return false
+          }
+          var leadcompetitorid = partner;
+          var followcompetitorid = this.competitor_id;
+          if (isLeading == 'Leading') {
+            leadcompetitorid = this.competitor_id;
+            followcompetitorid = partner;
+          }
+            fetch("/api/create_partnership", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    leadcompetitorid: leadcompetitorid,
+                    followcompetitorid: followcompetitorid,
+                    eventid: eventid,
+                    competitionid: this.competition_id
+                })
+            }).then(() => {
+                window.location.reload();
+            });
       } else {
           alert('Please finish selecting a event and your partner!');
       }
   };
 
-  onRemove(id) {
-      if (!confirm("Are you sure you want to delete this?")) {
-          return false;
-      }
-      const rows = cloneDeep(this.state.user_competition_events);
-      const idx = findIndex(rows, { id });
-
-      // this could go through flux etc.
-      rows.splice(idx, 1);
-
-      this.setState({ user_competition_events: rows });
-  }
+dropEventHandler = (rowData) => {
+        if (!confirm("Are you sure you want to delete this?")) {
+            return false;
+        }
+        fetch("/api/delete_partnership", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                leadcompetitorid: rowData.leadcompetitorid,
+                followcompetitorid: rowData.followcompetitorid,
+                eventid: rowData.eventid
+            })
+        }).then(() => {
+            window.location.reload();
+        });
+  };
 
   render() {
     const search_competitor = (list, query) => {
     if (query === '') return []
     return list.filter(comp => 
         comp.email.indexOf(query) != -1 ||
-        comp.first_name.toLowerCase().indexOf(query.toLowerCase()) != -1 ||
-        comp.last_name.toLowerCase().indexOf(query.toLowerCase()) != -1
+        comp.firstname.toLowerCase().indexOf(query.toLowerCase()) != -1 ||
+        comp.lastname.toLowerCase().indexOf(query.toLowerCase()) != -1
       )
     }
 
-    const show_style = this.state.level !== null
-    const show_smooth = this.state.style == 'Smooth'
-    const show_standard = this.state.style == 'Standard'
-    const show_rhythm = this.state.style == 'Rhythm'
-    const show_latin = this.state.style == 'Latin'
-    const show_leading = this.state.event !== null
+    const show_style = this.state.levelid !== null
+    const show_event = this.state.styleid !== null
+    const show_leading = this.state.eventid !== null
 
     const myMenuStyle = {
       borderRadius: '3px',
@@ -239,80 +298,52 @@ class PageEventRegistration extends React.Component {
     <Page ref="page" {...this.props}>
       <h1>Register Competitor for Events: </h1>
         <Box 
-        title = {<div>Register for New Event</div>}
+        title = {<div>Register Competitor for New Event</div>}
         content={
         <div className={styles.lines}>
-      { true && <span>
+        
+        { true && <span>
             <h2>Level</h2>
-            <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
-              <RadioButton label='Newcomer' value='Newcomer'/>
-              <RadioButton label='Bronze' value='Bronze'/>
-              <RadioButton label='Silver' value='Silver'/>
-              <RadioButton label='Gold' value='Gold'/>
-              <RadioButton label='Open' value='Open'/>
+            <RadioGroup name='comic' value={this.state.levelid} onChange={this.handleLevelChange}>
+              {
+                this.state.levels.map(item =>{
+                  return (<RadioButton value={item.id} label={item.name}/>);
+                })
+              }
             </RadioGroup>
             <br/>
           </span>
-      } 
+        } 
 
-      { show_style && <span>
+        { show_style && <span>
             <br/>
             <h2>Style</h2>
-            <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
-              <RadioButton label='Smooth' value='Smooth'/>
-              <RadioButton label='Standard' value='Standard'/>
-              <RadioButton label='Rhythm' value='Rhythm'/>
-              <RadioButton label='Latin' value='Latin'/>
+            <RadioGroup name='comic' value={this.state.styleid} onChange={this.handleStyleChange}>
+              {
+                this.state.level_styles.map(item =>{
+                  return (<RadioButton value={item.id} label={item.name}/>);
+                })
+              }
             </RadioGroup>
             <br/>
           </span>
-      }
-      {<div>
+        }
+        {<div>
           <br/>
-      { show_smooth && <span>
+        { show_event && <span>
             <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Waltz`} value='Waltz'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Tango`} value='Tango'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Foxtrot`} value='Foxtrot'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} V. Waltz`} value='V. Waltz'/>
+            <RadioGroup name='comic' value={this.state.eventid} onChange={this.handleEventChange}>
+              {
+                this.state.level_style_events.map(item =>{
+                  return (<RadioButton value={item.id} label={`${item.levelname} ${item.stylename} ${item.dance}`}/>);
+                })
+              }
             </RadioGroup>
           </span>
-      }
-      { show_standard && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Waltz`} value='Waltz'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Tango`} value='Tango'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Foxtrot`} value='Foxtrot'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Quickstep`} value='Quickstep'/>
-            </RadioGroup>
-          </span>
-      }
-      { show_rhythm && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Cha Cha`} value='Cha Cha'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Rhumba`} value='Rhumba'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Swing`} value='Swing'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Mambo`} value='Mambo'/>
-            </RadioGroup>
-          </span>
-      }
-      { show_latin && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Cha Cha`} value='Cha Cha'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Rhumba`} value='Rhumba'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Jive`} value='Jive'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Samba`} value='Samba'/>
-            </RadioGroup>
-          </span>
-      }
+        }
           <br/>
         </div>}
-
-      { show_leading && <span>
+              { show_leading && <span>
                  <br/>
             <h3>Are you leading or following?</h3>
             <RadioGroup name='comic' value={this.state.isLeading} onChange={this.handleLeadChange}>
@@ -321,7 +352,8 @@ class PageEventRegistration extends React.Component {
             </RadioGroup>
             <br/>
           </span>
-      }
+              }
+
         <br/>
         <hr />
         <h2>Partner's email</h2>
@@ -335,14 +367,14 @@ class PageEventRegistration extends React.Component {
           getItemValue={(item) => item.email}
           onSelect={(value, item) => {
             // set the menu to only the selected item
-            this.setState({ value, competitors: [ item ], partner: item.first_name + " " + item.last_name })
+            this.setState({ value, competitors: [ item ], partner: item.id })
             // or you could reset it to a default list again
             // this.setState({ unitedStates: getStates() })
       }}
           onChange={(event, value) => {
             this.setState({ value, loading: true })
 
-            fetch(`/localhost:8080/api/competitors`)
+            fetch(`/api/competitors`)
               .then(response => response.json())
               .then(json => {
                   json = search_competitor(json, value)
@@ -354,7 +386,7 @@ class PageEventRegistration extends React.Component {
             <div
               key={item.abbr}
               id={item.abbr}
-            >{item.first_name} {item.last_name} ({item.email})</div>
+            >{item.firstname} {item.lastname} ({item.email})</div>
           )}
         />
       <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register!</button></p>
@@ -369,7 +401,7 @@ class PageEventRegistration extends React.Component {
             content: (value, {rowData}) => (
               <div>
                 <span
-                  onClick={() => this.onRemove(rowData.id)}
+                  onClick={() => this.dropEventHandler(rowData)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop
