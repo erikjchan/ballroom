@@ -130,7 +130,7 @@ export default class PageCompetitorPayment extends React.Component {
                 </div>
                     <div>
                     <div className={styles.infoBoxExpanded}>
-                    <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
+                    <Box title={<div className={styles.titleContainers}><span>Competitor Payment Info</span> 
                                     
                                 </div>} 
                         content={comp_info}/>
