@@ -21,7 +21,7 @@ export default class PageEditProfile extends React.Component {
     super(props);
     this.state = {
       competitor: lib.flat_loading_proxy,
-      affiliations: lib.flat_loading_proxy,
+      affiliations: [],
       loading: true,
     }
   }
@@ -40,11 +40,24 @@ export default class PageEditProfile extends React.Component {
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
+      
+      fetch(`/api/affiliations`)
+      .then(response => response.json()) // parse the result
+      .then(json => { 
+        // update the state of our component
+        this.setState({ 
+          affiliations : json 
+        })
+      })
+      // todo; display a nice (sorry, there's no connection!) error
+      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // connection comes back
+      .catch(err => { alert(err); console.log(err)})
   }
 
   handleChange (event) {
     var new_competitor = this.state.competitor;
-    new_competitor[event.target.name] = event.target.value;
+    new_competitor[event.target.name] = event.target.value || null;
     console.log(new_competitor);
     this.setState({competitor: new_competitor});
   };
@@ -103,11 +116,16 @@ export default class PageEditProfile extends React.Component {
           value={this.state.competitor.mailingaddress} 
           onChange={this.handleChange.bind(this)} />
         <h5>Affiliation</h5>
-        <input
-          type = 'email' 
-          name = 'affiliationid'
-          value={this.state.competitor.affiliationname} 
-          onChange={this.handleChange.bind(this)} /><br/>
+        <select name = "affiliationid"
+            value={this.state.competitor.affiliationid || ''}
+            onChange={this.handleChange.bind(this)}>
+            <option value=''>Not Affiliated</option>
+            {
+              this.state.affiliations.map(item =>{
+                return (<option value={item.id}> {item.name} </option>);
+              })
+            }
+        </select>
         <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
         </div>
       } />
