@@ -42,15 +42,15 @@ export default class YourEvents extends React.Component {
       {
           property: 'id',
           header: {
-              label: 'Official ID',
+              label: 'ID',
               sortable: true,
               resizable: true
           }
       },
       {
-          property: 'firstname',
+          property: 'name',
           header: {
-              label: 'Official Name',
+              label: 'Name',
               sortable: true,
               resizable: true
           }
@@ -64,9 +64,9 @@ export default class YourEvents extends React.Component {
         }
       },
       {
-        property: 'token',
+        property: 'phonenumber',
         header: {
-          label: 'Number',
+          label: 'Phone',
           sortable: true,
           resizable: true
         }
