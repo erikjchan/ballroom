@@ -300,6 +300,17 @@ const get_events_for_competition_level_style = (competitionid, levelid, styleid)
                           ORDER BY event.ordernumber;`);
 }
 
+
+const create_judge = (firstname, lastname, email, token, phonenumber, competitionid) => {
+    return pool.query_wrapped(SQL`INSERT INTO judge (firstname, lastname, email, token, phonenumber, competitionid)
+                          VALUES (${firstname}, ${lastname}, ${email}, ${token}, 
+                                  ${phonenumber}, ${competitionid});`);
+}
+
+const delete_judge = (id) => {
+    return pool.query_wrapped(SQL`DELETE FROM judge WHERE id = ${id};`);
+}
+
 module.exports = {
     get_all_competitors,
     get_competitor_by_id,
@@ -326,5 +337,7 @@ module.exports = {
     create_paymentrecord,
     update_paymentrecord,
     get_styles_for_competition_level,
-    get_events_for_competition_level_style
+    get_events_for_competition_level_style,
+    create_judge,
+    delete_judge
 }

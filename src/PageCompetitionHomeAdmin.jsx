@@ -1,3 +1,9 @@
+/* 
+ * COMPETITION HOME PAGE (ADMIN)
+ *
+ * This page is the main hub for admins to see information about the
+ * competitions that they have created and selected.
+ */
 
 import styles from "./style.css"
 import React from 'react'
@@ -38,6 +44,20 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     fetch(`/api/competition/${this.competition_id}`)
       .then(response => response.json()) // parse the result
       .then(json => { 
+        this.competition = json;
+        var startdate = new Date(this.competition.startdate);
+        var enddate = new Date(this.competition.enddate);
+        var regstartdate = new Date(this.competition.regstartdate);
+        var earlyregdeadline = new Date(this.competition.earlyregdeadline);
+        var regularregdeadline = new Date(this.competition.regularregdeadline);
+        var lateregdeadline = new Date(this.competition.lateregdeadline);
+        this.competition.startdate = startdate.toUTCString();
+        this.competition.enddate = enddate.toUTCString();
+        this.competition.regstartdate = regstartdate.toUTCString();
+        this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
+        this.competition.regularregdeadline = regularregdeadline.toUTCString();
+        this.competition.lateregdeadline = lateregdeadline.toUTCString();
+        
         // update the state of our component
         this.setState({ competition : json })
       })
@@ -59,7 +79,6 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .then(response => response.json())
       .then(json => {
         this.setState({ competition_rounds : json})
-        console.log(this.state.competition_rounds)
       })
       .catch(err => alert(err))
 
@@ -218,8 +237,6 @@ populate_expanded(box_name, lines_react, link){
         }
     );
 
-    console.log(competitor_stats)
-
     const search_competitor = (list, query) => {
     if (query === '') return []
     return list.filter(comp => 
@@ -322,7 +339,7 @@ populate_expanded(box_name, lines_react, link){
                           this.state.organizations.map(org => {
                             return (<p key={org.affiliationname}>{org.affiliationname}</p>)
                           }))
-    links["Organizations"] = "/affiliationpayment/" + this.competition_id + "/0";
+    links["Organizations"] = "/organizationpayment/" + this.competition_id + "/0";
 
     var total_rounds = this.state.competition_rounds.length;
     /*var rounds_titles = (<div className={styles.lines}>

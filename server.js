@@ -74,6 +74,50 @@ app.use(bodyParser.json());
 
  });
 
+app.post('/api/create_judge', (req, res) => {
+    const email = req.body.email
+    const token = req.body.token
+    const firstname = req.body.firstname
+    const lastname = req.body.lastname
+    const competitionid = parseInt(req.body.competitionid)
+    const phonenumber = req.body.phonenumber
+    query2.create_judge(firstname, lastname, email, token, phonenumber, competitionid).then(function (value) {
+            console.log(value);
+            res.send(value);
+        },
+        function (err){
+            res.send(err);
+        });
+});
+
+app.post('/api/delete_judge', (req, res) => {
+    const id = req.body.id
+    query2.delete_judge(id).then(function (value) {
+            console.log(value);
+            res.send(value);
+        },
+        function (err){
+            res.send(err);
+        });
+});
+
+app.post('/api/update_competitor', (req, res) => {
+    const id = req.body.id
+    const firstname = req.body.firstname
+    const lastname = req.body.lastname
+    const affiliationid = req.body.affiliationid
+    const mailingaddress = req.body.mailingaddress
+    const hasregistered = req.body.hasregistered
+    query2.update_competitor_by_id(id, firstname, lastname, mailingaddress, affiliationid, hasregistered)
+        .then(function (value) {
+                console.log(value);
+                res.send(value);
+            },
+            function (err){
+                res.send(err);
+            });
+})
+
 app.post('/api/create_partnership', (req, res) => {
     const leadcompetitorid = parseInt(req.body.leadcompetitorid)
     const followcompetitorid = parseInt(req.body.followcompetitorid)
@@ -677,8 +721,9 @@ const routes = [
     '/editofficial/:competition_id'                              ,
     '/competition/:competition_id/seecompetitor/:competitor_id'  ,
     '/competition/:competition_id/regcompetitor/:competitor_id'  ,
-    '/affiliationpayment/:competition_id/:affiliation_id'        ,
+    '/organizationpayment/:competition_id/:organization_id'      ,
     '/querytest',
+    '/competitorpayment/:competition_id/:competitor_id'
 ]
 
 /*********************************** Assets ***********************************/

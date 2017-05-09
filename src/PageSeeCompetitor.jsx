@@ -1,3 +1,10 @@
+/* 
+ * SEE COMPETITOR
+ *
+ * This page allows admins to see detailed information about the 
+ * selected competitor as well as mark them as paid or not paid
+ */
+
 import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
@@ -28,14 +35,11 @@ class PageSeeCompetitor extends React.Component {
   }
 
     componentDidMount() {
-        console.log("ARE WE DOING STUFF");
-
     /* Call the API for competition info */
     fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
       .then(response => { return response.json() }) // parse the result
       .then(json => { 
           // update the state of our component
-          console.log("WE DOING STUFF")
           if (json.pay_w_org)
               json.pay_w_org = "True"
           else
@@ -86,18 +90,17 @@ class PageSeeCompetitor extends React.Component {
     return (
 
      <Page ref="page" {...this.props}>
-      <Box title={"See Competitor"}
+      <Box title={"Competitor Info"}
           content={
             <div className={style.lines}>
             <br />
-            <h2>Competitor Summary:</h2>
             <div className={styles.lines}>
                     <p><b>Name:</b> {this.state.competitor.name}</p>
                     <p><b>Email:</b> {this.state.competitor.email}</p>
                     <p><b>Organization:</b> {this.state.competitor.organization_name}</p>
                     <p><b>Number:</b> {this.state.competitor.lead_number}</p>
                     <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
-                    <p><b>Pay with Affiliation:</b> {this.state.competitor.pay_w_org} </p>
+                    <p><b>Pay with Organization:</b> {this.state.competitor.pay_w_org} </p>
                     <h3>Mark as Paid?</h3>
                         <span>
                             <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
@@ -115,7 +118,7 @@ class PageSeeCompetitor extends React.Component {
             /> 
             <div className = {styles.comp_containers}>
             <div className = {styles.addeditBtns}>
-                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/0/regcompetitor/0') }}> 
+                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/1/regcompetitor/1') }}> 
                     Add/Edit Event
                 </button>
             </div>

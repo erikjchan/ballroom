@@ -1,3 +1,9 @@
+/* 
+ * RUN COMPETITION  
+ *
+ * This page lets admins progress their competition though the selected rounds.
+ */
+
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';
@@ -351,7 +357,7 @@ export default class RunCompetition extends React.Component {
           <h2>Current Round</h2>*/}
         
         <Box
-          title = "Upcoming rounds"
+          title = "Upcoming Rounds"
           content = {future_rounds_table}
         />
         {/*<div className="container admin">

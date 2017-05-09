@@ -175,11 +175,11 @@ export default class CompetitorList extends React.Component {
       		     cell: {
       		         formatters: [
                          (value, { rowData }) => (
-                             <div>
-                               <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
-                               <input type="button"
-                                      value="Edit/See More" /></Link>
-      			             </div>
+                          <div>
+                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
+                            <input type="button"
+                                   value="Edit/See More" /></Link>
+      			               </div>
       		             )
       		         ]
       		     },

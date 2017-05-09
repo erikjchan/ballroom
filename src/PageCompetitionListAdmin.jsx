@@ -1,3 +1,11 @@
+/* 
+ * COMPETITIONS LIST (ADMINS)
+ *
+ * This page will be used by users to see all the competitions they have created,
+ * as well as to create new competitions
+ */
+
+
 import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
@@ -27,6 +35,11 @@ class PageCompetitionList extends React.Component {
     fetch(`/api/competitions`)
       .then(response => response.json()) // parse the result
       .then(json => { 
+        this.competitions = json;
+        for (let i = 0; i < this.competitions.length; i++) {
+          var date = new Date(this.competitions[i].startdate);
+          this.competitions[i].startdate = date.toUTCString();
+        }
         // update the state of our component
         this.setState({ competitions : json })
       })
@@ -43,9 +56,8 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    console.log(this, competition)
-    this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('admin/competition/' + competition.id)
+    // this.props.dispatch(selectCompetition(competition))
+    browserHistory.push('/admin/competition/' + competition.id)
   }
 
   /**
@@ -54,10 +66,10 @@ class PageCompetitionList extends React.Component {
    */
   getYourCompetitionsTable () {
     const yourColumns = [
-      { property: 'Name',
+      { property: 'name',
         header: { label: 'Name' }
       },
-      { property: 'StartDate',
+      { property: 'startdate',
         header: { label: 'Date' }
       },
       { property: 'Select',
@@ -91,14 +103,14 @@ class PageCompetitionList extends React.Component {
      	<Page ref="page" {...this.props}>
         <div className={style.content}>
          	<h1>Competitions Page</h1>
-             <Box title="Your Competitions"
+             <Box title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
         	<div>
         <div className = {style.addeditBtns}>
             <button 
                 className={style.editBtns} 
-                onClick={()=>{ browserHistory.push('/editcompetition/0/') }}> 
+                onClick={()=>{ browserHistory.push('/editcompetition/1/') }}> 
                 Create New Competition
             </button>
      	</div>

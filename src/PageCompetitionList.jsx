@@ -1,3 +1,10 @@
+/* 
+ * COMPETITIONS LIST (USER)
+ *
+ * This page will be used by users to see all the competitions they are registered
+ * for, as well as to register for new competitions
+ */
+
 import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
@@ -21,7 +28,9 @@ class PageCompetitionList extends React.Component {
     this.state = {
       /** We will populate this w/ data from the API */
       competitions: [],
+      
     }
+    this.competitor_id = 1;
   }
 
   componentDidMount() {
@@ -29,6 +38,14 @@ class PageCompetitionList extends React.Component {
     fetch(`/api/competitions/1`)
       .then(response => response.json()) // parse the result
       .then(json => { 
+        console.log(json);
+        this.competitions = json;
+        for (let i = 0; i < this.competitions.length; i++) {
+          this.competitions[i].regularprice = "$" + (this.competitions[i].regularprice || 0);
+          this.competitions[i].lateprice = "$" + (this.competitions[i].lateprice || 0);
+          var date = new Date(this.competitions[i].startdate);
+          this.competitions[i].startdate = date.toUTCString();
+        }
         // update the state of our component
         this.setState({ competitions : json })
       })
@@ -45,9 +62,8 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    console.log(this, competition)
     this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('competition/' + competition.id + '/0')
+    browserHistory.push('competition/' + competition.id + '/'+ this.competitor_id)
   }
 
   /**

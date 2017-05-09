@@ -23,9 +23,14 @@ import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
-import AffiliationPayment   from '../PageAffiliationPayment.jsx'
+import OrganizationPayment   from '../PageOrganizationPayment.jsx'
 import QueryTest            from '../../test.js'
+<<<<<<< HEAD
 import PageNewUser          from '../PageNewUser.jsx'
+=======
+import CompetitorPayment    from '../PageCompetitorPayment.jsx'
+
+>>>>>>> 804213d0f3e1e89848b65c3a13726609f04be593
 /**
  * Semantics:
  *   User pages can be accessed by 'user', 'judge' and 'admin'
@@ -55,9 +60,15 @@ const routes = {
   'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
+<<<<<<< HEAD
   'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
   'querytest'                                                  : Any(QueryTest),
   'newuser'                                                    : User(PageNewUser),
+=======
+  'organizationpayment/:competition_id/:organization_id'       : Admin(OrganizationPayment),
+  'querytest'                                                  : Any(QueryTest),
+  'competitorpayment/:competition_id/:competitor_id'                          : User(CompetitorPayment),
+>>>>>>> 804213d0f3e1e89848b65c3a13726609f04be593
 }
 
 export default (

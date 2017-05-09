@@ -1,3 +1,10 @@
+/* 
+ * EDIT COMPETITION
+ *
+ * This page will be used by admins to edit the parameters of 
+ * competitions they have created.
+ */
+
 
 import styles from "./style.css"
 import React from 'react'
@@ -78,7 +85,7 @@ export default class PageEditCompetition extends React.Component {
             <input className = {styles.price} type="number" name="regular_price" />
         </label>
         <label>
-            Late price:<br />
+            Late Price:<br />
             <input  className = {styles.price} type="number" name="late_price" />
         </label>
     </div>
