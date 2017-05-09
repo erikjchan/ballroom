@@ -1,3 +1,10 @@
+/* 
+ * COMPETITOR LIST  
+ *
+ * This page allows admins to search through all of the competitors
+ * which are registered for their competition and access edit 
+ * pages for those competitors.
+ */
 
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
@@ -5,7 +12,7 @@ import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 
 
 import { DragDropContext } from 'react-dnd';
@@ -19,7 +26,6 @@ import style from './style.css';
 class CompetitorsList extends React.Component {
 
  render() {
-  console.log(this.props.location.state);
   return (
     <Page ref="page" {...this.props}>
       <div id={style.titleContainer}>
@@ -28,7 +34,7 @@ class CompetitorsList extends React.Component {
           <div id={style.saveChanges}>See Organizations</div>
         </div>
       </div>
-      <Box title="Competitors"
+      <Box admin={true} title="Competitors"
       content=
       {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>

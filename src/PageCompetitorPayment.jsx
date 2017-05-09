@@ -3,7 +3,7 @@ import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
@@ -32,8 +32,7 @@ export default class PageCompetitorPayment extends React.Component {
 
     componentDidMount() {
         /* Call the API for competition info */
-        fetch(`/api/competitors/${this.competitor_id}`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/competitors/${this.competitor_id}`)
           .then(json => { 
               // update the state of our component
               this.setState({ competitor : json })
@@ -44,8 +43,7 @@ export default class PageCompetitorPayment extends React.Component {
           .catch(err => { alert(err); console.log(err)})
 
     /* Call the API for competition info */
-        fetch(`/api/competition/${this.competition_id}`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/competition/${this.competition_id}`)
           .then(json => { 
               // update the state of our component
               this.setState({ competition : json })
@@ -57,8 +55,7 @@ export default class PageCompetitorPayment extends React.Component {
 
 
           /* Call the API for competitor payment info */
-        fetch(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
           .then(json => { 
               // update the state of our component
               this.setState({ payment_record : json })
@@ -84,13 +81,13 @@ export default class PageCompetitorPayment extends React.Component {
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.full_label}>
-                            Last payment change: 
+                            Last Payment Change: 
                             {this.state.payment_record.timestamp}
                         </label>
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.full_label}>
-                            Registration time: 
+                            Registration Time: 
                             {/*todo*/}
                             {this.state.payment_record.timestamp}
                         </label>
@@ -103,17 +100,17 @@ export default class PageCompetitorPayment extends React.Component {
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.long_label}>
-                            Paying online
+                            Paying Online
                         </label><br />
                         <br /><input type="radio" name="online" value = "true" /> True <br />
                         <input type="radio" name="online" value = "false" /> False 
                     </div>
                     <div className = {styles.form_row}>
                         <label className = {styles.long_label}>
-                            Paying With Affiliation<br />
+                            Paying with Organization<br />
                         </label><br />
-                        <br /><input type="radio" name="affiliation" value = "true" /> True <br />
-                        <input type="radio" name="affiliation" value = "false" /> False
+                        <br /><input type="radio" name="organization" value = "true" /> True <br />
+                        <input type="radio" name="organization" value = "false" /> False
                     </div>
                     <div className = {styles.form_row}>
                         <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
@@ -130,7 +127,7 @@ export default class PageCompetitorPayment extends React.Component {
                 </div>
                     <div>
                     <div className={styles.infoBoxExpanded}>
-                    <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
+                    <Box admin={true} title={<div className={styles.titleContainers}><span>Competitor Payment Info</span> 
                                     
                                 </div>} 
                         content={comp_info}/>

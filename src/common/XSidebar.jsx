@@ -31,9 +31,14 @@ export default class OurSidebar extends React.Component {
 
     return [
 
-      isAuthenticated &&
+      isAuthenticated && !isAdmin &&
       <Link key={0} to={"/competitions"}>
-        Explore Competitions
+        All Competitions
+      </Link>,
+
+      isAuthenticated && isAdmin &&
+      <Link key={3} to={"/admin/competitions"}>
+        All Competitions
       </Link>,
 
       competition_selected &&
@@ -42,7 +47,7 @@ export default class OurSidebar extends React.Component {
       </h5></span>,
 
       !isAdmin && competition_selected &&
-      <Link key={2} to={`/competition/${competition_id}/0`}>
+      <Link key={2} to={`/competition/${competition_id}/1`}>
         - Competition Information
       </Link>,
 
@@ -67,12 +72,12 @@ export default class OurSidebar extends React.Component {
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={8} to={`/affiliationpayment/0/0`}>
-        - Affiliation Payment
+      <Link key={8} to={`/organizationpayment/1/1`}>
+        - Organization Payment
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={9} to={`/competition/${competition_id}/regcompetitor/0`}>
+      <Link key={9} to={`/competition/${competition_id}/regcompetitor/1`}>
         - Register Competitor
       </Link>
 
@@ -88,12 +93,7 @@ export default class OurSidebar extends React.Component {
 
     return [
 
-      isAdmin &&
-      <Link key={8} to="admin/competitions">
-        Manage Competitions
-      </Link>,
-
-      isAuthenticated &&
+      isAuthenticated && !isAdmin &&
       <Link key={2} to='/editprofile'>
         Edit Profile
       </Link>,

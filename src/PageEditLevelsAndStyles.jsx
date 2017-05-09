@@ -1,3 +1,10 @@
+/* 
+ * EDIT LEVELS AND STYLES  
+ *
+ * This page allows admins to define the levels and styles they will
+ * support at their competition, as well as the order in which they should
+ * occur by default
+ */
 
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
@@ -5,7 +12,7 @@ import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -34,7 +41,7 @@ class EditLevelsAndStyles extends React.Component {
                 <div className={style.infoTable}>
 
         <div className={style.editLnSBox}>
-            <Box title={
+            <Box admin={true} title={
                          <div>
                               <div id={style.dragAndDropTitle}>Levels</div>
                          </div>
@@ -47,7 +54,7 @@ class EditLevelsAndStyles extends React.Component {
             />
         </div>
         <div className={style.editLnSBox}>
-            <Box title={
+            <Box admin={true} title={
                          <div>
                               <div id={style.dragAndDropTitle}>Styles</div>
                          </div>

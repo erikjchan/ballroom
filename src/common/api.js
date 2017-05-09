@@ -1,14 +1,21 @@
 
+let log = (x) => {console.log(x); return x}
+
 export default class API {
   constructor (profile) {
     this.profile = profile
-    console.log("New API with profile", profile)
   }
 
   get(route) {
+    console.log(` API GET: ${route}`)
     return fetch(route)
       /** Parse the result */
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
+        else throw new Error('GET RESPONSE not ok')
+      })
       /** Something went wrong */
       .catch(err => { alert(err); console.log(err)})
   }
@@ -21,6 +28,10 @@ export default class API {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(obj)
+    })
+    .then(response => {
+      if (response.ok) return response.json()
+      else throw new Error('POST RESPONSE not ok')
     })
     /** Something went wrong */
     .catch(err => { alert(err); console.log(err)})

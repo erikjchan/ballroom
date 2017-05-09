@@ -1,3 +1,9 @@
+/* 
+ * ENTER CALLBACKS
+ *
+ * This page allows admins to add callbacks for selected round
+ */
+
 import styles from "./style.css"
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
@@ -58,8 +64,6 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   handleChange(event) {
-    console.log("DOING THING CHANGE")
-    console.log(this);
     this.setState({value: event.target.value});
   }
 
@@ -85,8 +89,7 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   componentDidMount() {
-      fetch(`/api/judges`)
-        .then(response => response.json()) // parse the result
+      this.props.api.get(`/api/judges`)
         .then(json => {
             // update the state of our component
             var judges = []

@@ -120,7 +120,13 @@ class CompetitionsTable extends React.Component {
       fetch("api/competitions/1/unregistered")
 		   .then(response => response.json())
 		   .then(json => {
-             this.rows = json;
+          this.rows = json;
+          for (let i = 0; i < this.rows.length; i++) {
+            this.rows[i].regularprice = "$" + (this.rows[i].regularprice || 0);
+            this.rows[i].lateprice = "$" + (this.rows[i].lateprice || 0);
+            var startdate = new Date(this.competitions[i].startdate);
+            this.competitions[i].startdate = startdate.toUTCString();
+		    	}
 		     this.setState({ rows: json, }); 
 		 })
 		   .catch(err => alert(err));

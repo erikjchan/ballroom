@@ -1,3 +1,10 @@
+/*
+ * COMPETITION HOME PAGE (USERS)
+ *
+ * This page is the main hub for users when seeing information about
+ * a specific competition they have been registered for.
+ */
+
 
 import styles from "./style.css"
 import React from 'react'
@@ -31,43 +38,53 @@ export default class PageCompetition extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
-      .then(json => { 
+    this.props.api.get(`/api/competition/${this.competition_id}`)
+      .then(json => {
+        this.competition = json;
+        const startdate          = new Date(this.competition.startdate);
+        const enddate            = new Date(this.competition.enddate);
+        const regstartdate       = new Date(this.competition.regstartdate);
+        const earlyregdeadline   = new Date(this.competition.earlyregdeadline);
+        const regularregdeadline = new Date(this.competition.regularregdeadline);
+        const lateregdeadline    = new Date(this.competition.lateregdeadline);
+        this.competition.startdate = startdate.toUTCString();
+        this.competition.enddate = enddate.toUTCString();
+        this.competition.regstartdate = regstartdate.toUTCString();
+        this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
+        this.competition.regularregdeadline = regularregdeadline.toUTCString();
+        this.competition.lateregdeadline = lateregdeadline.toUTCString();
+
         // update the state of our component
         this.setState({ competition : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // and setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    /** Fetch competitor */
-    fetch(`/api/competitors/${this.competitor_id}`)
-      .then(response => {
-        return response.json()
-      })
+    /** Get competitor */
+    this.props.api.get(`/api/competitors/${this.competitor_id}`)
       .then(json => {
         this.setState({competitor: json})
         console.log(this.state.competitor)
       })
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
       .then(json => {
+
+        this.payment = json;
+        var timestamp = new Date(this.payment.timestamp);
+        this.payment.timestamp = timestamp.toUTCString();
+
+        // update the state of our component
         this.setState({competitor_paymentrecord: json})
         console.log(this.state.competitor_paymentrecord)
       })
       .catch(err => { alert(err); console.log(err)})
 
     /**  Call the API for events that the competitor is in */
-    fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(json => {
         console.log(json)
         for (let i = 0; i < json.length; i++) {
@@ -111,11 +128,12 @@ export default class PageCompetition extends React.Component {
                       <p><b>Email:</b> {this.state.competitor.email}</p>
                       <p><b>Organization:</b> {this.state.competitor.affiliationname}</p>
                       <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number}</p>
+                      <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp}</p>
                       <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount}</p>
-                      <p><b>Pay with Affiliation:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
+                      <p><b>Paying with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                       <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
-    
+
     var event_titles = (<div className={styles.lines}>
                           {this.state.competitor_events.sort(function (a, b){
                           return a.id - b.id}).map((event, i) => {
@@ -158,18 +176,19 @@ export default class PageCompetition extends React.Component {
           </div>
           <div className={styles.infoTables}>
             <div className={styles.infoBoxLeft}>
-              <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
-                             
-                          </div>} 
-                   content={comp_info}/>
+              <Box title={
+                <div className={styles.titleContainers}>
+                  <span>Competiton Info</span>
+                </div>}>
+                {comp_info}
+              </Box>
             </div>
             <div className={styles.infoBoxRight}>
-              <Box title={<div className={styles.titleContainers}><span>User Info</span> 
+              <Box title={<div className={styles.titleContainers}><span>User Info</span>
                             <Link to={`/editprofile`}>
                             <input type="button" className={styles.editBtns}
                                       value="Edit" /></Link>
-                          </div>}
-                    content={competitor_info}/>
+                          </div>}>{competitor_info}</Box>
             </div>
 
             <div className={styles.separators}></div>
@@ -177,32 +196,29 @@ export default class PageCompetition extends React.Component {
             <div className={styles.eventTableCompetitor}>
 
              <div className={styles.separators}></div>
-             <Box title={<div className={styles.titleContainers}><span>Your Events</span> 
-                             
-             </div>} 
-                   content={<div> 
+             <Box title={<div className={styles.titleContainers}><span>Your Events</span></div>}>
+
+             {<div>
                                 <div className={styles.eventtable_containers}>
                                 <EventTable events={this.state.competitor_events} />
                                 </div>
                               <div className = {styles.comp_containers}>
                               <div className = {styles.addeditBtns}>
-                              <button 
-                                className={styles.editBtns} 
-                                onClick={()=>{ browserHistory.push('competition/0/eventregistration') }}> 
+                              <button
+                                className={styles.editBtns}
+                                onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}>
                                   Add/Edit Event
                               </button>
                             </div>
-                              </div>              
+                              </div>
                    </div>
-                   }/>
+                   }</Box>
             </div>
-
-            <div className={styles.separator}></div>
       </div>
-                  
+
       </Page>
 
-    ); 
+    );
   }
   else {
     return <Page ref="page" {...this.props}></Page>

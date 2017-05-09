@@ -1,46 +1,50 @@
+/* 
+ * EDIT JUDGES  
+ *
+ * This page allows admins to define the information about the judges who will
+ * partake in the competition.
+ */
+
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';
 import lib from './common/lib.js'
 import Page from './Page.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import EventTable from './common/OfficialTable.jsx'
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
 import style from './style.css';
 import { browserHistory } from 'react-router';
+import crypto from 'crypto'
 
 // editofficial/:competition_id
 export default class EditOfficial extends React.Component {
   constructor(props) {
     super(props)
+    try {this.competition_id = parseInt(this.props.params.competition_id)}
+    catch (e) { alert('Invalid competition ID!') }
     this.state = {
       /** We will populate this w/ data from the API */
       competition: null,
       officials: [],
-      official:[]
+      official: {
+                    firstname:'',
+                    lastname:'',
+                    email:'',
+                    phonenumber: '',
+                    token:'',
+                    competitionid: this.competition_id,
+                }
     }
-
-
-    this.state.official = 
-        {'name':'',
-        'email':'',
-        'number': '',
-        'position':''
-        }
-    
-
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {this.competition_id = parseInt(this.props.params.competition_id)}
-    catch (e) { alert('Invalid competition ID!') }
   }
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
         this.setState({ competition : json })
@@ -50,10 +54,12 @@ export default class EditOfficial extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/competition/${this.competition_id}/judges`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}/judges`)
       .then(json => {
         // update the state of our component
+        json.map(item => {
+            item.name = item.firstname+" "+item.lastname
+        })
         this.setState({ officials : json })
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
@@ -63,19 +69,43 @@ export default class EditOfficial extends React.Component {
 
   }
 
-  onRemove(id) {
-      if (!confirm("Are you sure you want to delete this?")) {
+  onRemove(rowData) {
+      if (!confirm('Are you sure you want to delete the judge?\n'+
+                        "  id: "+rowData.id + "\n"+
+                        "  name: "+rowData.firstname+" "+rowData.lastname+"\n"+
+                        "  email: "+rowData.email+"\n"+
+                        "  phone: "+rowData.phonenumber+"\n"
+                        )) {
           return false;
       }
-      const rows = cloneDeep(this.state.officials);
-      const idx = findIndex(rows, { id });
-
-      // this could go through flux etc.
-      rows.splice(idx, 1);
-
-      this.setState({ officials: rows });
+      fetch("/api/delete_judge", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: rowData.id
+            })
+        }).then(() => {
+            window.location.reload();
+        });
   }
-
+  addOfficial(event){
+      var official = this.state.official
+      official.token = crypto.randomBytes(16).toString('hex');
+      console.log(this.state.official)
+      fetch("/api/create_judge", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(official)
+        }).then(() => {
+            window.location.reload();
+        });
+  }
 
 
   /********************************** Render **********************************/
@@ -95,46 +125,46 @@ export default class EditOfficial extends React.Component {
 
             return (<Page ref="page" {...this.props}>
 
-                <h1>Edit Official: {this.state.competition.Name}</h1>
-                <Box title={"Add Official"}
+                <h1>Edit Official: {this.state.competition.name}</h1>
+                <Box admin={true} title={"Add Official"}
                         content ={
-                    <div className={style.lines}>
-                        <form>
+                <div className={style.lines}>
                 <div >
                     <label>
-                        Official Name: <br />
-                        <input type="text" name="name" size = '20'
-                               value = {this.state.official.name} 
-                               onChange = {(e) => { var o = this.state.official; o.name = e.value; this.setState({official: o});}}
+                        First Name: <br />
+                        <input type="text" name="firstname" size = '20'
+                               value = {this.state.official.firstname} 
+                               onChange = {(e) => { var o = this.state.official; o.firstname = e.target.value; this.setState({official: o});}}
+                        />
+                    </label>
+                    <label>
+                         Last Name: <br />
+                        <input type="text" name="lastname" size = '20'
+                               value = {this.state.official.lastname} 
+                               onChange = {(e) => { var o = this.state.official; o.lastname = e.target.value; this.setState({official: o});}}
                         />
                     </label>
                     <label>
                         Email:<br />
                         <input type="text" name="email" size = '20'
                                value = {this.state.official.email}  
-                               onChange = {(e) => { var o = this.state.official; o.email = e.value; this.setState({email: o});}} 
+                               onChange = {(e) => { var o = this.state.official; o.email = e.target.value; this.setState({email: o});}} 
                         />
                     </label>
                     <label>
-                        Number:<br />
-                        <input type="tel" name="number" size = '10'
-                               value = {this.state.official.number}  
-                               onChange = {(e) => { var o = this.state.official; o.number = e.value; this.setState({number: o});}} 
-                        />
-                    </label>
-                    <label>
-                        Position:<br />
-                        <input type="text" name="position" size = '20'
-                               value = {this.state.official.position}  
-                               onChange = {(e) => { var o = this.state.official; o.position = e.value; this.setState({position: o});}} 
+                        Phone:<br />
+                        <input type="tel" name="phonenumber" size = '10'
+                               value = {this.state.official.phonenumber}  
+                               onChange = {(e) => { var o = this.state.official; o.phonenumber = e.target.value; this.setState({number: o});}} 
                         />
                     </label>
                 </div>
-                <input className = {style.judgeEditBtns} type="submit" value="Save Changes" />
-            </form>
+                <button className = {style.judgeEditBtns}
+                       onClick={this.addOfficial.bind(this)}>Save Changes</button>
                     </div>} />
 
                 <Box
+                admin={true} 
                 title = "Officials"
                 content = {
                     <EventTable
@@ -144,7 +174,7 @@ export default class EditOfficial extends React.Component {
                 <div>
                 <div>
                 <span
-                  onClick={() => this.onRemove(rowData.id)}
+                  onClick={() => this.onRemove(rowData)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop
