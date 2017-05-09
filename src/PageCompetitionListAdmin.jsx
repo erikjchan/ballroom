@@ -1,26 +1,21 @@
 /* 
  * COMPETITIONS LIST (ADMINS)
  *
- * This page will be used by users to see all the competitions they have created,
+ * This page will be used by admins to see all the competitions they have created,
  * as well as to create new competitions
  */
 
-
-import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
-import lib from './common/lib.js';
-import Page from './Page.jsx';
-import Autocomplete from 'react-autocomplete';
+import { DragDropContext } from 'react-dnd';
 import { browserHistory } from 'react-router';
-import classnames from 'classnames';
+import HTML5Backend from 'react-dnd-html5-backend';
+import style from "./style.css";
+import Page from './Page.jsx';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/BoxAdmin.jsx'
 import { selectCompetition } from './actions'
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
-// admin/competitions
 class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)
@@ -56,7 +51,8 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    // this.props.dispatch(selectCompetition(competition))
+    console.log(competition)
+    this.props.dispatch(selectCompetition(competition))
     browserHistory.push('/admin/competition/' + competition.id)
   }
 
@@ -79,11 +75,10 @@ class PageCompetitionList extends React.Component {
 
     // TODO; filter to only my competitions
 
-    const rows = this.state.competitions.map(row => {
-      row['Select'] = <button
+    const rows = this.state.competitions.map((row, id) => {
+      return Object.assign({id}, row, { Select: <button
         className = {style.search}
-        onClick = {() => this.browseCompetition(row)}>Browse</button>;
-      return row
+        onClick = {() => this.browseCompetition(row)}>Browse</button>})
     })
 
     return <Table.Provider

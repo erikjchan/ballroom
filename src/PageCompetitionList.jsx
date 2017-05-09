@@ -7,18 +7,16 @@
 
 import style from "./style.css";
 import React from 'react';
+import { browserHistory } from 'react-router';
+import classnames from 'classnames';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import * as Table from 'reactabular-table';
 import lib from './common/lib.js';
 import Page from './Page.jsx';
-import Autocomplete from 'react-autocomplete';
-import { browserHistory } from 'react-router';
-import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/Box.jsx'
 import { selectCompetition } from './actions'
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-// max flow overflow hidden for scrollbar
 
 
 // competitions
@@ -54,6 +52,7 @@ class PageCompetitionList extends React.Component {
       // connection comes back
       .catch(err => alert(`There was an error fetching the competitions`))
   }
+
   /**
    * Selects a competition for browsing.
    * All sidebar links will now point to pages
@@ -106,8 +105,8 @@ class PageCompetitionList extends React.Component {
     }
     ]
 
-    const rows = this.state.competitions.map(row => {
-      return Object.assign({}, row, { Select: <button
+    const rows = this.state.competitions.map((row, id) => {
+      return Object.assign({id}, row, { Select: <button
         className = {style.search}
         onClick = {() => this.browseCompetition(row)}>Browse</button>})
     })
