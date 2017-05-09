@@ -2,14 +2,20 @@ import express from 'express';
 const app = express();
 const data = require('./api/data')
 const ip = require('ip');
-const query          = require('./query')
-const query2          = require('./query2')
+const query = require('./query')
+const query2 = require('./query2')
 const bodyParser = require("body-parser")
 const test = require('./test')
 const path = require('path')
 const jwt = require('express-jwt');
 const ManagementClient = require('auth0').ManagementClient;
 const AuthenticationClient = require('auth0').AuthenticationClient;
+
+const DEBUG_LEVEL = 1;
+
+const log_debug = level => msg => {
+    if (DEBUG_LEVEL === level) console.log(msg)
+}
 
 /******************************* AUTHORIZATION *******************************/
 
@@ -56,13 +62,25 @@ app.use(bodyParser.json());
  res.send({status: 'posted'})
  })*/
 
+ app.post('/api/create_user', (req, res) => {
+    const { first_name, last_name, email, mailing_address } = req.body
+
+    // TODO, create user, include Auth0 ID
+
+    // TODO, update Auth0 metadata to include user's competitor id
+
+    // send back the created competitor
+    res.send({})
+
+ });
+
 app.post('/api/create_partnership', (req, res) => {
     const leadcompetitorid = parseInt(req.body.leadcompetitorid)
     const followcompetitorid = parseInt(req.body.followcompetitorid)
     const eventid = parseInt(req.body.eventid)
     const competitionid = parseInt(req.body.competitionid)
     query2.create_partnership(leadcompetitorid, followcompetitorid, eventid, competitionid).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -75,7 +93,7 @@ app.post('/api/delete_partnership', (req, res) => {
     const followcompetitorid = parseInt(req.body.followcompetitorid)
     const eventid = parseInt(req.body.eventid)
     query2.delete_partnership(leadcompetitorid, followcompetitorid, eventid).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -85,119 +103,119 @@ app.post('/api/delete_partnership', (req, res) => {
 
 app.post('/api/competition/generateRounds', (req, res) => {
     query.create_rounds_for_events_for_competition(req.body.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.end(value);
     });
 });
 
 app.post('/api/competition/updateEvents', (req, res) => {
     query.update_events_for_competition(req.body).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.end(value);
     });
 });
 
 app.post('/api/competition/updateLevelsStyles', (req, res) => {
     query.update_levels_and_styles_for_competition(req.body).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.end(value);
     });
 });
 
 app.post('/api/competition/updateRounds', (req, res) => {
     query.update_rounds_for_competition(req.body).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.end(value);
     });
 });
 
 app.post('/api/competition/updateCompetitionInfo', (req, res) => {
     query.update_competition_info(req.body).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.end(value);
     });
 });
 
 app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
     query.update_competition_current_round_id(req.body).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.end(value);
     });
 });
 
 app.get('/api/competition/:id', (req, res) => {
     query.get_competition_info(req.params.id).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value[0]);
     });
 })
 
 app.get('/api/competition/:cid/affiliations', (req, res) => {
     query.get_affiliations_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/competitors', (req, res) => {
     query.get_competitors_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/competitors_styles', (req, res) => {
     query.get_num_competitors_per_style_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/events', (req, res) => {
     query.get_events_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/judges', (req, res) => {
     query.get_judges_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/levels', (req, res) => {
     query.get_levels_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     query2.get_styles_for_competition_level(req.params.cid, req.params.lid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/level/:lid/style/:sid', (req, res) => {
     query2.get_events_for_competition_level_style(req.params.cid, req.params.lid, req.params.sid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/rounds', (req, res) => {
     query.get_rounds_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competition/:cid/styles', (req, res) => {
     query.get_styles_for_competition(req.params.cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -205,21 +223,21 @@ app.get('/api/competition/:cid/styles', (req, res) => {
 app.get('/api/competitors/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_competitor_by_id(req.params.id).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value[0]);
     });
 })
 
 app.get('/api/competitors/', (req, res) => {
     query2.get_all_competitors().then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competitors/round/:rid', (req, res) => {
     query.get_competitors_for_round(req.params.rid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -234,14 +252,14 @@ app.get('/api/competitors/:id/:cid/events', (req, res) => {
     const id = parseInt(req.params.id)
     const cid = parseInt(req.params.cid)
     query2.get_comfirmed_partnerships_by_competition_competitor(cid, id).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/competitions', (req, res) => {
     query.get_competitions().then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -249,14 +267,14 @@ app.get('/api/competitions', (req, res) => {
 app.get('/api/competitions/:cid', (req, res) => {
     const cid = parseInt(req.params.cid)
     query.get_your_competitions(cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 app.get('/api/competitions/:cid/unregistered', (req, res) => {
     const cid = parseInt(req.params.cid)
     query.get_other_competitions(cid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -283,7 +301,7 @@ app.get('/api/event/:rid/rounds', (req, res) => {
 
 app.get('/api/affiliations', (req, res) => {
     query.get_affiliations().then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -307,7 +325,7 @@ app.get('/api/organizations', (req, res) => {
 
 app.get('/api/payment_records', (req, res) => {
     query2.get_all_paymentrecords().then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -315,7 +333,7 @@ app.get('/api/payment_records', (req, res) => {
 app.get('/api/payment_records/competition/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_paymentrecords_by_competition(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -323,7 +341,7 @@ app.get('/api/payment_records/competition/:id', (req, res) => {
 app.get('/api/payment_records/competitor/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_paymentrecords_by_competitior(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -332,7 +350,7 @@ app.get('/api/payment_records/:competitionid/:competitorid', (req, res) => {
     const competitionid = parseInt(req.params.competitionid)
     const competitorid = parseInt(req.params.competitorid)
     query2.get_paymentrecord_by_competition_competitor(competitionid, competitorid).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value[0]);
     });
 })
@@ -344,14 +362,14 @@ app.get('/api/callbacks', (req, res) => {
 
 app.get('/api/admins', (req, res) => {
     query.get_all_admins().then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
 
 app.get('/api/judges/:jid', (req, res) => {
     query.get_judge(req.params.jid).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -378,7 +396,7 @@ app.get('/api/', (req, res) => {
 /************************ TEST PATHS *************************/
 app.get('/test/competitors', (req, res) => {
     query2.get_all_competitors().then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -386,7 +404,7 @@ app.get('/test/competitors', (req, res) => {
 app.get('/test/competitors/competition/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_competitors_by_competition(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -394,7 +412,7 @@ app.get('/test/competitors/competition/:id', (req, res) => {
 app.get('/test/competitors/id/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_competitor_by_id(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -402,7 +420,7 @@ app.get('/test/competitors/id/:id', (req, res) => {
 app.get('/test/competitors/email/:email', (req, res) => {
     const email = req.params.email
     query2.get_competitor_by_email(email).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         query2.check_competitor_email_exist(email).then(function (value2) {
             console.log(value2);
             res.send({query_result: value, check_if_exists: value2});
@@ -418,7 +436,7 @@ app.get('/test/competitors/insert/:email/:firstname/:lastname/:mailingaddress/:a
     const mailingaddress = req.params.mailingaddress
     const password = req.params.password
     query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationid, password).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -436,7 +454,7 @@ app.get('/test/competitors/update/email/:email/:firstname/:lastname/:mailingaddr
     const hasregistered = parseInt(req.params.hasregistered)
     query2.update_competitor_by_email(email, firstname, lastname, mailingaddress, affiliationid, password, hasregistered)
         .then(function (value) {
-                console.log(value);
+                log_debug(2)(value)
                 res.send(value);
             },
             function (err){
@@ -454,7 +472,7 @@ app.get('/test/competitors/update/id/:id/:firstname/:lastname/:mailingaddress/:a
     const hasregistered = parseInt(req.params.hasregistered)
     query2.update_competitor_by_id(id, firstname, lastname, mailingaddress, affiliationid, password, hasregistered)
         .then(function (value) {
-                console.log(value);
+                log_debug(2)(value)
                 res.send(value);
             },
             function (err){
@@ -464,7 +482,7 @@ app.get('/test/competitors/update/id/:id/:firstname/:lastname/:mailingaddress/:a
 
 app.get('/test/payment_records', (req, res) => {
     query2.get_all_paymentrecords().then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -472,7 +490,7 @@ app.get('/test/payment_records', (req, res) => {
 app.get('/test/payment_records/competition/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_paymentrecords_by_competition(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -480,7 +498,7 @@ app.get('/test/payment_records/competition/:id', (req, res) => {
 app.get('/test/payment_records/competitor/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_paymentrecords_by_competitior(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -489,7 +507,7 @@ app.get('/test/payment_records/:competitionid/:competitorid', (req, res) => {
     const competitionid = parseInt(req.params.competitionid)
     const competitorid = parseInt(req.params.competitorid)
     query2.get_paymentrecord_by_competition_competitor(competitionid, competitorid).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -501,7 +519,7 @@ app.get('/test/payment_records/insert/:competitionid/:competitorid/:amount/:onli
     const online = parseInt(req.params.online)
     const paidwithaffiliation = parseInt(req.params.paidwithaffiliation)
     query2.create_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -516,7 +534,7 @@ app.get('/test/payment_records/update/:competitionid/:competitorid/:amount/:onli
     const online = parseInt(req.params.online)
     const paidwithaffiliation = parseInt(req.params.paidwithaffiliation)
     query2.update_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -526,7 +544,7 @@ app.get('/test/payment_records/update/:competitionid/:competitorid/:amount/:onli
 
 app.get('/test/partnerships/', (req, res) => {
     query2.get_all_partnerships().then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -534,7 +552,7 @@ app.get('/test/partnerships/', (req, res) => {
 app.get('/test/partnerships/competitor/:id', (req, res) => {
     const id = parseInt(req.params.id)
     query2.get_partnerships_by_competitor(id).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -543,7 +561,7 @@ app.get('/test/partnerships/competition/:competitionid/competitor/:competitorid'
     const competitionid = parseInt(req.params.competitionid)
     const competitorid = parseInt(req.params.competitorid)
     query2.get_partnerships_by_competition_competitor(competitionid, competitorid).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -553,7 +571,7 @@ app.get('/test/partnerships/lead/:competitiorid1/follow/:competitorid2/event/:ev
     const competitorid2 = parseInt(req.params.competitorid2)
     const eventid = parseInt(req.params.eventid)
     query2.get_partnership(competitiorid1, competitorid2, eventid).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -561,7 +579,7 @@ app.get('/test/partnerships/lead/:competitiorid1/follow/:competitorid2/event/:ev
 app.get('/test/partnerships/event/:eventid', (req, res) => {
     const eventid = parseInt(req.params.eventid)
     query2.get_partnerships_by_event(eventid).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -570,7 +588,7 @@ app.get('/test/partnerships/competition/:cid/number/:number', (req, res) => {
     const cid = parseInt(req.params.cid)
     const number = parseInt(req.params.number)
     query2.get_partnership_by_number(cid, number).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -579,7 +597,7 @@ app.get('/test/partnerships/comfirmed/event/:eventid', (req, res) => {
     const eventid = parseInt(req.params.eventid)
     console.log("here")
     query2.get_comfirmed_partnerships_by_event(eventid).then(function (value) {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 })
@@ -590,7 +608,7 @@ app.get('/test/partnerships/insert/:leadcompetitorid/:followcompetitorid/:eventi
     const eventid = parseInt(req.params.eventid)
     const competitionid = parseInt(req.params.competitionid)
     query2.create_partnership(leadcompetitorid, followcompetitorid, eventid, competitionid).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -608,7 +626,7 @@ app.get('/test/partnerships/update/:leadcompetitorid/:followcompetitorid/:eventi
     const calledback = parseInt(req.params.calledback)
     const number = parseInt(req.params.number)
     query2.update_partnership(leadcompetitorid, followcompetitorid, eventid, leadconfirmed, followconfirmed, calledback, number).then(function (value) {
-            console.log(value);
+            log_debug(2)(value)
             res.send(value);
         },
         function (err){
@@ -729,7 +747,7 @@ const server = app.listen(port, () => {
 /****************TEST *****************/
 app.get('/api/querytest', (req, res) => {
     test.get_test_result(req.body).then(value => {
-        console.log(value);
+        log_debug(2)(value)
         res.send(value);
     });
 });

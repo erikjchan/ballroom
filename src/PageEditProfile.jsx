@@ -1,7 +1,6 @@
 import styles from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
-import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
 import Box from './common/Box.jsx'
 import BoxAdmin from './common/BoxAdmin.jsx'

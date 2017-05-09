@@ -25,7 +25,7 @@ import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
 import AffiliationPayment   from '../PageAffiliationPayment.jsx'
 import QueryTest            from '../../test.js'
-
+import PageNewUser          from '../PageNewUser.jsx'
 /**
  * Semantics:
  *   User pages can be accessed by 'user', 'judge' and 'admin'
@@ -56,7 +56,8 @@ const routes = {
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
   'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
-  'querytest'                                                 : Any(QueryTest)
+  'querytest'                                                  : Any(QueryTest),
+  'newuser'                                                    : User(PageNewUser),
 }
 
 export default (

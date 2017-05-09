@@ -10,6 +10,7 @@ import { selectCompetition } from '../actions'
  * Note, this not only handles authorization, but it also
  * connects the page to redux. It's a little two-in-one
  * connection and authorization wrapper idk ¯\_(ツ)_/¯
+ * Note 2, now deals with more things lol
  */
 const Authorization = allowedRoles => WrappedComponent => {
 
@@ -18,6 +19,10 @@ const Authorization = allowedRoles => WrappedComponent => {
       super(props)
     }
 
+    /**
+     * @return true if user has permission to view
+     * this page, false otherwise.
+     */
     hasPermission() {
       if (allowedRoles === Authorization.ALL) return true;
 
@@ -30,26 +35,37 @@ const Authorization = allowedRoles => WrappedComponent => {
       return permission
     }
 
-    // TO persist state across urls
+    /**
+     * @return true if user doesn't have a competitor id
+     * associated with it. Means its a new user
+     */
+    userIsNew() {
+      return (this.props.profile.app_metadata && this.props.profile.app_metadata.competitor_id) !== undefined ||
+             (this.props.profile.app_metadata && this.props.profile.app_metadata.competitor_id) !== null
+    }
+
+    /**
+     * Ensure selected competition isnt lost
+     */
     componentDidMount() {
-      if (localStorage.getItem('competition')) {
+      if (!this.props.selected.competition && localStorage.getItem('competition')) {
         const competition = JSON.parse(localStorage.getItem('competition'))
         this.props.dispatch(selectCompetition(competition))
       }
     }
 
     componentWillMount() {
+      /** This is a new user! Continue the profile setup process */
+      if (this.userIsNew()) browserHistory.push('/newuser')
+
+      /** Continue if we have permission */
       if (this.hasPermission()) return;
+
+      /** No permission. Don't allow the user to continue. */
       browserHistory.push('/?msg=permission_denied')
     }
   
-    render() {
-      if (this.hasPermission()) {
-        return <WrappedComponent {...this.props} />
-      } else {
-        return <h1> Permission denied </h1>
-      }
-    }
+    render() { return <WrappedComponent {...this.props} /> }
   }
 
   return connection(WithAuthorization)
