@@ -359,8 +359,14 @@ export default class RunCompetition extends React.Component {
         {/*<div className="container admin">
           <h2>Upcoming rounds</h2>
           {future_rounds_table}
-        </div>*/}       
-        <Link to={`/competition/${this.competition_id}/editschedule`}>Edit schedule</Link>
+        </div>*/}
+
+        <div id={style.createContainer}>
+            <div id={style.saveChanges} 
+              onClick={
+                () => this.props.router.push(`/competition/${this.competition_id}/editschedule`)}>Edit Schedule</div>
+        </div>
+
 
     </Page>
    )

@@ -5,7 +5,7 @@
  * for, as well as to register for new competitions
  */
 
-import style from "./style.css";
+import styles from "./style.css";
 import React from 'react';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
@@ -106,7 +106,7 @@ class PageCompetitionList extends React.Component {
 
     const rows = this.state.competitions.map((row, id) => {
       return Object.assign({id}, row, { Select: <button
-        className = {style.search}
+        className = {styles.search}
         onClick = {() => this.browseCompetition(row)}>Browse</button>})
     })
 
@@ -124,7 +124,7 @@ class PageCompetitionList extends React.Component {
   render() {
     return (
      	<Page ref="page" {...this.props}>
-        <div className={style.content}>
+        <div className={styles.content}>
          	<h1>Competitions Page</h1>
             <Box title="Your Competitions">
               {this.getYourCompetitionsTable()}
@@ -132,7 +132,7 @@ class PageCompetitionList extends React.Component {
           <hr />
         	<div>
             <Box title="Other Competitions">
-              <div id={style.otherCompetitionsTable}>
+              <div id={styles.otherCompetitionsTable}>
                 <CompetitionsTable />
               </div>
             </Box>

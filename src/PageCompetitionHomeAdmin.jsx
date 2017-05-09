@@ -277,7 +277,7 @@ populate_expanded(box_name, lines_react, link){
         <button 
         className = {styles.searchBtn}
         onClick={() => {
-                        browserHistory.push({ //browserHistory.push should also work here
+                        browserHistory.push({
                           pathname: "/competition/"+this.competition_id+"/competitorslist",
                           state: {query: {name: this.state.keyword}}
                         }); 
@@ -369,22 +369,24 @@ populate_expanded(box_name, lines_react, link){
     var num = 6
     return (
       <Page ref="page" {...this.props}>
-          <div className={styles.title}>
-            <p>{comp_name}</p>
-          </div>
+          <h1>{comp_name}</h1>
           <div className={styles.infoTable}>
              {this.populate("Competiton Info", dict["Competiton Info"], num, links["Competiton Info"])}
               {this.populate("Judges", dict["Judges"], num, links["Judges"])}
-            <div className={styles.separator}></div>
+          <div className={styles.separator}></div>
             {this.populate("Events", dict["Events"], num, links["Events"])}
             {this.populate("Schedule", dict["Schedule"], num, links["Schedule"])}
-            <div className={styles.separator}></div>
+          <div className={styles.separator}></div>
              {this.populate("Competitors", dict["Competitors"], num, links["Competitors"])}
              {this.populate("Organizations", dict["Organizations"], num, links["Organizations"])}
-            <div className={styles.separator}></div>
+          <div className={styles.separator}></div>
           </div>
-          <button className={styles.runBtn} 
-              onClick={() => {window.location.href = "/competition/"+this.competition_id+"/run";}}>Run Competition</button>
+
+          <div id={styles.createContainer}>
+            <div id={styles.saveChanges} 
+              onClick={
+                () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition</div>
+          </div>
       </Page>
     ); 
   }
