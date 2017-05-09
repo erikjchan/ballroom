@@ -39,29 +39,43 @@
   box-shadow: 0px 4px 10px #444444;
 }
 
-.runBtn{
-	background-color: #606776;
-  color: white;
-	font-size: 24px;
-	padding: 10px;
-	width: auto;
-	height: auto;
-	border-radius: 20px;
-	box-shadow: 0px 5px 8px black;
-  /*display: block;
-	float: right;*/
+.runBtn {
+  float: right;
+  background-color: white;
+  color: black;
+  opacity: 0.5;
+  font-size: 20px;
+  padding: 6px;
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
   margin-left: 78%;
   margin-bottom: 40px;
 }
 
 .searchBtn{
-  background-color: #606776;
-  color: white;
-	/*font-size: 24px;
-	padding: 10px;*/
+  display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 0;
+  border: 0;
+  text-align: center;
+  box-shadow: 0px 2px 5px #444444;
+
+  /*background-color: white;
+  color: black;
+	font-size: 24px;
 	width: auto;
 	height: auto;
-	border-radius: 5px;
+	border-radius: 5px;*/
 }
 
 .titleContainer{
@@ -127,6 +141,20 @@ Start
 
 #buttonsContainer > div {
   display: inline-block;
+  font-size: 18pt;
+  box-sizing: border-box;
+  border: solid black 1px;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #365D82;
+  color: white;
+}
+
+#createContainer {
+  float: right;
+}
+
+#createContainer > div {
   font-size: 18pt;
   box-sizing: border-box;
   border: solid black 1px;
@@ -421,7 +449,7 @@ End
   /*border: 4px solid #7F7F7F;*/
   /*border-radius: 8px;*/
   width: 50%;
-  height: 340px;
+  height: auto;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
@@ -433,7 +461,7 @@ End
   /*border: 4px solid #7F7F7F;*/
   /*border-radius: 8px;*/
   width: 50%;
-  height: 340px;
+  height: auto;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
@@ -522,7 +550,9 @@ End
 }
 
 .comp_containers{
-  padding:60px;
+  padding-top: 30px;
+  padding-right: 30px;
+  padding-bottom: 60px;
 }
 
 .eventtable_containers{
@@ -549,18 +579,6 @@ End
   height: 0;
   width: 0;
 }
-
-/*.runBtn{
-  background-color: #E7B6A4;
-  font-size: 24px;
-  padding: 10px;
-  width: auto;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 5px 8px black;
-  float: right;
-  margin-right: 40px;
-}*/
 
 .titleContainer{
   vertical-align: middle; 

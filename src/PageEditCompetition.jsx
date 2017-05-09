@@ -68,6 +68,26 @@ export default class PageEditCompetition extends React.Component {
         });
     }
 
+//   validateForm = function(event) {
+//       // event.preventDefault();
+// 	var a = document.forms["compform"]["name"].value;
+
+//     var b=document.forms["compform"]["location"].value;
+
+//     if ((a==null || a=="")  ) {
+//         alert("Please enter a valid restaurant name");
+//         return false;
+//     }
+//     var n =a.length;
+//     var m=b.length;
+
+//     if(n>30){
+//         alert("Name is too long!");
+//         return false;
+
+//     }
+//   }
+
     render() {
         if (this.state.competition){
             var comp_name = this.state.competition.Name;
