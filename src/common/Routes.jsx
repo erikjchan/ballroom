@@ -25,12 +25,8 @@ import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
 import OrganizationPayment   from '../PageOrganizationPayment.jsx'
 import QueryTest            from '../../test.js'
-<<<<<<< HEAD
 import PageNewUser          from '../PageNewUser.jsx'
-=======
 import CompetitorPayment    from '../PageCompetitorPayment.jsx'
-
->>>>>>> 804213d0f3e1e89848b65c3a13726609f04be593
 /**
  * Semantics:
  *   User pages can be accessed by 'user', 'judge' and 'admin'
