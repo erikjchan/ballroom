@@ -100,16 +100,13 @@ class PageCompetitionList extends React.Component {
              <Box admin={true} title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
-        	<div>
-        <div className = {style.addeditBtns}>
-            <button 
-                className={style.editBtns} 
-                onClick={()=>{ browserHistory.push('/editcompetition/1/') }}> 
-                Create New Competition
-            </button>
-     	</div>
-          </div>
-       	</div>
+
+          <div id={style.createContainer}>
+            <div id={style.saveChanges} 
+              onClick={
+                () => this.props.router.push('/editcompetition/1/')}>Create New Competition</div>
+            </div>
+       	  </div>
       </Page>
      );
   }

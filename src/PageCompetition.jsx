@@ -131,7 +131,6 @@ export default class PageCompetition extends React.Component {
                       <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp}</p>
                       <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount}</p>
                       <p><b>Paying with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
-                      <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
 
     var event_titles = (<div className={styles.lines}>
@@ -197,22 +196,21 @@ export default class PageCompetition extends React.Component {
 
              <div className={styles.separators}></div>
              <Box title={<div className={styles.titleContainers}><span>Your Events</span></div>}>
-
-             {<div>
-                                <div className={styles.eventtable_containers}>
-                                <EventTable events={this.state.competitor_events} />
-                                </div>
-                              <div className = {styles.comp_containers}>
-                              <div className = {styles.addeditBtns}>
-                              <button
-                                className={styles.editBtns}
-                                onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}>
-                                  Add/Edit Event
-                              </button>
-                            </div>
-                              </div>
-                   </div>
-                   }</Box>
+              {<div>
+                  <div className={styles.eventtable_containers}>
+                    <EventTable events={this.state.competitor_events} />
+                  </div>
+                  <div className = {styles.comp_containers}>
+                    <div className = {styles.addeditBtns}>
+                      <button
+                        className={styles.editBtns}
+                        onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}>
+                          Add/Edit Event
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              }</Box>
             </div>
       </div>
 
