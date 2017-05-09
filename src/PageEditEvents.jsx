@@ -7,10 +7,9 @@
  */
 
 import React from 'react'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-
 import Page from './Page.jsx';
 import EventTable from './PageEditEvents/EventTable.jsx';
 import style from './style.css';
@@ -45,7 +44,7 @@ class EditEvents extends React.Component {
             }>Define Levels & Styles</div>
           </div>
         </div>
-          <Box title={box_title} content = {box_content} />
+          <Box admin={true} title={box_title} content = {box_content} />
       </Page>
     );
   }

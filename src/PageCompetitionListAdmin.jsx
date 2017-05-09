@@ -13,7 +13,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import style from "./style.css";
 import Page from './Page.jsx';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import { selectCompetition } from './actions'
 
 class PageCompetitionList extends React.Component {
@@ -97,7 +97,7 @@ class PageCompetitionList extends React.Component {
      	<Page ref="page" {...this.props}>
         <div className={style.content}>
          	<h1>Competitions Page</h1>
-             <Box title="All Competitions"
+             <Box admin={true} title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
         	<div>

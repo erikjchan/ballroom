@@ -8,7 +8,7 @@
 import styles from "./style.css"
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import Autocomplete from 'react-autocomplete'
 import { browserHistory } from 'react-router';
@@ -131,39 +131,44 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
   }
 
- populate(box_name, lines_react, max_line_num, link){
-   var ext;
-   if (max_line_num < lines_react.length){
-     ext = (
-       <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
-     )
-   }
-  var c = <div className={styles.lines}>
-            {lines_react.slice(0, max_line_num)}
-            {ext}
-        </div>
+  populate(box_name, lines_react, max_line_num, link){
+    var ext;
+    if (max_line_num < lines_react.length) {
+      ext = (
+        <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
+      )
+    }
+    var c = (
+      <div className={styles.lines}>
+              {lines_react.slice(0, max_line_num)}
+              {ext}
+      </div>
+    );
+
     return <div className={styles.infoBox}>
-      <Box title={<div className={styles.titleContainer}><span>{box_name}</span> 
-                      <button className={styles.editBtn} onClick={()=>{
-                          window.location.href = link;
-                        }}> Edit</button>
-                  </div>}
-      content={c}/>
+      <Box admin={true} title={<div className={styles.titleContainer}><span>{box_name}</span> 
+                        <button className={styles.editBtn} onClick={()=>{
+                            window.location.href = link;
+                          }}> Edit</button>
+                    </div>}>
+        {c}
+      </Box>
     </div>
- }
+  }
 
 populate_expanded(box_name, lines_react, link){
     return <div className={styles.infoBoxExpanded}>
-      <Box title={<div className={styles.titleContainer}>
-                      <button className={styles.returnBtn} 
-                              onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
-                      <span>{box_name}</span> 
-                      <button className={styles.editBtn} onClick={()=>{
-                                                  window.location.href = link;
-                                                  }}> Edit</button>
-                  </div>}
-      content={<div className={styles.lines}>
-                  {lines_react} </div>}/>
+      <Box admin={true} title={
+        <div className={styles.titleContainer}>
+          <button className={styles.returnBtn} 
+                  onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
+          <span>{box_name}</span> 
+          <button className={styles.editBtn} onClick={()=>{
+            window.location.href = link;
+            }}> Edit</button>
+        </div>}>
+        <div className={styles.lines}>{lines_react} </div>
+      </Box>
     </div>
  }
 

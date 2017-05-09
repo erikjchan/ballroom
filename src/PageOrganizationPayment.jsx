@@ -13,7 +13,7 @@ import React from 'react'
 import Select from 'react-select'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
@@ -174,7 +174,7 @@ class PageOrganizationPayment extends React.Component {
           <div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box title={<div className={styles.titleContainers}><span>See/Edit Organization Payment</span> 
+              <Box admin={true} title={<div className={styles.titleContainers}><span>See/Edit Organization Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>

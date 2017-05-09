@@ -10,7 +10,7 @@ import styles from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
@@ -163,7 +163,7 @@ export default class PageEditCompetition extends React.Component {
           <div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
+              <Box admin={true} title={<div className={styles.titleContainers}><span>Competiton Info</span> 
                              
                           </div>} 
                    content={comp_info}/>

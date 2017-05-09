@@ -1,7 +1,7 @@
-/* 
+/*
  * SEE COMPETITOR
  *
- * This page allows admins to see detailed information about the 
+ * This page allows admins to see detailed information about the
  * selected competitor as well as mark them as paid or not paid
  */
 
@@ -11,7 +11,7 @@ import EventTable from './common/EventTable.jsx'
 import Page from './Page.jsx'
 import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import style from './style.css';
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import connection from './common/connection';
@@ -37,7 +37,7 @@ class PageSeeCompetitor extends React.Component {
     componentDidMount() {
     /* Call the API for competition info */
     this.props.api.get(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
-      .then(json => { 
+      .then(json => {
           // update the state of our component
           if (json.pay_w_org)
               json.pay_w_org = "True"
@@ -50,7 +50,7 @@ class PageSeeCompetitor extends React.Component {
         this.setState({ competitor : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // and setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
@@ -82,11 +82,12 @@ class PageSeeCompetitor extends React.Component {
   saveChanges () { lib.post('/api/post/competitor', this.state) } // todo
 
 
-  render() {    
+  render() {
     return (
 
      <Page ref="page" {...this.props}>
       <Box title={"Competitor Info"}
+          admin={true}
           content={
             <div className={style.lines}>
             <br />
@@ -110,11 +111,11 @@ class PageSeeCompetitor extends React.Component {
             <div className={styles.separators}></div>
             <h2>Competitor is registered for the following events:</h2>
             <EventTable
-                events={this.state.competitor_events} 
-            /> 
+                events={this.state.competitor_events}
+            />
             <div className = {styles.comp_containers}>
             <div className = {styles.addeditBtns}>
-                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/1/regcompetitor/1') }}> 
+                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/1/regcompetitor/1') }}>
                     Add/Edit Event
                 </button>
             </div>
@@ -122,7 +123,7 @@ class PageSeeCompetitor extends React.Component {
 
             </div>
           } />
-      </Page>   
+      </Page>
     );
   }
 }

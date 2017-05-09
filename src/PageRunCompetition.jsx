@@ -10,7 +10,7 @@ import * as Table from 'reactabular-table';
 import EventRunningInfo from './PageRunCompetition/event.jsx'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
@@ -322,14 +322,14 @@ export default class RunCompetition extends React.Component {
 
         <h1>Running: {this.state.competition.name}</h1>
 
-       <Box title={"Past Rounds"}
+       <Box admin={true} title={"Past Rounds"}
             content ={past_rounds_table} />
         {/*<div className="container admin">
           <h2>Past Rounds</h2>
           {past_rounds_table}
         </div>*/}
 
-       <Box title={"Current Round"}
+       <Box admin={true} title={"Current Round"}
             content ={
           <div className={style.lines}>
             <h3>{this.getRoundName(current_round)}</h3>
@@ -352,7 +352,7 @@ export default class RunCompetition extends React.Component {
         {/*<div className="container admin">
           <h2>Current Round</h2>*/}
         
-        <Box
+        <Box admin={true} 
           title = "Upcoming Rounds"
           content = {future_rounds_table}
         />

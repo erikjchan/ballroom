@@ -10,10 +10,9 @@ import React from 'react'
 import Page from './Page.jsx'
 import lib from './common/lib'
 import Box from './common/Box.jsx'
-import BoxAdmin from './common/BoxAdmin.jsx'
 import style from './style.css';
 
-// editprofile
+// editprofilze
 export default class PageEditProfile extends React.Component {
 
   constructor(props) {
