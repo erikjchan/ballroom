@@ -79,6 +79,13 @@ export default class PageCompetition extends React.Component {
         return response.json()
       })
       .then(json => {
+
+        this.payment = json;
+
+        var timestamp = new Date(this.payment.timestamp);
+        this.payment.timestamp = timestamp.toUTCString();
+
+        // update the state of our component
         this.setState({competitor_paymentrecord: json})
         console.log(this.state.competitor_paymentrecord)
       })
@@ -132,6 +139,7 @@ export default class PageCompetition extends React.Component {
                       <p><b>Email:</b> {this.state.competitor.email}</p>
                       <p><b>Organization:</b> {this.state.competitor.affiliationname}</p>
                       <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number}</p>
+                      <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp}</p>
                       <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount}</p>
                       <p><b>Paying with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                       <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
@@ -217,8 +225,6 @@ export default class PageCompetition extends React.Component {
                    </div>
                    }/>
             </div>
-
-            <div className={styles.separator}></div>
       </div>
                   
       </Page>
