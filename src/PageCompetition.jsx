@@ -38,16 +38,15 @@ export default class PageCompetition extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => {
         this.competition = json;
-        var startdate = new Date(this.competition.startdate);
-        var enddate = new Date(this.competition.enddate);
-        var regstartdate = new Date(this.competition.regstartdate);
-        var earlyregdeadline = new Date(this.competition.earlyregdeadline);
-        var regularregdeadline = new Date(this.competition.regularregdeadline);
-        var lateregdeadline = new Date(this.competition.lateregdeadline);
+        const startdate          = new Date(this.competition.startdate);
+        const enddate            = new Date(this.competition.enddate);
+        const regstartdate       = new Date(this.competition.regstartdate);
+        const earlyregdeadline   = new Date(this.competition.earlyregdeadline);
+        const regularregdeadline = new Date(this.competition.regularregdeadline);
+        const lateregdeadline    = new Date(this.competition.lateregdeadline);
         this.competition.startdate = startdate.toUTCString();
         this.competition.enddate = enddate.toUTCString();
         this.competition.regstartdate = regstartdate.toUTCString();
@@ -64,24 +63,17 @@ export default class PageCompetition extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
     /** Fetch competitor */
-    fetch(`/api/competitors/${this.competitor_id}`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${this.competitor_id}`)
       .then(json => {
         this.setState({competitor: json})
         console.log(this.state.competitor)
       })
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
       .then(json => {
 
         this.payment = json;
-
         var timestamp = new Date(this.payment.timestamp);
         this.payment.timestamp = timestamp.toUTCString();
 
@@ -92,10 +84,7 @@ export default class PageCompetition extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
     /**  Call the API for events that the competitor is in */
-    fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(json => {
         console.log(json)
         for (let i = 0; i < json.length; i++) {

@@ -27,8 +27,7 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    fetch(`/api/competitions`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competitions`)
       .then(json => { 
         this.competitions = json;
         for (let i = 0; i < this.competitions.length; i++) {

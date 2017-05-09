@@ -36,8 +36,7 @@ class PageSeeCompetitor extends React.Component {
 
     componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
-      .then(response => { return response.json() }) // parse the result
+    this.props.api.get(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
       .then(json => { 
           // update the state of our component
           if (json.pay_w_org)
@@ -56,10 +55,7 @@ class PageSeeCompetitor extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
     /**  Call the API for events that the competitor is in */
-    fetch(`/api/competitors/${0}/events`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${0}/events`)
       .then(json => {
         for (let i = 0; i < json.length; i++) {
             if (json[i].leading) {

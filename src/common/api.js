@@ -11,7 +11,9 @@ export default class API {
     return fetch(route)
       /** Parse the result */
       .then(response => {
-        if (response.ok) return response.json()
+        if (response.ok) {
+          return response.json()
+        }
         else throw new Error('GET RESPONSE not ok')
       })
       /** Something went wrong */

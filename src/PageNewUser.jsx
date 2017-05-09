@@ -3,7 +3,6 @@ import Page from './Page.jsx'
 import lib from './common/lib'
 import Box from './common/Box.jsx'
 import style from './style.css';
-import API from './common/api'
 import { browserHistory } from 'react-router';
 
 export default class PageNewUser extends React.Component {
@@ -14,14 +13,12 @@ export default class PageNewUser extends React.Component {
       competitor: { email: this.props.profile.email },
       organizations: []
     }
-
-    this.api = new API(this.props.profile)
   }
 
   componentDidMount() {
 
       /** Get organizations */
-      this.api.get(`/api/organizations`)
+      this.props.api.get(`/api/organizations`)
         .then(organizations => {
           const competitor = Object.assign({}, this.state.competitor, 
             { affiliationid: organizations[0].id }) // select first affiliation by default
@@ -47,7 +44,7 @@ export default class PageNewUser extends React.Component {
     const obj = Object.assign({hasregistered:false}, 
         this.state.competitor, 
         { profile: this.props.profile})
-    this.api.post('/api/create_competitor', obj)
+    this.props.api.post('/api/create_competitor', obj)
       .then(competitor => {
         if (!competitor) return
         console.log(competitor.id)
