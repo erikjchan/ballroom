@@ -56,15 +56,12 @@ const routes = {
   'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
-<<<<<<< HEAD
   'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
   'querytest'                                                  : Any(QueryTest),
   'newuser'                                                    : User(PageNewUser),
-=======
   'organizationpayment/:competition_id/:organization_id'       : Admin(OrganizationPayment),
   'querytest'                                                  : Any(QueryTest),
   'competitorpayment/:competition_id/:competitor_id'                          : User(CompetitorPayment),
->>>>>>> 804213d0f3e1e89848b65c3a13726609f04be593
 }
 
 export default (
