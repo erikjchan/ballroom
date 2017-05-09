@@ -55,13 +55,23 @@ export default class PageEditCompetition extends React.Component {
     }
     
     onSaveHandler(){
-
+        console.log(this.state.competition);
+        fetch("/api/competition/updateCompetitionInfo", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state.competition)
+        }).then(() => {
+            window.location.reload();
+        });
     }
 
     render() {
         if (this.state.competition){
             var comp_name = this.state.competition.Name;
-            var comp_info = (<form className = {styles.long_form}>
+            var comp_info = (<div className = {styles.long_form}>
                 <div>
                         <div className = {styles.form_row}>
                             <label className = {styles.long_label}>
@@ -145,13 +155,13 @@ export default class PageEditCompetition extends React.Component {
         </label>
     </div>
     <div className = {styles.form_row}>
-        <input className = {styles.competitionEditBtns} onClick={()=>this.onSaveHandler()} value="Save Changes" />
+        <button className = {styles.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
         <button className={styles.competitionEditBtns} 
         onClick={() => {browserHistory.push("/competition/"+this.competition_id+"/editlevelsandstyles");}}> 
                          Edit Levels and Styles</button>
                 </div>
                 </div>
-            </form>)
+            </div>)
 
     
     /*var event_titles = (<div className={styles.lines}>

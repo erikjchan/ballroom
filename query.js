@@ -382,7 +382,7 @@ const update_competition_info = data => {
         lateprice = ${data.lateprice}, startdate = ${data.startdate}, enddate = ${data.enddate}, 
         regstartdate = ${data.regstartdate}, earlyregdeadline = ${data.earlyregdeadline}, 
         regularregdeadline = ${data.regularregdeadline}, lateregdeadline = ${data.lateregdeadline},
-        description = ${data.description} WHERE id = ${data.cid}`);
+        description = ${data.description} WHERE id = ${data.id}`);
 }
 
 const update_competition_current_round_id = data => {
