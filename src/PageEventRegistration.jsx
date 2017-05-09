@@ -5,7 +5,6 @@
  * specific selected competition
  */
 
-
 import styles from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
@@ -18,27 +17,6 @@ import Box from './common/Box.jsx'
 import { Link } from 'react-router'
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
-
-/*
-
-
-export default class RadioTest extends React.Component {
-  state = {
-    value: 'vvendetta'
-  };
-
-  handleChange = (value) => {
-    this.setState({value});
-  };
-
-  render () {
-    return (
-      
-    );
-  }
-}
-
- */
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
@@ -78,8 +56,7 @@ export default class PageEventRegistration extends React.Component {
   }
   componentDidMount(){
     /* Call the API for competition data */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
         this.setState({ competition : json })
@@ -90,17 +67,13 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
 
     /** Pretty similar to above! */
-    fetch(`/api/competition/${this.competition_id}/events`)
-      .then(response => response.json())
+    this.props.api.get(`/api/competition/${this.competition_id}/events`)
       .then(json => {
         this.setState({ competition_events : json})
       })
       .catch(err => alert(err))
 
-  fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(json => {
         console.log(json)
         for (let i = 0; i < json.length; i++) {
@@ -118,10 +91,7 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
     /** Fetch levels in a competition */
-    fetch(`/api/competition/${this.competition_id}/levels`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competition/${this.competition_id}/levels`)
       .then(json => {
 
         this.setState({levels: json})
@@ -129,12 +99,8 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
 
     /** Fetch competitors for partner search */
-    fetch(`/api/competitors`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors`)
       .then(json => {
-
         this.setState({competitors: json})
       })
       .catch(err => alert(err))
@@ -150,7 +116,7 @@ export default class PageEventRegistration extends React.Component {
       })
       .catch(err => alert(err))
     this.setState({
-        levelid: levelid,
+        levelid: parseInt(levelid),
         styleid: null,
         eventid: null 
     });
@@ -166,14 +132,14 @@ export default class PageEventRegistration extends React.Component {
       })
       .catch(err => alert(err))
     this.setState({
-        styleid: styleid,
+        styleid: parseInt(styleid),
         eventid: null
     });
   };
 
   handleEventChange = (eventid) => {
     this.setState({
-      eventid: eventid
+      eventid: parseInt(eventid)
     });
   };
 
@@ -271,15 +237,14 @@ dropEventHandler = (rowData) => {
     <Page ref="page" {...this.props}>
       <h1>Event Registration</h1>
         <Box 
-        title = {<div>Register for New Event</div>}
-        content={
+        title = {<div>Register for New Event</div>}>
         <div className={styles.lines}>
         { true && <span>
             <h2>Level</h2>
-            <RadioGroup name='comic' value={this.state.levelid} onChange={this.handleLevelChange}>
+            <RadioGroup name='comic' value={this.state.levelid && this.state.levelid.toString()} onChange={this.handleLevelChange}>
               {
                 this.state.levels.map(item =>{
-                  return (<RadioButton value={item.id} label={item.name}/>);
+                  return (<RadioButton value={item.id.toString()} key={item.id} label={item.name}/>);
                 })
               }
             </RadioGroup>
@@ -290,10 +255,10 @@ dropEventHandler = (rowData) => {
         { show_style && <span>
             <br/>
             <h2>Style</h2>
-            <RadioGroup name='comic' value={this.state.styleid} onChange={this.handleStyleChange}>
+            <RadioGroup name='comic' value={this.state.styleid && this.state.styleid.toString()} onChange={this.handleStyleChange}>
               {
                 this.state.level_styles.map(item =>{
-                  return (<RadioButton value={item.id} label={item.name}/>);
+                  return (<RadioButton value={item.id.toString()} key={item.id} label={item.name}/>);
                 })
               }
             </RadioGroup>
@@ -304,10 +269,10 @@ dropEventHandler = (rowData) => {
           <br/>
         { show_event && <span>
             <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.eventid} onChange={this.handleEventChange}>
+            <RadioGroup name='comic' value={this.state.eventid && this.state.eventid.toString()} onChange={this.handleEventChange}>
               {
                 this.state.level_style_events.map(item =>{
-                  return (<RadioButton value={item.id} label={`${item.levelname} ${item.stylename} ${item.dance}`}/>);
+                  return (<RadioButton value={item.id.toString()} key={item.id} label={`${item.levelname} ${item.stylename} ${item.dance}`}/>);
                 })
               }
             </RadioGroup>
@@ -363,10 +328,9 @@ dropEventHandler = (rowData) => {
         />
       <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register</button></p>
               </div>
-        }/>
+      </Box>
 
-      <Box title={<div>Your Current Registrations</div>}
-      content = {
+      <Box title={<div>Your Current Registrations</div>}>
         <EventTable
           events={this.state.user_competition_events}
           extra_columns={[{
@@ -382,8 +346,7 @@ dropEventHandler = (rowData) => {
             )
           }]}
         />
-      }
-      />
+      </Box>
      </Page>
    );
  }

@@ -1,30 +1,55 @@
 import React from 'react'
 import Page from './Page.jsx'
 import lib from './common/lib'
-import Box from './common/Box.jsx'
 import style from './style.css';
-import API from './common/api'
+import { browserHistory } from 'react-router';
 
 export default class PageNewUser extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      competitor: {}
+      competitor: { email: this.props.profile.email },
+      organizations: []
     }
+  }
 
-    this.api = new API(this.props.profile)
+  componentDidMount() {
+
+      /** Get organizations */
+      this.props.api.get(`/api/organizations`)
+        .then(organizations => {
+          const competitor = Object.assign({}, this.state.competitor, 
+            { affiliationid: organizations[0].id }) // select first affiliation by default
+          this.setState({ organizations, competitor })
+        })
+
   }
 
   /** Updates state to reflect form change */
-  handleChange (name, value) {
-    this.setState({...this.state, [name]: value});
+  handleCompetitorFormChange (name, event) {
+    const new_competitor = Object.assign({}, this.state.competitor, {[name]: event.target.value})
+    this.setState({competitor: new_competitor});
   };
 
   /** Saves profile information */
-  saveChanges () {
-    return false
-    this.api.post('TODO', this.state.competitor)
+  createCompetitor () {
+    // Form validation
+    const { firstname, lastname, email, affiliationid, mailingaddress } = this.state.competitor
+    if (!firstname || !lastname || !email || affiliationid === undefined || !mailingaddress) {
+      return console.log('INVALID')
+    }
+
+    const obj = Object.assign({hasregistered:false}, 
+        this.state.competitor, 
+        { profile: this.props.profile})
+    this.props.api.post('/api/create_competitor', obj)
+      .then(competitor => {
+        if (!competitor) return
+        console.log(competitor.id)
+        this.props.profile.app_metadata.competitor_id = competitor.id 
+        browserHistory.push('/')
+      })
   }
 
   render() {
@@ -36,32 +61,37 @@ export default class PageNewUser extends React.Component {
         <h5>First Name</h5>
         <input
           type='text'
-          name='first_name'
-          value={this.state.competitor.first_name}
-          onChange={this.handleChange.bind(this, 'first_name')}
+          name='firstname'
+          value={this.state.competitor.firstname}
+          onChange={this.handleCompetitorFormChange.bind(this, 'firstname')}
           maxLength={16} /><br/>
         <h5>Last Name</h5>
         <input
           type='text'
-          name='last_name'
-          value={this.state.competitor.last_name}
-          onChange={this.handleChange.bind(this, 'last_name')} /><br/>
+          name='lastname'
+          value={this.state.competitor.lastname}
+          onChange={this.handleCompetitorFormChange.bind(this, 'lastname')} /><br/>
         <h5>Email address</h5>
         <input
           type='email'
           disabled
-          value={this.props.profile.email}/><br/>
+          value={this.state.competitor.email}/><br/>
         <h5>Organization</h5>
-        <input
-          type='email'
-          disabled
-          value={"TODO"}/><br/>
+        {/* TODO: DEFAULT VALUE */}
+        <select
+          name='affiliationid' 
+          value={this.state.competitor.affiliationid} 
+          onChange={this.handleCompetitorFormChange.bind(this, 'affiliationid')}>
+          {this.state.organizations.map(org =>
+            <option value={org.id} key={org.id}>{org.name}</option>
+          )}
+        </select>
         <h5>Mailing Address</h5>
         <input
           type='text'
-          value={this.state.competitor.mailing_address}
-          onChange={this.handleChange.bind(this, 'mailing_address')} />
-        <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
+          value={this.state.competitor.mailingaddress}
+          onChange={this.handleCompetitorFormChange.bind(this, 'mailingaddress')} />
+        <p><button onClick={this.createCompetitor.bind(this)}>Save</button></p>
       </Page>
     )
   }

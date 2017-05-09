@@ -4,6 +4,7 @@ import { Redirect } from 'react-router'
 import { browserHistory } from 'react-router';
 import LoginPage from '../PageLogin.jsx'
 import { selectCompetition } from '../actions'
+import API from './api'
 
 /**
  * Authorizaiton guard for pages.
@@ -17,6 +18,7 @@ const Authorization = allowedRoles => WrappedComponent => {
   class WithAuthorization extends React.Component {
     constructor(props) {
       super(props)
+      this.api = new API(this.props.profile)
     }
 
     /**
@@ -40,7 +42,7 @@ const Authorization = allowedRoles => WrappedComponent => {
      * associated with it. Means its a new user
      */
     userIsNew() {
-      return false
+      return false;
 
         // (this.props.profile.app_metadata && this.props.profile.app_metadata.competitor_id) !== undefined ||
         //     (this.props.profile.app_metadata && this.props.profile.app_metadata.competitor_id) !== null
@@ -67,7 +69,7 @@ const Authorization = allowedRoles => WrappedComponent => {
       browserHistory.push('/?msg=permission_denied')
     }
   
-    render() { return <WrappedComponent {...this.props} /> }
+    render() { return <WrappedComponent {...this.props} api={this.api}/> }
   }
 
   return connection(WithAuthorization)

@@ -10,7 +10,7 @@ import * as Table from 'reactabular-table';
 import EventRunningInfo from './PageRunCompetition/event.jsx'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
@@ -38,11 +38,9 @@ export default class RunCompetition extends React.Component {
   componentDidMount() {
 
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => {
-        fetch(`/api/competition/${this.competition_id}/rounds`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/competition/${this.competition_id}/rounds`)
           .then(json2 => {
             // update the state of our component
             this.setState({
@@ -55,10 +53,8 @@ export default class RunCompetition extends React.Component {
           // todo; display a nice (sorry, there's no connection!) error
           // and setup a timer to retry. Fingers crossed, hopefully the
           // connection comes back
-          .catch(err => alert(
-            `There was an error fetching the rounds`))
-        fetch(`/api/competitors/round/${json.currentroundid}`)
-          .then(response => response.json())
+          .catch(err => alert(`There was an error fetching the rounds`))
+        this.props.api.get(`/api/competitors/round/${json.currentroundid}`)
           .then(json => {
             this.setState({competitors: json.map(c => c.number)});
           });  
@@ -326,14 +322,14 @@ export default class RunCompetition extends React.Component {
 
         <h1>Running: {this.state.competition.name}</h1>
 
-       <Box title={"Past Rounds"}
+       <Box admin={true} title={"Past Rounds"}
             content ={past_rounds_table} />
         {/*<div className="container admin">
           <h2>Past Rounds</h2>
           {past_rounds_table}
         </div>*/}
 
-       <Box title={"Current Round"}
+       <Box admin={true} title={"Current Round"}
             content ={
           <div className={style.lines}>
             <h3>{this.getRoundName(current_round)}</h3>
@@ -356,7 +352,7 @@ export default class RunCompetition extends React.Component {
         {/*<div className="container admin">
           <h2>Current Round</h2>*/}
         
-        <Box
+        <Box admin={true} 
           title = "Upcoming Rounds"
           content = {future_rounds_table}
         />

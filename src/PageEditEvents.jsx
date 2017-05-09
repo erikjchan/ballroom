@@ -7,25 +7,17 @@
  */
 
 import React from 'react'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-
 import Page from './Page.jsx';
 import EventTable from './PageEditEvents/EventTable.jsx';
 import style from './style.css';
-import API from './common/api'
 
 // competition/:competition_id/editevents
 class EditEvents extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.api = new API(this.props.profile)
-  }
-
   render() {
-
     const box_title = (
       <div>
         <div id={style.dragAndDropTitle}>Events</div>
@@ -52,7 +44,7 @@ class EditEvents extends React.Component {
             }>Define Levels & Styles</div>
           </div>
         </div>
-          <Box title={box_title} content = {box_content} />
+          <Box admin={true} title={box_title} content = {box_content} />
       </Page>
     );
   }
@@ -70,9 +62,9 @@ class EditEvents extends React.Component {
       }
 
       /** Post updates */
-      this.api.post("/api/competition/updateEvents", send_object)
+      this.props.api.post("/api/competition/updateEvents", send_object)
       /** Fetch the events to reload the table */
-      .then(() => this.api.get(`/api/competition/${cid}/events`))
+      .then(() => this.props.api.get(`/api/competition/${cid}/events`))
       /** Update the state */
       .then(json => this.refs.ddTable.setState({rows: json}))
     }

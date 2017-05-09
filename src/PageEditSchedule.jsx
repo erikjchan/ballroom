@@ -9,10 +9,8 @@
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
 import * as Table from 'reactabular-table';
-import {Button, IconButton } from 'react-toolbox/lib/button';
-import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -38,7 +36,7 @@ class EditSchedule extends React.Component {
           }>Cancel</div>
         </div>
       </div>
-        <Box title={
+        <Box admin={true} title={
                     <div>
                       <div id={style.dragAndDropTitle}>Rounds</div>
                       <button id={style.dragAndDropAutosort} onClick={() => this.confirmAutoSortRows()}>
@@ -56,26 +54,16 @@ class EditSchedule extends React.Component {
  }
 
  saveChanges(message) {
-  if (confirm(message)) {
-    fetch("/api/competition/updateRounds", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        cid: 1, // TODO: change in production
-        rows: this.refs.ddTable.state.rows
-      })
-    }).then(() => {
-        fetch("/api/competition/1/rounds") // TODO: change 1 to cid
-            .then(response => response.json())
-            .then(json => {
-                this.refs.ddTable.setState({rows: json})
-            })
-            .catch(err => alert(err));
-    });
+  if (!confirm(message)) return;
+  const cid = this.props.selected.competition.id
+  const send_obj = {
+    cid: cid,
+    rows: this.refs.ddTable.state.rows
   }
+  this.props.api.post("/api/competition/updateRounds", send_obj)
+  .then(() => this.props.api.get(`/api/competition/${cid}/rounds`))
+  .then(json => { this.refs.ddTable.setState({rows: json}) })
+  .catch(err => alert(err));
  }
 
  confirmGoToUrl(url, message) {

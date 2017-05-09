@@ -89,8 +89,7 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   componentDidMount() {
-      fetch(`/api/judges`)
-        .then(response => response.json()) // parse the result
+      this.props.api.get(`/api/judges`)
         .then(json => {
             // update the state of our component
             var judges = []

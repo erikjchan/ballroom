@@ -1,26 +1,21 @@
 /* 
  * COMPETITIONS LIST (ADMINS)
  *
- * This page will be used by users to see all the competitions they have created,
+ * This page will be used by admins to see all the competitions they have created,
  * as well as to create new competitions
  */
 
-
-import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
-import lib from './common/lib.js';
-import Page from './Page.jsx';
-import Autocomplete from 'react-autocomplete';
-import { browserHistory } from 'react-router';
-import classnames from 'classnames';
-import CompetitionsTable from './PageCompetitionList/competitions.jsx';
-import Box from './common/BoxAdmin.jsx'
-import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
+import { browserHistory } from 'react-router';
 import HTML5Backend from 'react-dnd-html5-backend';
+import style from "./style.css";
+import Page from './Page.jsx';
+import CompetitionsTable from './PageCompetitionList/competitions.jsx';
+import Box from './common/Box.jsx'
+import { selectCompetition } from './actions'
 
-// admin/competitions
 class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)
@@ -32,8 +27,7 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    fetch(`/api/competitions`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competitions`)
       .then(json => { 
         this.competitions = json;
         for (let i = 0; i < this.competitions.length; i++) {
@@ -46,7 +40,7 @@ class PageCompetitionList extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => alert(`There was an error fetching the competitions`))
+      .catch(err => alert(`There was an error getting the competitions`))
   }
   /**
    * Selects a competition for browsing.
@@ -56,7 +50,8 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    // this.props.dispatch(selectCompetition(competition))
+    console.log(competition)
+    this.props.dispatch(selectCompetition(competition))
     browserHistory.push('/admin/competition/' + competition.id)
   }
 
@@ -79,11 +74,10 @@ class PageCompetitionList extends React.Component {
 
     // TODO; filter to only my competitions
 
-    const rows = this.state.competitions.map(row => {
-      row['Select'] = <button
+    const rows = this.state.competitions.map((row, id) => {
+      return Object.assign({id}, row, { Select: <button
         className = {style.search}
-        onClick = {() => this.browseCompetition(row)}>Browse</button>;
-      return row
+        onClick = {() => this.browseCompetition(row)}>Browse</button>})
     })
 
     return <Table.Provider
@@ -103,7 +97,7 @@ class PageCompetitionList extends React.Component {
      	<Page ref="page" {...this.props}>
         <div className={style.content}>
          	<h1>Competitions Page</h1>
-             <Box title="All Competitions"
+             <Box admin={true} title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
         	<div>

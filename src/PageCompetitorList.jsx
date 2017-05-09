@@ -12,7 +12,7 @@ import * as Table from 'reactabular-table';
 import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 
 
 import { DragDropContext } from 'react-dnd';
@@ -34,7 +34,7 @@ class CompetitorsList extends React.Component {
           <div id={style.saveChanges}>See Organizations</div>
         </div>
       </div>
-      <Box title="Competitors"
+      <Box admin={true} title="Competitors"
       content=
       {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>

@@ -12,8 +12,7 @@ import EventTable from './common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
-import {Button, IconButton} from 'react-toolbox/lib/button';
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import { Link } from 'react-router'
 import connection from './common/connection'
 import cloneDeep from 'lodash/cloneDeep';
@@ -297,7 +296,7 @@ dropEventHandler = (rowData) => {
 
     <Page ref="page" {...this.props}>
       <h1>Register Competitor for Events: </h1>
-        <Box 
+        <Box admin={true} 
         title = {<div>Register Competitor for New Event</div>}
         content={
         <div className={styles.lines}>
@@ -393,7 +392,7 @@ dropEventHandler = (rowData) => {
               </div>
         }/>
 
-      <Box title={<div>Competitor is already registered to these:</div>}
+      <Box admin={true} title={<div>Competitor is already registered to these:</div>}
       content = {
         <EventTable
           events={this.state.user_competition_events}

@@ -10,7 +10,7 @@ import React from 'react'
 import * as Table from 'reactabular-table';
 import lib from './common/lib.js'
 import Page from './Page.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import EventTable from './common/OfficialTable.jsx'
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
@@ -44,8 +44,7 @@ export default class EditOfficial extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
         this.setState({ competition : json })
@@ -55,8 +54,7 @@ export default class EditOfficial extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/competition/${this.competition_id}/judges`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}/judges`)
       .then(json => {
         // update the state of our component
         json.map(item => {
@@ -128,7 +126,7 @@ export default class EditOfficial extends React.Component {
             return (<Page ref="page" {...this.props}>
 
                 <h1>Edit Official: {this.state.competition.name}</h1>
-                <Box title={"Add Official"}
+                <Box admin={true} title={"Add Official"}
                         content ={
                 <div className={style.lines}>
                 <div >
@@ -166,6 +164,7 @@ export default class EditOfficial extends React.Component {
                     </div>} />
 
                 <Box
+                admin={true} 
                 title = "Officials"
                 content = {
                     <EventTable

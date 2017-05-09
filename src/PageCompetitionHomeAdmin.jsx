@@ -8,7 +8,7 @@
 import styles from "./style.css"
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import Autocomplete from 'react-autocomplete'
 import { browserHistory } from 'react-router';
@@ -41,16 +41,15 @@ export default class PageCompetitionHomeAdmin extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         this.competition = json;
-        var startdate = new Date(this.competition.startdate);
-        var enddate = new Date(this.competition.enddate);
-        var regstartdate = new Date(this.competition.regstartdate);
-        var earlyregdeadline = new Date(this.competition.earlyregdeadline);
-        var regularregdeadline = new Date(this.competition.regularregdeadline);
-        var lateregdeadline = new Date(this.competition.lateregdeadline);
+        const startdate          = new Date(this.competition.startdate);
+        const enddate            = new Date(this.competition.enddate);
+        const regstartdate       = new Date(this.competition.regstartdate);
+        const earlyregdeadline   = new Date(this.competition.earlyregdeadline);
+        const regularregdeadline = new Date(this.competition.regularregdeadline);
+        const lateregdeadline    = new Date(this.competition.lateregdeadline);
         this.competition.startdate = startdate.toUTCString();
         this.competition.enddate = enddate.toUTCString();
         this.competition.regstartdate = regstartdate.toUTCString();
@@ -67,38 +66,30 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
 
     /**  Call the API for event schedule  */
-    fetch(`/api/competition/${this.competition_id}/events`)
-      .then(response => response.json())
+    this.props.api.get(`/api/competition/${this.competition_id}/events`)
       .then(json => {
         this.setState({ competition_events : json})
       })
       .catch(err => alert(err))
 
     /**  Call the API for round schedule  */
-    fetch(`/api/competition/${this.competition_id}/rounds`)
-      .then(response => response.json())
+    this.props.api.get(`/api/competition/${this.competition_id}/rounds`)
       .then(json => {
         this.setState({ competition_rounds : json})
       })
       .catch(err => alert(err))
 
 
-    /** Fetch competitors  
+    /** Get competitors  
     */
-    fetch(`/api/competition/${this.competition_id}/competitors`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competition/${this.competition_id}/competitors`)
       .then(json => {
         this.setState({competitors: json})
       })
       .catch(err => alert(err))
 
-    /** fetch partnerships */
-    fetch(`/api/competition/${this.competition_id}/competitors_styles`)
-      .then(response => {
-        return response.json()
-      })
+    /** Get partnerships */
+    this.props.api.get(`/api/competition/${this.competition_id}/competitors_styles`)
       .then(json => {
 
         this.setState({style_statistics: json})
@@ -124,21 +115,15 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       })
       .catch(err => alert(err))
 
-    /** Fetch judges */
-    fetch(`/api/competition/${this.competition_id}/judges`)
-      .then(response => {
-        return response.json()
-      })
+    /** Get judges */
+    this.props.api.get(`/api/competition/${this.competition_id}/judges`)
       .then(json => {
         this.setState({judges: json})
       })
       .catch(err => alert(err))
 
-    /** Fetch organizations */
-    fetch(`/api/competition/${this.competition_id}/affiliations`)
-      .then(response => {
-        return response.json()
-      })
+    /** Get organizations */
+    this.props.api.get(`/api/competition/${this.competition_id}/affiliations`)
       .then(json => {
 
         this.setState({organizations: json})
@@ -146,39 +131,44 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
   }
 
- populate(box_name, lines_react, max_line_num, link){
-   var ext;
-   if (max_line_num < lines_react.length){
-     ext = (
-       <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
-     )
-   }
-  var c = <div className={styles.lines}>
-            {lines_react.slice(0, max_line_num)}
-            {ext}
-        </div>
+  populate(box_name, lines_react, max_line_num, link){
+    var ext;
+    if (max_line_num < lines_react.length) {
+      ext = (
+        <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
+      )
+    }
+    var c = (
+      <div className={styles.lines}>
+              {lines_react.slice(0, max_line_num)}
+              {ext}
+      </div>
+    );
+
     return <div className={styles.infoBox}>
-      <Box title={<div className={styles.titleContainer}><span>{box_name}</span> 
-                      <button className={styles.editBtn} onClick={()=>{
-                          window.location.href = link;
-                        }}> Edit</button>
-                  </div>}
-      content={c}/>
+      <Box admin={true} title={<div className={styles.titleContainer}><span>{box_name}</span> 
+                        <button className={styles.editBtn} onClick={()=>{
+                            window.location.href = link;
+                          }}> Edit</button>
+                    </div>}>
+        {c}
+      </Box>
     </div>
- }
+  }
 
 populate_expanded(box_name, lines_react, link){
     return <div className={styles.infoBoxExpanded}>
-      <Box title={<div className={styles.titleContainer}>
-                      <button className={styles.returnBtn} 
-                              onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
-                      <span>{box_name}</span> 
-                      <button className={styles.editBtn} onClick={()=>{
-                                                  window.location.href = link;
-                                                  }}> Edit</button>
-                  </div>}
-      content={<div className={styles.lines}>
-                  {lines_react} </div>}/>
+      <Box admin={true} title={
+        <div className={styles.titleContainer}>
+          <button className={styles.returnBtn} 
+                  onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
+          <span>{box_name}</span> 
+          <button className={styles.editBtn} onClick={()=>{
+            window.location.href = link;
+            }}> Edit</button>
+        </div>}>
+        <div className={styles.lines}>{lines_react} </div>
+      </Box>
     </div>
  }
 
@@ -192,12 +182,12 @@ populate_expanded(box_name, lines_react, link){
     var comp_name = this.state.competition.name;
 
     dict['Competiton Info'] = [
-                      <p><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
-                      <p><b>Location:</b> {this.state.competition.locationname}</p>,
-                      <p><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
-                      <p><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>,
-                      <p><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
-                      <p><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
+                      <p key={0}><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
+                      <p key={1}><b>Location:</b> {this.state.competition.locationname}</p>,
+                      <p key={2}><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
+                      <p key={3}><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>,
+                      <p key={4}><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
+                      <p key={5}><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
                     ]
     links["Competiton Info"] = "/editcompetition/" + this.competition_id;
 /*
