@@ -27,6 +27,7 @@ import OrganizationPayment  from '../PageOrganizationPayment.jsx'
 import QueryTest            from '../../test.js'
 import PageNewUser          from '../PageNewUser.jsx'
 import CompetitorPayment    from '../PageCompetitorPayment.jsx'
+
 /**
  * Semantics:
  *   User pages can be accessed by 'user', 'judge' and 'admin'
@@ -56,7 +57,7 @@ const routes = {
   'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   'editcompetition/:competition_id'                            : Admin(EditCompetition),
   'editofficial/:competition_id'                               : Admin(EditOfficial), 
-  'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
+  // 'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
   'querytest'                                                  : Any(QueryTest),
   'newuser'                                                    : User(PageNewUser),
   'organizationpayment/:competition_id/:organization_id'       : Admin(OrganizationPayment),
