@@ -42,10 +42,30 @@ export default class PageEditCompetition extends React.Component {
           .catch(err => { alert(err); console.log(err)})
     }
 
+  validateForm = function(event) {
+      event.preventDefault();
+	var a = document.forms["compform"]["name"].value;
+
+    var b=document.forms["compform"]["location"].value;
+
+    if ((a==null || a=="")  ) {
+        alert("Please enter a valid restaurant name");
+        return false;
+    }
+    var n =a.length;
+    var m=b.length;
+
+    if(n>30){
+        alert("Name is too long!");
+        return false;
+
+    }
+  }
+
     render() {
         if (this.state.competition){
             var comp_name = this.state.competition.Name;
-            var comp_info = (<form className = {styles.long_form}>
+            var comp_info = (<form className = {styles.long_form} name= "compform" onSubmit={this.validateForm()}>
                 <div>
                         <div className = {styles.form_row}>
                             <label className = {styles.long_label}>
@@ -64,22 +84,22 @@ export default class PageEditCompetition extends React.Component {
     <div className = {styles.form_row}>
         <label>
             Lead Start Number:<br />
-            <input type="number" name="lead_number" />
+            <input type="number" name="lead_number" value = {this.state.competition.leadidstartnumber}/>
         </label>
     </div>
     <div className = {styles.form_row}>
         <label >
             Early Price:<br />
-            <input className = {styles.price} type="number" name="early_price" />
+            <input className = {styles.price} type="number" name="early_price" defaultValue = {this.state.competition.earlyprice}/>
         </label>
 
         <label>
             Regular Price:<br />
-            <input className = {styles.price} type="number" name="regular_price" />
+            <input className = {styles.price} type="number" name="regular_price" defaultValue = {this.state.competition.regularprice} />
         </label>
         <label>
             Late price:<br />
-            <input  className = {styles.price} type="number" name="late_price" />
+            <input  className = {styles.price} type="number" name="late_price" defaultValue = {this.state.competition.lateprice}/>
         </label>
     </div>
     <div className = {styles.form_row}>
