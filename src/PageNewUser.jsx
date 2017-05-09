@@ -1,7 +1,6 @@
 import React from 'react'
 import Page from './Page.jsx'
 import lib from './common/lib'
-import Box from './common/Box.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
 

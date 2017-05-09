@@ -5,7 +5,6 @@
  * specific selected competition
  */
 
-
 import styles from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
@@ -18,27 +17,6 @@ import Box from './common/Box.jsx'
 import { Link } from 'react-router'
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
-
-/*
-
-
-export default class RadioTest extends React.Component {
-  state = {
-    value: 'vvendetta'
-  };
-
-  handleChange = (value) => {
-    this.setState({value});
-  };
-
-  render () {
-    return (
-      
-    );
-  }
-}
-
- */
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
@@ -259,8 +237,7 @@ dropEventHandler = (rowData) => {
     <Page ref="page" {...this.props}>
       <h1>Event Registration</h1>
         <Box 
-        title = {<div>Register for New Event</div>}
-        content={
+        title = {<div>Register for New Event</div>}>
         <div className={styles.lines}>
         { true && <span>
             <h2>Level</h2>
@@ -351,10 +328,9 @@ dropEventHandler = (rowData) => {
         />
       <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register</button></p>
               </div>
-        }/>
+      </Box>
 
-      <Box title={<div>Your Current Registrations</div>}
-      content = {
+      <Box title={<div>Your Current Registrations</div>}>
         <EventTable
           events={this.state.user_competition_events}
           extra_columns={[{
@@ -370,8 +346,7 @@ dropEventHandler = (rowData) => {
             )
           }]}
         />
-      }
-      />
+      </Box>
      </Page>
    );
  }

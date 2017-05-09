@@ -122,22 +122,20 @@ class PageCompetitionList extends React.Component {
   }
 
   render() {
-  
     return (
      	<Page ref="page" {...this.props}>
         <div className={style.content}>
          	<h1>Competitions Page</h1>
-             <Box title="Your Competitions"
-             content={this.getYourCompetitionsTable()} />
+            <Box title="Your Competitions">
+              {this.getYourCompetitionsTable()}
+            </Box>
           <hr />
         	<div>
-            <Box title="Other Competitions"
-              content = {
-                <div id={style.otherCompetitionsTable}>
-                  <CompetitionsTable />
-                </div>
-              }
-            />
+            <Box title="Other Competitions">
+              <div id={style.otherCompetitionsTable}>
+                <CompetitionsTable />
+              </div>
+            </Box>
           </div>
        	</div>
       </Page>

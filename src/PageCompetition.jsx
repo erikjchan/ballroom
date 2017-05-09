@@ -1,4 +1,4 @@
-/* 
+/*
  * COMPETITION HOME PAGE (USERS)
  *
  * This page is the main hub for users when seeing information about
@@ -53,12 +53,12 @@ export default class PageCompetition extends React.Component {
         this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
         this.competition.regularregdeadline = regularregdeadline.toUTCString();
         this.competition.lateregdeadline = lateregdeadline.toUTCString();
-        
+
         // update the state of our component
         this.setState({ competition : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // and setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
@@ -133,7 +133,7 @@ export default class PageCompetition extends React.Component {
                       <p><b>Paying with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                       <button className={styles.editBtns} onClick={()=>{/*TODO*/}}> Edit Payment Info</button>
                     </div>)
-    
+
     var event_titles = (<div className={styles.lines}>
                           {this.state.competitor_events.sort(function (a, b){
                           return a.id - b.id}).map((event, i) => {
@@ -176,18 +176,19 @@ export default class PageCompetition extends React.Component {
           </div>
           <div className={styles.infoTables}>
             <div className={styles.infoBoxLeft}>
-              <Box title={<div className={styles.titleContainers}><span>Competiton Info</span> 
-                             
-                          </div>} 
-                   content={comp_info}/>
+              <Box title={
+                <div className={styles.titleContainers}>
+                  <span>Competiton Info</span>
+                </div>}>
+                {comp_info}
+              </Box>
             </div>
             <div className={styles.infoBoxRight}>
-              <Box title={<div className={styles.titleContainers}><span>User Info</span> 
+              <Box title={<div className={styles.titleContainers}><span>User Info</span>
                             <Link to={`/editprofile`}>
                             <input type="button" className={styles.editBtns}
                                       value="Edit" /></Link>
-                          </div>}
-                    content={competitor_info}/>
+                          </div>}>{competitor_info}</Box>
             </div>
 
             <div className={styles.separators}></div>
@@ -195,30 +196,29 @@ export default class PageCompetition extends React.Component {
             <div className={styles.eventTableCompetitor}>
 
              <div className={styles.separators}></div>
-             <Box title={<div className={styles.titleContainers}><span>Your Events</span> 
-                             
-             </div>} 
-                   content={<div> 
+             <Box title={<div className={styles.titleContainers}><span>Your Events</span></div>}>
+
+             {<div>
                                 <div className={styles.eventtable_containers}>
                                 <EventTable events={this.state.competitor_events} />
                                 </div>
                               <div className = {styles.comp_containers}>
                               <div className = {styles.addeditBtns}>
-                              <button 
-                                className={styles.editBtns} 
-                                onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}> 
+                              <button
+                                className={styles.editBtns}
+                                onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}>
                                   Add/Edit Event
                               </button>
                             </div>
-                              </div>              
+                              </div>
                    </div>
-                   }/>
+                   }</Box>
             </div>
       </div>
-                  
+
       </Page>
 
-    ); 
+    );
   }
   else {
     return <Page ref="page" {...this.props}></Page>
