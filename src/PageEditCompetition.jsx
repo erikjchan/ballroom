@@ -48,30 +48,31 @@ export default class PageEditCompetition extends React.Component {
           .catch(err => { alert(err); console.log(err)})
     }
 
-  validateForm = function(event) {
-      event.preventDefault();
-	var a = document.forms["compform"]["name"].value;
+//   validateForm = function(event) {
+//       // event.preventDefault();
+// 	var a = document.forms["compform"]["name"].value;
 
-    var b=document.forms["compform"]["location"].value;
+//     var b=document.forms["compform"]["location"].value;
 
-    if ((a==null || a=="")  ) {
-        alert("Please enter a valid restaurant name");
-        return false;
-    }
-    var n =a.length;
-    var m=b.length;
+//     if ((a==null || a=="")  ) {
+//         alert("Please enter a valid restaurant name");
+//         return false;
+//     }
+//     var n =a.length;
+//     var m=b.length;
 
-    if(n>30){
-        alert("Name is too long!");
-        return false;
+//     if(n>30){
+//         alert("Name is too long!");
+//         return false;
 
-    }
-  }
+//     }
+//   }
 
     render() {
         if (this.state.competition){
             var comp_name = this.state.competition.Name;
-            var comp_info = (<form className = {styles.long_form} name= "compform" onSubmit={this.validateForm()}>
+            // var comp_info = (<form className = {styles.long_form} name= "compform" onSubmit={this.validateForm()}>
+            var comp_info = (<form className = {styles.long_form} name= "compform">
                 <div>
                         <div className = {styles.form_row}>
                             <label className = {styles.long_label}>
