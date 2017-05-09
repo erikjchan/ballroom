@@ -62,7 +62,7 @@ export default class PageCompetition extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    /** Fetch competitor */
+    /** Get competitor */
     this.props.api.get(`/api/competitors/${this.competitor_id}`)
       .then(json => {
         this.setState({competitor: json})

@@ -44,8 +44,7 @@ export default class EditOfficial extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
         this.setState({ competition : json })
@@ -55,8 +54,7 @@ export default class EditOfficial extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/competition/${this.competition_id}/judges`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}/judges`)
       .then(json => {
         // update the state of our component
         json.map(item => {

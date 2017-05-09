@@ -56,26 +56,16 @@ class EditSchedule extends React.Component {
  }
 
  saveChanges(message) {
-  if (confirm(message)) {
-    fetch("/api/competition/updateRounds", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        cid: 1, // TODO: change in production
-        rows: this.refs.ddTable.state.rows
-      })
-    }).then(() => {
-        fetch("/api/competition/1/rounds") // TODO: change 1 to cid
-            .then(response => response.json())
-            .then(json => {
-                this.refs.ddTable.setState({rows: json})
-            })
-            .catch(err => alert(err));
-    });
+  if (!confirm(message)) return;
+  const cid = this.props.selected.competition.id
+  const send_obj = {
+    cid: cid,
+    rows: this.refs.ddTable.state.rows
   }
+  this.props.api.post("/api/competition/updateRounds", send_obj)
+  .then(() => this.props.api.get(`/api/competition/${cid}/rounds`))
+  .then(json => { this.refs.ddTable.setState({rows: json}) })
+  .catch(err => alert(err));
  }
 
  confirmGoToUrl(url, message) {

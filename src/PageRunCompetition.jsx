@@ -38,11 +38,9 @@ export default class RunCompetition extends React.Component {
   componentDidMount() {
 
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => {
-        fetch(`/api/competition/${this.competition_id}/rounds`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/competition/${this.competition_id}/rounds`)
           .then(json2 => {
             // update the state of our component
             this.setState({
@@ -55,10 +53,8 @@ export default class RunCompetition extends React.Component {
           // todo; display a nice (sorry, there's no connection!) error
           // and setup a timer to retry. Fingers crossed, hopefully the
           // connection comes back
-          .catch(err => alert(
-            `There was an error fetching the rounds`))
-        fetch(`/api/competitors/round/${json.currentroundid}`)
-          .then(response => response.json())
+          .catch(err => alert(`There was an error fetching the rounds`))
+        this.props.api.get(`/api/competitors/round/${json.currentroundid}`)
           .then(json => {
             this.setState({competitors: json.map(c => c.number)});
           });  

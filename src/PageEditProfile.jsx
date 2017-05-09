@@ -1,4 +1,4 @@
-/* 
+/*
  * EDIT PROFILE
  *
  * This page allows users to change their user information across
@@ -27,29 +27,27 @@ export default class PageEditProfile extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    fetch(`/api/competitors/${1}`)
-      .then(response => response.json()) // parse the result
-      .then(json => { 
+    this.props.api.get(`/api/competitors/${1}`)
+      .then(json => {
         // update the state of our component
-        this.setState({ 
-          competitor : json 
+        this.setState({
+          competitor : json
         })
       })
       // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // and setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
-      
-      fetch(`/api/affiliations`)
-      .then(response => response.json()) // parse the result
-      .then(json => { 
+
+      this.props.api.get(`/api/affiliations`)
+      .then(json => {
         // update the state of our component
-        this.setState({ 
-          affiliations : json 
+        this.setState({
+          affiliations : json
         })
       })
       // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // and setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
   }
@@ -61,21 +59,12 @@ export default class PageEditProfile extends React.Component {
     this.setState({competitor: new_competitor});
   };
 
-  saveChanges () { 
-      fetch("/api/update_competitor", {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(this.state.competitor)
-      }).then(() => {
-          window.location.reload();
-      });  
-  } 
+  saveChanges () {
+      this.props.api.post("/api/update_competitor", this.state.competitor)
+      .then(() => { window.location.reload() });
+  }
 
   render() {
-    console.log(this.state.competitor);
     const isAdmin = this.props.profile.role === 'admin'
 
     if (!isAdmin) {
@@ -102,17 +91,17 @@ export default class PageEditProfile extends React.Component {
           value = {this.state.competitor.lastname}
           onChange={this.handleChange.bind(this)} /><br/>
         <h5>Email address</h5>
-        <input 
-          type='email' 
+        <input
+          type='email'
           name = 'email'
-          value={this.state.competitor.email} 
+          value={this.state.competitor.email}
           disabled
           onChange={this.handleChange.bind(this)} /><br/>
         <h5>Mailing Address</h5>
-        <input 
-          type='text' 
+        <input
+          type='text'
           name = "mailingaddress"
-          value={this.state.competitor.mailingaddress} 
+          value={this.state.competitor.mailingaddress}
           onChange={this.handleChange.bind(this)} />
         <h5>Affiliation</h5>
         <select name = "affiliationid"
@@ -155,14 +144,14 @@ export default class PageEditProfile extends React.Component {
           value={this.state.competitor.last_name}
           onChange={this.handleChange.bind(this, 'last_name')} /><br/>
         <h5>Email address</h5>
-        <input 
-          type='email' 
-          value={this.state.competitor.email} 
+        <input
+          type='email'
+          value={this.state.competitor.email}
           onChange={this.handleChange.bind(this, 'email')} /><br/>
         <h5>Mailing Address</h5>
-        <input 
-          type='text' 
-          value={this.state.competitor.mailing_address} 
+        <input
+          type='text'
+          value={this.state.competitor.mailing_address}
           onChange={this.handleChange.bind(this, 'mailing_address')} />
         <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
         </div>

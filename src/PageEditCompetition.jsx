@@ -37,8 +37,7 @@ export default class PageEditCompetition extends React.Component {
 
     componentDidMount() {
         /* Call the API for competition info */
-        fetch(`/api/competition/${this.competition_id}`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/competition/${this.competition_id}`)
           .then(json => { 
               // update the state of our component
               this.setState({ competition : json })
