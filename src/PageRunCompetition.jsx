@@ -245,7 +245,7 @@ export default class RunCompetition extends React.Component {
       {
         property: 'size',
         header: {
-          label: 'No. of couples',
+          label: 'Number of Couples',
           sortable: true,
           resizable: true
         }

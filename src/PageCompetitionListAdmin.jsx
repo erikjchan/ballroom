@@ -104,9 +104,10 @@ class PageCompetitionList extends React.Component {
           <div id={style.createContainer}>
             <div id={style.saveChanges} 
               onClick={
-                () => this.props.router.push('/editcompetition/1/')}>Create New Competition</div>
+                () => {window.location.href = '/editcompetition/1/'}}>Create New Competition
             </div>
        	  </div>
+        </div>
       </Page>
      );
   }

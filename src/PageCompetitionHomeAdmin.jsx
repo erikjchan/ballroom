@@ -385,7 +385,8 @@ populate_expanded(box_name, lines_react, link){
           <div id={styles.createContainer}>
             <div id={styles.saveChanges} 
               onClick={
-                () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition</div>
+                () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition
+            </div>
           </div>
       </Page>
     ); 
