@@ -1,5 +1,3 @@
-
-
 .heading {
   font-size: 10vw;
 }
@@ -18,13 +16,13 @@
   text-align: center;
 }
 
-.separator{
+.separator {
 	display: block;
 	height: 0;
 	width: 0;
 }
 
-.registerBtn{
+.registerBtn {
   background-color: #CFC7C5;
   color: black;
   font-size: 16px;
@@ -57,7 +55,7 @@
   margin-bottom: 40px;
 }
 
-.searchBtn{
+.searchBtn {
   display:inline-block;
   background-color: #CFC7C5;
   color: black;
@@ -69,20 +67,13 @@
   border: 0;
   text-align: center;
   box-shadow: 0px 2px 5px #444444;
-
-  /*background-color: white;
-  color: black;
-	font-size: 24px;
-	width: auto;
-	height: auto;
-	border-radius: 5px;*/
 }
 
-.titleContainer{
+.titleContainer {
   vertical-align: middle;	
 }
 
-.editBtn{
+.editBtn {
 	float: right;
 	background-color: white;
 	color: black;
@@ -98,7 +89,7 @@
  	text-align: center;
 }
 
-.lines{
+.lines {
 	padding: 4px 20px;
 	font-size: 14px;
 	margin: 0 auto;
@@ -122,8 +113,6 @@ Competitions Page End
 Edit Schedule Page
 Start
  */
-
-
 #titleContainer {
   position: relative;
 }
@@ -156,12 +145,10 @@ Start
 #createContainer {
   float: right;
   display:inline-block;
-  /*overflow: auto ;*/
   height: 100%;
   height:100%;
   vertical-align: middle;
   text-align: center;
-  /*box-shadow: 0px 4px 10px #444444;*/
 }
 
 #createContainer > div {
@@ -172,12 +159,11 @@ Start
   padding: 10px;
   background-color: #365D82;
   color: white;
-    vertical-align: middle;
+  vertical-align: middle;
   text-align: center;
-  /*box-shadow: 0px 3px #333333;*/
   -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
--moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 
 .clear {
@@ -219,12 +205,6 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   vertical-align: middle;
 }
 
-/*#dragAndDropWrapperTopBar > div {
-  display: inline-block;
-  width: 50%;
-  vertical-align: middle;
-}*/
-
 #dragAndDropTitle {
   color: white;
   font-size: 30px;
@@ -250,14 +230,6 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   float:right;
   margin-right: 20px;
 }
-
-/*#dragAndDropAutosort > div {
-  display: inline-block;
-  background-color: #eeeeee;
-  border-radius: 10px;
-  text-align: center;
-  padding: 5px 20px;
-}*/
 
 #scheduleWrapper {
   padding: 30px;
@@ -309,12 +281,7 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 .tableWrapper > thead th {
   box-sizing: border-box;
   text-align: center;
-  /*border-top: solid black 1px;*/
-  /*border-bottom: solid black 1px;*/
   padding: 10px;
-
-
-  /*box-shadow: 0px 3px #333333;*/
 }
 
 .tableWrapper > thead th:first-child {
@@ -346,7 +313,7 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   width: 100%;
 }
 
-.editLnSBox{
+.editLnSBox {
 	width: 50%;
 	height: auto;
 	display: inline-block;
@@ -361,8 +328,6 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 .tableBody td {
   box-sizing: border-box;
   text-align: center;
-  /*border-top: solid #333333 1px;*/
-  /*border-bottom: solid #333333 1px;*/
   padding: 10px;
   box-shadow: 0px 1px #333;
 }
@@ -378,7 +343,6 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-
 /**
 Edit Schedule Page
 End
@@ -458,14 +422,13 @@ End
   text-align: center;
 }
 
-.infoTables{
+.infoTables {
   width: auto;
   height: auto;
-  /*padding: 20px 40px;*/
 }
 
 
-.infoBox{
+.infoBox {
 	width: 50%;
 	height: 340px;
 	display: inline-block;
@@ -473,43 +436,35 @@ End
 	vertical-align: middle;
 }
 
-.infoBoxExpanded{
+.infoBoxExpanded {
 	width: 100%;
   height: 100%;
   overflow:auto;
 }
 
-.infoBoxLeft{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
+.infoBoxLeft {
   width: 50%;
   height: auto;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
-  /*float:left;*/
-  /*margin-bottom: 20px;*/
 }
 
-.infoBoxRight{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
+.infoBoxRight {
   width: 50%;
   height: auto;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
-  /*float:right;*/
-  /*margin-bottom: 20px;*/
 }
 
-.separators{
+.separators {
   display: block;
   height: 0;
   width: 0;
 }
 
-.runBtns{
+.runBtns {
   background-color: #E7B6A4;
   font-size: 24px;
   padding: 10px;
@@ -521,11 +476,11 @@ End
   margin-right: 40px;
 }
 
-.titleContainers{
+.titleContainers {
   vertical-align: middle; 
 }
 
-.editBtns{
+.editBtns {
   float: right;
   display:inline-block;
   background-color: #CFC7C5;
@@ -567,16 +522,9 @@ End
   box-shadow: 0px 4px 10px #444444;
 }
 
-/*.lines{
-  padding: 20px;
-  font-size: 14px;
-  height: 100%;
-}*/
-
-.addeditBtns{
+.addeditBtns {
   float: right;
   display:inline-block;
-  /*background-color: white;*/
   color: black;
   opacity: 1;
   font-size: 20px;
@@ -590,8 +538,7 @@ End
   text-align: center;
 }
 
-.editpayBtns{
-  /*background-color: white;*/
+.editpayBtns {
   color: black;
   opacity: 1;
   font-size: 20px;
@@ -605,13 +552,13 @@ End
   text-align: center;
 }
 
-.comp_containers{
+.comp_containers {
   padding-top: 30px;
   padding-right: 30px;
   padding-bottom: 60px;
 }
 
-.eventtable_containers{
+.eventtable_containers {
   background-color: white;
   box-shadow: 0px 4px 10px #444444;
 }
@@ -624,23 +571,22 @@ End
   text-align: center;
 }
 
-.infoTable{
+.infoTable {
   width: auto;
   height: auto;
-  /*padding: 20px 40px;*/
 }
 
-.separator{
+.separator {
   display: block;
   height: 0;
   width: 0;
 }
 
-.titleContainer{
+.titleContainer {
   vertical-align: middle; 
 }
 
-.returnBtn{
+.returnBtn {
   float: left;
   background-color: white;
   color: black;
@@ -656,30 +602,6 @@ End
   text-align: center;
   margin-right: 10px;
 }
-
-/*.editBtn{
-  float: right;
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 0;
-  vertical-align: middle;
-  text-align: center;
-}*/
-
-/*.lines{
-  padding: 20px;
-  font-size: 14px;
-  height: 100%;
-}*/
-
-/* */
 
 
 
