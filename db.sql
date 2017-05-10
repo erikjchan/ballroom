@@ -529,7 +529,7 @@ SELECT pg_catalog.setval('round_id_seq', 1, false);
 
 INSERT INTO admin VALUES ('admin@email.edu');
 
-INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'admin@email.edu', 1, 'description');
+INSERT INTO competition VALUES (1, 'Cornell DanceSport Classic', 1, 'Ithaca, New York', 10.00, 20.00, 30.00, '2017-05-09 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'admin@email.edu', 1, 'description');
 
 SELECT pg_catalog.setval('competition_id_seq', 1, true);
 
