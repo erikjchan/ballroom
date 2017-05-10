@@ -25,7 +25,7 @@ var auth0 = new AuthenticationClient({
 });
 
 const management = new ManagementClient({
-  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlEwUkVSRGN4TXpnM1JqaEJPRVUwUVRSR01FVXlRalZFUVRZd1FqSkZOekUyUWpCRk1UTXpOZyJ9.eyJpc3MiOiJodHRwczovL21ya2V2LmF1dGgwLmNvbS8iLCJzdWIiOiJvSVVDaVlISlI1NVgwOTJ0Q2pQcm13ZjFadDRoeWI5bEBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9tcmtldi5hdXRoMC5jb20vYXBpL3YyLyIsImV4cCI6MTQ5NDExNzM3MCwiaWF0IjoxNDk0MDMwOTcwLCJzY29wZSI6InJlYWQ6Y2xpZW50X2dyYW50cyBjcmVhdGU6Y2xpZW50X2dyYW50cyBkZWxldGU6Y2xpZW50X2dyYW50cyB1cGRhdGU6Y2xpZW50X2dyYW50cyByZWFkOnVzZXJzIHVwZGF0ZTp1c2VycyBkZWxldGU6dXNlcnMgY3JlYXRlOnVzZXJzIHJlYWQ6dXNlcnNfYXBwX21ldGFkYXRhIHVwZGF0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgZGVsZXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGNyZWF0ZTp1c2VyX3RpY2tldHMgcmVhZDpjbGllbnRzIHVwZGF0ZTpjbGllbnRzIGRlbGV0ZTpjbGllbnRzIGNyZWF0ZTpjbGllbnRzIHJlYWQ6Y2xpZW50X2tleXMgdXBkYXRlOmNsaWVudF9rZXlzIGRlbGV0ZTpjbGllbnRfa2V5cyBjcmVhdGU6Y2xpZW50X2tleXMgcmVhZDpjb25uZWN0aW9ucyB1cGRhdGU6Y29ubmVjdGlvbnMgZGVsZXRlOmNvbm5lY3Rpb25zIGNyZWF0ZTpjb25uZWN0aW9ucyByZWFkOnJlc291cmNlX3NlcnZlcnMgdXBkYXRlOnJlc291cmNlX3NlcnZlcnMgZGVsZXRlOnJlc291cmNlX3NlcnZlcnMgY3JlYXRlOnJlc291cmNlX3NlcnZlcnMgcmVhZDpkZXZpY2VfY3JlZGVudGlhbHMgdXBkYXRlOmRldmljZV9jcmVkZW50aWFscyBkZWxldGU6ZGV2aWNlX2NyZWRlbnRpYWxzIGNyZWF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgcmVhZDpydWxlcyB1cGRhdGU6cnVsZXMgZGVsZXRlOnJ1bGVzIGNyZWF0ZTpydWxlcyByZWFkOmVtYWlsX3Byb3ZpZGVyIHVwZGF0ZTplbWFpbF9wcm92aWRlciBkZWxldGU6ZW1haWxfcHJvdmlkZXIgY3JlYXRlOmVtYWlsX3Byb3ZpZGVyIGJsYWNrbGlzdDp0b2tlbnMgcmVhZDpzdGF0cyByZWFkOnRlbmFudF9zZXR0aW5ncyB1cGRhdGU6dGVuYW50X3NldHRpbmdzIHJlYWQ6bG9ncyByZWFkOnNoaWVsZHMgY3JlYXRlOnNoaWVsZHMgZGVsZXRlOnNoaWVsZHMgdXBkYXRlOnRyaWdnZXJzIHJlYWQ6dHJpZ2dlcnMgcmVhZDpncmFudHMgZGVsZXRlOmdyYW50cyByZWFkOmd1YXJkaWFuX2ZhY3RvcnMgdXBkYXRlOmd1YXJkaWFuX2ZhY3RvcnMgcmVhZDpndWFyZGlhbl9lbnJvbGxtZW50cyBkZWxldGU6Z3VhcmRpYW5fZW5yb2xsbWVudHMgY3JlYXRlOmd1YXJkaWFuX2Vucm9sbG1lbnRfdGlja2V0cyByZWFkOnVzZXJfaWRwX3Rva2VucyJ9.S-iAYB4L3KxNLfqYW41e5e0soj0s-dUHZ2reQ37tplsRGpPt_RZEz3w4-yhB1XQCDYnVwJC5BIuv3wgstQLHDwH_-EH34GF044dW6Q5RcDzZ2ixO9TaT_YMzd5NoBF4VATAM9MYTFHIIhGnBqBEWImNjR2ZEO5rgR1uE4WeftvKgkRyAO_Z0nJqOf7KaG3wSwHYCWbkhnFTu3vc2BxonhTcscx8cGyQlhkfea_6lt05L8JHfk02jWCZ5_BCJ3CHnPjDibCcDgO_1-yg5NnZw3w-McWHZEP-ssvCAiofu8QLdhFXNTHNeq6HIhvH8pvhd7xShncOwX3hEdE2PO-mvrQ',
+  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlEwUkVSRGN4TXpnM1JqaEJPRVUwUVRSR01FVXlRalZFUVRZd1FqSkZOekUyUWpCRk1UTXpOZyJ9.eyJpc3MiOiJodHRwczovL21ya2V2LmF1dGgwLmNvbS8iLCJzdWIiOiJvSVVDaVlISlI1NVgwOTJ0Q2pQcm13ZjFadDRoeWI5bEBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9tcmtldi5hdXRoMC5jb20vYXBpL3YyLyIsImV4cCI6MTUwMzAyNzA4MSwiaWF0IjoxNDk0Mzg3MDgxLCJzY29wZSI6InJlYWQ6Y2xpZW50X2dyYW50cyBjcmVhdGU6Y2xpZW50X2dyYW50cyBkZWxldGU6Y2xpZW50X2dyYW50cyB1cGRhdGU6Y2xpZW50X2dyYW50cyByZWFkOnVzZXJzIHVwZGF0ZTp1c2VycyBkZWxldGU6dXNlcnMgY3JlYXRlOnVzZXJzIHJlYWQ6dXNlcnNfYXBwX21ldGFkYXRhIHVwZGF0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgZGVsZXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGNyZWF0ZTp1c2VyX3RpY2tldHMgcmVhZDpjbGllbnRzIHVwZGF0ZTpjbGllbnRzIGRlbGV0ZTpjbGllbnRzIGNyZWF0ZTpjbGllbnRzIHJlYWQ6Y2xpZW50X2tleXMgdXBkYXRlOmNsaWVudF9rZXlzIGRlbGV0ZTpjbGllbnRfa2V5cyBjcmVhdGU6Y2xpZW50X2tleXMgcmVhZDpjb25uZWN0aW9ucyB1cGRhdGU6Y29ubmVjdGlvbnMgZGVsZXRlOmNvbm5lY3Rpb25zIGNyZWF0ZTpjb25uZWN0aW9ucyByZWFkOnJlc291cmNlX3NlcnZlcnMgdXBkYXRlOnJlc291cmNlX3NlcnZlcnMgZGVsZXRlOnJlc291cmNlX3NlcnZlcnMgY3JlYXRlOnJlc291cmNlX3NlcnZlcnMgcmVhZDpkZXZpY2VfY3JlZGVudGlhbHMgdXBkYXRlOmRldmljZV9jcmVkZW50aWFscyBkZWxldGU6ZGV2aWNlX2NyZWRlbnRpYWxzIGNyZWF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgcmVhZDpydWxlcyB1cGRhdGU6cnVsZXMgZGVsZXRlOnJ1bGVzIGNyZWF0ZTpydWxlcyByZWFkOmVtYWlsX3Byb3ZpZGVyIHVwZGF0ZTplbWFpbF9wcm92aWRlciBkZWxldGU6ZW1haWxfcHJvdmlkZXIgY3JlYXRlOmVtYWlsX3Byb3ZpZGVyIGJsYWNrbGlzdDp0b2tlbnMgcmVhZDpzdGF0cyByZWFkOnRlbmFudF9zZXR0aW5ncyB1cGRhdGU6dGVuYW50X3NldHRpbmdzIHJlYWQ6bG9ncyByZWFkOnNoaWVsZHMgY3JlYXRlOnNoaWVsZHMgZGVsZXRlOnNoaWVsZHMgdXBkYXRlOnRyaWdnZXJzIHJlYWQ6dHJpZ2dlcnMgcmVhZDpncmFudHMgZGVsZXRlOmdyYW50cyByZWFkOmd1YXJkaWFuX2ZhY3RvcnMgdXBkYXRlOmd1YXJkaWFuX2ZhY3RvcnMgcmVhZDpndWFyZGlhbl9lbnJvbGxtZW50cyBkZWxldGU6Z3VhcmRpYW5fZW5yb2xsbWVudHMgY3JlYXRlOmd1YXJkaWFuX2Vucm9sbG1lbnRfdGlja2V0cyByZWFkOnVzZXJfaWRwX3Rva2VucyJ9.tC0ql0LDX_lJXXpzzU7ZCRWyrxOcudnIofjUrY6hTcXwxsvw-UOnvDzInEIehnGb-qDnFeVOH44n-XPaTr3ZPckkbVuXlraFUqktW9xFITXOVWvHbycouDPCdZ98ssoAJEukn-E9DHamiIjxO7jxdEV0ABQv2sEG3pBKs1pR3bak-eKJCtKYCP3wqY9rc2J7EEk_-XY0yc8bLVFtOVkJ1O6Oau9bJjZmPqU3c-1r4FxMbfFJvcwcSC7HbGl8XrOcYsC9rNltZEQ4bnCnzyEI9aWfatQM7tGxiw4C4zVZrRuoFhEh58tuElz3y1gFDz49vqw5AoWkiZZ0vce1XlcDkw',
   domain: 'mrkev.auth0.com'
 })
 
@@ -63,16 +63,25 @@ app.use(bodyParser.json());
  })*/
 
  app.post('/api/create_user', (req, res) => {
-    const { firstname, lastname, email, mailingaddress, affiliationname } = req.body;
-    query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationname).then(value => {
-      res.send(value);
+    const { profile, firstname, lastname, email, mailingaddress, affiliationname } = req.body;
+    const { user_id } = profile
+    query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationname)
+    .then(idstr => {
+        const idobj = JSON.parse(idstr)
+
+        // Update Auth0 profile app_metadata
+        management.users
+        .updateAppMetadata({ id: user_id }, {competitor_id : idobj.id})
+        .then(body => { console.log(body); res.send(idobj)})
+        .catch(err => { console.error(err); res.send({severity: "ERROR", err})})
     }, err => {
-      res.send(err);
+      res.send(err)
     })
+    .catch(err => res.send(err))
  });
 
-  app.post('/api/create_empty_competition', (req, res) => {
-    query2.create_empty_competition().then(function (value){
+  app.post('/api/create_competition', (req, res) => {
+    query2.create_competition(req.body).then(function (value){
         console.log(value);
         res.send(value[0]);
     })
@@ -216,6 +225,13 @@ app.get('/api/competition/:cid/affiliations', (req, res) => {
     query.get_affiliations_for_competition(req.params.cid).then(value => {
         log_debug(2)(value)
         res.send(value);
+    });
+})
+
+app.get('/api/affiliations/:id', (req, res) => {
+    query2.get_affiliation(req.params.id).then(value => {
+        log_debug(2)(value)
+        res.send(value[0]);
     });
 })
 

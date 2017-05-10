@@ -1,9 +1,7 @@
 import React from 'react';
 import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
-import * as dnd from 'reactabular-dnd';
 import * as easy from 'reactabular-easy';
-import VisibilityToggles from 'react-visibility-toggles';
 import * as resizable from 'reactabular-resizable';
 import * as search from 'searchtabular';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -37,7 +35,6 @@ class CompetitionsTable extends React.Component {
   constructor(props) {
 		super(props);
 
-		this.rows = null;
 		this.state = {
 		  rows: [],
 		  columns: this.getColumns(),
@@ -122,13 +119,12 @@ class CompetitionsTable extends React.Component {
       fetch("api/competitions/1/unregistered")
 		   .then(response => response.json())
 		   .then(json => {
-          this.rows = json;
-          console.log(this.rows);
-          for (let i = 0; i < this.rows.length; i++) {
-            this.rows[i].regularprice = "$" + (this.rows[i].regularprice || 0);
-            this.rows[i].lateprice = "$" + (this.rows[i].lateprice || 0);
-            var regularregdeadline = new Date(this.rows[i].regularregdeadline);
-            this.rows[i].regularregdeadline = regularregdeadline.toUTCString();
+          for (let i = 0; i < json.length; i++) {
+            
+            json[i].regularprice = "$" + (json[i].regularprice || 0);
+            json[i].lateprice = "$" + (json[i].lateprice || 0);
+            var regularregdeadline = new Date(json[i].regularregdeadline);
+            json[i].regularregdeadline = regularregdeadline.toDateString();
 		    	}
 		     this.setState({ rows: json, }); 
 		 })
@@ -142,9 +138,9 @@ class CompetitionsTable extends React.Component {
         row: 'tr',
         cell: 'th'
       },
-      body: {
-        row: dnd.Row
-      }
+      // body: {
+      //   row: dnd.Row
+      // }
     };
 
     const { columns, rows, query } = this.state;
@@ -159,10 +155,6 @@ class CompetitionsTable extends React.Component {
             )
 		 })
     )(rows);
-
-	  for (let i = 0; i < rows.length; i++) {
-	    rows[i].id = (i + 1);
-	  }
 
 	  const headerRows = resolve.headerRows({
 	    columns: columns

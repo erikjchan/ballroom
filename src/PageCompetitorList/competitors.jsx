@@ -9,7 +9,7 @@ import style from '../style.css';
 import { browserHistory, Link } from 'react-router';
 import { compose } from 'redux';
 
-
+/** TODO: CHANGE URL OF THIS, WE DONT NEED COMPETITION ANY MORE */
 export default class CompetitorList extends React.Component {
   constructor(props) {
     super(props);
@@ -17,200 +17,108 @@ export default class CompetitorList extends React.Component {
     this.state = {
       query: {},
       sortingColumns: {},
-      columns: [
-        {
-            id: 'name',
-            property: 'name',
-            props: {
-                style: {
-                    width: 250
-                }
-            },
-            header: {
-                label: 'Name',
-            }
-        },
-        {
-          id: 'affiliationname',
-          property: 'affiliationname',
-          props: {
-            style: {
-              width: 250
-            }
-          },
-          header: {
-            label: 'Organization',
-          }
-        },
-        {
-          id: 'number',
-          property: 'number',
-          props: {
-            style: {
-              width: 150
-            }
-          },
-          header: {
-            label: 'Number',
-          }
-        },
-        {
-          id: 'amount',
-          property: 'amount',
-          props: {
-            style: {
-              width: 200
-            }
-          },
-          header: {
-            label: 'Owes',
-          }
-        },
-        {
-          id: 'paidwithaffiliation',
-          property: 'paidwithaffiliation',
-          props: {
-            style: {
-              width: 100
-            }
-          },
-          header: {
-            label: 'Paying w/ Organization?',
-          }
-        },
-      	{
-            cell: {
-      		    formatters: [
-                    (value, { rowData }) => (
-                        <div>
-                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
-                            <input type="button"
-                                   value="Edit/See More" /></Link>
-      			        </div>
-      		        )
-      		    ]
-      	    },
-      		width: 100
-        },
-        {
-          props: {
-            style: {
-              width: 100
-            }
-          }
-        }
-      ],
       rows: []
     };
   }
 
+  /**
+   * @return the columns for this table
+   */
   getColumns() {
-      	  return [
-               {
-      		    id: 'name',
-      		    property: 'name',
-      		    header: {
-      		        label: 'Name',
-      		        sortable: true,
-      		        resizable: true
-      		    },
-      		    cell: {
-      		        highlight: true
-      		    },
-      		    width: 250
-      		 },
-      		 {
-      		     id: 'affiliationname',
-      		     property: 'affiliationname',
-      		     header: {
-      		        label: 'Organization',
-      		        sortable: true,
-      		        resizable: true
-      		    },
-      		    cell: {
-      		        highlight: true
-      		    },
-      		    width: 250
-      		 },
-      		 {
-      		    id: 'number',
-      		    property: 'number',
-      		    header: {
-      		        label: 'Number',
-      		        sortable: true,
-      		        resizable: true
-      		    },
-      		    cell: {
-      		        highlight: true
-      		    },
-      		    width: 150
-      		 },
-      		 {
-      		    id: 'amount',
-      		    property: 'amount',
-      		    header: {
-      		        label: 'Owes',
-      		        sortable: true,
-      		        resizable: true
-      		    },
-      		    cell: {
-      		        highlight: true
-      		    },
-      		    width: 200
-      		 },
-      		 {
-      		     id: 'paidwithaffiliation',
-      		     property: 'paidwithaffiliation',
-      		     header: {
-      		         label: 'Paying w/ Organization?',
-      		         sortable: true,
-      		         resizable: true
-      		     },
-      		     cell: {
-      		         highlight: true
-      		     },
-      		     width: 100
-      		 },
-      		 {
-      		     cell: {
-      		         formatters: [
-                         (value, { rowData }) => (
-                          <div>
-                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
-                            <input type="button"
-                                   value="Edit/See More" /></Link>
-      			               </div>
-      		             )
-      		         ]
-      		     },
-      		     width: 100
-      		 },
-      		 ];
-      		 }
+    return [
+      {
+        id: 'name',
+        property: 'name',
+        props: {
+            style: {
+                width: 250
+            }
+        },
+        header: {
+            label: 'Name',
+        },
+        cell: {
+          formatters: [
+              (value, { rowData }) => (
+                <Link to={`/competition/${this.props.competition_id}/seecompetitor/${rowData.id}`}>{value}</Link>
+            )
+          ]
+        },
+      },
+      {
+        id: 'affiliationname',
+        property: 'affiliationname',
+        props: {
+          style: {
+            width: 250
+          }
+        },
+        header: {
+          label: 'Organization',
+        }
+      },
+      {
+        id: 'number',
+        property: 'number',
+        props: {
+          style: {
+            width: 150
+          }
+        },
+        header: {
+          label: 'Number',
+        }
+      },
+      {
+        id: 'amount',
+        property: 'amount',
+        props: {
+          style: {
+            width: 200
+          }
+        },
+        header: {
+          label: 'Owes',
+        },
+      },
+      {
+        id: 'paidwithaffiliation',
+        property: 'paidwithaffiliation',
+        props: {
+          style: {
+            width: 100
+          }
+        },
+        header: {
+          label: 'Paying w/ Organization?',
+        }
+      },
+      {
+        props: { style: { width: 50 } }
+      }
+    ]
+  }
 
   componentWillMount() {
-		if (this.props.data){
-			this.setState({query: this.props.data.query})
-		}
+    if (this.props.data){
+      this.setState({query: this.props.data.query})
+    }
   }
 
   componentDidMount() {
-    fetch("/api/competition/1/competitors")
-	      .then(response => response.json())
-		  .then(json => {
-            console.log(json);
-            this.rows = json;
-            for (let i = 0; i < this.rows.length; i++) {
-                  this.rows[i].amount = "$" + (this.rows[i].amount || 0);
-                  if (this.rows[i].paidwithaffiliation) {
-                          this.rows[i].paidwithaffiliation = "Yes";
-                  } else {
-                          this.rows[i].paidwithaffiliation = "No";
-                  }
-		        }
-		        this.setState({ rows: json, }); 
-		 })
-		 .catch(err => alert(err));
+    this.props.api
+      .get(`/api/competition/${this.props.competition_id}/competitors`)
+      .then(json => {
+
+        const rows = json.map((row, i) => Object.assign(row, {
+          rowId: i,
+          amount: (!row.amount) ? "--" : "$" + (row.amount || 0),
+          paidwithaffiliation: row.paidwithaffiliation ? "Yes" : "No",
+        }))
+
+        this.setState({ rows }); 
+     })
+     .catch(err => alert(err));
   }
 
   render() {
@@ -220,11 +128,10 @@ export default class CompetitorList extends React.Component {
         row: 'tr',
         cell: 'th'
       },
-      body: {
-        row: dnd.Row
-      }
+      body: { row: dnd.Row }
     };
-    const { columns, rows, query } = this.state;
+    const { rows, query } = this.state;
+    const columns = this.getColumns()
     for (let i = 0; i < rows.length; i++) {
         rows[i].order_number = (i + 1);
     }
@@ -232,47 +139,47 @@ export default class CompetitorList extends React.Component {
     const resolvedRows = compose(
       search.multipleColumns({ columns: columns, query }),
       resolve.resolve({
-		     columns: columns,
-		     method: (extra) => compose(
+         columns: columns,
+         method: (extra) => compose(
                 resolve.byFunction('cell.resolve')(extra),
                 resolve.nested(extra)
             )
-		 })
+     })
     )(rows);
  
     var totalOwed = 0; var totalListed = 0;
     for (let i = 0; i < resolvedRows.length; i++) {
         totalListed += 1;
-        if (resolvedRows[i].amount != 0)
+        if (resolvedRows[i].amount != 0 && resolvedRows[i].amount != '--')
             totalOwed += parseFloat((resolvedRows[i].amount).substr(1));
     }  
 
     return (
       <div>
-      <p><b>Number of competitors listed: </b>{totalListed} ------- <b>Total amount owed: </b>${totalOwed}</p>
-
-      <Table.Provider
-        components={components}
-        columns={columns}
-        className={style.tableWrapper}
-      >
-        <Table.Header
-          headerRows={resolve.headerRows({ columns })}
-          className={style.tableHeader}
+        <p><b>Number of competitors listed: </b>{totalListed} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Total amount owed: </b>${totalOwed}</p>
+  
+        <Table.Provider
+          components={components}
+          columns={columns}
+          className={style.tableWrapper}
         >
-                <search.Columns
-                  query={query}
-                  columns={columns}
-                  onChange={query => this.setState({ query })}
-                />
-        </Table.Header>
-        <Table.Body
-          className={style.tableBody}
-          rows={resolvedRows}
-          rowKey="id"
-          onRow={this.onRow}
-        />
-      </Table.Provider>
+          <Table.Header
+            headerRows={resolve.headerRows({ columns })}
+            className={style.tableHeader}
+          >
+            <search.Columns
+              query={query}
+              columns={columns}
+              onChange={query => this.setState({ query })}
+            />
+          </Table.Header>
+          <Table.Body
+            className={style.tableBody}
+            rows={resolvedRows}
+            rowKey="id"
+            onRow={this.onRow}
+          />
+        </Table.Provider>
       </div>
     );
   }

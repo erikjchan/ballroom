@@ -28,12 +28,12 @@ class PageCompetitionList extends React.Component {
       competitions: [],
       
     }
-    this.competitor_id = 1;
+    this.competitor_id = this.props.profile.competitor_id;
   }
 
   componentDidMount() {
     /* Call the API for competitions info */
-    this.props.api.get(`/api/competitions/1`)
+    this.props.api.get(`/api/competitions/${this.props.profile.competitor_id}`)
       .then(json => { 
         console.log(json);
         this.competitions = json;
@@ -41,7 +41,7 @@ class PageCompetitionList extends React.Component {
           this.competitions[i].regularprice = "$" + (this.competitions[i].regularprice || 0);
           this.competitions[i].lateprice = "$" + (this.competitions[i].lateprice || 0);
           var date = new Date(this.competitions[i].startdate);
-          this.competitions[i].startdate = date.toUTCString();
+          this.competitions[i].startdate = date.toDateString();
         }
         // update the state of our component
         this.setState({ competitions : json })

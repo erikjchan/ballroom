@@ -42,10 +42,10 @@ const Authorization = allowedRoles => WrappedComponent => {
      * associated with it. Means its a new user
      */
     userIsNew() {
-      return false;
-
-        // (this.props.profile.app_metadata && this.props.profile.app_metadata.competitor_id) !== undefined ||
-        //     (this.props.profile.app_metadata && this.props.profile.app_metadata.competitor_id) !== null
+      const { app_metadata } = this.props.profile
+      const competitor_id = app_metadata && app_metadata.competitor_id
+      return this.props.isAuthenticated && 
+        (competitor_id === undefined || competitor_id === null)
     }
 
     /**

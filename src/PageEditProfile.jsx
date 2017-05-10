@@ -26,7 +26,7 @@ export default class PageEditProfile extends React.Component {
 
   componentDidMount() {
     /* Call the API for competition info */
-    this.props.api.get(`/api/competitors/${1}`)
+    this.props.api.get(`/api/competitors/${this.props.profile.competitor_id}`)
       .then(json => {
         // update the state of our component
         this.setState({

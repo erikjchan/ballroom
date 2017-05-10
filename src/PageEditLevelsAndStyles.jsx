@@ -83,18 +83,18 @@ class EditLevelsAndStyles extends React.Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    cid: 1, // TODO: change in production
+                    cid: this.props.selected.competition.id,
                     levels: this.refs.levelsTable.state.rows,
                     styles: this.refs.stylesTable.state.rows
                 })
             }).then(() => {
-                fetch("/api/competition/1/levels") // TODO: change 1 to cid
+                fetch("/api/competition/"+cid+"/levels") 
                     .then(response => response.json())
                     .then(json => {
                         this.refs.levelsTable.setState({rows: json})
                     })
                     .catch(err => alert(err));
-                fetch("/api/competition/1/styles") // TODO: change 1 to cid
+                fetch("/api/competition/"+cid+"/styles") 
                     .then(response => response.json())
                     .then(json => {
                         this.refs.stylesTable.setState({rows: json})
