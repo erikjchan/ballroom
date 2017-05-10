@@ -63,15 +63,12 @@ app.use(bodyParser.json());
  })*/
 
  app.post('/api/create_user', (req, res) => {
-    const { first_name, last_name, email, mailing_address } = req.body
-
-    // TODO, create user, include Auth0 ID
-
-    // TODO, update Auth0 metadata to include user's competitor id
-
-    // send back the created competitor
-    res.send({})
-
+    const { firstname, lastname, email, mailingaddress, affiliationname } = req.body;
+    query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationname).then(value => {
+      res.send(value);
+    }, err => {
+      res.send(err);
+    })
  });
 
   app.post('/api/create_empty_competition', (req, res) => {

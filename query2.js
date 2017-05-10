@@ -46,11 +46,11 @@ const check_competitor_email_exist = (email) => {
 
 // INSERT
 const create_competitor = (firstname, lastname, email, mailingaddress, 
-    affiliationid) => {
+    affiliationname) => {
     return pool.query_wrapped(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress,
-                                                  affiliationid, hasregistered)
-                          VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
-                                  ${affiliationid}, ${false});`);
+                                                  affiliationid)
+                          (SELECT ${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
+                                  id FROM affiliation WHERE name = ${affiliationname}) RETURNING id;`);
 }
 
 // UPDATE
