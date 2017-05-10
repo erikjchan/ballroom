@@ -8,7 +8,7 @@
 
 
 import Autocomplete from 'react-autocomplete'
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import Select from 'react-select'
 import EventTable from './common/EventTable.jsx'
@@ -28,7 +28,9 @@ class PageOrganizationPayment extends React.Component {
       /** We will populate this w/ data from the API */
       competition: null,
       organization: null,
+      owed: null,
       organizations: [],
+      paid: "false",
       searched_organizations: [],
       keyword: "",
       selectedOrgID: "-1"
@@ -37,9 +39,10 @@ class PageOrganizationPayment extends React.Component {
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {this.competition_id = this.props.profile.competitor_id}
+    // this.props.selected.competition.id 
+    try {this.competition_id =  this.props.params.competition_id} 
     catch (e) { alert('Invalid competition ID!') }
-    try {this.organization_id = this.props.selected.competition.id}
+    try {this.organization_id = this.props.params.organization_id}
     catch (e) { alert('Invalid competition ID!') }
     
  }
@@ -80,6 +83,42 @@ class PageOrganizationPayment extends React.Component {
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
+
+    fetch(`/api/get_organization_owed/${this.competition_id}/${this.organization_id}`)
+      .then(response => response.json()) // parse the result
+      .then(json => { 
+          // update the state of our component
+        this.setState({ owed : json.coalesce })
+      })
+      // todo; display a nice (sorry, there's no connection!) error
+      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // connection comes back
+      .catch(err => { alert(err); console.log(err)})
+  }
+
+  handlePayChange(value){
+      console.log(this.state.paid)
+      this.setState({paid: value});
+      console.log(this.state.paid)
+  }
+
+  onSaveHandler(){
+    console.log(this.state)
+    if (this.state.paid == "true"){
+           fetch("/api/clear_organization_owed", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    competitionid: this.competition_id,
+                    affiliationid: this.organization_id
+                })
+            }).then(() => {
+                window.location.reload();
+            });
+    }
   }
 
  render() {
@@ -103,11 +142,11 @@ class PageOrganizationPayment extends React.Component {
          };
         var comp_name = this.state.competition.name;
         var organization_name = this.state.organization.name;
-        var organization_owed = this.state.organization.amountowed;
+        var organization_owed = this.state.owed;
         var comp_info = (
-            <div className={styles.lines}>
+            <div className={style.lines}>
                 <h2>Search for Another Organization:</h2>
-                <div className = {styles.label}>
+                <div className = {style.label}>
                     <Autocomplete
                       menuStyle={myMenuStyle}
                       ref="autocomplete"
@@ -137,7 +176,7 @@ class PageOrganizationPayment extends React.Component {
                       )}
                     />
                     <button
-                      className = {styles.searchBtn}
+                      className = {style.searchBtn}
                       onClick={(event) => 
                         {   
                             console.log(this.state);
@@ -157,28 +196,28 @@ class PageOrganizationPayment extends React.Component {
                 <h2>Current Organization Information:</h2>
                 <p><b>Organization Number:</b> {this.organization_id} </p>   
                 <p><b>Organization Name:</b> {organization_name} </p>            
-                <p><b>Amount Owed:</b> $ {organization_owed} </p>          
+                <p><b>Amount Owed:</b> ${organization_owed} </p>          
                 <h3>Mark as Paid?</h3>
                 <span>
-                    <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
+                    <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange.bind(this)}>
                         <RadioButton label='Paid' value='true'/>
                         <RadioButton label='Unpaid' value='false'/>
                     </RadioGroup>
                 </span>
                  <div className = {styles.form_row}>
-                    <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
+                    <button className = {styles.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
                 </div>
         </div>)
 
     return (
       <Page ref="page" {...this.props}>
           <h1>{organization_name}</h1>
-          <div className={styles.infoTables}>
+          <div className={style.infoTables}>
           </div>
           <div>
-              {/*<div className={styles.infoBoxEditCompetition}>*/}
-            <div className={styles.infoBoxExpanded}>
-              <Box admin={true} title={<div className={styles.titleContainers}><span>See/Edit Organization Payment</span> 
+              {/*<div className={style.infoBoxEditCompetition}>*/}
+            <div className={style.infoBoxExpanded}>
+              <Box admin={true} title={<div className={style.titleContainers}><span>See/Edit Organization Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>

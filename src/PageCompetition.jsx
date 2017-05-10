@@ -6,7 +6,7 @@
  */
 
 
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
@@ -110,20 +110,15 @@ export default class PageCompetition extends React.Component {
  render() {
    if (this.state.competition){
     var comp_name = this.state.competition.name;
-    var comp_info = (<div className={styles.lines}>
+    var comp_info = (<div className={style.lines}>
                       <p><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>
                       <p><b>Location:</b> {this.state.competition.locationname}</p>
                       <p><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>
                       <p><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>
                       <p><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
                     </div>)
-    /* TODO: How to get numbe rof competitors in different styles?*/
-    // var style_category={}
-    // this.state.competitors.map(c => {
-    //     return event.competitionId === this.competition_id
-    // })
 
-    var competitor_info = (<div className={styles.lines}>
+    var competitor_info = (<div className={style.lines}>
                       <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname}</p>
                       <p><b>Email:</b> {this.state.competitor.email}</p>
                       <p><b>Organization:</b> {this.state.competitor.affiliationname}</p>
@@ -133,7 +128,7 @@ export default class PageCompetition extends React.Component {
                       <p><b>Paying with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                     </div>)
 
-    var event_titles = (<div className={styles.lines}>
+    var event_titles = (<div className={style.lines}>
                           {this.state.competitor_events.sort(function (a, b){
                           return a.id - b.id}).map((event, i) => {
                             return (<p key={event.Title} key={i}>{event.Title}</p>)
@@ -171,37 +166,37 @@ export default class PageCompetition extends React.Component {
     return (
       <Page ref="page" {...this.props}>
           <h1>{comp_name}</h1>
-          <div className={styles.infoTables}>
-            <div className={styles.infoBoxLeft}>
+          <div className={style.infoTables}>
+            <div className={style.infoBoxLeft}>
               <Box title={
-                <div className={styles.titleContainers}>
+                <div className={style.titleContainers}>
                   <span>Competition Info</span>
                 </div>}>
                 {comp_info}
               </Box>
             </div>
-            <div className={styles.infoBoxRight}>
-              <Box title={<div className={styles.titleContainers}><span>User Info</span>
+            <div className={style.infoBoxRight}>
+              <Box title={<div className={style.titleContainers}><span>User Info</span>
                             <Link to={`/editprofile`}>
-                            <input type="button" className={styles.editBtns}
+                            <input type="button" className={style.editBtns}
                                       value="Edit" /></Link>
                           </div>}>{competitor_info}</Box>
             </div>
 
-            <div className={styles.separators}></div>
+            <div className={style.separators}></div>
 
-            <div className={styles.eventTableCompetitor}>
+            <div className={style.eventTableCompetitor}>
 
-             <div className={styles.separators}></div>
-             <Box title={<div className={styles.titleContainers}><span>Your Events</span></div>}>
+             <div className={style.separators}></div>
+             <Box title={<div className={style.titleContainers}><span>Your Events</span></div>}>
               {<div>
-                  <div className={styles.eventtable_containers}>
+                  <div className={style.eventtable_containers}>
                     <EventTable events={this.state.competitor_events} />
                   </div>
-                  <div className = {styles.comp_containers}>
-                    <div className = {styles.addeditBtns}>
+                  <div className = {style.comp_containers}>
+                    <div className = {style.addeditBtns}>
                       <button
-                        className={styles.editBtns}
+                        className={style.editBtns}
                         onClick={()=>{ browserHistory.push('/competition/1/eventregistration') }}>
                           Add/Edit Event
                         </button>

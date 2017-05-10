@@ -1,5 +1,5 @@
 
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import CompEventTable from './common/CompEventTable.jsx'
@@ -71,49 +71,49 @@ export default class PageCompetitorPayment extends React.Component {
           var comp_name1 = String(this.state.competitor.firstname);
           var comp_name2 = this.state.competitor.lastname;
           var comp_name = comp_name1.concat(" ", comp_name2);
-          var comp_info = (<form className = {styles.long_form}>        
+          var comp_info = (<form className = {style.long_form}>        
                 <div>
-                    <div className = {styles.form_row}>
-                        <label className = {styles.full_label}>
+                    <div className = {style.form_row}>
+                        <label className = {style.full_label}>
                             Competitor Name: 
                             {comp_name}
                         </label>
                     </div>
-                    <div className = {styles.form_row}>
-                        <label className = {styles.full_label}>
+                    <div className = {style.form_row}>
+                        <label className = {style.full_label}>
                             Last Payment Change: 
                             {this.state.payment_record.timestamp}
                         </label>
                     </div>
-                    <div className = {styles.form_row}>
-                        <label className = {styles.full_label}>
+                    <div className = {style.form_row}>
+                        <label className = {style.full_label}>
                             Registration Time: 
                             {/*todo*/}
                             {this.state.payment_record.timestamp}
                         </label>
                     </div>
-                     <div className = {styles.form_row}>
-                        <label className = {styles.long_label}>
+                     <div className = {style.form_row}>
+                        <label className = {style.long_label}>
                             Amount Owed: 
                             {this.state.payment_record.amount}
                         </label>
                     </div>
-                    <div className = {styles.form_row}>
-                        <label className = {styles.long_label}>
+                    <div className = {style.form_row}>
+                        <label className = {style.long_label}>
                             Paying Online
                         </label><br />
                         <br /><input type="radio" name="online" value = "true" /> True <br />
                         <input type="radio" name="online" value = "false" /> False 
                     </div>
-                    <div className = {styles.form_row}>
-                        <label className = {styles.long_label}>
+                    <div className = {style.form_row}>
+                        <label className = {style.long_label}>
                             Paying with Organization<br />
                         </label><br />
                         <br /><input type="radio" name="organization" value = "true" /> True <br />
                         <input type="radio" name="organization" value = "false" /> False
                     </div>
-                    <div className = {styles.form_row}>
-                        <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
+                    <div className = {style.form_row}>
+                        <input className = {style.competitionEditBtns} type="submit" value="Save Changes" />
                     </div>
                 </div>
 
@@ -121,13 +121,13 @@ export default class PageCompetitorPayment extends React.Component {
 
             return (
             <Page ref="page" {...this.props}>
-                <div className={styles.titles}>
+                <div className={style.titles}>
                 </div>
-                <div className={styles.infoTables}>
+                <div className={style.infoTables}>
                 </div>
                     <div>
-                    <div className={styles.infoBoxExpanded}>
-                    <Box admin={true} title={<div className={styles.titleContainers}><span>Competitor Payment Info</span> 
+                    <div className={style.infoBoxExpanded}>
+                    <Box admin={true} title={<div className={style.titleContainers}><span>Competitor Payment Info</span> 
                                     
                                 </div>} 
                         content={comp_info}/>

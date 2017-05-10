@@ -286,7 +286,7 @@ populate_expanded(box_name, lines_react, link){
     dict['Officials'] = [<p><b>Total Officials:</b> {total_officials}</p>].concat(
                           this.state.officials.map(official => {
                             var name = official.firstname + " " + official.lastname;
-                            return (<p key={official.id}>{name} (official.rolename)</p>)
+                            return (<p key={official.id}>{name} ({official.rolename})</p>)
                           }))
     links["Officials"] = "/editofficials/" + this.competition_id;
 

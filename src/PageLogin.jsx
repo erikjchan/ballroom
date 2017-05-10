@@ -1,5 +1,4 @@
-
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
 import { Link } from 'react-router'

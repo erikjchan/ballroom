@@ -5,7 +5,7 @@
  * for, as well as to register for new competitions
  */
 
-import styles from "./style.css";
+import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
 import lib from './common/lib.js';
@@ -114,7 +114,7 @@ class PageCompetitionList extends React.Component {
   render() {
     return (
      	<Page ref="page" {...this.props}>
-        <div className={styles.content}>
+        <div className={style.content}>
          	<h1>Competitions Page</h1>
             <Box title="Your Competitions">
               {this.getYourCompetitionsTable()}
@@ -122,7 +122,7 @@ class PageCompetitionList extends React.Component {
           <hr />
         	<div>
             <Box title="Other Competitions">
-              <div id={styles.otherCompetitionsTable}>
+              <div id={style.otherCompetitionsTable}>
                 <CompetitionsTable />
               </div>
             </Box>

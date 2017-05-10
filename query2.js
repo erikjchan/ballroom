@@ -373,6 +373,30 @@ const get_affiliation = (id) => {
                           WHERE id = ${id}`);
 }
 
+const get_organization_owed = (cid, aid) => {
+    return pool.query(SQL`SELECT COALESCE(SUM(paymentrecord.amount),0) from paymentrecord
+                            LEFT JOIN competitor on paymentrecord.competitorid = competitor.id
+                            LEFT JOIN affiliation on competitor.affiliationid = affiliation.id
+                            WHERE paymentrecord.paidwithaffiliation = TRUE and paymentrecord.competitionid = ${cid} 
+                                AND competitor.affiliationid = ${aid}`); 
+}
+
+const clear_organization_owed = (cid, aid) => {
+    return pool.query(SQL`
+                        with t as (
+                            SELECT paymentrecord.id as rowid
+                            FROM paymentrecord 
+                            LEFT JOIN competitor on
+                            competitor.id = paymentrecord.competitorid
+                            WHERE competitor.affiliationid = ${aid}
+                                  AND paymentrecord.competitionid = ${cid}
+                        )
+                        update paymentrecord
+                        set amount = 0
+                        from t
+                        where id = t.rowid`);  
+}
+
 
 module.exports = {
     get_all_competitors,
@@ -404,5 +428,7 @@ module.exports = {
     create_official,
     delete_official,
     create_competition,
-    get_affiliation
+    get_affiliation,
+    get_organization_owed,
+    clear_organization_owed
 }
