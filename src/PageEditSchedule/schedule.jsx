@@ -103,8 +103,7 @@ export default class DragAndDropTable extends React.Component {
 
   componentDidMount() {
     const cid = this.props.competition_id
-    fetch("/api/competition/" + cid + "/rounds") // TODO: change 1 to cid
-      .then(response => response.json())
+    this.props.api.get(`/api/competition/${cid}/rounds`)
       .then(json => {
           const rows = json.map((value, index) => {value.key = index; return value;});
           this.setState({
@@ -113,8 +112,7 @@ export default class DragAndDropTable extends React.Component {
           });
       })
       .catch(err => alert(err));
-    fetch("/api/competition/" + cid + "/events") // TODO: change 1 to cid
-      .then(response => response.json())
+    this.props.api.get(`/api/competition/${cid}/events`)
       .then(json => {
         this.setState({events: json})
       })
