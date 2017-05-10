@@ -57,13 +57,13 @@ class PageEventRegistration extends React.Component {
     sure it's an integer */
     try {this.competition_id = this.props.selected.competition.id}
     catch (e) { alert('Invalid competition ID!') }
-    try{this.competitor_id = this.props.profile.competitor_id}
+    try{this.competitor_id = this.props.params.competitor_id}
     catch (e) {alert('Invalid competitor ID!') }
   }
 
     componentDidMount() {
     
-        this.props.api.get(`/api/competitors/${this.competitor_id-1}`)
+        this.props.api.get(`/api/competitors/${this.competitor_id}`)
           .then(json => {
               this.setState({competitor: json})
               console.log(this.state.competitor)
