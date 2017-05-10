@@ -18,8 +18,8 @@ import style from './style.css';
 import { browserHistory } from 'react-router';
 import crypto from 'crypto'
 
-// editofficial/:competition_id
-export default class EditOfficial extends React.Component {
+// editofficials/:competition_id
+export default class EditOfficials extends React.Component {
   constructor(props) {
     super(props)
     try {this.competition_id = parseInt(this.props.params.competition_id)}
@@ -125,7 +125,7 @@ export default class EditOfficial extends React.Component {
 
             return (<Page ref="page" {...this.props}>
 
-                <h1>Edit Official: {this.state.competition.name}</h1>
+                <h1>Edit Officials: {this.state.competition.name}</h1>
                 <Box admin={true} title={"Add Official"}
                         content ={
                 <div className={style.lines}>

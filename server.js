@@ -725,7 +725,7 @@ const routes = [
     '/admin/competitions'                                         ,
     '/admin/competition/:competition_id'                          ,
     '/editcompetition/:competition_id'                            ,
-    '/editofficial/:competition_id'                               ,
+    '/editofficials/:competition_id'                              ,
     '/querytest'                                                  ,
     '/newuser'                                                    ,
     '/organizationpayment/:competition_id/:organization_id'       ,
