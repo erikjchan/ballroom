@@ -24,13 +24,13 @@ class PageSeeCompetitor extends React.Component {
     this.state = {
         competitor_events: [],
         competitor: {},
-        competitor_paymentrecord: {},
+        competitor_paymentrecord: null,
         paid: ''
     }
 
-    try {this.competition_id = this.props.selected.competition.id}
+    try {this.competition_id = this.props.params.competition_id}
     catch (e) { alert('Invalid competition ID!') }
-    try{this.competitor_id = this.props.profile.competitor_id}
+    try{this.competitor_id = this.props.params.competitor_id}
     catch (e) {alert('Invalid competitor ID!') }
   }
 
@@ -45,11 +45,9 @@ class PageSeeCompetitor extends React.Component {
 
         this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
           .then(json => {
-
-              this.payment = json;
-              var timestamp = new Date(this.payment.timestamp);
-              this.payment.timestamp = timestamp.toUTCString();
-              this.state.paid = (this.payment.amount == 0) ? "true" : "false"
+              var timestamp = new Date(json.timestamp);
+              json.timestamp = timestamp.toUTCString();
+              this.state.paid = (json.amount == 0) ? "true" : "false"
 
               // update the state of our component
               this.setState({competitor_paymentrecord: json})

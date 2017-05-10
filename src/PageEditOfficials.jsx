@@ -127,7 +127,7 @@ export default class EditOfficials extends React.Component {
                 <Box admin={true} title={"Add Official"}
                         content ={
                 <div className={style.lines}>
-                <div >
+                    <br/>
                     <label className="addLabel">
                         First Name: <br />
                         <input type="text" name="firstname" size = '20'
@@ -149,11 +149,9 @@ export default class EditOfficials extends React.Component {
                           {this.state.roles.map(role => (<option key={"role_id_" + role.id} value={role.id}>{role.name}</option>))}
                         </select>
                     </label>
-                </div>
                 <button className = {style.judgeEditBtns}
                        onClick={this.addOfficial.bind(this)}>Add Official</button>
                     </div>} />
-
                 <Box
                 admin={true} 
                 title = "Officials"

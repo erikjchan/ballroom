@@ -31,7 +31,7 @@ export default class OurSidebar extends React.Component {
 
     return [
 
-      isAuthenticated && !isAdmin &&
+      isAuthenticated && !isAdmin && this.props.profile.competitor &&
       <Link key={0} to={"/competitions"}>
         All Competitions
       </Link>,

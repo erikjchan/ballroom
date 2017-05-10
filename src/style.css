@@ -90,7 +90,7 @@
 }
 
 .lines {
-	padding: 4px 20px;
+	padding: 5px 20px;
 	font-size: 14px;
 	margin: 0 auto;
 }
@@ -125,8 +125,8 @@ Start
   position: absolute;
   right: 5vw;
   top: 15px;
-  display: inline-block;
-  overflow: auto;
+  /*display: inline-block;
+  overflow: auto;*/
 }
 
 #buttonsContainer > div {
@@ -179,16 +179,44 @@ Start
 }
 
 #saveChanges {
-  cursor: pointer;
-  height:50px;
-  display:table-cell;
+  margin-right: 20px;
+  float: right;
+  display:inline-block;
+  background-color: #365D82;
+  color: white;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 50px;
+  border-radius: 10px;
+  border: 0;
   vertical-align: middle;
   text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 #cancelChanges {
-  margin-left: 30px;
   cursor: pointer;
+  margin-right: 20px;
+  float: right;
+  display:inline-block;
+  background-color: #365D82;
+  color: white;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 50px;
+  border-radius: 10px;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 #dragAndDropWrapper {
@@ -270,12 +298,14 @@ Start
 
 .tableWrapper {
   border-collapse: separate;
-  background-color: #888888;
-  border-spacing: 0px 3px;
+  background-color: #C5C7CF;
+  border-spacing: 0px 5px;
+  width: 100%;
 }
 
 .tableWrapper > thead > tr {
   background-color: #dddddd;
+  box-shadow: 0px 4px 4px #444444
 }
 
 .tableWrapper > thead th {
@@ -303,10 +333,9 @@ Start
 .scheduleAddEventTBody td:last-child > div {
   text-align: center;
   cursor: pointer;
-  border: solid black 1px;
-  box-shadow: 0px 3px #333333;
+  /*border: solid black 1px;*/
+  box-shadow: 0px 2px 5px #444444;
   background-color: white;
-
 }
 
 .scheduleAddEventTBody td > select {
@@ -329,19 +358,20 @@ Start
   box-sizing: border-box;
   text-align: center;
   padding: 10px;
-  box-shadow: 0px 1px #333;
+  box-shadow: 0px 4px #666666;
+  overflow: hidden;
 }
 
 .tableBody > tr > td:first-child {
   border-left: solid #999 1px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 .tableBody > tr > td:last-child {
   border-right: solid #999 1px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 /**
 Edit Schedule Page
@@ -444,7 +474,7 @@ End
 
 .infoBoxLeft {
   width: 50%;
-  height: auto;
+  height: 360px;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
@@ -452,7 +482,7 @@ End
 
 .infoBoxRight {
   width: 50%;
-  height: auto;
+  height: 360px;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
