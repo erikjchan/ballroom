@@ -13,6 +13,7 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
 import Box from './common/Box.jsx'
+import { browserHistory } from 'react-router';
 
 
 import { DragDropContext } from 'react-dnd';
@@ -31,17 +32,17 @@ class CompetitorsList extends React.Component {
       <div id={style.titleContainer}>
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>
-          <div id={style.saveChanges} 
-              onClick={
-                (rowData) => {window.location.href = "/organizationpayment/" + this.props.params.competition_id + "/" + rowData.id}}>See Organization Payments
-            </div>
+          <div id={style.saveChanges} onClick={() => 
+              browserHistory.push(`/organizationpayment/${this.props.selected.competition_id}/1`)}>
+            See Organization Payments
+          </div>
         </div>
       </div>
       <Box admin={true} title="Competitors"
       content=
       {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>
-          <CompetitorList data={this.props.location.state}/>
+          <CompetitorList {...this.props} data={this.props.location.state}/>
         </div>
       </div>}
       />

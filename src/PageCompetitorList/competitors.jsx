@@ -199,20 +199,18 @@ export default class CompetitorList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/competition/" + this.props.selected.competition.id + "/competitors")
-	      .then(response => response.json())
+    this.props.api.get(`/api/competition/${this.props.selected.competition}/competitors`)
 		  .then(json => {
-            console.log(json);
-            this.rows = json;
-            for (let i = 0; i < this.rows.length; i++) {
-                  this.rows[i].amount = "$" + (this.rows[i].amount || 0);
-                  if (this.rows[i].paidwithaffiliation) {
-                          this.rows[i].paidwithaffiliation = "Yes";
-                  } else {
-                          this.rows[i].paidwithaffiliation = "No";
-                  }
-		        }
-		        this.setState({ rows: json, }); 
+        this.rows = json;
+        for (let i = 0; i < this.rows.length; i++) {
+              this.rows[i].amount = "$" + (this.rows[i].amount || 0);
+              if (this.rows[i].paidwithaffiliation) {
+                      this.rows[i].paidwithaffiliation = "Yes";
+              } else {
+                      this.rows[i].paidwithaffiliation = "No";
+              }
+		    }
+		    this.setState({ rows: json, }); 
 		 })
 		 .catch(err => alert(err));
   }
