@@ -204,8 +204,8 @@ class PageOrganizationPayment extends React.Component {
                         <RadioButton label='Unpaid' value='false'/>
                     </RadioGroup>
                 </span>
-                 <div className = {styles.form_row}>
-                    <button className = {styles.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
+                 <div className = {style.form_row}>
+                    <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
                 </div>
         </div>)
 
