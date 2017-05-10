@@ -49,7 +49,8 @@ export default class PageEventRegistration extends React.Component {
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
     try {
-      this.competition_id = this.props.selected.competition.id
+      // this.competition_id = this.props.selected.competition.id
+      this.competition_id = this.props.params.competition_id
       this.competitor_id = this.props.profile.competitor_id 
     }
     catch (e) { alert('Invalid competition ID!') }
@@ -182,7 +183,22 @@ export default class PageEventRegistration extends React.Component {
                     competitionid: this.competition_id
                 })
             }).then(() => {
-                window.location.reload();
+                fetch("/api/create_paymentrecord", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      competitionid: this.competition_id,
+                      competitorid: this.competitor_id,
+                      amount: this.competition.regularprice,
+                      online: false,
+                      paidwithaffiliatio: false,
+                    })
+                }).then(() =>{
+                  window.location.reload();
+                })
             });
       } else {
           alert('Please finish selecting a event and your partner!');

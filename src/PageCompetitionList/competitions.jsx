@@ -42,6 +42,8 @@ class CompetitionsTable extends React.Component {
 		  query: {},
   	  };
 		this.table = null;
+
+		this.competitor_id = parseInt(this.props.profile.competitor_id)
   }
 
   componentWillMount() {
@@ -116,7 +118,7 @@ class CompetitionsTable extends React.Component {
 	}
 
   componentDidMount() {
-      fetch("api/competitions/1/unregistered")
+      fetch(`api/competitions/${this.competitor_id}/unregistered`)
 		   .then(response => response.json())
 		   .then(json => {
           for (let i = 0; i < json.length; i++) {

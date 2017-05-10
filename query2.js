@@ -145,9 +145,10 @@ const get_paymentrecord_by_competition_competitor = (competitionid, competitorid
 // INSERT
 const create_paymentrecord = (competitionid, competitorid, amount, online, paidwithaffiliation) => {
     return pool.query_wrapped(SQL`INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, 
-                                                     online, paidwithaffiliation)
-                          VALUES (${competitionid}, now(), ${competitorid}, ${amount}, 
-                                  ${online}, ${paidwithaffiliation});`);
+                                                     online, paidwithaffiliation) SELECT ${competitionid}, now(), 
+                                                     ${competitorid}, ${amount}, ${online}, ${paidwithaffiliation}
+                                  WHERE NOT EXISTS (SELECT * FROM paymentrecord WHERE competitionid = ${competitionid} 
+                                                                                AND competitorid = ${competitorid});`);
 }
 
 // UPDATE
@@ -258,7 +259,7 @@ const create_partnership = (leadcompetitorid, followcompetitorid, eventid, compe
                         }
                         var comp = result.rows[0]
                         if (comp.number == null){
-                             // TODO: UPDATE lead number of competition
+                             // UPDATE lead number of competition
                              client.query(SQL`SELECT * FROM competition WHERE id = ${competitionid};`, (err, result) => {
                                 if (err) {
                                     rollback(client, done);

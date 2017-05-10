@@ -114,6 +114,21 @@ app.post('/api/clear_organization_owed', (req, res) => {
         });
 });
 
+app.post('/api/create_paymentrecord', (req, res) => {
+    const competitionid = parseInt(req.body.competitionid)
+    const competitorid = parseInt(req.body.competitorid)
+    const amount = parseFloat(req.body.amount)
+    const online = parseInt(req.body.online)
+    const paidwithaffiliation = parseInt(req.body.paidwithaffiliation)
+    query2.create_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
+            log_debug(2)(value)
+            res.send(value);
+        },
+        function (err){
+            res.send(err);
+        });
+})
+
 app.get('/api/get_organization_owed/:cid/:aid', (req, res) => {
     const cid = req.params.cid
     const aid = req.params.aid
@@ -376,14 +391,14 @@ app.get('/api/competitions', (req, res) => {
 app.get('/api/competitions/:cid', (req, res) => {
     const cid = parseInt(req.params.cid)
     query.get_your_competitions(cid).then(value => {
-        log_debug(2)(value)
+        console.log(value)
         res.send(value);
     });
 })
 app.get('/api/competitions/:cid/unregistered', (req, res) => {
     const cid = parseInt(req.params.cid)
     query.get_other_competitions(cid).then(value => {
-        log_debug(2)(value)
+        console.log(value)
         res.send(value);
     });
 })
