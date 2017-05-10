@@ -63,7 +63,7 @@ class PageEventRegistration extends React.Component {
 
     componentDidMount() {
     
-        this.props.api.get(`/api/competitors/${this.competitor_id}`)
+        this.props.api.get(`/api/competitors/${this.competitor_id-1}`)
           .then(json => {
               this.setState({competitor: json})
               console.log(this.state.competitor)

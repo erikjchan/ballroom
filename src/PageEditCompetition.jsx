@@ -12,6 +12,7 @@ import Box from './common/Box.jsx'
 import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
+import { selectCompetition } from './actions'
 var moment = require('moment-timezone');
 
 // editcompetition/:competition_id
@@ -98,7 +99,9 @@ export default class PageEditCompetition extends React.Component {
                     body: JSON.stringify(this.state.competition)
                 }).then(res => res.json()).then(json => {
                     console.log(json);
-                    window.location.href = '/editcompetition/'+json.id;
+                    this.props.dispatch(selectCompetition(json))
+                    //window.location.href = '/editcompetition/'+json.id;
+                    browserHistory.push('/admin/competition/' + json.id)
                 });
         }
     }
