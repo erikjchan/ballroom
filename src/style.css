@@ -145,9 +145,9 @@ Start
 
 #createContainer {
   float: right;
-  display:inline-block;
+  display: inline-block;
   height: 100%;
-  height:100%;
+  height: 100%;
   vertical-align: middle;
   text-align: center;
 }
@@ -157,7 +157,7 @@ Start
   box-sizing: border-box;
   border: solid black 1px;
   border-radius: 20px;
-  padding: 10px;
+  padding: 30px;
   background-color: #365D82;
   color: white;
   vertical-align: middle;
