@@ -101,7 +101,7 @@ class PageCompetitionList extends React.Component {
                 body: JSON.stringify({})
             }).then(res => res.json()).then(json => {
                console.log(json);
-               window.location.href('/editcompetition/'+json.id);
+               window.location.href = '/editcompetition/'+json.id;
             });
   }
 
