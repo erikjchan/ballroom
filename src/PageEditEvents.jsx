@@ -29,7 +29,7 @@ class EditEvents extends React.Component {
 
     const box_content = (
       <div id={style.scheduleWrapper}>
-          <EventTable ref="ddTable" {...this.props} />
+          <EventTable ref="ddTable" {...this.props} competition_id={this.props.params.competition_id} />
       </div>
     )
 
