@@ -117,7 +117,6 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
     this.setState({
         levelid: parseInt(levelid),
-        styleid: null,
         eventid: null 
     });
   };
