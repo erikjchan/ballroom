@@ -135,9 +135,6 @@ class PageOrganizationPayment extends React.Component {
                 </div>
                 
                 <h2>Current Organization Information:</h2>
-                <div className = {styles.form_row}>
-                    <label> Competition Name: {comp_name} </label>            
-                </div>
                 
                 <div className = {styles.form_row}>
                      <label> Organization Number: {this.organization_id} </label>

@@ -72,7 +72,7 @@ export default class OurSidebar extends React.Component {
       </Link>,
 
       isAdmin && competition_selected &&
-      <Link key={8} to={`/organizationpayment/1/1`}>
+      <Link key={8} to={`/organizationpayment/${competition_id}/1`}>
         - Organization Payment
       </Link>,
 
