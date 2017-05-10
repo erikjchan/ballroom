@@ -91,6 +91,20 @@ class PageCompetitionList extends React.Component {
           </Table.Provider>
   }
 
+  onCreateNewCompetition(){
+    fetch("/api/create_empty_competition", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            }).then(res => res.json()).then(json => {
+               console.log(json);
+               this.props.router.push('/editcompetition/'+json.id);
+            });
+  }
+
   render() {
   
     return (
@@ -103,8 +117,7 @@ class PageCompetitionList extends React.Component {
 
           <div id={style.createContainer}>
             <div id={style.saveChanges} 
-              onClick={
-                () => this.props.router.push('/editcompetition/1/')}>Create New Competition</div>
+              onClick={this.onCreateNewCompetition.bind(this)}>Create New Competition</div>
             </div>
        	  </div>
       </Page>
