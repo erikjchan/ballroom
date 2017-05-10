@@ -28,12 +28,12 @@ class EditSchedule extends React.Component {
       <div id={style.titleContainer}>
         <h1>Schedule Editor</h1>
         <div id={style.buttonsContainer}>
+          <button id={style.saveChanges} onClick={
+            () => this.saveChanges("Are you sure you want to save changes?")  
+          }>Save Changes</button>
           <button id={style.cancelChanges} onClick={
             () => this.confirmGoToUrl(`/admin/competition/${this.props.params.competition_id}`, "Are you sure you want to discard changes?")
           }>Cancel</button>
-          <button id={style.saveChanges} onClick={
-            () => this.saveChanges("Are you sure you want to save changes?")  
-          }>Save Changes</ button>
         </div>
       </div>
         <Box admin={true} title={

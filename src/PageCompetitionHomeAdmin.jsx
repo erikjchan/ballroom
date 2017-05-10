@@ -301,10 +301,10 @@ populate_expanded(box_name, lines_react, link){
 
                     <div className = {style.clear}>
           <div id={style.createContainer}>
-            <div id={style.saveChanges} 
+            <button id={style.saveChanges} 
               onClick={
                 () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition
-            </div>
+            </button>
           </div>
           </div>
       </Page>

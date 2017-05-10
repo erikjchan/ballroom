@@ -205,7 +205,7 @@ class PageOrganizationPayment extends React.Component {
                     </RadioGroup>
                 </span>
                  <div className = {style.form_row}>
-                    <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
+                    <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save</button>
                 </div>
         </div>)
 

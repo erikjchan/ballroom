@@ -362,9 +362,9 @@ export default class RunCompetition extends React.Component {
         </div>*/}
           <div className = {style.clear}>
         <div id={style.createContainer}>
-            <div id={style.saveChanges} 
+            <button id={style.saveChanges} 
               onClick={
-                () => this.props.router.push(`/competition/${this.competition_id}/editschedule`)}>Edit Schedule</div>
+                () => this.props.router.push(`/competition/${this.competition_id}/editschedule`)}>Edit Schedule</button>
         </div>
         </div>
 

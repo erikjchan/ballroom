@@ -18,6 +18,7 @@
 
 .separator {
 	display: block;
+  clear:both;
 	height: 0;
 	width: 0;
 }
@@ -180,7 +181,7 @@ Start
 
 #saveChanges {
   margin-right: 20px;
-  float: right;
+  float: left;
   display:inline-block;
   background-color: #365D82;
   color: white;
@@ -201,7 +202,7 @@ Start
 #cancelChanges {
   cursor: pointer;
   margin-right: 20px;
-  float: right;
+  float: left;
   display:inline-block;
   background-color: #365D82;
   color: white;
@@ -608,6 +609,7 @@ End
 
 .separator {
   display: block;
+  clear:both;
   height: 0;
   width: 0;
 }
@@ -689,6 +691,28 @@ label{
   margin-right: 20px;
   float: left;
   display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
+}
+
+
+.blockcompetitionEditBtns{
+  margin-top: 30px;
+  margin-right: 20px;
+  display: block;
   background-color: #CFC7C5;
   color: black;
   opacity: 1;

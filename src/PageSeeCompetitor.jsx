@@ -45,6 +45,7 @@ class PageSeeCompetitor extends React.Component {
 
         this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
           .then(json => {
+              console.log(json)
               var timestamp = new Date(json.timestamp);
               json.timestamp = timestamp.toUTCString();
               this.state.paid = (json.amount == 0) ? "true" : "false"
@@ -112,6 +113,7 @@ class PageSeeCompetitor extends React.Component {
           content={
             <div className={style.lines}>
             <br />
+            {this.state.competitor_paymentrecord &&
             <div className={style.lines}>
                     <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname} </p>
                     <p><b>Email:</b> {this.state.competitor.email} </p>
@@ -127,10 +129,13 @@ class PageSeeCompetitor extends React.Component {
                              <RadioButton label='Unpaid' value='false'/>
                             </RadioGroup>
                         </span>
-                    <br /><br />
-                    <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
+                    <br /> <br/>
+                    <p><button className={style.blockcompetitionEditBtns} onClick={this.saveChanges.bind(this)}>Save</button></p>
              </div>
+            }
+            <br/>
             <div className={style.separators}></div>
+             <hr/>
             <h2>Competitor is registered for the following events:</h2>
             <EventTable
                 events={this.state.competitor_events}

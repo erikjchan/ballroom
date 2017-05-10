@@ -34,11 +34,16 @@ module.exports.query = function (text, values) {
   console.log('query:', text, values);
   return new Promise(function(resolve, reject) {
       pool.query(text, values, function(err, res) {
+        try{
           if(err) {
               console.error('error running query', err);
               reject(err);
           }
           resolve(res.rows);
+        }
+        catch(e){
+          reject(err);
+        }
       });
   });
 };
