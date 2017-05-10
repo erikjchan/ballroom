@@ -46,6 +46,24 @@ const check_competitor_email_exist = (email) => {
 
 // INSERT
 
+const insert_competitor_helper = (resolve, reject, client, done, firstname, lastname, email, mailingaddress, affiliationid) => {
+  client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
+    VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${affiliationid}) RETURNING id`, (err, result) => {
+      if (err) {
+        rollback(client, done);
+        return reject(err);
+      }
+      client.query('COMMIT', (err) => {
+        if (err) {
+          rollback(client, done);
+          return reject(err);
+        }
+        done(null);
+        resolve(JSON.stringify(result.rows[0]));
+      });
+  });
+}
+
 const create_competitor = (firstname, lastname, email, mailingaddress, 
     affiliationname) => {
     return new Promise(function(resolve, reject) {
@@ -65,43 +83,15 @@ const create_competitor = (firstname, lastname, email, mailingaddress,
                 return reject(err);
               }
               if (result.rowCount == 1) {
-                client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
-                  VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${result.rows[0].id}) RETURNING id`, (err, result) => {
-                    if (err) {
-                      rollback(client, done);
-                      return reject(err);
-                    }
-                    client.query('COMMIT', (err) => {
-                      if (err) {
-                        rollback(client, done);
-                        return reject(err);
-                      }
-                      done(null);
-                      resolve(JSON.stringify(result.rows[0]));
-                    });
-                });  
+                insert_competitor_helper(resolve, reject, client, done, firstname, lastname, email, mailingaddress, result.rows[0].id);
               } else {
                 client.query(SQL`INSERT INTO affiliation(name) VALUES(${affiliationname}) RETURNING id;`, (err, result) => {
                   if (err) {
                     rollback(client, done);
                     return reject(err);
                   }
-                  client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
-                    VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${result.rows[0].id}) RETURNING id`, (err, result) => {
-                      if (err) {
-                        rollback(client, done);
-                        return reject(err);
-                      }
-                      client.query('COMMIT', (err) => {
-                        if (err) {
-                          rollback(client, done);
-                          return reject(err);
-                        }
-                        done(null);
-                        resolve(JSON.stringify(result.rows[0]));
-                      });
-                  });
-                })  
+                  insert_competitor_helper(resolve, reject, client, done, firstname, lastname, email, mailingaddress, result.rows[0].id);
+                });  
               }
             });
           });
