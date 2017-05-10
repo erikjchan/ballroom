@@ -32,7 +32,7 @@ class PageCompetitionList extends React.Component {
         this.competitions = json;
         for (let i = 0; i < this.competitions.length; i++) {
           var date = new Date(this.competitions[i].startdate);
-          this.competitions[i].startdate = date.toUTCString();
+          this.competitions[i].startdate = date.toDateString();
         }
         // update the state of our component
         this.setState({ competitions : json })

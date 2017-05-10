@@ -93,7 +93,8 @@ export default class EventTable extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/competition/1/events") // TODO: change 1 to cid
+    const cid = this.props.profile.competitor_id
+    fetch("/api/competition/" + cid + "/events") // TODO: change 1 to cid
           .then(response => response.json())
           .then(json => {
               const rows = json.map((value, index) => {value.key = index; return value;});
@@ -103,7 +104,7 @@ export default class EventTable extends React.Component {
               });
           })
           .catch(err => alert(err));
-    fetch("/api/competition/1/levels") // TODO: change 1 to cid
+    fetch("/api/competition/" + cid + "/levels") // TODO: change 1 to cid
           .then(response => response.json())
           .then(json => {
               this.setState({
@@ -111,7 +112,7 @@ export default class EventTable extends React.Component {
               });
           })
           .catch(err => alert(err));
-    fetch("/api/competition/1/styles") // TODO: change 1 to cid
+    fetch("/api/competition/" + cid + "/styles") // TODO: change 1 to cid
           .then(response => response.json())
           .then(json => {
               this.setState({

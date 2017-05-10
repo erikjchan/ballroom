@@ -49,8 +49,8 @@ export default class PageEventRegistration extends React.Component {
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
     try {
-      this.competition_id = parseInt(this.props.params.competition_id)
-      this.competitor_id = 1 /** Hard coded TODO */
+      this.competition_id = this.props.selected.competition.id
+      this.competitor_id = this.props.profile.competitor_id 
     }
     catch (e) { alert('Invalid competition ID!') }
   }
@@ -117,7 +117,6 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
     this.setState({
         levelid: parseInt(levelid),
-        styleid: null,
         eventid: null 
     });
   };

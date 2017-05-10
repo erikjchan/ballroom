@@ -8,7 +8,7 @@ var Pool = require('pg').Pool;
 var config = {
   user: 'postgres', //env var: PGUSER
   database: 'postgres', //env var: PGDATABASE
-  password: 'admin', //env var: PGPASSWORD
+  password: 'showtime', //env var: PGPASSWORD
   host: 'localhost', // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool

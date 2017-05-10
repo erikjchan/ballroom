@@ -13,6 +13,7 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js'
 import Box from './common/Box.jsx'
+import { browserHistory } from 'react-router';
 
 
 import { DragDropContext } from 'react-dnd';
@@ -25,23 +26,29 @@ import style from './style.css';
 // competition/:competition_id/competitorslist
 class CompetitorsList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.competition_id = (this.props.selected.competition && this.props.selected.competition.id) 
+                        || this.props.params.competition_id
+  }
+
  render() {
   return (
     <Page ref="page" {...this.props}>
       <div id={style.titleContainer}>
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>
-          <div id={style.saveChanges} 
-              onClick={
-                () => {window.location.href = "/organizationpayment/" + this.props.params.competition_id + "/1"}}>See Organization Payments
-            </div>
+          <div id={style.saveChanges} onClick={() => 
+              browserHistory.push(`/organizationpayment/${this.props.selected.competition_id}/1`)}>
+            See Organization Payments
+          </div>
         </div>
       </div>
       <Box admin={true} title="Competitors"
       content=
       {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>
-          <CompetitorList data={this.props.location.state}/>
+          <CompetitorList {...this.props} competition_id={this.competition_id} data={this.props.location.state}/>
         </div>
       </div>}
       />

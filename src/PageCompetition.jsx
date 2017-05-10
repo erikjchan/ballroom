@@ -30,9 +30,9 @@ export default class PageCompetition extends React.Component {
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {this.competition_id = parseInt(this.props.params.competition_id)}
+    try {this.competition_id = this.props.selected.competition.id}
     catch (e) { alert('Invalid competition ID!') }
-    try{this.competitor_id = parseInt(this.props.params.competitor_id)}
+    try{this.competitor_id = this.props.profile.competitor_id}
     catch (e) {alert('Invalid competitor ID!') }
  }
 
@@ -47,12 +47,12 @@ export default class PageCompetition extends React.Component {
         const earlyregdeadline   = new Date(this.competition.earlyregdeadline);
         const regularregdeadline = new Date(this.competition.regularregdeadline);
         const lateregdeadline    = new Date(this.competition.lateregdeadline);
-        this.competition.startdate = startdate.toUTCString();
-        this.competition.enddate = enddate.toUTCString();
-        this.competition.regstartdate = regstartdate.toUTCString();
-        this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
-        this.competition.regularregdeadline = regularregdeadline.toUTCString();
-        this.competition.lateregdeadline = lateregdeadline.toUTCString();
+        this.competition.startdate = startdate.toDateString();
+        this.competition.enddate = enddate.toDateString();
+        this.competition.regstartdate = regstartdate.toDateString();
+        this.competition.earlyregdeadline = earlyregdeadline.toDateString();
+        this.competition.regularregdeadline = regularregdeadline.toDateString();
+        this.competition.lateregdeadline = lateregdeadline.toDateString();
 
         // update the state of our component
         this.setState({ competition : json })
@@ -75,7 +75,7 @@ export default class PageCompetition extends React.Component {
 
         this.payment = json;
         var timestamp = new Date(this.payment.timestamp);
-        this.payment.timestamp = timestamp.toUTCString();
+        this.payment.timestamp = timestamp.toDateString();
 
         // update the state of our component
         this.setState({competitor_paymentrecord: json})
@@ -170,9 +170,7 @@ export default class PageCompetition extends React.Component {
 
     return (
       <Page ref="page" {...this.props}>
-          <div className={styles.titles}>
-            <p>{comp_name}</p>
-          </div>
+          <h1>{comp_name}</h1>
           <div className={styles.infoTables}>
             <div className={styles.infoBoxLeft}>
               <Box title={
