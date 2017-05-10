@@ -33,24 +33,28 @@ class PageOrganizationPayment extends React.Component {
       paid: "false",
       searched_organizations: [],
       keyword: "",
-      selectedOrgID: "-1"
+      selectedOrgID: "-1",
+      showInfo: false
     }
 
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
     // this.props.selected.competition.id 
-    try {this.competition_id =  this.props.params.competition_id} 
+    try {this.competition_id =  this.props.selected.competition.id} 
     catch (e) { alert('Invalid competition ID!') }
     try {this.organization_id = this.props.params.organization_id}
-    catch (e) { alert('Invalid competition ID!') }
-    
+      catch (e) { alert('Invalid competition ID!') }
+
+    if (this.organization_id != 0)
+        this.state = { showInfo: true }
+
  }
 
   componentDidMount() {
-    /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+      /* Call the API for competition info */
+
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
         this.setState({ competition : json })
@@ -61,8 +65,7 @@ class PageOrganizationPayment extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
       /* Call the API for organization info */
-    fetch(`/api/affiliations`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/affiliations`)
       .then(json => { 
           // update the state of our component
         this.setState({organizations: json, searched_organizations:json})
@@ -72,28 +75,30 @@ class PageOrganizationPayment extends React.Component {
       // connection comes back
       .catch(err => { alert(err); console.log(err)})
 
-            /* Call the API for organization info */
-    fetch(`/api/affiliations/`+this.organization_id)
-      .then(response => response.json()) // parse the result
-      .then(json => { 
-          // update the state of our component
-        this.setState({ organization : json })
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
-      // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+    if (this.state.showInfo) {
+        /* Call the API for organization info */
+        this.props.api.get(`/api/affiliations/`+this.organization_id)
+          .then(json => { 
+              // update the state of our component
+              this.setState({ organization : json })
+          })
+          // todo; display a nice (sorry, there's no connection!) error
+          // and setup a timer to retry. Fingers crossed, hopefully the 
+          // connection comes back
+          .catch(err => { alert(err); console.log(err)})
 
-    fetch(`/api/get_organization_owed/${this.competition_id}/${this.organization_id}`)
-      .then(response => response.json()) // parse the result
-      .then(json => { 
-          // update the state of our component
-        this.setState({ owed : json.coalesce })
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
-      // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+        this.props.api.get(`/api/get_organization_owed/${this.competition_id}/${this.organization_id}`)
+          .then(json => { 
+              // update the state of our component
+              this.setState({ owed : json.coalesce })
+              if (this.state.owed == 0)
+                  this.setState({ paid: "true" })
+          })
+          // todo; display a nice (sorry, there's no connection!) error
+          // and setup a timer to retry. Fingers crossed, hopefully the 
+          // connection comes back
+          .catch(err => { alert(err); console.log(err)})
+    }
   }
 
   handlePayChange(value){
@@ -104,7 +109,7 @@ class PageOrganizationPayment extends React.Component {
 
   onSaveHandler(){
     console.log(this.state)
-    if (this.state.paid == "true"){
+    if (this.state.paid == "true" && this.state.showInfo){
            fetch("/api/clear_organization_owed", {
                 method: 'POST',
                 headers: {
@@ -122,7 +127,7 @@ class PageOrganizationPayment extends React.Component {
   }
 
  render() {
-     if (this.state.organization && this.state.competition){
+     if (this.state.competition && (this.state.organization || !this.state.showInfo)){
          const search_org = (list, query) => {
              if (query === '') return list
              else
@@ -141,8 +146,11 @@ class PageOrganizationPayment extends React.Component {
              zIndex: 200
          };
         var comp_name = this.state.competition.name;
-        var organization_name = this.state.organization.name;
-        var organization_owed = this.state.owed;
+
+        var organization_name ="Organization Payment Management"
+        if (this.state.showInfo)
+            organization_name = this.state.organization.name
+        var organization_owed = this.state.showInfo ? this.state.owed : 0;
         var comp_info = (
             <div className={style.lines}>
                 <h2>Search for Another Organization:</h2>
@@ -193,6 +201,7 @@ class PageOrganizationPayment extends React.Component {
                 </div>
                 <br/>
                 <hr/>
+                {this.state.showInfo && <div>
                 <h2>Current Organization Information:</h2>
                 <p><b>Organization Number:</b> {this.organization_id} </p>   
                 <p><b>Organization Name:</b> {organization_name} </p>            
@@ -206,7 +215,10 @@ class PageOrganizationPayment extends React.Component {
                 </span>
                  <div className = {style.form_row}>
                     <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
-                </div>
+                </div></div>}
+                {!this.state.showInfo && <div>
+                <h2>Select an Organization above!</h2>
+                </div>}
         </div>)
 
     return (
