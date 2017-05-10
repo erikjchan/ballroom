@@ -27,7 +27,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       keyword: "",
       style_statistics: [],
       organizations: [],
-      judges: [],
+      officials: [],
       expanded: null,
       boxes: {},
     }
@@ -115,10 +115,10 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       })
       .catch(err => alert(err))
 
-    /** Get judges */
+    /** Get officials */
     this.props.api.get(`/api/competition/${this.competition_id}/judges`)
       .then(json => {
-        this.setState({judges: json})
+        this.setState({officials: json})
       })
       .catch(err => alert(err))
 
@@ -299,23 +299,15 @@ populate_expanded(box_name, lines_react, link){
                           })
     links["Events"] = "/competition/"+this.competition_id+"/editevents";
 
-    var total_judges = this.state.judges.length;
-    /*var judges_names = (<div className={styles.lines}>
-                          <p><b>Total Judges:</b> {total_judges}</p>
-                          {this.state.judges.map(judge => {
-                            var name = judge['Last Name']+" "+judge['First Name']
-                            var email = "mailto:"+judge['Email address'];
-                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
-                          })}
-                        </div>)*/
+    var total_officials = this.state.officials.length;
 
-    dict['Judges'] = [<p><b>Total Judges:</b> {total_judges}</p>].concat(
-                          this.state.judges.map(judge => {
-                            var name = judge.firstname+" "+judge.lastname
-                            var email = "mailto:"+judge.email;
-                            return (<p key={name}>{name} (<a href={email}>{judge.email}</a>) </p>)
+    dict['Officials'] = [<p><b>Total Officials:</b> {total_officials}</p>].concat(
+                          this.state.officials.map(official => {
+                            var name = official.firstname + " " + official.lastname
+                            var email = "mailto:" + official.email;
+                            return (<p key={name}>{name} (<a href={email}>{official.email}</a>) </p>)
                           }))
-    links["Judges"] = "/editofficial/" + this.competition_id;
+    links["Officials"] = "/editofficials/" + this.competition_id;
 
     var total_orgs = this.state.organizations.length;
     /*var org_names = (<div className={styles.lines}>
@@ -372,7 +364,7 @@ populate_expanded(box_name, lines_react, link){
           <h1>{comp_name}</h1>
           <div className={styles.infoTable}>
              {this.populate("Competiton Info", dict["Competiton Info"], num, links["Competiton Info"])}
-              {this.populate("Judges", dict["Judges"], num, links["Judges"])}
+              {this.populate("Officials", dict["Officials"], num, links["Officials"])}
           <div className={styles.separator}></div>
             {this.populate("Events", dict["Events"], num, links["Events"])}
             {this.populate("Schedule", dict["Schedule"], num, links["Schedule"])}
@@ -382,10 +374,13 @@ populate_expanded(box_name, lines_react, link){
           <div className={styles.separator}></div>
           </div>
 
+                    <div className = {styles.clear}>
           <div id={styles.createContainer}>
             <div id={styles.saveChanges} 
               onClick={
-                () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition</div>
+                () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition
+            </div>
+          </div>
           </div>
       </Page>
     ); 

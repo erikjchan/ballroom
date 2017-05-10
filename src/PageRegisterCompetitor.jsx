@@ -17,26 +17,6 @@ import { Link } from 'react-router'
 import connection from './common/connection'
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
-/*
-
-
-class RadioTest extends React.Component {
-  state = {
-    value: 'vvendetta'
-  };
-
-  handleChange = (value) => {
-    this.setState({value});
-  };
-
-  render () {
-    return (
-      
-    );
-  }
-}
-
- */
 
 // competition/:competition_id/regcompetitor/:competitor_id
 class PageEventRegistration extends React.Component {
@@ -50,7 +30,6 @@ class PageEventRegistration extends React.Component {
       competition_events: [],
       user_competition_events: [],
       competitors: [],
-      competitor: [],
       levels: [],
       level_styles: [],
       level_style_events: [],
@@ -82,25 +61,7 @@ class PageEventRegistration extends React.Component {
   }
 
     componentDidMount() {
-    /* Call the API for competitor info */
-    // fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
-    //   .then(response => { return response.json() }) // parse the result
-    //   .then(json => { 
-    //       // update the state of our component
-    //       if (json.pay_w_org)
-    //           json.pay_w_org = "True"
-    //       else
-    //           json.pay_w_org = "False"
-
-    //       if (json.amount_owed == 0) {
-    //           this.setState({ paid: "True" });
-    //       }
-    //     this.setState({ competitor : json })
-    //   })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
-      // connection comes back
-      // .catch(err => { alert(err); console.log(err)})
+    
 
 
 /* Call the API for competition data */
@@ -123,7 +84,7 @@ class PageEventRegistration extends React.Component {
       })
       .catch(err => alert(err))
 
-  fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
+    fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(response => {
         return response.json()
       })
@@ -160,8 +121,7 @@ class PageEventRegistration extends React.Component {
         return response.json()
       })
       .then(json => {
-
-        this.setState({competitors: json})
+        this.setState({competitor : json, competitors: json})
       })
       .catch(err => alert(err))
   }
@@ -291,13 +251,18 @@ dropEventHandler = (rowData) => {
       zIndex: 200
     };
 
+    if (this.state.competitor) {
+      console.log(this.competitor_id)
+      var competitor = this.state.competitors[this.competitor_id-1];
+      var competitor_name = competitor.firstname + " " + competitor.lastname;
+    }
 
     return (
 
     <Page ref="page" {...this.props}>
-      <h1>Register Competitor for Events: </h1>
+      <h1>Register {competitor_name} for Events</h1>
         <Box admin={true} 
-        title = {<div>Register Competitor for New Event</div>}
+        title = {<div>Select Event</div>}
         content={
         <div className={styles.lines}>
         
@@ -392,7 +357,7 @@ dropEventHandler = (rowData) => {
               </div>
         }/>
 
-      <Box admin={true} title={<div>Competitor is already registered to these:</div>}
+      <Box admin={true} title={<div>{competitor_name}'s Current Registrations</div>}
       content = {
         <EventTable
           events={this.state.user_competition_events}

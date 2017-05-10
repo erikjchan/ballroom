@@ -81,7 +81,7 @@ ALTER TABLE affiliation OWNER TO postgres;
 
 CREATE TABLE callback (
     id SERIAL,
-    "timestamp" timestamp with time zone,
+    "timestamp" timestamp without time zone,
     judgeid integer,
     leadcompetitornumber integer,
     roundid integer,
@@ -103,12 +103,12 @@ CREATE TABLE competition (
     earlyprice numeric(6,2),
     regularprice numeric(6,2),
     lateprice numeric(6,2),
-    startdate timestamp with time zone,
-    enddate timestamp with time zone,
-    regstartdate timestamp with time zone,
-    earlyregdeadline timestamp with time zone,
-    regularregdeadline timestamp with time zone,
-    lateregdeadline timestamp with time zone,
+    startdate timestamp without time zone,
+    enddate timestamp without time zone,
+    regstartdate timestamp without time zone,
+    earlyregdeadline timestamp without time zone,
+    regularregdeadline timestamp without time zone,
+    lateregdeadline timestamp without time zone,
     compadmin character varying(100),
     currentroundid integer,
     description character varying(1000)
@@ -195,7 +195,7 @@ CREATE TABLE partnership (
     competitionid integer,
     number integer,
     calledback boolean,
-    "timestamp" timestamp with time zone
+    "timestamp" timestamp without time zone
 );
 
 
@@ -208,7 +208,7 @@ ALTER TABLE partnership OWNER TO postgres;
 CREATE TABLE paymentrecord (
     id SERIAL,
     competitionid integer,
-    "timestamp" timestamp with time zone,
+    "timestamp" timestamp without time zone,
     competitorid integer,
     amount numeric(6,2),
     online boolean,
@@ -502,7 +502,7 @@ SELECT pg_catalog.setval('round_id_seq', 1, false);
 
 INSERT INTO admin VALUES ('admin@email.edu');
 
-INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00-04', '2017-05-10 00:00:00-04', '2017-05-05 00:00:00-04', '2017-05-07 00:00:00-04', '2017-05-08 00:00:00-04', '2017-05-09 00:00:00-04', 'admin@email.edu', 1, 'description');
+INSERT INTO competition VALUES (1,'Name', 1, 'locationname', 10.00, 20.00, 30.00, '2017-05-10 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'admin@email.edu', 1, 'description');
 
 SELECT pg_catalog.setval('competition_id_seq', 1, true);
 
@@ -597,76 +597,76 @@ INSERT INTO event VALUES (6, 1, 2, 3, 'Cha Cha', 6);
 
 SELECT pg_catalog.setval('event_id_seq', 6, true);
 
-INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (3, 4, 1, true, true, 1, 3, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (5, 6, 1, true, true, 1, 5, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (7, 8, 1, true, true, 1, 7, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (9, 10, 1, true, true, 1, 9, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (11, 12, 1, true, true, 1, 11, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (13, 14, 1, true, true, 1, 13, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (15, 16, 1, true, true, 1, 15, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (17, 18, 1, true, true, 1, 17, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (19, 20, 1, true, true, 1, 19, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (21, 22, 1, true, true, 1, 21, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (23, 24, 1, true, true, 1, 23, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (25, 26, 1, true, true, 1, 25, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (27, 28, 1, true, true, 1, 27, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (29, 30, 1, true, true, 1, 29, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (31, 32, 1, true, true, 1, 31, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (33, 34, 1, true, true, 1, 33, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (35, 36, 1, true, true, 1, 35, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (37, 38, 1, true, true, 1, 37, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (39, 40, 1, true, true, 1, 39, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (41, 42, 1, true, true, 1, 41, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (43, 44, 1, true, true, 1, 43, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (45, 46, 1, true, true, 1, 45, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (47, 48, 1, true, true, 1, 47, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (49, 50, 1, true, true, 1, 49, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (3, 4, 1, true, true, 1, 3, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (5, 6, 1, true, true, 1, 5, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (7, 8, 1, true, true, 1, 7, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (9, 10, 1, true, true, 1, 9, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (11, 12, 1, true, true, 1, 11, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (13, 14, 1, true, true, 1, 13, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (15, 16, 1, true, true, 1, 15, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (17, 18, 1, true, true, 1, 17, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (19, 20, 1, true, true, 1, 19, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (21, 22, 1, true, true, 1, 21, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (23, 24, 1, true, true, 1, 23, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (25, 26, 1, true, true, 1, 25, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (27, 28, 1, true, true, 1, 27, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (29, 30, 1, true, true, 1, 29, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (31, 32, 1, true, true, 1, 31, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (33, 34, 1, true, true, 1, 33, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (35, 36, 1, true, true, 1, 35, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (37, 38, 1, true, true, 1, 37, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (39, 40, 1, true, true, 1, 39, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (41, 42, 1, true, true, 1, 41, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (43, 44, 1, true, true, 1, 43, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (45, 46, 1, true, true, 1, 45, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (47, 48, 1, true, true, 1, 47, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (49, 50, 1, true, true, 1, 49, true, '2017-05-10 00:00:00');
 
-INSERT INTO partnership VALUES (2, 3, 2, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (4, 5, 2, true, true, 1, 4, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (6, 7, 2, true, true, 1, 6, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (8, 9, 2, true, true, 1, 8, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (10, 11, 2, true, true, 1, 10, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (12, 13, 2, true, true, 1, 12, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (14, 15, 2, true, true, 1, 14, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (16, 17, 2, true, true, 1, 16, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (18, 19, 2, true, true, 1, 18, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (20, 21, 2, true, true, 1, 20, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 3, 2, true, true, 1, 2, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (4, 5, 2, true, true, 1, 4, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (6, 7, 2, true, true, 1, 6, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (8, 9, 2, true, true, 1, 8, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (10, 11, 2, true, true, 1, 10, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (12, 13, 2, true, true, 1, 12, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (14, 15, 2, true, true, 1, 14, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (16, 17, 2, true, true, 1, 16, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (18, 19, 2, true, true, 1, 18, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (20, 21, 2, true, true, 1, 20, true, '2017-05-10 00:00:00');
 
-INSERT INTO partnership VALUES (2, 3, 3, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (4, 5, 3, true, true, 1, 4, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (6, 7, 3, true, true, 1, 6, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (8, 9, 3, true, true, 1, 8, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (10, 11, 3, true, true, 1, 10, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (12, 13, 3, true, true, 1, 12, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (14, 15, 3, true, true, 1, 14, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (16, 17, 3, true, true, 1, 16, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (18, 19, 3, true, true, 1, 18, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (20, 21, 3, true, true, 1, 20, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 3, 3, true, true, 1, 2, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (4, 5, 3, true, true, 1, 4, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (6, 7, 3, true, true, 1, 6, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (8, 9, 3, true, true, 1, 8, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (10, 11, 3, true, true, 1, 10, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (12, 13, 3, true, true, 1, 12, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (14, 15, 3, true, true, 1, 14, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (16, 17, 3, true, true, 1, 16, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (18, 19, 3, true, true, 1, 18, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (20, 21, 3, true, true, 1, 20, true, '2017-05-10 00:00:00');
 
-INSERT INTO partnership VALUES (2, 3, 4, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (4, 5, 4, true, true, 1, 4, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (6, 7, 4, true, true, 1, 6, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (8, 9, 4, true, true, 1, 8, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (10, 11, 4, true, true, 1, 10, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (12, 13, 4, true, true, 1, 12, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (14, 15, 4, true, true, 1, 14, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (16, 17, 4, true, true, 1, 16, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (18, 19, 4, true, true, 1, 18, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (20, 21, 4, true, true, 1, 20, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 3, 4, true, true, 1, 2, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (4, 5, 4, true, true, 1, 4, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (6, 7, 4, true, true, 1, 6, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (8, 9, 4, true, true, 1, 8, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (10, 11, 4, true, true, 1, 10, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (12, 13, 4, true, true, 1, 12, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (14, 15, 4, true, true, 1, 14, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (16, 17, 4, true, true, 1, 16, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (18, 19, 4, true, true, 1, 18, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (20, 21, 4, true, true, 1, 20, true, '2017-05-10 00:00:00');
 
-INSERT INTO partnership VALUES (2, 3, 5, true, true, 1, 2, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (4, 5, 5, true, true, 1, 4, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (6, 7, 5, true, true, 1, 6, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (8, 9, 5, true, true, 1, 8, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (10, 11, 5, true, true, 1, 10, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (12, 13, 5, true, true, 1, 12, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (14, 15, 5, true, true, 1, 14, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (16, 17, 5, true, true, 1, 16, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (18, 19, 5, true, true, 1, 18, true, '2017-05-10 00:00:00-04');
-INSERT INTO partnership VALUES (20, 21, 5, true, true, 1, 20, true, '2017-05-10 00:00:00-04');
+INSERT INTO partnership VALUES (2, 3, 5, true, true, 1, 2, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (4, 5, 5, true, true, 1, 4, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (6, 7, 5, true, true, 1, 6, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (8, 9, 5, true, true, 1, 8, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (10, 11, 5, true, true, 1, 10, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (12, 13, 5, true, true, 1, 12, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (14, 15, 5, true, true, 1, 14, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (16, 17, 5, true, true, 1, 16, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (18, 19, 5, true, true, 1, 18, true, '2017-05-10 00:00:00');
+INSERT INTO partnership VALUES (20, 21, 5, true, true, 1, 20, true, '2017-05-10 00:00:00');
 
-INSERT INTO paymentrecord VALUES (1, 1, '2017-05-10 00:00:00-04', 1, 21.87, true, true);
+INSERT INTO paymentrecord VALUES (1, 1, '2017-05-10 00:00:00', 1, 21.87, true, true);
 
 SELECT pg_catalog.setval('paymentrecord_id_seq', 1, true);

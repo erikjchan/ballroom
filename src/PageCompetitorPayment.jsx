@@ -9,7 +9,7 @@ import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 
 
-// editcompetition/:competition_id
+// competitorpayment/:competition_id/:competitor_id
 export default class PageCompetitorPayment extends React.Component {
     constructor(props) {
         super(props)

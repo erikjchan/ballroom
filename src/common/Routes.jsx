@@ -18,7 +18,7 @@ import CompetitorsList      from '../PageCompetitorList.jsx'
 import EditProfile          from '../PageEditProfile.jsx'
 import EnterCallbacks       from '../PageEnterCallbacks.jsx'
 import EditCompetition      from '../PageEditCompetition.jsx'
-import EditOfficial         from '../PageEditOfficial.jsx'
+import EditOfficials        from '../PageEditOfficials.jsx'
 import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
@@ -56,13 +56,12 @@ const routes = {
   '/admin/competitions'                                         : User(CompetitionListAdmin),
   '/admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   '/editcompetition/:competition_id'                            : Admin(EditCompetition),
-  '/editofficial/:competition_id'                               : Admin(EditOfficial), 
-  // '/affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
+  '/editofficials/:competition_id'                              : Admin(EditOfficials),
   '/querytest'                                                  : Any(QueryTest),
   '/newuser'                                                    : User(PageNewUser),
   '/organizationpayment/:competition_id/:organization_id'       : Admin(OrganizationPayment),
   '/querytest'                                                  : Any(QueryTest),
-  '/competitorpayment/:competition_id/:competitor_id'                          : User(CompetitorPayment),
+  '/competitorpayment/:competition_id/:competitor_id'           : User(CompetitorPayment),
 }
 
 export default (
