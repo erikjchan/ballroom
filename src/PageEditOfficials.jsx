@@ -26,16 +26,12 @@ export default class EditOfficials extends React.Component {
     catch (e) { alert('Invalid competition ID!') }
     this.state = {
       /** We will populate this w/ data from the API */
-      competition: null,
+      competition: lib.flat_loading_proxy,
       officials: [],
-      official: {
-                    firstname:'',
-                    lastname:'',
-                    email:'',
-                    phonenumber: '',
-                    token:'',
-                    competitionid: this.competition_id,
-                }
+      inputFirstName: '',
+      inputLastName: '',
+      selectedRoleId: '',
+      roles: []
     }
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
@@ -52,9 +48,15 @@ export default class EditOfficials extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { alert("There was an error fetching the competition"); console.log(err)})
 
-    this.props.api.get(`/api/competition/${this.competition_id}/judges`)
+    this.props.api.get('/api/roles')
+      .then(json => {
+        this.setState({roles: json});
+      })
+      .catch(err => alert('There was an error fetcihng official roles'));
+
+    this.props.api.get(`/api/competition/${this.competition_id}/officials`)
       .then(json => {
         // update the state of our component
         json.map(item => {
@@ -65,44 +67,40 @@ export default class EditOfficials extends React.Component {
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
       .catch(err => alert(
-        `There was an error fetching the competition`))
-
+        `There was an error fetching the officials`))
   }
 
   onRemove(rowData) {
       if (!confirm('Are you sure you want to delete the judge?\n'+
                         "  id: "+rowData.id + "\n"+
                         "  name: "+rowData.firstname+" "+rowData.lastname+"\n"+
-                        "  email: "+rowData.email+"\n"+
-                        "  phone: "+rowData.phonenumber+"\n"
+                        "  email: "+rowData.rolename
                         )) {
           return false;
       }
-      fetch("/api/delete_judge", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: rowData.id
-            })
-        }).then(() => {
-            window.location.reload();
-        });
+      this.props.api.post("/api/delete_official", {id: rowData.id});
+      const officials = cloneDeep(this.state.officials);
+      const idx = findIndex(officials, { id: rowData.id });
+
+      // this could go through flux etc.
+      const officialToRemove = officials[idx];
+      officials.splice(idx, 1);
+      this.setState({officials: officials});
   }
+
   addOfficial(event){
-      var official = this.state.official
+      if (this.state.selectedRoleId == "") {
+        return false;
+      }
+      const official = {
+        firstname: this.state.inputFirstName,
+        lastname: this.state.inputLastName,
+        roleid: this.state.selectedRoleId,
+        competitionid: this.competition_id
+      }
       official.token = crypto.randomBytes(16).toString('hex');
-      console.log(this.state.official)
-      fetch("/api/create_judge", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(official)
-        }).then(() => {
+      this.props.api.post("/api/create_official", official)
+        .then((res) => {
             window.location.reload();
         });
   }
@@ -133,34 +131,27 @@ export default class EditOfficials extends React.Component {
                     <label className="addLabel">
                         First Name: <br />
                         <input type="text" name="firstname" size = '20'
-                               value = {this.state.official.firstname} 
-                               onChange = {(e) => { var o = this.state.official; o.firstname = e.target.value; this.setState({official: o});}}
+                               value = {this.state.inputFirstName} 
+                               onChange = {(event) => this.setState({inputFirstName: event.target.value})}
                         />
                     </label>
                     <label className="addLabel">
                          Last Name: <br />
                         <input type="text" name="lastname" size = '20'
-                               value = {this.state.official.lastname} 
-                               onChange = {(e) => { var o = this.state.official; o.lastname = e.target.value; this.setState({official: o});}}
+                               value = {this.state.inputLastName} 
+                               onChange = {(event) => this.setState({inputLastName: event.target.value})}
                         />
                     </label>
                     <label className="addLabel">
-                        Email:<br />
-                        <input type="text" name="email" size = '20'
-                               value = {this.state.official.email}  
-                               onChange = {(e) => { var o = this.state.official; o.email = e.target.value; this.setState({email: o});}} 
-                        />
-                    </label>
-                    <label className="addLabel">
-                        Phone:<br />
-                        <input type="tel" name="phonenumber" size = '10'
-                               value = {this.state.official.phonenumber}  
-                               onChange = {(e) => { var o = this.state.official; o.phonenumber = e.target.value; this.setState({number: o});}} 
-                        />
+                        Role:<br />
+                        <select value={this.state.selectedRoleId} onChange={(event) => this.setState({selectedRoleId: event.target.value})}>
+                          <option value="" disabled></option>
+                          {this.state.roles.map(role => (<option key={"role_id_" + role.id} value={role.id}>{role.name}</option>))}
+                        </select>
                     </label>
                 </div>
                 <button className = {style.judgeEditBtns}
-                       onClick={this.addOfficial.bind(this)}>Save Changes</button>
+                       onClick={this.addOfficial.bind(this)}>Add Official</button>
                     </div>} />
 
                 <Box

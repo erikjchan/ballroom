@@ -116,7 +116,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .catch(err => alert(err))
 
     /** Get officials */
-    this.props.api.get(`/api/competition/${this.competition_id}/judges`)
+    this.props.api.get(`/api/competition/${this.competition_id}/officials`)
       .then(json => {
         this.setState({officials: json})
       })
@@ -303,9 +303,8 @@ populate_expanded(box_name, lines_react, link){
 
     dict['Officials'] = [<p><b>Total Officials:</b> {total_officials}</p>].concat(
                           this.state.officials.map(official => {
-                            var name = official.firstname + " " + official.lastname
-                            var email = "mailto:" + official.email;
-                            return (<p key={name}>{name} (<a href={email}>{official.email}</a>) </p>)
+                            var name = official.firstname + " " + official.lastname;
+                            return (<p key={official.id}>{name} (official.rolename)</p>)
                           }))
     links["Officials"] = "/editofficials/" + this.competition_id;
 

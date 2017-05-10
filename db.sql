@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS admin CASCADE;
 DROP TABLE IF EXISTS callback CASCADE;
 DROP TABLE IF EXISTS competitor CASCADE;
 DROP TABLE IF EXISTS paymentrecord CASCADE;
-DROP TABLE IF EXISTS judge CASCADE;
+DROP TABLE IF EXISTS official CASCADE;
 DROP TABLE IF EXISTS event CASCADE;
 DROP TABLE IF EXISTS level CASCADE;
 DROP TABLE IF EXISTS partnership CASCADE;
@@ -151,21 +151,31 @@ CREATE TABLE event (
 ALTER TABLE event OWNER TO postgres;
 
 --
--- Name: judge; Type: TABLE; Schema: public; Owner: postgres
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE judge (
+CREATE TABLE role (
+    id integer,
+    name character varying(30) UNIQUE NOT NULL
+);
+
+ALTER TABLE role OWNER TO postgres;
+
+--
+-- Name: official; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE official (
     id SERIAL,
-    email character varying(100),
     token character varying(100),
-    firstname character varying(30),
-    lastname character varying(30),
-    phonenumber character varying(30),
-    competitionid integer
+    firstname character varying(30) NOT NULL,
+    lastname character varying(30) NOT NULL,
+    roleid integer NOT NULL,
+    competitionid integer NOT NULL
 );
 
 
-ALTER TABLE judge OWNER TO postgres;
+ALTER TABLE official OWNER TO postgres;
 
 --
 -- Name: level; Type: TABLE; Schema: public; Owner: postgres
@@ -300,11 +310,19 @@ ALTER TABLE ONLY event
 
 
 --
--- Name: judge judge_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY judge
-    ADD CONSTRAINT judge_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: official official_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY official
+    ADD CONSTRAINT official_pkey PRIMARY KEY (id);
 
 
 --
@@ -360,7 +378,7 @@ ALTER TABLE ONLY callback
 --
 
 ALTER TABLE ONLY callback
-    ADD CONSTRAINT callback_judgeid_fkey FOREIGN KEY (judgeid) REFERENCES judge(id) ON DELETE CASCADE;
+    ADD CONSTRAINT callback_judgeid_fkey FOREIGN KEY (judgeid) REFERENCES official(id) ON DELETE CASCADE;
 
 
 --
@@ -412,11 +430,19 @@ ALTER TABLE ONLY event
 
 
 --
--- Name: judge judge_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: official official_roleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY judge
-    ADD CONSTRAINT judge_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
+ALTER TABLE ONLY official
+    ADD CONSTRAINT official_roleid_fkey FOREIGN KEY (roleid) REFERENCES role(id) ON DELETE CASCADE;
+
+
+--
+-- Name: official official_competitionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY official
+    ADD CONSTRAINT official_competitionid_fkey FOREIGN KEY (competitionid) REFERENCES competition(id) ON DELETE CASCADE;
 
 
 --
@@ -572,15 +598,19 @@ INSERT INTO competitor VALUES (50,'fname50', 'lname50', 'email50@email.com', 'ma
 
 SELECT pg_catalog.setval('competitor_id_seq', 50, true);
 
+INSERT INTO role VALUES (1, 'Adjudicator');
+INSERT INTO role VALUES (2, 'Master of Ceremonies');
+INSERT INTO role VALUES (3, 'Scrutineer');
+INSERT INTO role VALUES (4, 'Music Director');
 
-INSERT INTO judge VALUES (1,'len@goodman.com', 'judgetoken', 'Len', 'Goodman', '626-555-5555', 1);
-INSERT INTO judge VALUES (2,'bruno@tonioli.com', 'judgetoken', 'Bruno', 'Tonioli', '626-655-5555', 1);
-INSERT INTO judge VALUES (3,'carrieann@inaba.com', 'judgetoken', 'Carrie Ann', 'Inaba', '626-565-5555', 1);
-INSERT INTO judge VALUES (4,'julianne@hough.com', 'judgetoken', 'Julianne', 'Hough', '626-556-5555', 1);
-INSERT INTO judge VALUES (5,'tom@bergeron.com', 'judgetoken', 'Tom', 'Bergeron', '626-555-6555', 1);
-INSERT INTO judge VALUES (6,'erin@andrews.com', 'judgetoken', 'Erin', 'Andrews', '626-555-5655', 1);
+INSERT INTO official VALUES (1, 'officialtoken', 'Len', 'Goodman', 1, 1);
+INSERT INTO official VALUES (2, 'officialtoken', 'Bruno', 'Tonioli', 1, 1);
+INSERT INTO official VALUES (3, 'officialtoken', 'Carrie Ann', 'Inaba', 1, 1);
+INSERT INTO official VALUES (4, 'officialtoken', 'Julianne', 'Hough', 1, 1);
+INSERT INTO official VALUES (5, 'officialtoken', 'Tom', 'Bergeron', 1, 1);
+INSERT INTO official VALUES (6, 'officialtoken', 'Erin', 'Andrews', 1, 1);
 
-SELECT pg_catalog.setval('judge_id_seq', 6, true);
+SELECT pg_catalog.setval('official_id_seq', 6, true);
 
 INSERT INTO style VALUES (1, 'Latin', 1, 1);
 INSERT INTO style VALUES (2, 'Smooth', 2, 1);

@@ -78,14 +78,13 @@ app.use(bodyParser.json());
     })
  });
 
-app.post('/api/create_judge', (req, res) => {
-    const email = req.body.email
+app.post('/api/create_official', (req, res) => {
     const token = req.body.token
     const firstname = req.body.firstname
     const lastname = req.body.lastname
-    const competitionid = parseInt(req.body.competitionid)
-    const phonenumber = req.body.phonenumber
-    query2.create_judge(firstname, lastname, email, token, phonenumber, competitionid).then(function (value) {
+    const roleid = req.body.roleid
+    const competitionid = req.body.competitionid
+    query2.create_official(firstname, lastname, token, roleid, competitionid).then(function (value) {
             console.log(value);
             res.send(value);
         },
@@ -94,9 +93,9 @@ app.post('/api/create_judge', (req, res) => {
         });
 });
 
-app.post('/api/delete_judge', (req, res) => {
+app.post('/api/delete_official', (req, res) => {
     const id = req.body.id
-    query2.delete_judge(id).then(function (value) {
+    query2.delete_official(id).then(function (value) {
             console.log(value);
             res.send(value);
         },
@@ -236,6 +235,13 @@ app.get('/api/competition/:cid/competitors_styles', (req, res) => {
 
 app.get('/api/competition/:cid/events', (req, res) => {
     query.get_events_for_competition(req.params.cid).then(value => {
+        log_debug(2)(value)
+        res.send(value);
+    });
+})
+
+app.get('/api/competition/:cid/officials', (req, res) => {
+    query.get_officials_for_competition(req.params.cid).then(value => {
         log_debug(2)(value)
         res.send(value);
     });
@@ -430,8 +436,15 @@ app.get('/api/admins', (req, res) => {
     });
 })
 
-app.get('/api/judges/:jid', (req, res) => {
-    query.get_judge(req.params.jid).then(value => {
+app.get('/api/roles', (req, res) => {
+    query.get_roles().then(value => {
+      log_debug(2)(value);
+      res.send(value);
+    });
+})
+
+app.get('/api/officials/:id', (req, res) => {
+    query.get_official(req.params.id).then(value => {
         log_debug(2)(value)
         res.send(value);
     });
@@ -451,7 +464,7 @@ app.get('/api/', (req, res) => {
         '/api/payment_records',
         '/api/callbacks',
         '/api/admins',
-        '/api/judges',
+        '/api/officials',
         'api/querytest'
     ]})
 })
