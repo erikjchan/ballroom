@@ -638,7 +638,7 @@ INSERT INTO event VALUES (16, 1, 2, 2, 'Waltz', 10);
 INSERT INTO event VALUES (17, 1, 1, 3, 'Tango', 11);
 INSERT INTO event VALUES (18, 1, 2, 3, 'Tango', 12);
 
-SELECT pg_catalog.setval('event_id_seq', 6, true);
+SELECT pg_catalog.setval('event_id_seq', 18, true);
 
 INSERT INTO partnership VALUES (1, 2, 1, true, true, 1, 1, true, '2017-05-10 00:00:00');
 INSERT INTO partnership VALUES (3, 4, 1, true, true, 1, 3, true, '2017-05-10 00:00:00');
