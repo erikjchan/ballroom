@@ -71,8 +71,8 @@ app.use(bodyParser.json());
     })
  });
 
-  app.post('/api/create_empty_competition', (req, res) => {
-    query2.create_empty_competition().then(function (value){
+  app.post('/api/create_competition', (req, res) => {
+    query2.create_competition(req.body).then(function (value){
         console.log(value);
         res.send(value[0]);
     })
