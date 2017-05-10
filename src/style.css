@@ -676,8 +676,9 @@ form{
   display: inline-block;
 }
 input{
-  border-radius:5px;
-  margin-top: 10px;
+  font-size: 16;
+  border: 1px solid #aaa;
+  border-radius: 4px;
 }
 input[type = "text"]{
   width:100%;

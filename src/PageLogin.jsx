@@ -60,6 +60,7 @@ export default class LoginPage extends React.Component {
         <p><Link to='competition/1/run'              >RunCompetition</Link></p>
         <p><Link to='editprofile'                    >EditProfile</Link></p>
         <p><Link to='editcompetition/1'              >EditCompetition</Link></p>
+        <p><Link to='newuser'              >NewUser</Link></p>
         <p><Link to='editofficial/1'                 >EditOfficial</Link></p>
         <p><Link to='organizationpayment/1/1'        >OrganizationPayment</Link></p>        
         <p><Link to='competition/1/seecompetitor/1'  >SeeCompetitor</Link></p>
