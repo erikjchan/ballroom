@@ -624,6 +624,18 @@ INSERT INTO event VALUES (3, 1, 1, 2, 'Tango', 3);
 INSERT INTO event VALUES (4, 1, 2, 2, 'Tango', 4);
 INSERT INTO event VALUES (5, 1, 1, 3, 'Cha Cha', 5);
 INSERT INTO event VALUES (6, 1, 2, 3, 'Cha Cha', 6);
+INSERT INTO event VALUES (7, 1, 1, 1, 'Tango', 7);
+INSERT INTO event VALUES (8, 1, 2, 1, 'Tango', 8);
+INSERT INTO event VALUES (9, 1, 1, 2, 'Cha Cha', 9);
+INSERT INTO event VALUES (10, 1, 2, 2, 'Cha Cha', 10);
+INSERT INTO event VALUES (11, 1, 1, 3, 'Waltz', 11);
+INSERT INTO event VALUES (12, 1, 2, 3, 'Waltz', 12);
+INSERT INTO event VALUES (13, 1, 1, 1, 'Cha Cha', 7);
+INSERT INTO event VALUES (14, 1, 2, 1, 'Cha Cha', 8);
+INSERT INTO event VALUES (15, 1, 1, 2, 'Waltz', 9);
+INSERT INTO event VALUES (16, 1, 2, 2, 'Waltz', 10);
+INSERT INTO event VALUES (17, 1, 1, 3, 'Tango', 11);
+INSERT INTO event VALUES (18, 1, 2, 3, 'Tango', 12);
 
 SELECT pg_catalog.setval('event_id_seq', 6, true);
 
