@@ -6,6 +6,9 @@ import styles from "./XSidebar.css"
 
 export default class OurSidebar extends React.Component {
 
+  constructor(props) {
+    super(props)
+  }
   /**
    * Starts the login process.
    */
@@ -26,6 +29,8 @@ export default class OurSidebar extends React.Component {
   getTopLinks() {
     const competition_selected = !!this.props.selected.competition
     const competition_id = this.props.selected.competition && this.props.selected.competition.id
+    const competitor_id = this.props.profile.competitor_id
+    console.log(competitor_id)
     const isAdmin = this.props.profile.role === 'admin'
     const isAuthenticated = this.props.profile.role !== 'none'
 
@@ -42,12 +47,12 @@ export default class OurSidebar extends React.Component {
       </Link>,
 
       competition_selected &&
-      <span key={1}><h5>
+      <span key={1}><h3>
         {this.props.selected.competition.name}
-      </h5></span>,
+      </h3></span>,
 
       !isAdmin && competition_selected &&
-      <Link key={2} to={`/competition/${competition_id}/1`}>
+      <Link key={2} to={`/competition/${competition_id}/${competitor_id}`}>
         - Competition Information
       </Link>,
 
@@ -76,10 +81,10 @@ export default class OurSidebar extends React.Component {
         - Organization Payment
       </Link>,
 
-      isAdmin && competition_selected &&
+      /*isAdmin && competition_selected &&
       <Link key={9} to={`/competition/${competition_id}/regcompetitor/1`}>
         - Competitor Registration
-      </Link>
+      </Link>*/
 
     ]
   }
