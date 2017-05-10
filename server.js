@@ -118,8 +118,8 @@ app.post('/api/create_paymentrecord', (req, res) => {
     const competitionid = parseInt(req.body.competitionid)
     const competitorid = parseInt(req.body.competitorid)
     const amount = parseFloat(req.body.amount)
-    const online = parseInt(req.body.online)
-    const paidwithaffiliation = parseInt(req.body.paidwithaffiliation)
+    const online = (req.body.online)
+    const paidwithaffiliation = (req.body.paidwithaffiliation)
     query2.create_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
             log_debug(2)(value)
             res.send(value);
@@ -647,8 +647,8 @@ app.get('/test/payment_records/insert/:competitionid/:competitorid/:amount/:onli
     const competitionid = parseInt(req.params.competitionid)
     const competitorid = parseInt(req.params.competitorid)
     const amount = parseFloat(req.params.amount)
-    const online = parseInt(req.params.online)
-    const paidwithaffiliation = parseInt(req.params.paidwithaffiliation)
+    const online =  (req.params.online)
+    const paidwithaffiliation = (req.params.paidwithaffiliation)
     query2.create_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
             log_debug(2)(value)
             res.send(value);
