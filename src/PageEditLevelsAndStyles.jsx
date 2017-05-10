@@ -13,7 +13,6 @@ import {Button, IconButton } from 'react-toolbox/lib/button';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
 import Box from './common/Box.jsx'
-
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -34,7 +33,7 @@ class EditLevelsAndStyles extends React.Component {
             () => this.saveChanges("Are you sure you want to save changes?")
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
-            () => this.confirmGoToUrl("/competition/1/editevents", "Are you sure you wish to leave this page without saving?")
+            () => this.confirmGoToUrl(`/competition/${this.props.params.competition_id}/editevents`, "Are you sure you wish to leave this page without saving?") // TODO CID
           }>Define Events</div>
         </div>
       </div>
@@ -48,7 +47,7 @@ class EditLevelsAndStyles extends React.Component {
                         }
                  content={
                           <div id={style.scheduleWrapper}>
-                              <LevelTable ref="levelsTable" type="levels" />
+                              <LevelTable api={this.props.api} competition_id={this.props.params.competition_id} ref="levelsTable" type="levels" />
                           </div>
                          } 
             />
@@ -61,7 +60,7 @@ class EditLevelsAndStyles extends React.Component {
                         }
                  content={
                           <div id={style.scheduleWrapper}>
-                              <LevelTable ref="stylesTable" type="styles" />
+                              <LevelTable api={this.props.api} competition_id={this.props.params.competition_id} ref="stylesTable" type="styles" />
                           </div>
                          } 
             />
@@ -75,33 +74,27 @@ class EditLevelsAndStyles extends React.Component {
  }
 
     saveChanges(message) {
-        if (confirm(message)) {
-            fetch("/api/competition/updateLevelsStyles", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    cid: this.props.selected.competition.id,
-                    levels: this.refs.levelsTable.state.rows,
-                    styles: this.refs.stylesTable.state.rows
-                })
-            }).then(() => {
-                fetch("/api/competition/"+cid+"/levels") 
-                    .then(response => response.json())
-                    .then(json => {
-                        this.refs.levelsTable.setState({rows: json})
-                    })
-                    .catch(err => alert(err));
-                fetch("/api/competition/"+cid+"/styles") 
-                    .then(response => response.json())
-                    .then(json => {
-                        this.refs.stylesTable.setState({rows: json})
-                    })
-                    .catch(err => alert(err));
-            });
-        }
+      if (!confirm(message)) return;
+      console.log(this.props)
+      const cid = this.props.params.competition_id
+
+      this.props.api.post("/api/competition/updateLevelsStyles", {
+        cid,
+        levels: this.refs.levelsTable.state.rows,
+        styles: this.refs.stylesTable.state.rows
+      }).then(() => {
+        this.props.api.get("/api/competition/"+cid+"/levels") 
+            .then(json => {
+                this.refs.levelsTable.setState({rows: json})
+            })
+            .catch(err => alert(err));
+        this.props.api.get("/api/competition/"+cid+"/styles") 
+            .then(json => {
+                this.refs.stylesTable.setState({rows: json})
+            })
+            .catch(err => alert(err));
+      });
+
     }
 
 

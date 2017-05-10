@@ -32,7 +32,7 @@ class EditSchedule extends React.Component {
             () => this.saveChanges("Are you sure you want to save changes?")  
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
-            () => this.confirmGoToUrl("/admin/competition/0", "Are you sure you want to discard changes?")
+            () => this.confirmGoToUrl("/admin/competition/" + this.props.params.competition_id, "Are you sure you want to discard changes?")
           }>Cancel</div>
         </div>
       </div>
@@ -46,7 +46,7 @@ class EditSchedule extends React.Component {
                     }
             content = {
                       <div id={style.scheduleWrapper}>
-                          <DragAndDropTable ref="ddTable" />
+                          <DragAndDropTable ref="ddTable" competition_id={this.props.params.competition_id} />
                       </div>} 
         />
     </Page>
@@ -55,7 +55,7 @@ class EditSchedule extends React.Component {
 
  saveChanges(message) {
   if (!confirm(message)) return;
-  const cid = this.props.selected.competition.id
+  const cid = this.props.params.competition_id
   const send_obj = {
     cid: cid,
     rows: this.refs.ddTable.state.rows

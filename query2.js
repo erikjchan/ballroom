@@ -308,7 +308,7 @@ const create_partnership = (leadcompetitorid, followcompetitorid, eventid, compe
                                 return reject(err);
                             }
                             done(null);
-                            resolve("{finished: true}");
+                            resolve('{"finished": true}');
                         });
                     });
                 });

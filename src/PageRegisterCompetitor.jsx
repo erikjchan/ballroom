@@ -5,7 +5,7 @@
  * in their competition.
  */
 
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
 import EventTable from './common/EventTable.jsx'
@@ -251,7 +251,7 @@ class PageEventRegistration extends React.Component {
         <Box admin={true} 
         title = {<div>Select Event</div>}
         content={
-        <div className={styles.lines}>
+        <div className={style.lines}>
         
         { true && <span>
             <h2>Level</h2>
@@ -339,7 +339,7 @@ class PageEventRegistration extends React.Component {
             >{item.firstname} {item.lastname} ({item.email})</div>
           )}
         />
-      <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register!</button></p>
+      <p><button onClick={this.registerEventHandler} className={style.registerBtn}>Register!</button></p>
               </div>
         }/>
 

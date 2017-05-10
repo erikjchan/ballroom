@@ -102,7 +102,7 @@ export default class DragAndDropTable extends React.Component {
   }
 
   componentDidMount() {
-    cid = this.props.selected.competition.id
+    const cid = this.props.competition_id
     fetch("/api/competition/" + cid + "/rounds") // TODO: change 1 to cid
       .then(response => response.json())
       .then(json => {

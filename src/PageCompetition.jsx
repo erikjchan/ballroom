@@ -30,9 +30,7 @@ export default class PageCompetition extends React.Component {
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {
-      // this.props.selected.competition.id
-      this.competition_id = this.props.params.competition_id}
+    try {this.competition_id = this.props.params.competition_id}
     catch (e) { alert('Invalid competition ID!') }
     try{this.competitor_id = this.props.profile.competitor_id}
     catch (e) {alert('Invalid competitor ID!') }

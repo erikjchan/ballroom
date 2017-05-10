@@ -10,6 +10,9 @@ import { connect } from 'react-redux'
  */
 export default (component) => connect((state) => {
   const { auth, app, selected } = state
+  if (!selected.competition && localStorage.getItem('competition')) {
+    selected.competition = JSON.parse(localStorage.getItem('competition'))
+  }
   const { isAuthenticated, errorMessage, isAdmin } = auth
   const profile = auth.profile || {}
   const role = (auth.profile && Object.keys(auth.profile.roles)[0]) || 'none'

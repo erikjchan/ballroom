@@ -66,8 +66,7 @@ export default class LevelTable extends React.Component {
   }
 
   componentDidMount() {
-      fetch("/api/competition/"+ this.props.selected.competition.id + "/" + this.props.type) // TODO: change 1 to cid
-          .then(response => response.json())
+      this.props.api.get(`/api/competition/${this.props.competition_id}/${this.props.type}`)
           .then(json => {
               const rows = json.map((value, index) => {value.key = index; return value;});
               this.setState({
@@ -133,6 +132,7 @@ export default class LevelTable extends React.Component {
   }
 
   addNewRow() {
+    console.log('ADD NEW ROW')
     const {
     	userData,
         keyCounter
