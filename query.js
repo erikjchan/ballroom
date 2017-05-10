@@ -144,7 +144,7 @@ const update_events_for_competition = data => {
                        }
                    });
                    client.query(SQL`DELETE FROM event WHERE id NOT IN 
-                    (SELECT id FROM newevents WHERE id IS NOT NULL) returning id`, (err, result) => {
+                    (SELECT id FROM newevents WHERE id IS NOT NULL) AND competitionid = ${data.cid} returning id`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
@@ -213,7 +213,7 @@ const update_levels_and_styles_for_competition = data => {
                         });
                     }
                     client.query(SQL`DELETE FROM level WHERE id NOT IN 
-                    (SELECT id FROM newrows WHERE id IS NOT NULL)`, (err, result) => {
+                    (SELECT id FROM newrows WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
                         if (err) {
                             rollback(client, done);
                             return reject(err);
@@ -250,7 +250,7 @@ const update_levels_and_styles_for_competition = data => {
                         });
                     }
                     client.query(SQL`DELETE FROM style WHERE id NOT IN 
-                    (SELECT id FROM newrows WHERE id IS NOT NULL)`, (err, result) => {
+                    (SELECT id FROM newrows WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
                         if (err) {
                             rollback(client, done);
                             return reject(err);
@@ -346,7 +346,7 @@ const update_rounds_for_competition = data => {
                        }
                    });
                    client.query(SQL`DELETE FROM round WHERE id NOT IN 
-                    (SELECT id FROM newrounds WHERE id IS NOT NULL)`, (err, result) => {
+                    (SELECT id FROM newrounds WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
                        if (err) {
                            rollback(client, done);
                            return reject(err);
