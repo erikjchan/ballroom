@@ -177,7 +177,7 @@ export default class PageCompetition extends React.Component {
             <div className={styles.infoBoxLeft}>
               <Box title={
                 <div className={styles.titleContainers}>
-                  <span>Competiton Info</span>
+                  <span>Competition Info</span>
                 </div>}>
                 {comp_info}
               </Box>

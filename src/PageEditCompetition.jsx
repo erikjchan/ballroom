@@ -226,7 +226,7 @@ export default class PageEditCompetition extends React.Component {
           </div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box admin={true} title={<div className={styles.titleContainers}><span>Competiton Info</span> 
+              <Box admin={true} title={<div className={styles.titleContainers}><span>Competition Info</span> 
                              
                           </div>} 
                    content={comp_info}/>
