@@ -28,7 +28,7 @@ class PageSeeCompetitor extends React.Component {
         paid: ''
     }
 
-    try {this.competition_id = this.props.params.competition_id}
+    try {this.competition_id = this.props.selected.competition.id}
     catch (e) { alert('Invalid competition ID!') }
     try{this.competitor_id = this.props.params.competitor_id}
     catch (e) {alert('Invalid competitor ID!') }
