@@ -66,7 +66,7 @@ export default class LevelTable extends React.Component {
   }
 
   componentDidMount() {
-      fetch("/api/competition/1/" + this.props.type) // TODO: change 1 to cid
+      fetch("/api/competition/"+ this.props.selected.competition.id + "/" + this.props.type) // TODO: change 1 to cid
           .then(response => response.json())
           .then(json => {
               const rows = json.map((value, index) => {value.key = index; return value;});

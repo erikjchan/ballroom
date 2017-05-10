@@ -22,7 +22,7 @@ export default class LoginPage extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        cid: 1, // TODO: change in production
+        cid: this.props.profile.competitor_id, // TODO: change in production
       })
     })
   }

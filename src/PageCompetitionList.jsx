@@ -28,7 +28,7 @@ class PageCompetitionList extends React.Component {
       competitions: [],
       
     }
-    this.competitor_id = 1;
+    this.competitor_id = this.props.profile.competitor_id;
   }
 
   componentDidMount() {

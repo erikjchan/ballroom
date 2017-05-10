@@ -100,15 +100,15 @@ export default class CompetitorList extends React.Component {
   }
 
   componentWillMount() {
-		if (this.props.data){
-			this.setState({query: this.props.data.query})
-		}
+    if (this.props.data){
+      this.setState({query: this.props.data.query})
+    }
   }
 
   componentDidMount() {
     this.props.api
       .get(`/api/competition/${this.props.competition_id}/competitors`)
-		  .then(json => {
+      .then(json => {
 
         const rows = json.map((row, i) => Object.assign(row, {
           rowId: i,
@@ -116,9 +116,9 @@ export default class CompetitorList extends React.Component {
           paidwithaffiliation: row.paidwithaffiliation ? "Yes" : "No",
         }))
 
-		    this.setState({ rows }); 
-		 })
-		 .catch(err => alert(err));
+        this.setState({ rows }); 
+     })
+     .catch(err => alert(err));
   }
 
   render() {
@@ -139,12 +139,12 @@ export default class CompetitorList extends React.Component {
     const resolvedRows = compose(
       search.multipleColumns({ columns: columns, query }),
       resolve.resolve({
-		     columns: columns,
-		     method: (extra) => compose(
+         columns: columns,
+         method: (extra) => compose(
                 resolve.byFunction('cell.resolve')(extra),
                 resolve.nested(extra)
             )
-		 })
+     })
     )(rows);
  
     var totalOwed = 0; var totalListed = 0;
