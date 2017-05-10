@@ -44,6 +44,15 @@ export default class LoginPage extends React.Component {
     // console.log(action, fetchQuote())
     return (
      <Page ref="page" {...this.props}>
+      <h1>Welcome to Floorcraft!</h1>
+
+      Floorcraft is a service that allows both collegiate ballroom competition organizers 
+      to manage competitions and competitors to register for competitions.
+
+      The site is an open-source project that can be found at <a href="https://github.com/ejc233/ballroom/">this link</a>.
+
+
+      <div style={{visibility: 'hidden'}}>
         <h1>Welcome to Floorcraft!</h1>
         { message }
         { this.props.profile.role === 'none' && <button onClick={this.loginUser.bind(this)}>Login / Signup</button> }
@@ -81,6 +90,7 @@ export default class LoginPage extends React.Component {
               return value;
           }, 2)}
         </pre>
+    </div>
 
       </Page>
     );
