@@ -57,7 +57,7 @@ class EditEvents extends React.Component {
       const cid = this.props.selected.competition.id
 
       const send_object = {
-        cid: cid, // TODO: change in production
+        cid: cid, 
         rows: this.refs.ddTable.state.rows
       }
 

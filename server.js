@@ -1,4 +1,4 @@
-import express from 'express';
+    import express from 'express';
 const app = express();
 const data = require('./api/data')
 const ip = require('ip');
@@ -184,6 +184,18 @@ app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
     query.update_competition_current_round_id(req.body).then(value => {
         log_debug(2)(value)
         res.end(value);
+    });
+});
+    
+app.post('/api/payment_records/update/', (req, res) => {
+    const competitionid = parseInt(req.body.competitionid)
+    const competitorid = parseInt(req.body.competitorid)
+    const amount = parseFloat(req.body.amount)
+    const online = req.body.online
+    const paidwithaffiliation = req.body.paidwithaffiliation
+    query2.update_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
+        log_debug(2)(value)
+        res.send(value);
     });
 });
 
