@@ -5,7 +5,7 @@
  * specific selected competition
  */
 
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
 import EventTable from './common/EventTable.jsx'
@@ -243,7 +243,7 @@ dropEventHandler = (rowData) => {
       <h1>Event Registration</h1>
         <Box 
         title = {<div>Register for New Event</div>}>
-        <div className={styles.lines}>
+        <div className={style.lines}>
         { true && <span>
             <h2>Level</h2>
             <RadioGroup name='comic' value={this.state.levelid && this.state.levelid.toString()} onChange={this.handleLevelChange}>
@@ -331,7 +331,7 @@ dropEventHandler = (rowData) => {
             >{item.firstname} {item.lastname} ({item.email})</div>
           )}
         />
-      <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register</button></p>
+      <p><button onClick={this.registerEventHandler} className={style.registerBtn}>Register</button></p>
               </div>
       </Box>
 
