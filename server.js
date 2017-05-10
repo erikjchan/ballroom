@@ -74,6 +74,13 @@ app.use(bodyParser.json());
 
  });
 
+  app.post('/api/create_empty_competition', (req, res) => {
+    query2.create_empty_competition().then(function (value){
+        console.log(value);
+        res.send(value[0]);
+    })
+ });
+
 app.post('/api/create_judge', (req, res) => {
     const email = req.body.email
     const token = req.body.token
