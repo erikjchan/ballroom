@@ -21,7 +21,7 @@ export default class LoginPage extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        cid: this.props.profile.competitor_id, // TODO: change in production
+        cid: 1, // TODO: change in production
       })
     })
   }
@@ -76,7 +76,6 @@ export default class LoginPage extends React.Component {
         <p><Link to='querytest'                      >QueryTest</Link></p>   
         <p><Link to='competitorpayment/1/1'          >CompetitorPayment</Link></p>      
         <button onClick={() => this.props.dispatch(action) } />
-        <button onClick={() => this.generateRounds()}>Create rounds for events</button>
         <pre>
           {JSON.stringify(this.props, function(key, value) {
               if (typeof value === 'object' && value !== null) {
@@ -91,6 +90,7 @@ export default class LoginPage extends React.Component {
           }, 2)}
         </pre>
     </div>
+    <button onClick={() => this.generateRounds()}>Create rounds for events</button>
 
       </Page>
     );
