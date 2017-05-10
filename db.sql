@@ -128,7 +128,7 @@ CREATE TABLE competitor (
     email character varying(100) NOT NULL UNIQUE,
     mailingaddress character varying(100),
     affiliationid integer,
-    hasregistered boolean NOT NULL
+    hasregistered boolean NOT NULL DEFAULT true
 );
 
 
