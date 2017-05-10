@@ -210,14 +210,16 @@ export default class PageEditCompetition extends React.Component {
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
     </div>
+    
     <div className = {style.form_row}>
         <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
-        <button className={style.competitionEditBtns} 
+        {this.competition_id > 0 && <button className={style.competitionEditBtns} 
         onClick={() => {browserHistory.push("/competition/"+this.competition_id+"/editlevelsandstyles");}}> 
-                         Edit Levels and Styles</button>
+                         Edit Levels and Styles</button>}
                 </div>
                 </div>
-            </div>)
+            </div>
+    )
 
     return (
       <Page ref="page" {...this.props}>
