@@ -1,21 +1,26 @@
 /* 
  * COMPETITIONS LIST (ADMINS)
  *
- * This page will be used by admins to see all the competitions they have created,
+ * This page will be used by users to see all the competitions they have created,
  * as well as to create new competitions
  */
 
+
+import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
-import { DragDropContext } from 'react-dnd';
-import { browserHistory } from 'react-router';
-import HTML5Backend from 'react-dnd-html5-backend';
-import style from "./style.css";
+import lib from './common/lib.js';
 import Page from './Page.jsx';
+import Autocomplete from 'react-autocomplete';
+import { browserHistory } from 'react-router';
+import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
 import Box from './common/Box.jsx'
 import { selectCompetition } from './actions'
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
+// admin/competitions
 class PageCompetitionList extends React.Component {
 	constructor(props) {
     super(props)
@@ -50,8 +55,7 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    console.log(competition)
-    this.props.dispatch(selectCompetition(competition))
+    // this.props.dispatch(selectCompetition(competition))
     browserHistory.push('/admin/competition/' + competition.id)
   }
 
@@ -62,37 +66,31 @@ class PageCompetitionList extends React.Component {
   getYourCompetitionsTable () {
     const yourColumns = [
       { property: 'name',
-        header: { label: 'Name' }
+        header: { label: 'Name' },
+        cell: { formatters: [
+          (value, { rowData }) =>
+            <a onClick={() => this.browseCompetition(rowData)}>{value}</a>
+        ]},
       },
       { property: 'startdate',
         header: { label: 'Date' }
-      },
-      { property: 'Select',
-        header: { label: '' }
       }
     ]
 
-    // TODO; filter to only my competitions
-
-    const rows = this.state.competitions.map((row, id) => {
-      return Object.assign({id}, row, { Select: <button
-        className = {style.search}
-        onClick = {() => this.browseCompetition(row)}>Browse</button>})
-    })
-
     return <Table.Provider
-            className="pure-table pure-table-striped event-table"
-            columns = {yourColumns}>
-            <Table.Header />
-            <Table.Body
-              rows = {rows || []}
-              rowKey = "id"
-            />
-          </Table.Provider>
+        className="pure-table pure-table-striped event-table"
+        columns = {yourColumns}>
+        <Table.Header />
+        <Table.Body
+          rows = {this.state.competitions || []}
+          rowKey = "id"
+        />
+      </Table.Provider>
   }
 
   onCreateNewCompetition(){
-    window.location.href = "/editcompetition/0"
+    // Competition ID 0 creates new competition
+    browserHistory.push(`/editcompetition/0`)
   }
 
   render() {

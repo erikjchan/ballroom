@@ -22,6 +22,14 @@ html, body {
   background-color: #CFC7C5;
 }
 
+
+
+:global(a) {
+  color: (internal value);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 :global(.event-table) {
   width: 100%;
 }
