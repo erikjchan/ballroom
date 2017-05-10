@@ -314,7 +314,7 @@ app.get('/api/competitors/round/:rid', (req, res) => {
 app.get('/api/competitors/:id/:cid/events', (req, res) => {
     const id = parseInt(req.params.id)
     const cid = parseInt(req.params.cid)
-    query2.get_comfirmed_partnerships_by_competition_competitor(cid, id).then(value => {
+    query2.get_confirmed_partnerships_by_competition_competitor(cid, id).then(value => {
         log_debug(2)(value)
         res.send(value);
     });
@@ -659,7 +659,7 @@ app.get('/test/partnerships/competition/:cid/number/:number', (req, res) => {
 app.get('/test/partnerships/comfirmed/event/:eventid', (req, res) => {
     const eventid = parseInt(req.params.eventid)
     console.log("here")
-    query2.get_comfirmed_partnerships_by_event(eventid).then(function (value) {
+    query2.get_confirmed_partnerships_by_event(eventid).then(function (value) {
         log_debug(2)(value)
         res.send(value);
     });

@@ -30,6 +30,7 @@ class PageEventRegistration extends React.Component {
       competition_events: [],
       user_competition_events: [],
       competitors: [],
+      competitor: null,
       levels: [],
       level_styles: [],
       level_style_events: [],
@@ -62,14 +63,18 @@ class PageEventRegistration extends React.Component {
 
     componentDidMount() {
     
+        this.props.api.get(`/api/competitors/${this.competitor_id}`)
+          .then(json => {
+              this.setState({competitor: json})
+              console.log(this.state.competitor)
+          })
+          .catch(err => { alert(err); console.log(err)})
 
-
-/* Call the API for competition data */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    /* Call the API for competition data */
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
-        this.setState({ competition : json })
+          this.setState({ competition : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
@@ -77,26 +82,21 @@ class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
 
     /** Pretty similar to above! */
-    fetch(`/api/competition/${this.competition_id}/events`)
-      .then(response => response.json())
+    this.props.api.get(`/api/competition/${this.competition_id}/events`)
       .then(json => {
         this.setState({ competition_events : json})
       })
       .catch(err => alert(err))
 
-    fetch(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(json => {
-        console.log(json)
         for (let i = 0; i < json.length; i++) {
             json[i].title = json[i].dance;
             if (json[i].leadcompetitorid == this.competitor_id) {
-                json[i].leader = "You"
+                json[i].leader = this.state.competitor.firstname+" "+this.state.competitor.lastname
                 json[i].follower = json[i].followfirstname+" "+json[i].followlastname
             } else {
-                json[i].follower = "You"
+                json[i].follower = this.state.competitor.firstname+" "+this.state.competitor.lastname
                 json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
             }
         }
@@ -105,10 +105,7 @@ class PageEventRegistration extends React.Component {
       .catch(err => { alert(err); console.log(err)})
 
     /** Fetch levels in a competition */
-    fetch(`/api/competition/${this.competition_id}/levels`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competition/${this.competition_id}/levels`)
       .then(json => {
 
         this.setState({levels: json})
@@ -116,21 +113,15 @@ class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
 
     /** Fetch competitors for partner search */
-    fetch(`/api/competitors`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors`)
       .then(json => {
-        this.setState({competitor : json, competitors: json})
+        this.setState({competitors: json})
       })
       .catch(err => alert(err))
   }
 
   handleLevelChange = (levelid) => {
-    fetch(`/api/competition/${this.competition_id}/level/${levelid}/styles`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competition/${this.competition_id}/level/${levelid}/styles`)
       .then(json => {
         this.setState({level_styles: json})
       })
@@ -143,10 +134,7 @@ class PageEventRegistration extends React.Component {
   };
 
   handleStyleChange = (styleid) => {
-    fetch(`/api/competition/${this.competition_id}/level/${this.state.levelid}/style/${styleid}`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competition/${this.competition_id}/level/${this.state.levelid}/style/${styleid}`)
       .then(json => {
         this.setState({level_style_events: json})
       })
@@ -167,16 +155,16 @@ class PageEventRegistration extends React.Component {
       this.setState({isLeading});
   };
 
-  checkIfExists = (reg) => {
-      const { level, style, event } = this.state;
-      return (reg["level"] !== level) || (reg["style"] !== style) || (reg["title"] !== event);
+  checkIfNotExists = (reg) => {
+      const { eventid } = this.state;
+      return (reg["eventid"] != eventid);
   };
 
   registerEventHandler = () => {
       const { levelid, styleid, eventid, partner, isLeading, user_competition_events } = this.state;
       const button_enabled = (eventid != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
-          if (!user_competition_events.every(this.checkIfExists)) {
+          if (!user_competition_events.every(this.checkIfNotExists)) {
               alert('You are already registered for this event!');
               return false
           }
@@ -206,8 +194,9 @@ class PageEventRegistration extends React.Component {
       }
   };
 
-dropEventHandler = (rowData) => {
-        if (!confirm("Are you sure you want to delete this?")) {
+  dropEventHandler = (rowData) => {
+      const eventName = rowData.level + " " + rowData.style + " " + rowData.dance;
+        if (!confirm("Are you sure you want to drop " + eventName + "?")) {
             return false;
         }
         fetch("/api/delete_partnership", {
@@ -252,9 +241,8 @@ dropEventHandler = (rowData) => {
     };
 
     if (this.state.competitor) {
-      console.log(this.competitor_id)
-      var competitor = this.state.competitors[this.competitor_id-1];
-      var competitor_name = competitor.firstname + " " + competitor.lastname;
+      var competitor = this.state.competitor;
+      var competitor_name = competitor.firstname + " " + competitor.lastname    ;
     }
 
     return (
@@ -338,8 +326,7 @@ dropEventHandler = (rowData) => {
           onChange={(event, value) => {
             this.setState({ value, loading: true })
 
-            fetch(`/api/competitors`)
-              .then(response => response.json())
+            this.props.api.get(`/api/competitors`)
               .then(json => {
                   json = search_competitor(json, value)
                   this.setState({competitors: json, loading: false})
