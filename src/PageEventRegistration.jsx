@@ -194,7 +194,7 @@ export default class PageEventRegistration extends React.Component {
                       competitorid: leadcompetitorid,
                       amount: this.state.competition.regularprice,
                       online: false,
-                      paidwithaffiliation: false,
+                      paidwithaffiliation: true,
                     })
                 }).then((response) =>{
                     console.log(response)
@@ -209,7 +209,7 @@ export default class PageEventRegistration extends React.Component {
                         competitorid: followcompetitorid,
                         amount: this.state.competition.regularprice,
                         online: false,
-                        paidwithaffiliation: false,
+                        paidwithaffiliation: true,
                       })
                   }).then((response) =>{
                     console.log(response)
