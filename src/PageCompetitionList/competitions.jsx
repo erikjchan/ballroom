@@ -3,7 +3,6 @@ import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import * as dnd from 'reactabular-dnd';
 import * as easy from 'reactabular-easy';
-import VisibilityToggles from 'react-visibility-toggles';
 import * as resizable from 'reactabular-resizable';
 import * as search from 'searchtabular';
 import HTML5Backend from 'react-dnd-html5-backend';

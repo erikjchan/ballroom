@@ -170,9 +170,7 @@ export default class PageCompetition extends React.Component {
 
     return (
       <Page ref="page" {...this.props}>
-          <div className={styles.titles}>
-            <p>{comp_name}</p>
-          </div>
+          <h1>{comp_name}</h1>
           <div className={styles.infoTables}>
             <div className={styles.infoBoxLeft}>
               <Box title={

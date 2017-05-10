@@ -344,8 +344,8 @@ export default class RunCompetition extends React.Component {
             </ul>
 
             <span className="right_align">
-              <button onClick={this.prevRound.bind(this)}> Previous Round </button>
-              <button onClick={this.nextRound.bind(this)}> Next Round </button>
+              <button className={style.roundBtns} onClick={this.nextRound.bind(this)}> Next Round </button>
+              <button className={style.roundBtns} onClick={this.prevRound.bind(this)}> Previous Round </button>
             </span>
           </div>} />
 

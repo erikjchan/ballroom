@@ -83,10 +83,12 @@ export default class CompetitorList extends React.Component {
       		    formatters: [
                     (value, { rowData }) => (
                         <div>
-                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
-                            <input type="button"
-                                   value="Edit/See More" /></Link>
-      			        </div>
+                            <button
+                              className={style.editBtns}
+                              onClick={()=>{ browserHistory.push(`/competition/${1}/seecompetitor/${rowData.id}`) }}>
+                                Edit/See More
+                            </button>
+      			            </div>
       		        )
       		    ]
       	    },
@@ -176,9 +178,11 @@ export default class CompetitorList extends React.Component {
       		         formatters: [
                          (value, { rowData }) => (
                           <div>
-                            <Link to={`/competition/${1}/seecompetitor/${rowData.id}`}>
-                            <input type="button"
-                                   value="Edit/See More" /></Link>
+                            <button
+                              className={style.editBtns}
+                              onClick={()=>{ browserHistory.push(`/competition/${1}/seecompetitor/${rowData.id}`) }}>
+                                Edit/See More
+                            </button>
       			               </div>
       		             )
       		         ]
