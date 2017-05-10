@@ -55,7 +55,7 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    // this.props.dispatch(selectCompetition(competition))
+    this.props.dispatch(selectCompetition(competition))
     browserHistory.push('/admin/competition/' + competition.id)
   }
 

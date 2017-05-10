@@ -63,37 +63,25 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => alert(err))
+
 
     /**  Call the API for event schedule  */
-    this.props.api.get(`/api/competition/${this.competition_id}/events`)
-      .then(json => {
-        this.setState({ competition_events : json})
-      })
-      .catch(err => alert(err))
+      .then(() => this.props.api.get(`/api/competition/${this.competition_id}/events`))
+      .then(json => this.setState({ competition_events : json}))
 
     /**  Call the API for round schedule  */
-    this.props.api.get(`/api/competition/${this.competition_id}/rounds`)
-      .then(json => {
-        this.setState({ competition_rounds : json})
-      })
-      .catch(err => alert(err))
+      .then(() => this.props.api.get(`/api/competition/${this.competition_id}/rounds`))
+      .then(json => this.setState({ competition_rounds : json}))
 
 
-    /** Get competitors  
-    */
-    this.props.api.get(`/api/competition/${this.competition_id}/competitors`)
-      .then(json => {
-        this.setState({competitors: json})
-      })
-      .catch(err => alert(err))
+    /** Get competitors  */
+      .then(() => this.props.api.get(`/api/competition/${this.competition_id}/competitors`))
+      .then(json => this.setState({competitors: json}))
 
     /** Get partnerships */
-    this.props.api.get(`/api/competition/${this.competition_id}/competitors_styles`)
+      .then(() => this.props.api.get(`/api/competition/${this.competition_id}/competitors_styles`))
       .then(json => {
-
         this.setState({style_statistics: json})
-
         // /** Filter registered competitors */
         // var all_competitors = this.state.partnerships.map(item => {
         //   return item.lead_competitor_id;
@@ -113,21 +101,15 @@ export default class PageCompetitionHomeAdmin extends React.Component {
         // });
         // this.setState({registered_competitors: all_competitors})
       })
-      .catch(err => alert(err))
+
 
     /** Get officials */
-    this.props.api.get(`/api/competition/${this.competition_id}/officials`)
-      .then(json => {
-        this.setState({officials: json})
-      })
-      .catch(err => alert(err))
+      .then(() => this.props.api.get(`/api/competition/${this.competition_id}/officials`))
+      .then(json => this.setState({officials: json}))
 
     /** Get organizations */
-    this.props.api.get(`/api/competition/${this.competition_id}/affiliations`)
-      .then(json => {
-
-        this.setState({organizations: json})
-      })
+      .then(() => this.props.api.get(`/api/competition/${this.competition_id}/affiliations`))
+      .then(json => {this.setState({organizations: json})})
       .catch(err => alert(err))
   }
 
