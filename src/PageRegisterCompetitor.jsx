@@ -128,7 +128,6 @@ class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
     this.setState({
         levelid: levelid,
-        styleid: null,
         eventid: null 
     });
   };
