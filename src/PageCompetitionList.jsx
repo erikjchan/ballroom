@@ -41,7 +41,7 @@ class PageCompetitionList extends React.Component {
           this.competitions[i].regularprice = "$" + (this.competitions[i].regularprice || 0);
           this.competitions[i].lateprice = "$" + (this.competitions[i].lateprice || 0);
           var date = new Date(this.competitions[i].startdate);
-          this.competitions[i].startdate = date.toUTCString();
+          this.competitions[i].startdate = date.toDateString();
         }
         // update the state of our component
         this.setState({ competitions : json })

@@ -402,11 +402,11 @@ const get_judge = id => {
 }
 
 const get_affiliations = () => {
-    return pool.query('SELECT * FROM affiliation', []);
+    return pool.query('SELECT * FROM affiliation');
 }
 
 const get_competitions = () => {
-    return pool.query('SELECT * FROM competition', []);
+    return pool.query('SELECT * FROM competition ORDER BY startdate');
 }
 
 const get_your_competitions = (cid) => {
@@ -415,7 +415,7 @@ const get_your_competitions = (cid) => {
                                 (SELECT * FROM paymentrecord
                                  WHERE competition.id = competitionid
                                        AND
-                                       competitorid = ${cid});`);
+                                       competitorid = ${cid}) ORDER BY startdate;`);
 }
 
 const get_other_competitions = (cid) => {
@@ -424,7 +424,7 @@ const get_other_competitions = (cid) => {
                                 (SELECT * FROM paymentrecord
                                  WHERE competition.id = competitionid
                                        AND
-                                       competitorid = ${cid});`);
+                                       competitorid = ${cid}) ORDER BY startdate;`);
 }
 
 
