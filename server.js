@@ -103,6 +103,30 @@ app.post('/api/create_judge', (req, res) => {
         });
 });
 
+app.post('/api/clear_organization_owed', (req, res) => {
+    const cid = req.body.competitionid
+    const aid = req.body.affiliationid
+    query2.clear_organization_owed(cid, aid).then(function (value) {
+            console.log(value);
+            res.send(value);
+        },
+        function (err){
+            res.send(err);
+        });
+});
+
+app.get('/api/get_organization_owed/:cid/:aid', (req, res) => {
+    const cid = req.params.cid
+    const aid = req.params.aid
+    query2.get_organization_owed(cid, aid).then(function (value) {
+            console.log(value);
+            res.send(value[0]);
+        },
+        function (err){
+            res.send(err);
+        });
+});
+
 app.post('/api/delete_judge', (req, res) => {
     const id = req.body.id
     query2.delete_judge(id).then(function (value) {
