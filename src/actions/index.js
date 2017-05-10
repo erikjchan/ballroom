@@ -22,6 +22,7 @@ export const login = () => {
   return dispatch => {
     lock.show((err, profile, token, access_token) => {
       profile.access_token = access_token
+      profile.competitor_id = profile.app_metadata.competitor_id
       if (err) { console.error(err)
         dispatch(lockError(err))
         return

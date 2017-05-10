@@ -27,7 +27,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       keyword: "",
       style_statistics: [],
       organizations: [],
-      judges: [],
+      officials: [],
       expanded: null,
       boxes: {},
     }
@@ -115,10 +115,10 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       })
       .catch(err => alert(err))
 
-    /** Get judges */
+    /** Get officials */
     this.props.api.get(`/api/competition/${this.competition_id}/judges`)
       .then(json => {
-        this.setState({judges: json})
+        this.setState({officials: json})
       })
       .catch(err => alert(err))
 
@@ -181,7 +181,7 @@ populate_expanded(box_name, lines_react, link){
 
     var comp_name = this.state.competition.name;
 
-    dict['Competiton Info'] = [
+    dict['Competition Info'] = [
                       <p key={0}><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
                       <p key={1}><b>Location:</b> {this.state.competition.locationname}</p>,
                       <p key={2}><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
@@ -189,7 +189,7 @@ populate_expanded(box_name, lines_react, link){
                       <p key={4}><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
                       <p key={5}><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
                     ]
-    links["Competiton Info"] = "/editcompetition/" + this.competition_id;
+    links["Competition Info"] = "/editcompetition/" + this.competition_id;
 /*
     var comp_info = (<div className={styles.lines}>
                       <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
@@ -299,23 +299,15 @@ populate_expanded(box_name, lines_react, link){
                           })
     links["Events"] = "/competition/"+this.competition_id+"/editevents";
 
-    var total_judges = this.state.judges.length;
-    /*var judges_names = (<div className={styles.lines}>
-                          <p><b>Total Judges:</b> {total_judges}</p>
-                          {this.state.judges.map(judge => {
-                            var name = judge['Last Name']+" "+judge['First Name']
-                            var email = "mailto:"+judge['Email address'];
-                            return (<p key={name}>{name} (<a href={email}>{judge['Email address']}</a>) </p>)
-                          })}
-                        </div>)*/
+    var total_officials = this.state.officials.length;
 
-    dict['Judges'] = [<p><b>Total Judges:</b> {total_judges}</p>].concat(
-                          this.state.judges.map(judge => {
-                            var name = judge.firstname+" "+judge.lastname
-                            var email = "mailto:"+judge.email;
-                            return (<p key={name}>{name} (<a href={email}>{judge.email}</a>) </p>)
+    dict['Officials'] = [<p><b>Total Officials:</b> {total_officials}</p>].concat(
+                          this.state.officials.map(official => {
+                            var name = official.firstname + " " + official.lastname
+                            var email = "mailto:" + official.email;
+                            return (<p key={name}>{name} (<a href={email}>{official.email}</a>) </p>)
                           }))
-    links["Judges"] = "/editofficial/" + this.competition_id;
+    links["Officials"] = "/editofficials/" + this.competition_id;
 
     var total_orgs = this.state.organizations.length;
     /*var org_names = (<div className={styles.lines}>
@@ -371,8 +363,8 @@ populate_expanded(box_name, lines_react, link){
       <Page ref="page" {...this.props}>
           <h1>{comp_name}</h1>
           <div className={styles.infoTable}>
-             {this.populate("Competiton Info", dict["Competiton Info"], num, links["Competiton Info"])}
-              {this.populate("Judges", dict["Judges"], num, links["Judges"])}
+             {this.populate("Competition Info", dict["Competition Info"], num, links["Competition Info"])}
+              {this.populate("Officials", dict["Officials"], num, links["Officials"])}
           <div className={styles.separator}></div>
             {this.populate("Events", dict["Events"], num, links["Events"])}
             {this.populate("Schedule", dict["Schedule"], num, links["Schedule"])}

@@ -45,12 +45,69 @@ const check_competitor_email_exist = (email) => {
 }
 
 // INSERT
+
 const create_competitor = (firstname, lastname, email, mailingaddress, 
-    affiliationid) => {
-    return pool.query_wrapped(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress,
-                                                  affiliationid, hasregistered)
-                          VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
-                                  ${affiliationid}, ${false});`);
+    affiliationname) => {
+    return new Promise(function(resolve, reject) {
+      pool.connect(function(err, client, done) {
+        if (err) {
+               console.error('error getting client', err);
+               reject(err);
+        } else {
+          client.query('BEGIN', (err) => {
+            if (err) {
+              rollback(client, done);
+              return reject(err);
+            }
+            client.query(SQL`SELECT id from affiliation WHERE name = ${affiliationname}`, (err, result) => {
+              if (err) {
+                rollback(client, done);
+                return reject(err);
+              }
+              if (result.rowCount == 1) {
+                client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
+                  VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${result.rows[0].id}) RETURNING id`, (err, result) => {
+                    if (err) {
+                      rollback(client, done);
+                      return reject(err);
+                    }
+                    client.query('COMMIT', (err) => {
+                      if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                      }
+                      done(null);
+                      resolve(JSON.stringify(result.rows[0]));
+                    });
+                });  
+              } else {
+                client.query(SQL`INSERT INTO affiliation(name) VALUES(${affiliationname}) RETURNING id;`, (err, result) => {
+                  if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                  }
+                  client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
+                    VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${result.rows[0].id}) RETURNING id`, (err, result) => {
+                      if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                      }
+                      client.query('COMMIT', (err) => {
+                        if (err) {
+                          rollback(client, done);
+                          return reject(err);
+                        }
+                        done(null);
+                        resolve(JSON.stringify(result.rows[0]));
+                      });
+                  });
+                })  
+              }
+            });
+          });
+        };
+      });
+    });
 }
 
 // UPDATE
@@ -127,9 +184,11 @@ const get_partnerships_by_competitor = (competitorid) => {
                           WHERE leadcompetitorid = ${competitorid} OR followcompetitorid = ${competitorid};`);
 }
 
-const get_comfirmed_partnerships_by_competition_competitor = (competitionid, competitorid) => {
-    return pool.query(SQL`SELECT partnership.*, event.dance as dance,
-                                style.name as style, level.name as level,
+const get_confirmed_partnerships_by_competition_competitor = (competitionid, competitorid) => {
+    return pool.query(SQL`SELECT partnership.*, 
+                                event.dance as dance, event.id as eventid,
+                                style.name as style,
+                                level.name as level,
                                 competitor1.firstname as leadfirstname, competitor1.lastname as leadlastname, 
                                 competitor2.firstname as followfirstname, competitor2.lastname as followlastname  
                           FROM partnership
@@ -166,7 +225,7 @@ const get_partnerships_by_event = eventid =>{
                           WHERE eventid = ${eventid};`);
 }
 
-const get_comfirmed_partnerships_by_event = eventid =>{
+const get_confirmed_partnerships_by_event = eventid =>{
     return pool.query(SQL`SELECT * FROM partnership 
                           WHERE eventid = ${eventid} AND leadconfirmed = ${true} AND followconfirmed = ${true};`);
 }
@@ -328,9 +387,9 @@ module.exports = {
     get_partnership_by_number,
     get_partnerships_by_competition_competitor,
     get_partnerships_by_competitor,
-    get_comfirmed_partnerships_by_competition_competitor,
+    get_confirmed_partnerships_by_competition_competitor,
     get_partnerships_by_event,
-    get_comfirmed_partnerships_by_event,
+    get_confirmed_partnerships_by_event,
     create_partnership,
     update_partnership,
     delete_partnership,

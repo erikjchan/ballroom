@@ -117,24 +117,6 @@ export default class PageEditCompetition extends React.Component {
         </label>
     </div>
     <div className = {styles.form_row}>
-        <label >
-            Early Price:<br />
-            <input className = {styles.price} type="number" name="earlyprice" value = {this.state.competition.earlyprice}
-                 onChange={this.onChangeHandler.bind(this)}/>
-        </label>
-
-        <label>
-            Regular Price:<br />
-            <input className = {styles.price} type="number" name="regularprice" value = {this.state.competition.regularprice}
-                 onChange={this.onChangeHandler.bind(this)}/>
-        </label>
-        <label>
-            Late Price:<br />
-            <input  className = {styles.price} type="number" name="lateprice" value = {this.state.competition.lateprice}
-                 onChange={this.onChangeHandler.bind(this)}/>
-        </label>
-    </div>
-    <div className = {styles.form_row}>
         <label>
             Start Date:<br />
             <input type="date" name="startdate" value = {this.formatDateString(this.state.competition.startdate)}
@@ -152,6 +134,12 @@ export default class PageEditCompetition extends React.Component {
             <input type="date" name="regstartdate"  value = {this.formatDateString(this.state.competition.regstartdate)}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
+        <label >
+            Early Price:<br />
+            $ &nbsp;
+            <input className = {styles.price} type="number" name="earlyprice" value = {this.state.competition.earlyprice}
+                 onChange={this.onChangeHandler.bind(this)}/>
+        </label>
         </div>
     <div className = {styles.form_row}>
         <label>
@@ -159,12 +147,25 @@ export default class PageEditCompetition extends React.Component {
             <input type="date" name="earlyregdeadline" value = {this.formatDateString(this.state.competition.earlyregdeadline)}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
-    </div>
+        <label>
+            Regular Price:<br />
+            $ &nbsp;
+            <input className = {styles.price} type="number" name="regularprice" value = {this.state.competition.regularprice}
+                 onChange={this.onChangeHandler.bind(this)}/>
+        </label>
+        </div>
     <div className = {styles.form_row}>
         <label>
             Start Late Registration:<br />
             <input type="date" name="regularregdeadline" value = {this.formatDateString(this.state.competition.regularregdeadline)}
                  onChange={this.onChangeHandler.bind(this)}/>
+        </label>
+        <label>
+            Late Price:<br />
+            $ &nbsp;
+            <input  className = {styles.price} type="number" name="lateprice" value = {this.state.competition.lateprice}
+                 onChange={this.onChangeHandler.bind(this)}/>
+                 
         </label>
     </div>
     <div className = {styles.form_row}>
@@ -226,7 +227,7 @@ export default class PageEditCompetition extends React.Component {
           </div>
               {/*<div className={styles.infoBoxEditCompetition}>*/}
             <div className={styles.infoBoxExpanded}>
-              <Box admin={true} title={<div className={styles.titleContainers}><span>Competiton Info</span> 
+              <Box admin={true} title={<div className={styles.titleContainers}><span>Competition Info</span> 
                              
                           </div>} 
                    content={comp_info}/>

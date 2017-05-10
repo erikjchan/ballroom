@@ -31,7 +31,9 @@ export default class API {
     })
     .then(response => {
       if (response.ok) return response.json()
-      else throw new Error('POST RESPONSE not ok')
+      else {
+        console.log(response)
+        throw new Error('POST RESPONSE not ok')}
     })
     /** Something went wrong */
     .catch(err => { alert(err); console.log(err)})

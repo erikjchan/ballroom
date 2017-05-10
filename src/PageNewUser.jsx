@@ -40,15 +40,20 @@ export default class PageNewUser extends React.Component {
       return console.log('INVALID')
     }
 
-    const obj = Object.assign({ hasregistered:false, affiliationname }, 
-        this.state.competitor, 
+    const obj = Object.assign({ hasregistered:false, affiliationname },
+        this.state.competitor,
         { profile: this.props.profile})
-    this.props.api.post('/api/create_competitor', obj)
-      .then(competitor => {
-        if (!competitor) return
-        this.props.profile.app_metadata.competitor_id = competitor.id 
+    this.props.api.post('/api/create_user', obj)
+      .then(response => {
+        console.log(response)
+        if (response.severity) throw new Error(response)
+        const {id} = response
+        this.props.profile.app_metadata.competitor_id = id
+        this.props.profile.competitor_id = id
+        localStorage.setItem('profile', JSON.stringify(this.props.profile))
         browserHistory.push('/')
       })
+      .catch(err => console.error(err.detail || err.message.detail || err.message))
   }
 
   /************************ Organization autosuggestion ***********************/
