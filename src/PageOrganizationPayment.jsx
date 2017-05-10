@@ -18,6 +18,7 @@ import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 import connection from './common/connection'
+import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 
 // organizationpayment/:competition_id/:organization_id
 class PageOrganizationPayment extends React.Component {
@@ -28,7 +29,8 @@ class PageOrganizationPayment extends React.Component {
       competition: null,
       organization: null,
       organizations: [],
-      selectedOrg: "",
+      searched_organizations: [],
+      keyword: "",
       selectedOrgID: "-1"
     }
 
@@ -60,7 +62,19 @@ class PageOrganizationPayment extends React.Component {
       .then(response => response.json()) // parse the result
       .then(json => { 
           // update the state of our component
-        this.setState({ organization : json, organizations: json })
+        this.setState({organizations: json, searched_organizations:json})
+      })
+      // todo; display a nice (sorry, there's no connection!) error
+      // and setup a timer to retry. Fingers crossed, hopefully the 
+      // connection comes back
+      .catch(err => { alert(err); console.log(err)})
+
+            /* Call the API for organization info */
+    fetch(`/api/affiliations/`+this.organization_id)
+      .then(response => response.json()) // parse the result
+      .then(json => { 
+          // update the state of our component
+        this.setState({ organization : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
@@ -71,9 +85,10 @@ class PageOrganizationPayment extends React.Component {
  render() {
      if (this.state.organization && this.state.competition){
          const search_org = (list, query) => {
-             if (query === '') return []
+             if (query === '') return list
+             else
              return list.filter(org => 
-                 {return org.name.toLowerCase().indexOf(query) != -1;}
+                 {return org.name.toLowerCase().indexOf(query.toLowerCase()) != -1;}
              )
          }
          const myMenuStyle = {
@@ -86,32 +101,33 @@ class PageOrganizationPayment extends React.Component {
              maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
              zIndex: 200
          };
-        var comp_name = this.state.competition.Name;
-        var organization = this.state.organization[this.organization_id];
-        var organization_name = organization.name;
-        var organization_owed = organization.amount_owed;
+        var comp_name = this.state.competition.name;
+        var organization_name = this.state.organization.name;
+        var organization_owed = this.state.organization.amountowed;
         var comp_info = (
-            <form className = {styles.long_form}>
-                <div>
-
-                <h3>Search for another organization:</h3>
+            <div className={styles.lines}>
+                <h2>Search for Another Organization:</h2>
                 <div className = {styles.label}>
                     <Autocomplete
                       menuStyle={myMenuStyle}
-                      inputProps={{name: "US state", id: "states-autocomplete"}}
                       ref="autocomplete"
-                      value={this.state.selectedOrg}
-                      items={this.state.organizations}
-                      getItemValue={(item) => item.id}
+                      value={this.state.value}
+                      items={this.state.searched_organizations}
+                      getItemValue={(item) => item.name}
                       onSelect={(value, item) => {
                           // set the menu to only the selected item
-                        this.setState({ selectedOrg: item.name, selectedOrgID: item.id })
+                        this.setState({ value, searched_organizations: [ item ], selectedOrgID: item.id})
+                        this.setState({keyword: value})
                         // or you could reset it to a default list again
                         // this.setState({ unitedStates: getStates() })
                       }}
                       onChange={(event, value) => { 
-                        var json = search_org(this.state.organization, value)
-                        this.setState({organizations: json, selectedOrg: value, selectedOrgID: "-1" })
+                        console.log(event)
+                        console.log(value)
+                        this.setState({ value, loading: true })
+                        this.setState({ keyword: value})
+                        var json = search_org(this.state.organizations, value)
+                        this.setState({searched_organizations: json, loading: false, selectedOrgID: "-1" })
                       }}
                       renderItem={(item, isHighlighted) => (
                         <div
@@ -121,9 +137,10 @@ class PageOrganizationPayment extends React.Component {
                       )}
                     />
                     <button onClick={(event) => 
-                        {
+                        {   
+                            console.log(this.state)
                             if (this.state.selectedOrgID != "-1") {
-                               this.props.router.push("/organizationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
+                               window.location.href = ("/organizationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
                             } else {
                                 event.preventDefault();
                                 alert("Please select an organization first!");
@@ -133,36 +150,23 @@ class PageOrganizationPayment extends React.Component {
                         Go To
                     </button>
                 </div>
-                
+                <br/>
+                <hr/>
                 <h2>Current Organization Information:</h2>
-                <div className = {styles.form_row}>
-                    <label> Competition Name: {comp_name} </label>            
-                </div>
-                
-                <div className = {styles.form_row}>
-                     <label> Organization Number: {this.organization_id} </label>
-                </div>
-                     
-                <div className = {styles.form_row}>
-                    <label> Organization Name: {organization_name} </label>            
-                </div>
-
-
-                <div className = {styles.form_row}>
-                    <label> Amount Owed: {organization_owed} </label>            
-                </div>
-                <div className = {styles.form_row}>
-                    <label>
-                        Enter New Payment Amount: 
-                        <input type="number" name="payment" />
-                    </label>
-                </div>               
+                <p><b>Organization Number:</b> {this.organization_id} </p>   
+                <p><b>Organization Name:</b> {organization_name} </p>            
+                <p><b>Amount Owed:</b> $ {organization_owed} </p>          
+                <h3>Mark as Paid?</h3>
+                <span>
+                    <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
+                        <RadioButton label='Paid' value='true'/>
+                        <RadioButton label='Unpaid' value='false'/>
+                    </RadioGroup>
+                </span>              
                  <div className = {styles.form_row}>
                     <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
                 </div>
-               
-            </div>
-        </form>)
+        </div>)
 
     return (
       <Page ref="page" {...this.props}>

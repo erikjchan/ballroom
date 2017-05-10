@@ -220,6 +220,13 @@ app.get('/api/competition/:cid/affiliations', (req, res) => {
     });
 })
 
+app.get('/api/affiliations/:id', (req, res) => {
+    query2.get_affiliation(req.params.id).then(value => {
+        log_debug(2)(value)
+        res.send(value[0]);
+    });
+})
+
 app.get('/api/competition/:cid/competitors', (req, res) => {
     query.get_competitors_for_competition(req.params.cid).then(value => {
         log_debug(2)(value)

@@ -374,6 +374,12 @@ const create_empty_competition = () =>{
     return pool.query(SQL`INSERT INTO competition DEFAULT VALUES RETURNING id;`);
 }
 
+const get_affiliation = (id) => {
+    return pool.query(SQL`SELECT * FROM affiliation 
+                          WHERE id = ${id}`);
+}
+
+
 module.exports = {
     get_all_competitors,
     get_competitor_by_id,
@@ -403,5 +409,6 @@ module.exports = {
     get_events_for_competition_level_style,
     create_judge,
     delete_judge,
-    create_empty_competition
+    create_empty_competition,
+    get_affiliation
 }
