@@ -33,7 +33,7 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    this.props.api.get(`/api/competitions/1`)
+    this.props.api.get(`/api/competitions/${this.props.profile.competitor_id}`)
       .then(json => { 
         console.log(json);
         this.competitions = json;
