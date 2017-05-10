@@ -137,6 +137,7 @@ Start
   right: 5vw;
   top: 15px;
   display: inline-block;
+  overflow: auto;
 }
 
 #buttonsContainer > div {
@@ -148,10 +149,19 @@ Start
   padding: 10px;
   background-color: #365D82;
   color: white;
+  height:100%;
+  overflow: auto;
 }
 
 #createContainer {
   float: right;
+  display:inline-block;
+  /*overflow: auto ;*/
+  height: 100%;
+  height:100%;
+  vertical-align: middle;
+  text-align: center;
+  /*box-shadow: 0px 4px 10px #444444;*/
 }
 
 #createContainer > div {
@@ -162,10 +172,32 @@ Start
   padding: 10px;
   background-color: #365D82;
   color: white;
+    vertical-align: middle;
+  text-align: center;
+  /*box-shadow: 0px 3px #333333;*/
+  -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+-moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.clear {
+    clear:both;
+    line-height:0;
+}
+
+.clear::after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
 }
 
 #saveChanges {
   cursor: pointer;
+  height:50px;
+  display:table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 #cancelChanges {
@@ -441,8 +473,8 @@ End
 
 .infoBoxExpanded{
 	width: 100%;
-	height: 100%;
-	padding: 0px;
+  height: 100%;
+  overflow:auto;
 }
 
 .infoBoxLeft{
@@ -634,7 +666,8 @@ form{
 }
 
 .long_form{
-  height:100vh;
+  height:100%;
+  padding: 20px;
 }
 .form_row{
   /*margin-top:10px;*/
@@ -658,7 +691,6 @@ input[type="date"]{
 }
 label{
   font-size: 20px;
-  /*margin:10px;*/
   float:left;
   display:inline-block;
 }
@@ -724,6 +756,11 @@ label{
 
 
 
+/****************************************** Edit Officials *****************************************/
+.addLabel{
+  width:30%;
+  margin: 10px;
+}
 
 
 /****************************************** Global *****************************************/
