@@ -29,7 +29,7 @@ class EditEvents extends React.Component {
 
     const box_content = (
       <div id={style.scheduleWrapper}>
-          <EventTable ref="ddTable" />
+          <EventTable ref="ddTable" {...this.props} competition_id={this.props.params.competition_id} />
       </div>
     )
 
@@ -40,7 +40,7 @@ class EditEvents extends React.Component {
           <div id={style.buttonsContainer}>
             <div id={style.saveChanges} onClick={this.saveChanges.bind(this)}>Save Changes</div>
             <div id={style.cancelChanges} onClick={
-              () => this.confirmGoToUrl(`/competition/${this.props.selected.competition.id}/editlevelsandstyles`, "Are you sure you want to leave this page without saving?")
+              () => this.confirmGoToUrl(`/competition/${this.props.params.competition_id}/editlevelsandstyles`, "Are you sure you want to leave this page without saving?")
             }>Define Levels & Styles</div>
           </div>
         </div>
@@ -54,8 +54,7 @@ class EditEvents extends React.Component {
    */
   saveChanges(message) {
     if (confirm("Are you sure you want to save changes?")) {
-      const cid = this.props.selected.competition.id
-
+      const cid = this.props.params.competition_id
       const send_object = {
         cid: cid, 
         rows: this.refs.ddTable.state.rows

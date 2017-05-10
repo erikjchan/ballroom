@@ -21,6 +21,7 @@ export default class API {
   }
 
   post(route, obj) {
+    console.log(route, JSON.stringify(obj))
     return fetch(route, {
       method: 'POST',
       headers: {

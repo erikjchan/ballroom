@@ -85,7 +85,7 @@ const create_rounds_for_events_for_competition = cid => {
                                 return reject(err);
                             }
                             done(null);
-                            resolve("{finished: true}");
+                            resolve('{"finished": true}');
                         });
                       });
                     }
@@ -173,7 +173,7 @@ const update_events_for_competition = data => {
                            return reject(err);
                        }
                        done(null);
-                       resolve("{finished: true}");
+                       resolve('{"finished": true}');
                    });
                });
            }
@@ -278,7 +278,7 @@ const update_levels_and_styles_for_competition = data => {
                             return reject(err);
                         }
                         done(null);
-                        resolve("{finished: true}");
+                        resolve('{"finished": true}');
                     });
                 });
             }
@@ -375,7 +375,7 @@ const update_rounds_for_competition = data => {
                            return reject(err);
                        }
                        done(null);
-                       resolve("{finished: true}");
+                       resolve('{"finished": true}');
                    });
                });
            }
