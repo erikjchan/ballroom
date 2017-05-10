@@ -23,9 +23,10 @@ class PageSeeCompetitor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        competitor: lib.flat_loading_proxy,
         competitor_events: [],
-        paid: "False"
+        competitor: {},
+        competitor_paymentrecord: {},
+        paid: ''
     }
 
     try {this.competition_id = parseInt(this.props.params.competition_id)}
@@ -35,40 +36,46 @@ class PageSeeCompetitor extends React.Component {
   }
 
     componentDidMount() {
-    /* Call the API for competition info */
-    this.props.api.get(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
-      .then(json => {
-          // update the state of our component
-          if (json.pay_w_org)
-              json.pay_w_org = "True"
-          else
-              json.pay_w_org = "False"
+    /* Call the API for competitor info */
+        this.props.api.get(`/api/competitors/${this.competitor_id}`)
+          .then(json => {
+              this.setState({competitor: json})
+              console.log(this.state.competitor)
+          })
+          .catch(err => { alert(err); console.log(err)})
 
-          if (json.amount_owed == 0) {
-              this.setState({ paid: "True" });
-          }
-        this.setState({ competitor : json })
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the
-      // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+        this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
+          .then(json => {
+
+              this.payment = json;
+              var timestamp = new Date(this.payment.timestamp);
+              this.payment.timestamp = timestamp.toUTCString();
+              this.state.paid = (this.payment.amount == 0) ? "true" : "false"
+
+              // update the state of our component
+              this.setState({competitor_paymentrecord: json})
+              console.log(this.state.competitor_paymentrecord)
+          })
+          .catch(err => { alert(err); console.log(err)})
 
     /**  Call the API for events that the competitor is in */
-    this.props.api.get(`/api/competitors/${0}/events`)
-      .then(json => {
-        for (let i = 0; i < json.length; i++) {
-            if (json[i].leading) {
-                json[i].leader = this.state.competitor.name
-                json[i].follower = json[i].partner
-            } else {
-                json[i].leader = json[i].partner
-                json[i].follower = this.state.competitor.name
-            }
-        }
-        this.setState({competitor_events: json})
-      })
-      .catch(err => { alert(err); console.log(err)})
+        /**  Call the API for events that the competitor is in */
+        this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
+          .then(json => {
+              console.log(json)
+              for (let i = 0; i < json.length; i++) {
+                  json[i].title = json[i].dance;
+                  if (json[i].leadcompetitorid == this.competitor_id) {
+                      json[i].leader = this.state.competitor.firstname+" "+this.state.competitor.lastname
+                      json[i].follower = json[i].followfirstname+" "+json[i].followlastname
+                  } else {
+                      json[i].follower = this.state.competitor.firstname+" "+this.state.competitor.lastname
+                      json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
+                  }
+              }
+              this.setState({competitor_events: json})
+          })
+          .catch(err => { alert(err); console.log(err)})
   }
 
   handleChange (name, value) {
@@ -79,30 +86,48 @@ class PageSeeCompetitor extends React.Component {
     this.setState({paid: event});
   };
 
-  saveChanges () { lib.post('/api/post/competitor', this.state) } // todo
+  saveChanges () { 
+      const totalAmount = this.state.paid == "true" ? 0 : this.state.competitor_paymentrecord.amount
 
+      const send_object = {
+          competitionid: this.props.selected.competition.id,
+          competitorid: this.competitor_id,
+          amount: totalAmount,
+          online: false,
+          paidwithaffiliation: this.state.competitor_paymentrecord.paidwithaffiliation
+      }
+
+      console.log(send_object);
+
+      /** Post updates */
+      this.props.api.post("/api/payment_records/update", send_object)
+
+      window.location.reload();
+  } // todo
+      
 
   render() {
     return (
 
      <Page ref="page" {...this.props}>
-      <Box title={"Competitor Info"}
+      <Box title={"Competitor Info: "+this.state.competitor.firstname+" "+this.state.competitor.lastname}
           admin={true}
           content={
             <div className={style.lines}>
             <br />
             <div className={styles.lines}>
-                    <p><b>Name:</b> {this.state.competitor.name}</p>
-                    <p><b>Email:</b> {this.state.competitor.email}</p>
-                    <p><b>Organization:</b> {this.state.competitor.organization_name}</p>
-                    <p><b>Number:</b> {this.state.competitor.lead_number}</p>
-                    <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
-                    <p><b>Pay with Organization:</b> {this.state.competitor.pay_w_org} </p>
+                    <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname} </p>
+                    <p><b>Email:</b> {this.state.competitor.email} </p>
+                    <p><b>Organization:</b> {this.state.competitor.affiliationname} </p>
+                    <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number} </p>
+                    <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp} </p>
+                    <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount} </p>
+                    <p><b>Pay with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                     <h3>Mark as Paid?</h3>
                         <span>
                             <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
-                             <RadioButton label='Paid' value='True'/>
-                             <RadioButton label='Unpaid' value='False'/>
+                             <RadioButton label='Paid' value='true'/>
+                             <RadioButton label='Unpaid' value='false'/>
                             </RadioGroup>
                         </span>
                     <br /><br />
@@ -115,7 +140,7 @@ class PageSeeCompetitor extends React.Component {
             />
             <div className = {styles.comp_containers}>
             <div className = {styles.addeditBtns}>
-                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/1/regcompetitor/1') }}>
+                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/' + this.competitor_id + '/regcompetitor/' + this.competition_id) }}>
                     Add/Edit Event
                 </button>
             </div>
