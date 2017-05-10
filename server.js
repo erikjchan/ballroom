@@ -175,8 +175,11 @@ app.post('/api/competition/updateRounds', (req, res) => {
 
 app.post('/api/competition/updateCompetitionInfo', (req, res) => {
     query.update_competition_info(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
+        console.log(value)
+        res.send(value);
+    }, err =>{
+        console.log(err);
+        res.send(err);
     });
 });
 
