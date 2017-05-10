@@ -19,7 +19,7 @@ export default class PageNewUser extends React.Component {
 
   componentDidMount() {
       /** Get organizations */
-      this.props.api.get(`/api/organizations`)
+      this.props.api.get(`/api/affiliations`)
         .then(organizations => {
           this.setState({ organizations })
         })
