@@ -1,5 +1,6 @@
 // The middleware to call the API for quotes
 import { CALL_API } from './middleware/ballroom_api'
+import { browserHistory } from 'react-router';
 
 /*********************************** Login ***********************************/
 
@@ -22,6 +23,7 @@ export const login = () => {
   return dispatch => {
     lock.show((err, profile, token, access_token) => {
       profile.access_token = access_token
+      profile.competitor_id = profile.app_metadata.competitor_id
       if (err) { console.error(err)
         dispatch(lockError(err))
         return
@@ -30,6 +32,7 @@ export const login = () => {
       localStorage.setItem('profile', JSON.stringify(profile))
       localStorage.setItem('id_token', token)
       dispatch(lockSuccess(profile, token))
+      browserHistory.push('/competitions')
     })
   }
 }
