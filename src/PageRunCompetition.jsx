@@ -360,13 +360,13 @@ export default class RunCompetition extends React.Component {
           <h2>Upcoming rounds</h2>
           {future_rounds_table}
         </div>*/}
-
+          <div className = {style.clear}>
         <div id={style.createContainer}>
             <div id={style.saveChanges} 
               onClick={
                 () => this.props.router.push(`/competition/${this.competition_id}/editschedule`)}>Edit Schedule</div>
         </div>
-
+        </div>
 
     </Page>
    )
