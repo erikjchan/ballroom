@@ -106,53 +106,58 @@ class PageSeeCompetitor extends React.Component {
       
 
   render() {
-    return (
+      if (this.state.competitor && this.state.competitor_events && this.state.competitor_paymentrecord) {
+        return (
 
-     <Page ref="page" {...this.props}>
-      <Box title={"Competitor Info: "+this.state.competitor.firstname+" "+this.state.competitor.lastname}
-          admin={true}
-          content={
-            <div className={style.lines}>
-            <br />
-            {this.state.competitor_paymentrecord &&
-            <div className={style.lines}>
-                    <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname} </p>
-                    <p><b>Email:</b> {this.state.competitor.email} </p>
-                    <p><b>Organization:</b> {this.state.competitor.affiliationname} </p>
-                    <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number} </p>
-                    <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp} </p>
-                    <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount} </p>
-                    <p><b>Pay with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
-                    <h3>Mark as Paid?</h3>
-                        <span>
-                            <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
-                             <RadioButton label='Paid' value='true'/>
-                             <RadioButton label='Unpaid' value='false'/>
-                            </RadioGroup>
-                        </span>
-                    <br /> <br/>
-                    <p><button className={style.blockcompetitionEditBtns} onClick={this.saveChanges.bind(this)}>Save</button></p>
-             </div>
-            }
-            <br/>
-            <div className={style.separators}></div>
-             <hr/>
-            <h2>Competitor is registered for the following events:</h2>
-            <EventTable
-                events={this.state.competitor_events}
-            />
-            <div className = {style.comp_containers}>
-            <div className = {style.addeditBtns}>
-                <button className={style.editBtns} onClick={()=>{ browserHistory.push('/competition/' + this.competitor_id + '/regcompetitor/' + this.competition_id) }}>
-                    Add/Edit Event
-                </button>
-            </div>
-            </div>
+         <Page ref="page" {...this.props}>
+          <Box title={"Competitor Info: "+this.state.competitor.firstname+" "+this.state.competitor.lastname}
+              admin={true}
+              content={
+                <div className={style.lines}>
+                <br />
+                {this.state.competitor_paymentrecord &&
+                <div className={style.lines}>
+                        <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname} </p>
+                        <p><b>Email:</b> {this.state.competitor.email} </p>
+                        <p><b>Organization:</b> {this.state.competitor.affiliationname} </p>
+                        <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number} </p>
+                        <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp} </p>
+                        <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount} </p>
+                        <p><b>Pay with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
+                        <h3>Mark as Paid?</h3>
+                            <span>
+                                <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
+                                 <RadioButton label='Paid' value='true'/>
+                                 <RadioButton label='Unpaid' value='false'/>
+                                </RadioGroup>
+                            </span>
+                        <br /> <br/>
+                        <p><button className={style.blockcompetitionEditBtns} onClick={this.saveChanges.bind(this)}>Save</button></p>
+                 </div>
+                }
+                <br/>
+                <div className={style.separators}></div>
+                 <hr/>
+                <h2>Competitor is registered for the following events:</h2>
+                <EventTable
+                    events={this.state.competitor_events}
+                />
+                <div className = {style.comp_containers}>
+                <div className = {style.addeditBtns}>
+                    <button className={style.editBtns} onClick={()=>{ browserHistory.push('/competition/' + this.competitor_id + '/regcompetitor/' + this.competition_id) }}>
+                        Add/Edit Event
+                    </button>
+                </div>
+                </div>
 
-            </div>
-          } />
-      </Page>
-    );
+                </div>
+              } />
+          </Page>
+        );
+    } else {
+        console.log("waiting on data")
+        return <Page ref="page" {...this.props}/>
+    }
   }
 }
 
