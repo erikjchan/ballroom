@@ -4,7 +4,7 @@
  * This page allows admins to add callbacks for selected round
  */
 
-import styles from "./style.css"
+import style from "./style.css"
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
 import React from 'react'
@@ -151,14 +151,14 @@ export default class PageEnterCallbacks extends React.Component {
         <Table.Provider
           components={components}
           columns={columns}
-          className={styles.tableWrapper}
+          className={style.tableWrapper}
         >
             <Table.Header
               headerRows={resolve.headerRows({ columns })}
-              className={styles.tableHeader}
+              className={style.tableHeader}
             />
             <Table.Body
-              className={styles.tableBody}
+              className={style.tableBody}
               rows={resolvedRows}
               rowKey="id"
             />

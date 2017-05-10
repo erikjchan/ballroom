@@ -6,7 +6,7 @@
  */
 
 
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import Box from './common/Box.jsx'
 import Page from './Page.jsx'
@@ -126,32 +126,32 @@ export default class PageEditCompetition extends React.Component {
     render() {
         if (this.state.competition){
             var comp_name = this.state.competition.Name;
-            var comp_info = (<div className = {styles.long_form}>
+            var comp_info = (<div className = {style.long_form}>
                 <div>
-                        <div className = {styles.form_row}>
-                            <label className = {styles.long_label}>
+                        <div className = {style.form_row}>
+                            <label className = {style.long_label}>
                                 Competition Name: <br />
                                 <input type="text" name="name" value = {(this.state.competition.name) || ''}
                                     onChange={this.onChangeHandler.bind(this)}/>
                             </label>
                         </div>
                 
-                        <div className = {styles.form_row}>
-                            <label className = {styles.long_label}>
+                        <div className = {style.form_row}>
+                            <label className = {style.long_label}>
             Location:<br />
             <input type="text" name="locationname" value = {(this.state.competition.locationname) || ''}
                 onChange={this.onChangeHandler.bind(this)} />
         </label>
     </div>
     <br />
-    <div className = {styles.form_row}>
+    <div className = {style.form_row}>
         <label>
             Lead Start Number:<br />
             <input type="number" name="leadidstartnum" value = {(this.state.competition.leadidstartnum) || ''}
                  onChange={this.onChangeHandler.bind(this)} />
         </label>
     </div>
-    <div className = {styles.form_row}>
+    <div className = {style.form_row}>
         <label>
             Start Date:<br />
             <input type="date" name="startdate" value = {this.formatDateString(this.state.competition.startdate) || ''}
@@ -163,7 +163,7 @@ export default class PageEditCompetition extends React.Component {
                 onChange={this.onChangeHandler.bind(this)}/>
         </label>
     </div>
-    <div className = {styles.form_row}>
+    <div className = {style.form_row}>
         <label>
             Start Early Bird Registration:<br />
             <input type="date" name="regstartdate"  value = {this.formatDateString(this.state.competition.regstartdate) || ''}
@@ -172,11 +172,11 @@ export default class PageEditCompetition extends React.Component {
         <label >
             Early Price:<br />
             $ &nbsp;
-            <input className = {styles.price} type="number" name="earlyprice" value = {this.state.competition.earlyprice || ''}
+            <input className = {style.price} type="number" name="earlyprice" value = {this.state.competition.earlyprice || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         </div>
-    <div className = {styles.form_row}>
+    <div className = {style.form_row}>
         <label>
             Start Regular Registration:<br />
             <input type="date" name="earlyregdeadline" value = {this.formatDateString(this.state.competition.earlyregdeadline) || ''}
@@ -185,11 +185,11 @@ export default class PageEditCompetition extends React.Component {
         <label>
             Regular Price:<br />
             $ &nbsp;
-            <input className = {styles.price} type="number" name="regularprice" value = {this.state.competition.regularprice || ''}
+            <input className = {style.price} type="number" name="regularprice" value = {this.state.competition.regularprice || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         </div>
-    <div className = {styles.form_row}>
+    <div className = {style.form_row}>
         <label>
             Start Late Registration:<br />
             <input type="date" name="regularregdeadline" value = {this.formatDateString(this.state.competition.regularregdeadline) || ''}
@@ -198,71 +198,35 @@ export default class PageEditCompetition extends React.Component {
         <label>
             Late Price:<br />
             $ &nbsp;
-            <input  className = {styles.price} type="number" name="lateprice" value = {this.state.competition.lateprice || ''}
+            <input  className = {style.price} type="number" name="lateprice" value = {this.state.competition.lateprice || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
                  
         </label>
     </div>
-    <div className = {styles.form_row}>
+    <div className = {style.form_row}>
         <label>
            End All Registration:<br />
             <input type="date" name="lateregdeadline" value = {this.formatDateString(this.state.competition.lateregdeadline) || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
     </div>
-    <div className = {styles.form_row}>
-        <button className = {styles.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
-        <button className={styles.competitionEditBtns} 
+    <div className = {style.form_row}>
+        <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
+        <button className={style.competitionEditBtns} 
         onClick={() => {browserHistory.push("/competition/"+this.competition_id+"/editlevelsandstyles");}}> 
                          Edit Levels and Styles</button>
                 </div>
                 </div>
             </div>)
 
-    
-    /*var event_titles = (<div className={styles.lines}>
-                          {this.state.competitor_events.sort(function (a, b){
-                          return a.id - b.id}).map((event, i) => {
-                            return (<p key={event.Title} key={i}>{event.Title}</p>)
-                          })}
-                        </div>)*/
-
-
-    // const event_table_columns = [
-    //   {
-    //     property: 'name',
-    //     header: {
-    //       label: 'Name',
-    //       sortable: true,
-    //       resizable: true
-    //     }
-    //   },
-    //   {
-    //     property: 'partner',
-    //     header: {
-    //       label: 'Partner',
-    //       sortable: true,
-    //       resizable: true
-    //     }
-    //   },
-    //   {
-    //     property: 'amount awed',
-    //     header: {
-    //       label: 'Amount awed',
-    //       sortable: true,
-    //       resizable: true
-    //     }
-    //   }
-    // ]
-
     return (
       <Page ref="page" {...this.props}>
-          <div className={styles.titles}>
+          <div className={style.titles}>
             <p>{comp_name}</p>
           </div>
-              {/*<div className={styles.infoBoxEditCompetition}>*/}
-            <div className={styles.infoBoxExpanded}>
-              <Box admin={true} title={<div className={styles.titleContainers}><span>Competition Info</span> 
+              {/*<div className={style.infoBoxEditCompetition}>*/}
+            <div className={style.infoBoxExpanded}>
+              <Box admin={true} title={<div className={style.titleContainers}><span>Competition Info</span> 
                              
                           </div>} 
                    content={comp_info}/>

@@ -56,17 +56,9 @@ export default class YourEvents extends React.Component {
           }
       },
       {
-        property: 'email',
+        property: 'rolename',
         header: {
-          label: 'Email',
-          sortable: true,
-          resizable: true
-        }
-      },
-      {
-        property: 'phonenumber',
-        header: {
-          label: 'Phone',
+          label: 'Position',
           sortable: true,
           resizable: true
         }
