@@ -32,7 +32,7 @@ export const login = () => {
       localStorage.setItem('profile', JSON.stringify(profile))
       localStorage.setItem('id_token', token)
       dispatch(lockSuccess(profile, token))
-      browserHistory.push('/competitions')
+      browserHistory.push('/')
     })
   }
 }
