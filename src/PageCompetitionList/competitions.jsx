@@ -124,7 +124,7 @@ class CompetitionsTable extends React.Component {
             json[i].regularprice = "$" + (json[i].regularprice || 0);
             json[i].lateprice = "$" + (json[i].lateprice || 0);
             var regularregdeadline = new Date(json[i].regularregdeadline);
-            json[i].regularregdeadline = regularregdeadline.toUTCString();
+            json[i].regularregdeadline = regularregdeadline.toDateString();
 		    	}
 		     this.setState({ rows: json, }); 
 		 })
