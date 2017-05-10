@@ -33,7 +33,7 @@ class CompetitorsList extends React.Component {
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges} 
               onClick={
-                () => {window.location.href = "/organizationpayment/" + this.props.params.competition_id + "/1"}}>See Organization Payments
+                (rowData) => {window.location.href = "/organizationpayment/" + this.props.params.competition_id + "/" + rowData.id}}>See Organization Payments
             </div>
         </div>
       </div>

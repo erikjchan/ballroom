@@ -85,7 +85,7 @@ export default class CompetitorList extends React.Component {
                         <div>
                             <button
                               className={style.editBtns}
-                              onClick={()=>{ browserHistory.push(`/competition/${1}/seecompetitor/${rowData.id}`) }}>
+                              onClick={()=>{ browserHistory.push(`/competition/${this.props.selected.competition.id}/seecompetitor/${rowData.id}`) }}>
                                 Edit/See More
                             </button>
       			            </div>
@@ -180,7 +180,7 @@ export default class CompetitorList extends React.Component {
                           <div>
                             <button
                               className={style.editBtns}
-                              onClick={()=>{ browserHistory.push(`/competition/${1}/seecompetitor/${rowData.id}`) }}>
+                              onClick={()=>{ browserHistory.push(`/competition/${this.props.selected.competition.id}/seecompetitor/${rowData.id}`) }}>
                                 Edit/See More
                             </button>
       			               </div>
@@ -199,7 +199,7 @@ export default class CompetitorList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/competition/1/competitors")
+    fetch("/api/competition/" + this.props.selected.competition.id + "/competitors")
 	      .then(response => response.json())
 		  .then(json => {
             console.log(json);
