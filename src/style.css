@@ -76,15 +76,15 @@
 
 .editBtn {
 	float: right;
-	background-color: white;
+	background-color: #C5C7CF;
 	color: black;
-	opacity: 0.5;
+	opacity: 1;
 	font-size: 20px;
 	padding: 6px;
 	width: auto;
 	height: 100%;
 	border-radius: 10px;
-	box-shadow: 0 0 0;
+	box-shadow: 0px 4px 10px #444444;
 	border: 0;
 	vertical-align: middle;
  	text-align: center;
@@ -243,21 +243,22 @@ Start
 
 #dragAndDropAutosort {
 	float: right;
-	background-color: white;
+	background-color: #C5C7CF;
 	color: black;
-	opacity: 0.5;
+	opacity: 1;
 	font-size: 20px;
 	padding: 6px;
 	width: auto;
 	height: 100%;
 	border-radius: 10px;
-	box-shadow: 0 0 0;
+	box-shadow: ;
 	border: 0;
 	vertical-align: middle;
  	text-align: center;
   cursor: pointer;
   float:right;
   margin-right: 20px;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 #scheduleWrapper {
