@@ -101,7 +101,7 @@ class PageCompetitionList extends React.Component {
                 body: JSON.stringify({})
             }).then(res => res.json()).then(json => {
                console.log(json);
-               this.props.router.push('/editcompetition/'+json.id);
+               window.location.href('/editcompetition/'+json.id);
             });
   }
 
@@ -114,12 +114,13 @@ class PageCompetitionList extends React.Component {
              <Box admin={true} title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
-
+          <div className = {styles.clear}>
           <div id={style.createContainer}>
             <div id={style.saveChanges} 
               onClick={this.onCreateNewCompetition.bind(this)}>Create New Competition</div>
             </div>
        	  </div>
+        </div>
       </Page>
      );
   }

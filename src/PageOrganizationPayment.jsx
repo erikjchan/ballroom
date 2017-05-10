@@ -166,9 +166,7 @@ class PageOrganizationPayment extends React.Component {
 
     return (
       <Page ref="page" {...this.props}>
-          <div className={styles.titles}>
-            <p>{organization_name}</p>
-          </div>
+          <h1>{organization_name}</h1>
           <div className={styles.infoTables}>
           </div>
           <div>
