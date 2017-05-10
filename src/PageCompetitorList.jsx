@@ -33,7 +33,7 @@ class CompetitorsList extends React.Component {
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>
           <div id={style.saveChanges} onClick={() => 
-              browserHistory.push(`/organizationpayment/${this.props.params.competition_id}/1`)}>
+              browserHistory.push(`/organizationpayment/${this.props.selected.competition_id}/1`)}>
             See Organization Payments
           </div>
         </div>

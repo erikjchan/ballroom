@@ -81,15 +81,15 @@ export default class CompetitorList extends React.Component {
       	{
             cell: {
       		    formatters: [
-                  (value, { rowData }) => (
-                    <div>
-                      <button
-                        className={style.editBtns}
-                        onClick={()=>{ browserHistory.push(`/competition/${this.props.selected.competition}/seecompetitor/${rowData.id}`) }}>
-                          Edit/See More
-                      </button>
-      			        </div>
-      		      )
+                    (value, { rowData }) => (
+                        <div>
+                            <button
+                              className={style.editBtns}
+                              onClick={()=>{ browserHistory.push(`/competition/${this.props.selected.competition.id}/seecompetitor/${rowData.id}`) }}>
+                                Edit/See More
+                            </button>
+      			            </div>
+      		        )
       		    ]
       	    },
       		width: 100
@@ -180,7 +180,7 @@ export default class CompetitorList extends React.Component {
                           <div>
                             <button
                               className={style.editBtns}
-                              onClick={()=>{ browserHistory.push(`/competition/${this.props.selected.competition}/seecompetitor/${rowData.id}`) }}>
+                              onClick={()=>{ browserHistory.push(`/competition/${this.props.selected.competition.id}/seecompetitor/${rowData.id}`) }}>
                                 Edit/See More
                             </button>
       			               </div>

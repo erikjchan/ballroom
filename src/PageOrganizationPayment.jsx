@@ -35,9 +35,9 @@ class PageOrganizationPayment extends React.Component {
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {this.competition_id = parseInt(this.props.params.competition_id)}
+    try {this.competition_id = this.props.profile.competitor_id}
     catch (e) { alert('Invalid competition ID!') }
-    try {this.organization_id = parseInt(this.props.params.organization_id)}
+    try {this.organization_id = this.props.selected.competition.id}
     catch (e) { alert('Invalid competition ID!') }
     
  }
