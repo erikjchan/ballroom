@@ -136,9 +136,11 @@ class PageOrganizationPayment extends React.Component {
                         >{item.name}</div>
                       )}
                     />
-                    <button onClick={(event) => 
+                    <button
+                      className = {styles.searchBtn}
+                      onClick={(event) => 
                         {   
-                            console.log(this.state)
+                            console.log(this.state);
                             if (this.state.selectedOrgID != "-1") {
                                window.location.href = ("/organizationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
                             } else {

@@ -45,7 +45,7 @@ export default class LoginPage extends React.Component {
     // console.log(action, fetchQuote())
     return (
      <Page ref="page" {...this.props}>
-        <h1>Welcome to Footcraft!</h1>
+        <h1>Welcome to Floorcraft!</h1>
         { message }
         { this.props.profile.role === 'none' && <button onClick={this.loginUser.bind(this)}>Login / Signup</button> }
 
