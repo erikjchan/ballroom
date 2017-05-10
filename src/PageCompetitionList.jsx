@@ -123,7 +123,7 @@ class PageCompetitionList extends React.Component {
         	<div>
             <Box title="Other Competitions">
               <div id={style.otherCompetitionsTable}>
-                <CompetitionsTable />
+                <CompetitionsTable {...this.props} />
               </div>
             </Box>
           </div>
