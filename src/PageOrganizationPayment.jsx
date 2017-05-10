@@ -120,7 +120,9 @@ class PageOrganizationPayment extends React.Component {
                         >{item.name}</div>
                       )}
                     />
-                    <button onClick={(event) => 
+                    <button
+                      className = {styles.searchBtn}
+                      onClick={(event) => 
                         {
                             if (this.state.selectedOrgID != "-1") {
                                this.props.router.push("/organizationpayment/"+this.competition_id+"/"+this.state.selectedOrgID);
