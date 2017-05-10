@@ -181,7 +181,7 @@ populate_expanded(box_name, lines_react, link){
 
     var comp_name = this.state.competition.name;
 
-    dict['Competiton Info'] = [
+    dict['Competition Info'] = [
                       <p key={0}><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
                       <p key={1}><b>Location:</b> {this.state.competition.locationname}</p>,
                       <p key={2}><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
@@ -189,7 +189,7 @@ populate_expanded(box_name, lines_react, link){
                       <p key={4}><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
                       <p key={5}><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
                     ]
-    links["Competiton Info"] = "/editcompetition/" + this.competition_id;
+    links["Competition Info"] = "/editcompetition/" + this.competition_id;
 /*
     var comp_info = (<div className={styles.lines}>
                       <p><b>Date:</b> {this.state.competition.StartDate} ~ {this.state.competition.EndDate}</p>
@@ -363,7 +363,7 @@ populate_expanded(box_name, lines_react, link){
       <Page ref="page" {...this.props}>
           <h1>{comp_name}</h1>
           <div className={styles.infoTable}>
-             {this.populate("Competiton Info", dict["Competiton Info"], num, links["Competiton Info"])}
+             {this.populate("Competition Info", dict["Competition Info"], num, links["Competition Info"])}
               {this.populate("Officials", dict["Officials"], num, links["Officials"])}
           <div className={styles.separator}></div>
             {this.populate("Events", dict["Events"], num, links["Events"])}
