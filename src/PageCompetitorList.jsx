@@ -26,6 +26,12 @@ import style from './style.css';
 // competition/:competition_id/competitorslist
 class CompetitorsList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.competition_id = (this.props.selected.competition && this.props.selected.competition.id) 
+                        || this.props.params.competition_id
+  }
+
  render() {
   return (
     <Page ref="page" {...this.props}>
@@ -42,7 +48,7 @@ class CompetitorsList extends React.Component {
       content=
       {<div id={style.dragAndDropWrapper}>
         <div id={style.scheduleWrapper}>
-          <CompetitorList {...this.props} data={this.props.location.state}/>
+          <CompetitorList {...this.props} competition_id={this.competition_id} data={this.props.location.state}/>
         </div>
       </div>}
       />
