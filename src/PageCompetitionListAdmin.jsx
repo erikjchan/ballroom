@@ -104,10 +104,9 @@ class PageCompetitionList extends React.Component {
           <hr />
           <div className = {style.clear}>
           <div id={style.createContainer}>
-            <div id={style.saveChanges} 
-              onClick={this.onCreateNewCompetition.bind(this)}>Create New Competition</div>
-            </div>
+            <button id={style.saveChanges} onClick={this.onCreateNewCompetition.bind(this)}>Create New Competition</button>
        	  </div>
+           </div>
         </div>
       </Page>
      );

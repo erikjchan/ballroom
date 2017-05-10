@@ -183,7 +183,6 @@ export default class PageEventRegistration extends React.Component {
                     competitionid: this.competition_id
                 })
             }).then((response) => {
-              console.log(response)
                 fetch("/api/create_paymentrecord", {
                     method: 'POST',
                     headers: {
@@ -192,14 +191,30 @@ export default class PageEventRegistration extends React.Component {
                     },
                     body: JSON.stringify({
                       competitionid: this.competition_id,
-                      competitorid: this.competitor_id,
+                      competitorid: leadcompetitorid,
                       amount: this.state.competition.regularprice,
                       online: false,
-                      paidwithaffiliation: false,
+                      paidwithaffiliation: true,
                     })
                 }).then((response) =>{
-                  console.log(response)
-                  window.location.reload();
+                    console.log(response)
+                    fetch("/api/create_paymentrecord", {
+                      method: 'POST',
+                      headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        competitionid: this.competition_id,
+                        competitorid: followcompetitorid,
+                        amount: this.state.competition.regularprice,
+                        online: false,
+                        paidwithaffiliation: true,
+                      })
+                  }).then((response) =>{
+                    console.log(response)
+                    window.location.reload();
+                  })
                 })
             });
       } else {

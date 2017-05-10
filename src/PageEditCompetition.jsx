@@ -86,7 +86,7 @@ export default class PageEditCompetition extends React.Component {
             });
         }
         else{
-            if (!confirm("Are you sure to create a new competition with the provided information? You can continue to edit the competition after the creation. ")){
+            if (!confirm("Are you sure to create a new competition with the provided information? You can continue editing the competition after the creation. ")){
                 return;
             }
             fetch("/api/create_competition", {
@@ -210,14 +210,17 @@ export default class PageEditCompetition extends React.Component {
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
     </div>
+    
     <div className = {style.form_row}>
-        <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>Save Changes</button>
-        <button className={style.competitionEditBtns} 
+        <button className = {style.competitionEditBtns} onClick={this.onSaveHandler.bind(this)}>
+            {this.competition_id==0? "Create Competition": "Save Changes"}</button>
+        {this.competition_id > 0 && <button className={style.competitionEditBtns} 
         onClick={() => {browserHistory.push("/competition/"+this.competition_id+"/editlevelsandstyles");}}> 
-                         Edit Levels and Styles</button>
+                         Edit Levels and Styles</button>}
                 </div>
                 </div>
-            </div>)
+            </div>
+    )
 
     return (
       <Page ref="page" {...this.props}>

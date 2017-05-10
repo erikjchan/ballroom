@@ -29,12 +29,12 @@ class EditLevelsAndStyles extends React.Component {
       <div id={style.titleContainer}>
         <h1>Define Levels and Styles</h1>
         <div id={style.buttonsContainer}>
-          <div id={style.saveChanges} onClick={
+          <button id={style.saveChanges} onClick={
             () => this.saveChanges("Are you sure you want to save changes?")
-          }>Save Changes</div>
-          <div id={style.cancelChanges} onClick={
+          }>Save Changes</button>
+          <button id={style.cancelChanges} onClick={
             () => this.confirmGoToUrl(`/competition/${this.props.params.competition_id}/editevents`, "Are you sure you wish to leave this page without saving?") // TODO CID
-          }>Define Events</div>
+          }>Define Events</button>
         </div>
       </div>
                 <div className={style.infoTable}>

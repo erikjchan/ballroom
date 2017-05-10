@@ -38,10 +38,10 @@ class EditEvents extends React.Component {
         <div id={style.titleContainer}>
           <h1>Define Events</h1>
           <div id={style.buttonsContainer}>
-            <div id={style.saveChanges} onClick={this.saveChanges.bind(this)}>Save Changes</div>
-            <div id={style.cancelChanges} onClick={
+            <button id={style.saveChanges} onClick={this.saveChanges.bind(this)}>Save Changes</button>
+            <button id={style.cancelChanges} onClick={
               () => this.confirmGoToUrl(`/competition/${this.props.params.competition_id}/editlevelsandstyles`, "Are you sure you want to leave this page without saving?")
-            }>Define Levels & Styles</div>
+            }> Define Levels & Styles</button>
           </div>
         </div>
           <Box admin={true} title={box_title} content = {box_content} />

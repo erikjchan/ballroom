@@ -38,10 +38,10 @@ class CompetitorsList extends React.Component {
       <div id={style.titleContainer}>
         <h1>List of Competitors</h1>
         <div id={style.buttonsContainer}>
-          <div id={style.saveChanges} onClick={() => 
+          <button id={style.saveChanges} onClick={() => 
               browserHistory.push(`/organizationpayment/${this.competition_id}/1`)}>
             See Organization Payments
-          </div>
+          </button>
         </div>
       </div>
       <Box admin={true} title="Competitors"
