@@ -51,7 +51,7 @@ export default class PageNewUser extends React.Component {
         this.props.profile.app_metadata.competitor_id = id
         this.props.profile.competitor_id = id
         localStorage.setItem('profile', JSON.stringify(this.props.profile))
-        browserHistory.push('/')
+        browserHistory.push('/competitions')
       })
       .catch(err => console.error(err.detail || err.message.detail || err.message))
   }
