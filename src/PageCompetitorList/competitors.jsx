@@ -150,7 +150,7 @@ export default class CompetitorList extends React.Component {
     var totalOwed = 0; var totalListed = 0;
     for (let i = 0; i < resolvedRows.length; i++) {
         totalListed += 1;
-        if (resolvedRows[i].amount != 0)
+        if (resolvedRows[i].amount != 0 && resolvedRows[i].amount != '--')
             totalOwed += parseFloat((resolvedRows[i].amount).substr(1));
     }  
 
