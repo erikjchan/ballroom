@@ -32,7 +32,7 @@ class EditSchedule extends React.Component {
             () => this.saveChanges("Are you sure you want to save changes?")  
           }>Save Changes</div>
           <div id={style.cancelChanges} onClick={
-            () => this.confirmGoToUrl("/admin/competition/" + this.props.params.competition_id, "Are you sure you want to discard changes?")
+            () => this.confirmGoToUrl(`/admin/competition/${this.props.params.competition_id}`, "Are you sure you want to discard changes?")
           }>Cancel</div>
         </div>
       </div>
@@ -46,7 +46,7 @@ class EditSchedule extends React.Component {
                     }
             content = {
                       <div id={style.scheduleWrapper}>
-                          <DragAndDropTable ref="ddTable" competition_id={this.props.params.competition_id} />
+                          <DragAndDropTable ref="ddTable" {...this.props} competition_id={this.props.params.competition_id} />
                       </div>} 
         />
     </Page>
@@ -61,9 +61,9 @@ class EditSchedule extends React.Component {
     rows: this.refs.ddTable.state.rows
   }
   this.props.api.post("/api/competition/updateRounds", send_obj)
-  .then(() => this.props.api.get(`/api/competition/${cid}/rounds`))
-  .then(json => { this.refs.ddTable.setState({rows: json}) })
-  .catch(err => alert(err));
+    .then(() => this.props.api.get(`/api/competition/${cid}/rounds`))
+    .then(json => { this.refs.ddTable.setState({rows: json}) })
+    .catch(err => alert(err));
  }
 
  confirmGoToUrl(url, message) {
