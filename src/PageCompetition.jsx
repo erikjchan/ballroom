@@ -47,12 +47,12 @@ export default class PageCompetition extends React.Component {
         const earlyregdeadline   = new Date(this.competition.earlyregdeadline);
         const regularregdeadline = new Date(this.competition.regularregdeadline);
         const lateregdeadline    = new Date(this.competition.lateregdeadline);
-        this.competition.startdate = startdate.toUTCString();
-        this.competition.enddate = enddate.toUTCString();
-        this.competition.regstartdate = regstartdate.toUTCString();
-        this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
-        this.competition.regularregdeadline = regularregdeadline.toUTCString();
-        this.competition.lateregdeadline = lateregdeadline.toUTCString();
+        this.competition.startdate = startdate.toDateString();
+        this.competition.enddate = enddate.toDateString();
+        this.competition.regstartdate = regstartdate.toDateString();
+        this.competition.earlyregdeadline = earlyregdeadline.toDateString();
+        this.competition.regularregdeadline = regularregdeadline.toDateString();
+        this.competition.lateregdeadline = lateregdeadline.toDateString();
 
         // update the state of our component
         this.setState({ competition : json })
@@ -75,7 +75,7 @@ export default class PageCompetition extends React.Component {
 
         this.payment = json;
         var timestamp = new Date(this.payment.timestamp);
-        this.payment.timestamp = timestamp.toUTCString();
+        this.payment.timestamp = timestamp.toDateString();
 
         // update the state of our component
         this.setState({competitor_paymentrecord: json})
