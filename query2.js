@@ -127,9 +127,11 @@ const get_partnerships_by_competitor = (competitorid) => {
                           WHERE leadcompetitorid = ${competitorid} OR followcompetitorid = ${competitorid};`);
 }
 
-const get_comfirmed_partnerships_by_competition_competitor = (competitionid, competitorid) => {
-    return pool.query(SQL`SELECT partnership.*, event.dance as dance,
-                                style.name as style, level.name as level,
+const get_confirmed_partnerships_by_competition_competitor = (competitionid, competitorid) => {
+    return pool.query(SQL`SELECT partnership.*, 
+                                event.dance as dance, event.id as eventid,
+                                style.name as style,
+                                level.name as level,
                                 competitor1.firstname as leadfirstname, competitor1.lastname as leadlastname, 
                                 competitor2.firstname as followfirstname, competitor2.lastname as followlastname  
                           FROM partnership
@@ -166,7 +168,7 @@ const get_partnerships_by_event = eventid =>{
                           WHERE eventid = ${eventid};`);
 }
 
-const get_comfirmed_partnerships_by_event = eventid =>{
+const get_confirmed_partnerships_by_event = eventid =>{
     return pool.query(SQL`SELECT * FROM partnership 
                           WHERE eventid = ${eventid} AND leadconfirmed = ${true} AND followconfirmed = ${true};`);
 }
@@ -328,9 +330,9 @@ module.exports = {
     get_partnership_by_number,
     get_partnerships_by_competition_competitor,
     get_partnerships_by_competitor,
-    get_comfirmed_partnerships_by_competition_competitor,
+    get_confirmed_partnerships_by_competition_competitor,
     get_partnerships_by_event,
-    get_comfirmed_partnerships_by_event,
+    get_confirmed_partnerships_by_event,
     create_partnership,
     update_partnership,
     delete_partnership,

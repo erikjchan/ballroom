@@ -147,17 +147,21 @@ export default class PageEventRegistration extends React.Component {
       this.setState({isLeading});
   };
 
-  checkIfExists = (reg) => {
-      const { level, style, event } = this.state;
-      return (reg["level"] !== level) || (reg["style"] !== style) || (reg["title"] !== event);
+  checkIfNotExists = (reg) => {
+      const { eventid } = this.state;
+      return (reg["eventid"] != eventid);
   };
 
   registerEventHandler = () => {
       const { levelid, styleid, eventid, partner, isLeading, user_competition_events } = this.state;
       const button_enabled = (eventid != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
-          if (!user_competition_events.every(this.checkIfExists)) {
+          if (!user_competition_events.every(this.checkIfNotExists)) {
+              console.log(user_competition_events.every(this.checkIfNotExists));
               alert('You are already registered for this event!');
+              return false
+          } else if (this.competitor_id == partner) {
+              alert('This is a partner dance competition silly, dance with somebody else!');
               return false
           }
           var leadcompetitorid = partner;
@@ -187,7 +191,9 @@ export default class PageEventRegistration extends React.Component {
   };
 
 dropEventHandler = (rowData) => {
-        if (!confirm("Are you sure you want to delete this?")) {
+        const eventName = rowData.level + " " + rowData.style + " " + rowData.dance;
+        const name = rowData.leader == "You" ? rowData.follower : rowData.leader;
+        if (!confirm("Are you sure you want to drop " + eventName + " with " + name + "?")) {
             return false;
         }
         fetch("/api/delete_partnership", {
