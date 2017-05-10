@@ -45,12 +45,69 @@ const check_competitor_email_exist = (email) => {
 }
 
 // INSERT
+
 const create_competitor = (firstname, lastname, email, mailingaddress, 
     affiliationname) => {
-    return pool.query_wrapped(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress,
-                                                  affiliationid)
-                          (SELECT ${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
-                                  id FROM affiliation WHERE name = ${affiliationname}) RETURNING id;`);
+    return new Promise(function(resolve, reject) {
+      pool.connect(function(err, client, done) {
+        if (err) {
+               console.error('error getting client', err);
+               reject(err);
+        } else {
+          client.query('BEGIN', (err) => {
+            if (err) {
+              rollback(client, done);
+              return reject(err);
+            }
+            client.query(SQL`SELECT id from affiliation WHERE name = ${affiliationname}`, (err, result) => {
+              if (err) {
+                rollback(client, done);
+                return reject(err);
+              }
+              if (result.rowCount == 1) {
+                client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
+                  VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${result.rows[0].id}) RETURNING id`, (err, result) => {
+                    if (err) {
+                      rollback(client, done);
+                      return reject(err);
+                    }
+                    client.query('COMMIT', (err) => {
+                      if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                      }
+                      done(null);
+                      resolve(JSON.stringify(result.rows[0]));
+                    });
+                });  
+              } else {
+                client.query(SQL`INSERT INTO affiliation(name) VALUES(${affiliationname}) RETURNING id;`, (err, result) => {
+                  if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                  }
+                  client.query(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress, affiliationid)
+                    VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, ${result.rows[0].id}) RETURNING id`, (err, result) => {
+                      if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                      }
+                      client.query('COMMIT', (err) => {
+                        if (err) {
+                          rollback(client, done);
+                          return reject(err);
+                        }
+                        done(null);
+                        resolve(JSON.stringify(result.rows[0]));
+                      });
+                  });
+                })  
+              }
+            });
+          });
+        };
+      });
+    });
 }
 
 // UPDATE
