@@ -98,9 +98,10 @@ class PageSeeCompetitor extends React.Component {
       console.log(send_object);
 
       /** Post updates */
-      this.props.api.post("/api/payment_records/update", send_object)
+      this.props.api.post("/api/payment_records/update", send_object).then(()=>{
+                window.location.reload();
+      })
 
-      window.location.reload();
   } // todo
       
 
