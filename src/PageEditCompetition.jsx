@@ -20,7 +20,22 @@ export default class PageEditCompetition extends React.Component {
         super(props)
         this.state = {
             /** We will populate this w/ data from the API */
-            competition: null,
+            competition: {
+                        name: null,
+                        locationname: null,
+                        leadidstartnum: null,
+                        earlyprice: null,
+                        regularprice: null,
+                        lateprice: null,
+                        startdate: null,
+                        enddate: null,
+                        regstartdate: null,
+                        earlyregdeadline: null,
+                        regularregdeadline: null,
+                        lateregdeadline: null,
+                        id: null,
+                        description: null ,
+                        },
             // competitor_events: [],
         }
 
@@ -37,35 +52,55 @@ export default class PageEditCompetition extends React.Component {
 
     componentDidMount() {
         /* Call the API for competition info */
-        this.props.api.get(`/api/competition/${this.competition_id}`)
-          .then(json => { 
-              // update the state of our component
-              this.setState({ competition : json })
-          })
-          // todo; display a nice (sorry, there's no connection!) error
-          // and setup a timer to retry. Fingers crossed, hopefully the 
-          // connection comes back
-          .catch(err => { alert(err); console.log(err)})
+        if (this.competition_id > 0){
+            this.props.api.get(`/api/competition/${this.competition_id}`)
+            .then(json => { 
+                // update the state of our component
+                this.setState({ competition : json })
+            })
+            // todo; display a nice (sorry, there's no connection!) error
+            // and setup a timer to retry. Fingers crossed, hopefully the 
+            // connection comes back
+            .catch(err => { alert(err); console.log(err)})
+        }
     }
 
     onChangeHandler(event){
         var new_competition = this.state.competition;
-        new_competition[event.target.name] = event.target.value; 
+        new_competition[event.target.name] = event.target.value===''?  null: event.target.value; 
         this.setState({competition: new_competition});
     }
     
     onSaveHandler(){
         console.log(this.state.competition);
-        fetch("/api/competition/updateCompetitionInfo", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.competition)
-        }).then(() => {
-            window.location.reload();
-        });
+        if (this.competition_id > 0){
+            fetch("/api/competition/updateCompetitionInfo", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.state.competition)
+            }).then(() => {
+                window.location.reload();
+            });
+        }
+        else{
+            if (!confirm("Are you sure to create a new competition with the provided information? You can continue to edit the competition after the creation. ")){
+                return;
+            }
+            fetch("/api/create_competition", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(this.state.competition)
+                }).then(res => res.json()).then(json => {
+                    console.log(json);
+                    window.location.href = '/editcompetition/'+json.id;
+                });
+        }
     }
 
 //   validateForm = function(event) {
@@ -96,7 +131,7 @@ export default class PageEditCompetition extends React.Component {
                         <div className = {styles.form_row}>
                             <label className = {styles.long_label}>
                                 Competition Name: <br />
-                                <input type="text" name="name" value = {(this.state.competition.name)}
+                                <input type="text" name="name" value = {(this.state.competition.name) || ''}
                                     onChange={this.onChangeHandler.bind(this)}/>
                             </label>
                         </div>
@@ -104,7 +139,7 @@ export default class PageEditCompetition extends React.Component {
                         <div className = {styles.form_row}>
                             <label className = {styles.long_label}>
             Location:<br />
-            <input type="text" name="locationname" value = {(this.state.competition.locationname)}
+            <input type="text" name="locationname" value = {(this.state.competition.locationname) || ''}
                 onChange={this.onChangeHandler.bind(this)} />
         </label>
     </div>
@@ -112,58 +147,58 @@ export default class PageEditCompetition extends React.Component {
     <div className = {styles.form_row}>
         <label>
             Lead Start Number:<br />
-            <input type="number" name="leadidstartnum" value = {(this.state.competition.leadidstartnum)}
+            <input type="number" name="leadidstartnum" value = {(this.state.competition.leadidstartnum) || ''}
                  onChange={this.onChangeHandler.bind(this)} />
         </label>
     </div>
     <div className = {styles.form_row}>
         <label>
             Start Date:<br />
-            <input type="date" name="startdate" value = {this.formatDateString(this.state.competition.startdate)}
+            <input type="date" name="startdate" value = {this.formatDateString(this.state.competition.startdate) || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         <label>
             End Date:<br />
-            <input type="date" name="enddate" value = {this.formatDateString(this.state.competition.enddate)}
+            <input type="date" name="enddate" value = {this.formatDateString(this.state.competition.enddate) || ''}
                 onChange={this.onChangeHandler.bind(this)}/>
         </label>
     </div>
     <div className = {styles.form_row}>
         <label>
             Start Early Bird Registration:<br />
-            <input type="date" name="regstartdate"  value = {this.formatDateString(this.state.competition.regstartdate)}
+            <input type="date" name="regstartdate"  value = {this.formatDateString(this.state.competition.regstartdate) || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         <label >
             Early Price:<br />
             $ &nbsp;
-            <input className = {styles.price} type="number" name="earlyprice" value = {this.state.competition.earlyprice}
+            <input className = {styles.price} type="number" name="earlyprice" value = {this.state.competition.earlyprice || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         </div>
     <div className = {styles.form_row}>
         <label>
             Start Regular Registration:<br />
-            <input type="date" name="earlyregdeadline" value = {this.formatDateString(this.state.competition.earlyregdeadline)}
+            <input type="date" name="earlyregdeadline" value = {this.formatDateString(this.state.competition.earlyregdeadline) || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         <label>
             Regular Price:<br />
             $ &nbsp;
-            <input className = {styles.price} type="number" name="regularprice" value = {this.state.competition.regularprice}
+            <input className = {styles.price} type="number" name="regularprice" value = {this.state.competition.regularprice || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         </div>
     <div className = {styles.form_row}>
         <label>
             Start Late Registration:<br />
-            <input type="date" name="regularregdeadline" value = {this.formatDateString(this.state.competition.regularregdeadline)}
+            <input type="date" name="regularregdeadline" value = {this.formatDateString(this.state.competition.regularregdeadline) || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
         <label>
             Late Price:<br />
             $ &nbsp;
-            <input  className = {styles.price} type="number" name="lateprice" value = {this.state.competition.lateprice}
+            <input  className = {styles.price} type="number" name="lateprice" value = {this.state.competition.lateprice || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
                  
         </label>
@@ -171,7 +206,7 @@ export default class PageEditCompetition extends React.Component {
     <div className = {styles.form_row}>
         <label>
            End All Registration:<br />
-            <input type="date" name="lateregdeadline" value = {this.formatDateString(this.state.competition.lateregdeadline)}
+            <input type="date" name="lateregdeadline" value = {this.formatDateString(this.state.competition.lateregdeadline) || ''}
                  onChange={this.onChangeHandler.bind(this)}/>
         </label>
     </div>

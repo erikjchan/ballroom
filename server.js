@@ -80,8 +80,8 @@ app.use(bodyParser.json());
     .catch(err => res.send(err))
  });
 
-  app.post('/api/create_empty_competition', (req, res) => {
-    query2.create_empty_competition().then(function (value){
+  app.post('/api/create_competition', (req, res) => {
+    query2.create_competition(req.body).then(function (value){
         console.log(value);
         res.send(value[0]);
     })
@@ -226,6 +226,13 @@ app.get('/api/competition/:cid/affiliations', (req, res) => {
     query.get_affiliations_for_competition(req.params.cid).then(value => {
         log_debug(2)(value)
         res.send(value);
+    });
+})
+
+app.get('/api/affiliations/:id', (req, res) => {
+    query2.get_affiliation(req.params.id).then(value => {
+        log_debug(2)(value)
+        res.send(value[0]);
     });
 })
 

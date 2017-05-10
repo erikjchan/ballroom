@@ -92,17 +92,7 @@ class PageCompetitionList extends React.Component {
   }
 
   onCreateNewCompetition(){
-    fetch("/api/create_empty_competition", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({})
-            }).then(res => res.json()).then(json => {
-               console.log(json);
-               window.location.href = '/editcompetition/'+json.id;
-            });
+    window.location.href = "/editcompetition/0"
   }
 
   render() {
