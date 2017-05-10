@@ -46,11 +46,11 @@ const check_competitor_email_exist = (email) => {
 
 // INSERT
 const create_competitor = (firstname, lastname, email, mailingaddress, 
-    affiliationid) => {
+    affiliationname) => {
     return pool.query_wrapped(SQL`INSERT INTO competitor (firstname, lastname, email, mailingaddress,
-                                                  affiliationid, hasregistered)
-                          VALUES (${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
-                                  ${affiliationid}, ${false});`);
+                                                  affiliationid)
+                          (SELECT ${firstname}, ${lastname}, ${email}, ${mailingaddress}, 
+                                  id FROM affiliation WHERE name = ${affiliationname}) RETURNING id;`);
 }
 
 // UPDATE
@@ -311,6 +311,10 @@ const delete_judge = (id) => {
     return pool.query_wrapped(SQL`DELETE FROM judge WHERE id = ${id};`);
 }
 
+const create_empty_competition = () =>{
+    return pool.query(SQL`INSERT INTO competition DEFAULT VALUES RETURNING id;`);
+}
+
 module.exports = {
     get_all_competitors,
     get_competitor_by_id,
@@ -339,5 +343,6 @@ module.exports = {
     get_styles_for_competition_level,
     get_events_for_competition_level_style,
     create_judge,
-    delete_judge
+    delete_judge,
+    create_empty_competition
 }

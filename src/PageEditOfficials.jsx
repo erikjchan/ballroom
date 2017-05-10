@@ -18,8 +18,8 @@ import style from './style.css';
 import { browserHistory } from 'react-router';
 import crypto from 'crypto'
 
-// editofficial/:competition_id
-export default class EditOfficial extends React.Component {
+// editofficials/:competition_id
+export default class EditOfficials extends React.Component {
   constructor(props) {
     super(props)
     try {this.competition_id = parseInt(this.props.params.competition_id)}
@@ -125,33 +125,33 @@ export default class EditOfficial extends React.Component {
 
             return (<Page ref="page" {...this.props}>
 
-                <h1>Edit Official: {this.state.competition.name}</h1>
+                <h1>Edit Officials: {this.state.competition.name}</h1>
                 <Box admin={true} title={"Add Official"}
                         content ={
                 <div className={style.lines}>
                 <div >
-                    <label>
+                    <label className="addLabel">
                         First Name: <br />
                         <input type="text" name="firstname" size = '20'
                                value = {this.state.official.firstname} 
                                onChange = {(e) => { var o = this.state.official; o.firstname = e.target.value; this.setState({official: o});}}
                         />
                     </label>
-                    <label>
+                    <label className="addLabel">
                          Last Name: <br />
                         <input type="text" name="lastname" size = '20'
                                value = {this.state.official.lastname} 
                                onChange = {(e) => { var o = this.state.official; o.lastname = e.target.value; this.setState({official: o});}}
                         />
                     </label>
-                    <label>
+                    <label className="addLabel">
                         Email:<br />
                         <input type="text" name="email" size = '20'
                                value = {this.state.official.email}  
                                onChange = {(e) => { var o = this.state.official; o.email = e.target.value; this.setState({email: o});}} 
                         />
                     </label>
-                    <label>
+                    <label className="addLabel">
                         Phone:<br />
                         <input type="tel" name="phonenumber" size = '10'
                                value = {this.state.official.phonenumber}  

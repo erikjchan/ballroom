@@ -63,15 +63,19 @@ app.use(bodyParser.json());
  })*/
 
  app.post('/api/create_user', (req, res) => {
-    const { first_name, last_name, email, mailing_address } = req.body
+    const { firstname, lastname, email, mailingaddress, affiliationname } = req.body;
+    query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationname).then(value => {
+      res.send(value);
+    }, err => {
+      res.send(err);
+    })
+ });
 
-    // TODO, create user, include Auth0 ID
-
-    // TODO, update Auth0 metadata to include user's competitor id
-
-    // send back the created competitor
-    res.send({})
-
+  app.post('/api/create_empty_competition', (req, res) => {
+    query2.create_empty_competition().then(function (value){
+        console.log(value);
+        res.send(value[0]);
+    })
  });
 
 app.post('/api/create_judge', (req, res) => {
@@ -175,8 +179,11 @@ app.post('/api/competition/updateRounds', (req, res) => {
 
 app.post('/api/competition/updateCompetitionInfo', (req, res) => {
     query.update_competition_info(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
+        console.log(value)
+        res.send(value);
+    }, err =>{
+        console.log(err);
+        res.send(err);
     });
 });
 
@@ -717,25 +724,29 @@ app.get('/test/', (req, res) => {
 
 /*********************** ROUTES **************************/
 const routes = [
-    "/",
-    '/competition/:competition_id/eventregistration'             ,
-    '/competition/:competition_id/:competitor_id'                ,
-    '/competitions'                                              ,
-    '/editprofile'                                               ,
-    '/competition/:competition_id/run'                           ,
-    '/competition/:competition_id/round/:round_id/entercallbacks',
-    '/competition/:competition_id/editschedule'                  ,
-    '/competition/:competition_id/editlevelsandstyles'           ,
-    '/competition/:competition_id/editevents'                    ,
-    '/competition/:competition_id/competitorslist'               ,
-    '/admin/competition/:competition_id'                         ,
-    '/editcompetition/:competition_id'                           ,
-    '/editofficial/:competition_id'                              ,
-    '/competition/:competition_id/seecompetitor/:competitor_id'  ,
-    '/competition/:competition_id/regcompetitor/:competitor_id'  ,
-    '/organizationpayment/:competition_id/:organization_id'      ,
-    '/querytest',
-    '/competitorpayment/:competition_id/:competitor_id'
+    '/',
+    '/home',
+    '/competition/:competition_id/eventregistration'              ,
+    '/competitions'                                               ,
+    '/editprofile'                                                ,
+    '/competition/:competition_id/run'                            ,
+    '/competition/:competition_id/round/:round_id/entercallbacks' ,
+    '/competition/:competition_id/editschedule'                   ,
+    '/competition/:competition_id/editlevelsandstyles'            ,
+    '/competition/:competition_id/editevents'                     ,
+    '/competition/:competition_id/competitorslist'                ,
+    '/competition/:competition_id/seecompetitor/:competitor_id'   ,
+    '/competition/:competition_id/regcompetitor/:competitor_id'   ,
+    '/competition/:competition_id/:competitor_id'                 ,
+    '/admin/competitions'                                         ,
+    '/admin/competition/:competition_id'                          ,
+    '/editcompetition/:competition_id'                            ,
+    '/editofficials/:competition_id'                              ,
+    '/querytest'                                                  ,
+    '/newuser'                                                    ,
+    '/organizationpayment/:competition_id/:organization_id'       ,
+    '/querytest'                                                  ,
+    '/competitorpayment/:competition_id/:competitor_id'           ,
 ]
 
 /*********************************** Assets ***********************************/
