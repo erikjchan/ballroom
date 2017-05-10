@@ -50,12 +50,12 @@ export default class PageCompetitionHomeAdmin extends React.Component {
         const earlyregdeadline   = new Date(this.competition.earlyregdeadline);
         const regularregdeadline = new Date(this.competition.regularregdeadline);
         const lateregdeadline    = new Date(this.competition.lateregdeadline);
-        this.competition.startdate = startdate.toUTCString();
-        this.competition.enddate = enddate.toUTCString();
-        this.competition.regstartdate = regstartdate.toUTCString();
-        this.competition.earlyregdeadline = earlyregdeadline.toUTCString();
-        this.competition.regularregdeadline = regularregdeadline.toUTCString();
-        this.competition.lateregdeadline = lateregdeadline.toUTCString();
+        this.competition.startdate = startdate.toDateString();
+        this.competition.enddate = enddate.toDateString();
+        this.competition.regstartdate = regstartdate.toDateString();
+        this.competition.earlyregdeadline = earlyregdeadline.toDateString();
+        this.competition.regularregdeadline = regularregdeadline.toDateString();
+        this.competition.lateregdeadline = lateregdeadline.toDateString();
         
         // update the state of our component
         this.setState({ competition : json })
