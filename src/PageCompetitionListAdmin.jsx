@@ -100,7 +100,7 @@ class PageCompetitionList extends React.Component {
              <Box admin={true} title="All Competitions"
              content={this.getYourCompetitionsTable()} />
           <hr />
-          <div className = {styles.clear}>
+          <div className = {style.clear}>
           <div id={style.createContainer}>
             <div id={style.saveChanges} 
               onClick={
