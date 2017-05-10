@@ -8,7 +8,7 @@
 
 
 import Autocomplete from 'react-autocomplete'
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import Select from 'react-select'
 import EventTable from './common/EventTable.jsx'
@@ -105,9 +105,9 @@ class PageOrganizationPayment extends React.Component {
         var organization_name = this.state.organization.name;
         var organization_owed = this.state.organization.amountowed;
         var comp_info = (
-            <div className={styles.lines}>
+            <div className={style.lines}>
                 <h2>Search for Another Organization:</h2>
-                <div className = {styles.label}>
+                <div className = {style.label}>
                     <Autocomplete
                       menuStyle={myMenuStyle}
                       ref="autocomplete"
@@ -137,7 +137,7 @@ class PageOrganizationPayment extends React.Component {
                       )}
                     />
                     <button
-                      className = {styles.searchBtn}
+                      className = {style.searchBtn}
                       onClick={(event) => 
                         {   
                             console.log(this.state);
@@ -165,20 +165,20 @@ class PageOrganizationPayment extends React.Component {
                         <RadioButton label='Unpaid' value='false'/>
                     </RadioGroup>
                 </span>
-                 <div className = {styles.form_row}>
-                    <input className = {styles.competitionEditBtns} type="submit" value="Save Changes" />
+                 <div className = {style.form_row}>
+                    <input className = {style.competitionEditBtns} type="submit" value="Save Changes" />
                 </div>
         </div>)
 
     return (
       <Page ref="page" {...this.props}>
           <h1>{organization_name}</h1>
-          <div className={styles.infoTables}>
+          <div className={style.infoTables}>
           </div>
           <div>
-              {/*<div className={styles.infoBoxEditCompetition}>*/}
-            <div className={styles.infoBoxExpanded}>
-              <Box admin={true} title={<div className={styles.titleContainers}><span>See/Edit Organization Payment</span> 
+              {/*<div className={style.infoBoxEditCompetition}>*/}
+            <div className={style.infoBoxExpanded}>
+              <Box admin={true} title={<div className={style.titleContainers}><span>See/Edit Organization Payment</span> 
                              
                           </div>} 
                    content={comp_info}/>

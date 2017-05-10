@@ -5,14 +5,13 @@
  * selected competitor as well as mark them as paid or not paid
  */
 
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import Page from './Page.jsx'
 import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
 import Box from './common/Box.jsx'
-import style from './style.css';
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import connection from './common/connection';
 import { browserHistory } from 'react-router';
@@ -115,7 +114,7 @@ class PageSeeCompetitor extends React.Component {
           content={
             <div className={style.lines}>
             <br />
-            <div className={styles.lines}>
+            <div className={style.lines}>
                     <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname} </p>
                     <p><b>Email:</b> {this.state.competitor.email} </p>
                     <p><b>Organization:</b> {this.state.competitor.affiliationname} </p>
@@ -133,14 +132,14 @@ class PageSeeCompetitor extends React.Component {
                     <br /><br />
                     <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
              </div>
-            <div className={styles.separators}></div>
+            <div className={style.separators}></div>
             <h2>Competitor is registered for the following events:</h2>
             <EventTable
                 events={this.state.competitor_events}
             />
-            <div className = {styles.comp_containers}>
-            <div className = {styles.addeditBtns}>
-                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/' + this.competitor_id + '/regcompetitor/' + this.competition_id) }}>
+            <div className = {style.comp_containers}>
+            <div className = {style.addeditBtns}>
+                <button className={style.editBtns} onClick={()=>{ browserHistory.push('/competition/' + this.competitor_id + '/regcompetitor/' + this.competition_id) }}>
                     Add/Edit Event
                 </button>
             </div>
@@ -154,17 +153,4 @@ class PageSeeCompetitor extends React.Component {
 }
 
 export default connection(PageSeeCompetitor)
-
-// const get_competitors = n => collection(n)(i => ({
-//   "id" : i,
-//   "first_name" : randomData(1).firstName,
-//   "last_name" : randomData().lastName,
-//   "email" :  randomData().emailAddress,
-//   "mailing_address" : randomData().street,
-//   "organization_id" : randomId(ORGANIZATIONS),
-//   "password" : uuidV1(),
-//   "registered" : randomBool(),
-//   "lead_number" : randomInt(0, 100),
-// }))
-
 
