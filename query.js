@@ -345,7 +345,9 @@ const update_rounds_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   client.query(SQL`DELETE FROM round WHERE id NOT IN 
+                   client.query(SQL`DELETE FROM round USING round AS rd
+                    LEFT JOIN event ON (rd.eventid = event.id) 
+                    WHERE round.id NOT IN 
                     (SELECT id FROM newrounds WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
                        if (err) {
                            rollback(client, done);
