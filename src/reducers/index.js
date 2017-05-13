@@ -17,8 +17,6 @@ const { profile, isAuthenticated } = (() => {
   return { profile, isAuthenticated }
 })()
 
-
-
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. 
 // TODO: check if the token is expired.
@@ -105,7 +103,6 @@ function selected(state = {
 }, action) {
   switch (action.type) {
     case SELECT_COMPETITION: {
-      // console.log(action.competition)
       localStorage.setItem('competition', JSON.stringify(action.competition))
       return Object.assign({}, state, {
         competition: action.competition
@@ -120,7 +117,6 @@ function selected(state = {
       return state
   }
 }
-
 
 // We combine the reducers here so that they
 // can be left split apart above

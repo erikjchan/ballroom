@@ -30,17 +30,17 @@ export default class CompetitorList extends React.Component {
         id: 'name',
         property: 'name',
         props: {
-            style: {
-                width: 250
-            }
+          style: {
+            width: 250
+          }
         },
         header: {
-            label: 'Name',
+          label: 'Name',
         },
         cell: {
           formatters: [
-              (value, { rowData }) => (
-                <Link to={`/competition/${this.props.competition_id}/seecompetitor/${rowData.id}`}>{value}</Link>
+            (value, { rowData }) => (
+              <Link to={`/competition/${this.props.competition_id}/seecompetitor/${rowData.id}`}>{value}</Link>
             )
           ]
         },
@@ -94,7 +94,11 @@ export default class CompetitorList extends React.Component {
         }
       },
       {
-        props: { style: { width: 50 } }
+        props: {
+          style: {
+            width: 50
+          }
+        }
       }
     ]
   }
@@ -133,25 +137,25 @@ export default class CompetitorList extends React.Component {
     const { rows, query } = this.state;
     const columns = this.getColumns()
     for (let i = 0; i < rows.length; i++) {
-        rows[i].order_number = (i + 1);
+      rows[i].order_number = (i + 1);
     }
-    //const resolvedColumns = resolve.columnChildren({ columns });
+   
     const resolvedRows = compose(
       search.multipleColumns({ columns: columns, query }),
       resolve.resolve({
-         columns: columns,
-         method: (extra) => compose(
-                resolve.byFunction('cell.resolve')(extra),
-                resolve.nested(extra)
-            )
+        columns: columns,
+        method: (extra) => compose(
+          resolve.byFunction('cell.resolve')(extra),
+          resolve.nested(extra)
+        )
      })
     )(rows);
  
     var totalOwed = 0; var totalListed = 0;
     for (let i = 0; i < resolvedRows.length; i++) {
-        totalListed += 1;
-        if (resolvedRows[i].amount != 0 && resolvedRows[i].amount != '--')
-            totalOwed += parseFloat((resolvedRows[i].amount).substr(1));
+      totalListed += 1;
+      if (resolvedRows[i].amount != 0 && resolvedRows[i].amount != '--')
+        totalOwed += parseFloat((resolvedRows[i].amount).substr(1));
     }  
 
     return (
@@ -159,25 +163,25 @@ export default class CompetitorList extends React.Component {
         <p><b>Number of competitors listed: </b>{totalListed} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Total amount owed: </b>${totalOwed}</p>
   
         <Table.Provider
-          components={components}
-          columns={columns}
-          className={style.tableWrapper}
+          components = {components}
+          columns = {columns}
+          className = {style.tableWrapper}
         >
           <Table.Header
-            headerRows={resolve.headerRows({ columns })}
-            className={style.tableHeader}
+            headerRows = {resolve.headerRows({ columns })}
+            className = {style.tableHeader}
           >
             <search.Columns
-              query={query}
-              columns={columns}
-              onChange={query => this.setState({ query })}
+              query = {query}
+              columns = {columns}
+              onChange = {query => this.setState({ query })}
             />
           </Table.Header>
           <Table.Body
-            className={style.tableBody}
-            rows={resolvedRows}
-            rowKey="id"
-            onRow={this.onRow}
+            className = {style.tableBody}
+            rows = {resolvedRows}
+            rowKey = "id"
+            onRow = {this.onRow}
           />
         </Table.Provider>
       </div>

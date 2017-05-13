@@ -26,15 +26,15 @@ export default class DragAndDropTable extends React.Component {
           }
         },
         {
-            property: 'levelname',
-            props: {
-                style: {
-                    width: 300
-                }
-            },
-            header: {
-                label: 'Level',
+          property: 'levelname',
+          props: {
+            style: {
+              width: 300
             }
+          },
+          header: {
+            label: 'Level',
+          }
         },
         {
           property: 'stylename',
@@ -74,7 +74,7 @@ export default class DragAndDropTable extends React.Component {
             formatters: [
               (value, { rowData }) => (
                 <span
-                  onClick={() => this.onRemove(rowData.key)} style={{ cursor: 'pointer' }}
+                  onClick = {() => this.onRemove(rowData.key)} style = {{ cursor: 'pointer' }}
                 >
                   &#10007;
                 </span>

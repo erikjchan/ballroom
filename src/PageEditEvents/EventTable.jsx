@@ -26,15 +26,15 @@ export default class EventTable extends React.Component {
           }
         },
         {
-            property: 'levelname',
-            props: {
-                style: {
-                    width: 300
-                }
-            },
-            header: {
-                label: 'Level',
+          property: 'levelname',
+          props: {
+            style: {
+              width: 300
             }
+          },
+          header: {
+            label: 'Level',
+          }
         },
         {
           property: 'stylename',
@@ -87,7 +87,6 @@ export default class EventTable extends React.Component {
       keyCounter: 0
     };
 
-
     this.onRow = this.onRow.bind(this);
     this.onMoveRow = this.onMoveRow.bind(this);
   }
@@ -95,31 +94,33 @@ export default class EventTable extends React.Component {
   componentDidMount() {
     const cid = this.props.competition_id
     fetch("/api/competition/" + cid + "/events")
-          .then(response => response.json())
-          .then(json => {
-              const rows = json.map((value, index) => {value.key = index; return value;});
-              this.setState({
-                rows: rows,
-                keyCounter: rows.length
-              });
-          })
-          .catch(err => alert(err));
+      .then(response => response.json())
+      .then(json => {
+        const rows = json.map((value, index) => {value.key = index; return value;});
+        this.setState({
+          rows: rows,
+          keyCounter: rows.length
+        });
+      })
+      .catch(err => alert(err));
+
     fetch("/api/competition/" + cid + "/levels")
-          .then(response => response.json())
-          .then(json => {
-              this.setState({
-                levels: json
-              });
-          })
-          .catch(err => alert(err));
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          levels: json
+        });
+      })
+      .catch(err => alert(err));
+
     fetch("/api/competition/" + cid + "/styles")
-          .then(response => response.json())
-          .then(json => {
-              this.setState({
-                styles: json
-              });
-          })
-          .catch(err => alert(err));
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          styles: json
+        });
+      })
+      .catch(err => alert(err));
   }
 
   render() {
@@ -135,9 +136,8 @@ export default class EventTable extends React.Component {
     };
     const { columns, rows } = this.state;
     for (let i = 0; i < rows.length; i++) {
-        rows[i].ordernumber = (i + 1);
+      rows[i].ordernumber = (i + 1);
     }
-    //const resolvedColumns = resolve.columnChildren({ columns });
     const resolvedRows = resolve.resolve({
       columns: columns,
       method: resolve.nested
@@ -145,40 +145,40 @@ export default class EventTable extends React.Component {
 
     var numberOptions = [];
     for (let i = 1; i <= this.state.rows.length + 1; i++) {
-        numberOptions.push(<option key={"ordernumber_" + i} value={i}>{i}</option>);
+      numberOptions.push(<option key = {"ordernumber_" + i} value = {i}>{i}</option>);
     }
-    var levelOptions = this.state.levels.map(level => (<option key={"level_" + level.name} value={level.name}>{level.name}</option>));
-    var styleOptions = this.state.styles.map(style => (<option key={"style_" + style.name} value={style.name}>{style.name}</option>));
-    var danceInput = <input type="text" ref="input" style = {{width: '100%'}}
-                              value={this.state.danceInput} onChange={(event) => this.setState({danceInput: event.target.value})}/>;
+    var levelOptions = this.state.levels.map(level => (<option key = {"level_" + level.name} value = {level.name}>{level.name}</option>));
+    var styleOptions = this.state.styles.map(style => (<option key = {"style_" + style.name} value = {style.name}>{style.name}</option>));
+    var danceInput = <input type = "text" ref = "input" style = {{width: '100%'}}
+                        value = {this.state.danceInput} onChange = {(event) => this.setState({danceInput: event.target.value})}/>;
 
     return (
       <Table.Provider
-        components={components}
-        columns={columns}
-        className={style.tableWrapper}
+        components = {components}
+        columns = {columns}
+        className = {style.tableWrapper}
       >
         <Table.Header
-          headerRows={resolve.headerRows({ columns })}
-          className={style.tableHeader}
+          headerRows = {resolve.headerRows({ columns })}
+          className = {style.tableHeader}
         />
-        <tbody className={style.scheduleAddEventTBody}>
+        <tbody className = {style.scheduleAddEventTBody}>
             <tr>
               <td>
-              	<select value={this.state.selectedNumber} onChange={(event) => this.setState({selectedNumber: event.target.value})}>
-              		<option disabled value=""></option>
+              	<select value = {this.state.selectedNumber} onChange = {(event) => this.setState({selectedNumber: event.target.value})}>
+              		<option disabled value = ""></option>
               		{numberOptions}
               	</select>
               </td>
               <td>
-              	<select value={this.state.selectedLevel} onChange={(event) => this.setState({selectedLevel: event.target.value})}>
-              		<option disabled value=""></option>
+              	<select value = {this.state.selectedLevel} onChange = {(event) => this.setState({selectedLevel: event.target.value})}>
+              		<option disabled value = ""></option>
               		{levelOptions}
               	</select>
               </td>
               <td>
-              	<select value={this.state.selectedStyle} onChange={(event) => this.setState({selectedStyle: event.target.value})}>
-              		<option disabled value=""></option>
+              	<select value = {this.state.selectedStyle} onChange = {(event) => this.setState({selectedStyle: event.target.value})}>
+              		<option disabled value = ""></option>
               		{styleOptions}
               	</select>
               </td>
@@ -186,16 +186,16 @@ export default class EventTable extends React.Component {
                {danceInput}
               </td>
               <td>
-              	<div onClick={() =>this.addNewRow()}>&#43;</div>
+              	<div onClick = {() =>this.addNewRow()}>&#43;</div>
               </td>
             </tr>
           </tbody>
 
         <Table.Body
-          className={style.tableBody}
-          rows={resolvedRows}
-          rowKey="key"
-          onRow={this.onRow}
+          className = {style.tableBody}
+          rows = {resolvedRows}
+          rowKey = "key"
+          onRow = {this.onRow}
         />
       </Table.Provider>
     );
