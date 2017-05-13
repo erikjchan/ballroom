@@ -16,35 +16,34 @@ import style from './style.css';
 
 // competition/:competition_id/editevents
 class EditEvents extends React.Component {
-
   render() {
     const box_title = (
       <div>
-        <div id={style.dragAndDropTitle}>Events</div>
-        <button id={style.dragAndDropAutosort} onClick={this.confirmAutoSortRows.bind(this)}>
+        <div id = {style.dragAndDropTitle}>Events</div>
+        <button id = {style.dragAndDropAutosort} onClick = {this.confirmAutoSortRows.bind(this)}>
           Autosort
         </button>
       </div>
     )
 
     const box_content = (
-      <div id={style.scheduleWrapper}>
-          <EventTable ref="ddTable" {...this.props} competition_id={this.props.params.competition_id} />
+      <div id = {style.scheduleWrapper}>
+          <EventTable ref = "ddTable" {...this.props} competition_id = {this.props.params.competition_id} />
       </div>
     )
 
     return (
-      <Page ref="page" {...this.props}>
-        <div id={style.titleContainer}>
+      <Page ref = "page" {...this.props}>
+        <div id = {style.titleContainer}>
           <h1>Define Events</h1>
-          <div id={style.buttonsContainer}>
-            <button id={style.saveChanges} onClick={this.saveChanges.bind(this)}>Save Changes</button>
-            <button id={style.cancelChanges} onClick={
+          <div id = {style.buttonsContainer}>
+            <button id = {style.saveChanges} onClick = {this.saveChanges.bind(this)}>Save Changes</button>
+            <button id = {style.cancelChanges} onClick = {
               () => this.confirmGoToUrl(`/competition/${this.props.params.competition_id}/editlevelsandstyles`, "Are you sure you want to leave this page without saving?")
-            }> Define Levels & Styles</button>
+              }> Define Levels & Styles</button>
           </div>
         </div>
-          <Box admin={true} title={box_title} content = {box_content} />
+          <Box admin = {true} title = {box_title} content = {box_content} />
       </Page>
     );
   }
@@ -77,7 +76,7 @@ class EditEvents extends React.Component {
   }
 
   confirmAutoSortRows() {
-    if(confirm("Are you sure you want to autosort the schedule?")) {
+    if (confirm("Are you sure you want to autosort the schedule?")) {
       this.refs.ddTable.autoSortRows();
     }
   }

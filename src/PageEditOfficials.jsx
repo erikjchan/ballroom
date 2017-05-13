@@ -1,7 +1,7 @@
 /* 
- * EDIT JUDGES  
+ * EDIT OFFICIALS  
  *
- * This page allows admins to define the information about the judges who will
+ * This page allows admins to define the information about the officials who will
  * partake in the competition.
  */
 
