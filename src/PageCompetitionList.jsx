@@ -18,8 +18,6 @@ import Box from './common/Box.jsx'
 import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-// max flow overflow hidden for scrollbar
-
 
 // competitions
 class PageCompetitionList extends React.Component {
@@ -52,6 +50,7 @@ class PageCompetitionList extends React.Component {
       // connection comes back
       .catch(err => alert(`There was an error getting the competitions`))
   }
+
   /**
    * Selects a competition for browsing.
    * All sidebar links will now point to pages
@@ -61,7 +60,7 @@ class PageCompetitionList extends React.Component {
    */
   browseCompetition (competition) {
     this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('competition/' + competition.id + '/'+ this.competitor_id)
+    browserHistory.push('competition/' + competition.id + '/' + this.competitor_id)
   }
 
   /**
@@ -70,58 +69,58 @@ class PageCompetitionList extends React.Component {
    */
   getYourCompetitionsTable () {
     const yourColumns = [
-    {
-      property: 'name',
-      header: {
-        label: 'Name',
-        sortable: true,
-        resizable: true
+      {
+        property: 'name',
+        header: {
+          label: 'Name',
+          sortable: true,
+          resizable: true
+        },
+        cell: { formatters: [
+          (value, { rowData }) =>
+            <a onClick = {() => this.browseCompetition(rowData)}>{value}</a>
+        ]},
       },
-      cell: { formatters: [
-        (value, { rowData }) =>
-          <a onClick={() => this.browseCompetition(rowData)}>{value}</a>
-      ]},
-    },
-    {
-      property: 'regularprice',
-      header: {
-        label: 'Amount Owed',
-        sortable: true,
-        resizable: true
+      {
+        property: 'regularprice',
+        header: {
+          label: 'Amount Owed',
+          sortable: true,
+          resizable: true
+        }
+      },
+      {
+        property: 'startdate',
+        header: {
+          label: 'Date',
+          sortable: true,
+          resizable: true
+        }
       }
-    },
-    {
-      property: 'startdate',
-      header: {
-        label: 'Date',
-        sortable: true,
-        resizable: true
-      }
-    }
     ]
 
     return <Table.Provider
-            className="pure-table pure-table-striped event-table"
+            className = "pure-table pure-table-striped event-table"
             columns = {yourColumns}>
-            <Table.Header />
-            <Table.Body
-              rows = {this.state.competitions || []}
-              rowKey = "id"
-            />
-          </Table.Provider>
+              <Table.Header />
+              <Table.Body
+                rows = {this.state.competitions || []}
+                rowKey = "id"
+              />
+           </Table.Provider>
   }
 
   render() {
     return (
-     	<Page ref="page" {...this.props}>
-        <div className={style.content}>
+     	<Page ref = "page" {...this.props}>
+        <div className = {style.content}>
          	<h1>Competitions Page</h1>
-            <Box title="Your Competitions">
+            <Box title = "Your Competitions">
               {this.getYourCompetitionsTable()}
             </Box>
           <hr />
         	<div>
-            <Box title="Other Competitions">
+            <Box title = "Other Competitions">
               <div>
                 <CompetitionsTable {...this.props} />
               </div>
@@ -129,7 +128,7 @@ class PageCompetitionList extends React.Component {
           </div>
        	</div>
       </Page>
-     );
+    );
   }
 }
 

@@ -5,7 +5,6 @@
  * competitions they have created.
  */
 
-
 import style from "./style.css"
 import React from 'react'
 import Box from './common/Box.jsx'

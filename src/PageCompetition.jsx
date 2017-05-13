@@ -1,5 +1,5 @@
 /*
- * COMPETITION HOME PAGE (USERS)
+ * COMPETITION HOME PAGE (USER)
  *
  * This page is the main hub for users to see information about
  * specific competition they have been registered for.

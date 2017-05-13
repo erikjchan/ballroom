@@ -1,10 +1,9 @@
 /* 
- * COMPETITIONS LIST (ADMINS)
+ * COMPETITIONS LIST (ADMIN)
  *
- * This page will be used by users to see all the competitions they have created,
+ * This page will be used by admins to see all the competitions they have created,
  * as well as to create new competitions
  */
-
 
 import style from "./style.css";
 import React from 'react';
@@ -47,6 +46,7 @@ class PageCompetitionList extends React.Component {
       // connection comes back
       .catch(err => alert(`There was an error getting the competitions`))
   }
+
   /**
    * Selects a competition for browsing.
    * All sidebar links will now point to pages
@@ -63,29 +63,36 @@ class PageCompetitionList extends React.Component {
    * Builds the table with the competitions you're registered to.
    * @return {[type]} [description]
    */
-  getYourCompetitionsTable () {
+  getAllCompetitionsTable () {
     const yourColumns = [
-      { property: 'name',
-        header: { label: 'Name' },
-        cell: { formatters: [
-          (value, { rowData }) =>
-            <a onClick={() => this.browseCompetition(rowData)}>{value}</a>
-        ]},
+      {
+        property: 'name',
+        header: {
+          label: 'Name'
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) =>
+              <a onClick={() => this.browseCompetition(rowData)}>{value}</a>
+          ]
+        },
       },
       { property: 'startdate',
-        header: { label: 'Date' }
+        header: {
+          label: 'Date'
+        }
       }
     ]
 
     return <Table.Provider
-        className="pure-table pure-table-striped event-table"
-        columns = {yourColumns}>
-        <Table.Header />
-        <Table.Body
-          rows = {this.state.competitions || []}
-          rowKey = "id"
-        />
-      </Table.Provider>
+            className = "pure-table pure-table-striped event-table"
+            columns = {yourColumns}>
+              <Table.Header />
+              <Table.Body
+                rows = {this.state.competitions || []}
+                rowKey = "id"
+              />
+           </Table.Provider>
   }
 
   onCreateNewCompetition(){
@@ -94,17 +101,16 @@ class PageCompetitionList extends React.Component {
   }
 
   render() {
-  
     return (
-     	<Page ref="page" {...this.props}>
-        <div className={style.content}>
+     	<Page ref = "page" {...this.props}>
+        <div className = {style.content}>
          	<h1>Competitions Page</h1>
-             <Box admin={true} title="All Competitions"
-             content={this.getYourCompetitionsTable()} />
+             <Box admin = {true} title = "All Competitions"
+             content = {this.getAllCompetitionsTable()} />
           <hr />
           <div className = {style.clear}>
-          <div id={style.createContainer}>
-            <button id={style.saveChanges} onClick={this.onCreateNewCompetition.bind(this)}>Create New Competition</button>
+          <div id = {style.createContainer}>
+            <button id = {style.saveChanges} onClick = {this.onCreateNewCompetition.bind(this)}>Create New Competition</button>
        	  </div>
            </div>
         </div>
