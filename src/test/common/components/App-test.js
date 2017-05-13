@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 
 import App from '../../../src/common/components/App';
 
-
 test('render with container div', t => {
   const wrapper = shallow(React.createElement(App));
 

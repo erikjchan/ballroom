@@ -21,18 +21,20 @@ export default class AddEvent extends React.Component {
 			headers: new Headers({
 				"Content-Type": "application/json"
 			})
-		}).then((response) => {
-			response.json().then((data) => {
-				console.log(data);
-				this.setState({
-					dances: data.map((d) => {
+		})
+			.then((response) => {
+				response.json().then((data) => {
+					console.log(data);
+					this.setState({
+						dances: data.map((d) => {
 						return d.title
-					})
+						})
+					});
 				});
+			})
+			.catch(function(err) {
+				console.log(err);
 			});
-		}).catch(function(err) {
-			console.log(err);
-		});
 	}
 
 	getLevelsAndStyles() {
@@ -41,29 +43,31 @@ export default class AddEvent extends React.Component {
 			headers: new Headers({
 				"Content-Type": "application/json"
 			})
-		}).then((response) => {
-			response.json().then((respJson) => {
-				console.log(respJson);
-				const data = respJson.reduce(
-					(acc, val) => {
-						acc.levels.push(val.level);
-						acc.styles.push(val.style);
-						return {
-							levels: acc.levels,
-							styles: acc.styles
-						};
-					},
-					{
-						levels: [],
-						styles: []
-					}
-				);
+		})
+			.then((response) => {
+				response.json().then((respJson) => {
+					console.log(respJson);
+					const data = respJson.reduce(
+						(acc, val) => {
+							acc.levels.push(val.level);
+							acc.styles.push(val.style);
+							return {
+								levels: acc.levels,
+								styles: acc.styles
+							};
+						},
+						{
+							levels: [],
+							styles: []
+						}
+					);
 				this.setState({
 					levels: data.levels,
 					styles: data.styles		
 				});
 			});
-		}).catch(function(err) {
+		})
+		.catch(function(err) {
 			console.log(err);
 		});
 	}
@@ -79,37 +83,37 @@ export default class AddEvent extends React.Component {
 
 	render() {
 		return (
-			<div className={styles.addEvent}>
+			<div className = {styles.addEvent}>
 				<div>Add New Event</div>
-				<div className={styles.eventListsContainer}>
-					<div className={styles.eventListWrapper}>
+				<div className = {styles.eventListsContainer}>
+					<div className = {styles.eventListWrapper}>
 						{this.state.dances ? (
 							<div>
-								<Number number="1" />
-								<List name="Dance" data={this.state.dances} selectDance={this.selectDance.bind(this)} />
+								<Number number = "1" />
+								<List name = "Dance" data = {this.state.dances} selectDance = {this.selectDance.bind(this)} />
 							</div>
 						) : (
 							<div>Loading dances...</div>
 						)}
 					</div>
-					<div className={styles.eventListWrapper}>
+					<div className = {styles.eventListWrapper}>
 						{this.state.levels ? (
 							<div>
-								<Number number="2" />
-								<List name="Level" data={this.state.levels} />
+								<Number number = "2" />
+								<List name = "Level" data = {this.state.levels} />
 							</div>
 						) : (
-							<div className={styles.placeholder}>Select a Dance</div>
+							<div className = {styles.placeholder}>Select a Dance</div>
 						)}
 					</div>
-					<div className={styles.eventListWrapper}>
+					<div className = {styles.eventListWrapper}>
 						{this.state.styles ? (
 							<div>
-								<Number number="3" />
-								<List name="Style" data={this.state.styles} />
+								<Number number = "3" />
+								<List name = "Style" data = {this.state.styles} />
 							</div>
 						) : (
-							<div className={styles.placeholder}>Select a Dance</div>
+							<div className = {styles.placeholder}>Select a Dance</div>
 						)}
 					</div>
 				</div>
@@ -120,7 +124,7 @@ export default class AddEvent extends React.Component {
 
 function Number(props) {
 	return (
-		<div className={styles.number}>{props.number}.</div>
+		<div className = {styles.number}>{props.number}.</div>
 	)
 }
 
@@ -152,10 +156,10 @@ class List extends React.Component {
 
 	render() {
 		const listItems = this.props.data.map((d, i) =>
-			<li onClick={this.handleClick.bind(this)} key={i}>{d}</li>
+			<li onClick = {this.handleClick.bind(this)} key = {i}>{d}</li>
 		);
 		return (
-			<ul className={styles.eventList}>
+			<ul className = {styles.eventList}>
 				<li>{this.props.name}</li>
 				{listItems}
 			</ul>

@@ -30,20 +30,19 @@ export default class EventRunningInfo extends React.Component {
   	if (!this.props.event) return <div>Invalid event</div>
 
   	const rounds = this.state.rounds
-  	.sort((a,b) => a.order_number - b.order_number)
-  	.map(r => `
-  		Round name: ${r.name}
-  		Size: ${r.size}
-  	`)
+  	  .sort((a,b) => a.order_number - b.order_number)
+  	  .map(r => `
+  		  Round name: ${r.name}
+  		  Size: ${r.size}
+  	  `)
 
   	return (
   		<pre>
-  		{this.props.event.title}
-  		{this.props.event.style}
+  		  {this.props.event.title}
+  		  {this.props.event.style}
 
-  		{rounds}
+  		  {rounds}
   		</pre>
   	)
   }
-
 }

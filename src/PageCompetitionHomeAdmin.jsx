@@ -83,26 +83,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       .then(() => this.props.api.get(`/api/competition/${this.competition_id}/competitors_styles`))
       .then(json => {
         this.setState({style_statistics: json})
-        // /** Filter registered competitors */
-        // var all_competitors = this.state.partnerships.map(item => {
-        //   return item.lead_competitor_id;
-        // }).concat(
-        //   this.state.partnerships.map(item2 => {
-        //   return item2.follow_competitor_id;
-        // }));
-
-        // all_competitors = all_competitors.filter((v, i, a) => a.indexOf(v) === i); 
-        // all_competitors = all_competitors.map(real_comp_id=>{
-        //   var results = this.state.competitors.filter(comp=>
-        //     {
-        //       return comp.id == real_comp_id
-        //     }
-        //   )
-        //   return results[0];
-        // });
-        // this.setState({registered_competitors: all_competitors})
       })
-
 
     /** Get officials */
       .then(() => this.props.api.get(`/api/competition/${this.competition_id}/officials`))
@@ -118,39 +99,39 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     var ext;
     if (max_line_num < lines_react.length) {
       ext = (
-        <p><a href="#" onClick={()=> {this.setState({expanded: box_name})}}>View More </a></p>
+        <p><a href = "#" onClick = {()=> {this.setState({expanded: box_name})}}>View More </a></p>
       )
     }
     var c = (
-      <div className={style.lines}>
-              {lines_react.slice(0, max_line_num)}
-              {ext}
+      <div className = {style.lines}>
+        {lines_react.slice(0, max_line_num)}
+        {ext}
       </div>
     );
 
-    return <div className={style.infoBox}>
-      <Box admin={true} title={<div className={style.titleContainer}><span>{box_name}</span> 
-                        <button className={style.editBtn} onClick={()=>{
-                            window.location.href = link;
-                          }}> Edit</button>
-                    </div>}>
+    return <div className = {style.infoBox}>
+      <Box admin = {true} title = {<div className={style.titleContainer}><span>{box_name}</span> 
+        <button className = {style.editBtn} onClick = {()=>{
+          window.location.href = link;
+        }}> Edit</button>
+        </div>}>
         {c}
       </Box>
     </div>
   }
 
 populate_expanded(box_name, lines_react, link){
-    return <div className={style.infoBoxExpanded}>
-      <Box admin={true} title={
-        <div className={style.titleContainer}>
-          <button className={style.returnBtn} 
-                  onClick={()=>{this.setState({expanded: null})}}> {"Back"} </button>
+    return <div className = {style.infoBoxExpanded}>
+      <Box admin = {true} title = {
+        <div className = {style.titleContainer}>
+          <button className = {style.returnBtn} 
+                  onClick = {()=>{this.setState({expanded: null})}}> {"Back"} </button>
           <span>{box_name}</span> 
-          <button className={style.editBtn} onClick={()=>{
+          <button className = {style.editBtn} onClick = {()=>{
             window.location.href = link;
             }}> Edit</button>
         </div>}>
-        <div className={style.lines}>{lines_react} </div>
+        <div className = {style.lines}>{lines_react} </div>
       </Box>
     </div>
  }
@@ -159,25 +140,23 @@ populate_expanded(box_name, lines_react, link){
    if (this.state.competition){
 
     var dict = {}
-
     var links = {}
-
     var comp_name = this.state.competition.name;
 
     dict['Competition Info'] = [
-                      <p key={0}><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
-                      <p key={1}><b>Location:</b> {this.state.competition.locationname}</p>,
-                      <p key={2}><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
-                      <p key={3}><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>,
-                      <p key={4}><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
-                      <p key={5}><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
-                    ]
+      <p key = {0}><b>Date:</b> {this.state.competition.startdate} - {this.state.competition.enddate}</p>,
+      <p key = {1}><b>Location:</b> {this.state.competition.locationname}</p>,
+      <p key = {2}><b>Registration Start Date:</b> {this.state.competition.regstartdate}</p>,
+      <p key = {3}><b>Early Registration Deadline:</b> {this.state.competition.earlyregdeadline} (${this.state.competition.earlyprice})</p>,
+      <p key = {4}><b>Regular Registration Deadline:</b> {this.state.competition.regularregdeadline} (${this.state.competition.regularprice})</p>,
+      <p key = {5}><b>Late Registration Deadline:</b> {this.state.competition.lateregdeadline} (${this.state.competition.lateprice})</p>
+    ]
     links["Competition Info"] = "/editcompetition/" + this.competition_id;
 
     var competitor_stats = this.state.style_statistics.map(
-        (item) => {
-          return <p><b>{item.name+": "}</b> {item.count}</p>
-        }
+      (item) => {
+        return <p><b>{item.name+": "}</b> {item.count}</p>
+      }
     );
 
     const search_competitor = (list, query) => {
@@ -202,47 +181,46 @@ populate_expanded(box_name, lines_react, link){
     dict['Competitors'] = [<p><b>Total Competitors:</b> {this.state.competitors.length}</p>,
     <div>
       <Autocomplete menuStyle={myMenuStyle}
-          fullWidth = {true}
-          ref="autocomplete"
-          value={this.state.value}
-          items={this.state.searched_competitors}
-          getItemValue={(item) => item.name}
-          onSelect={(value, item) => {
-            // set the menu to only the selected item
-            this.setState({ value, searched_competitors: [ item ] })
-            this.setState({keyword: value})
-            // or you could reset it to a default list again
-            // this.setState({ unitedStates: getStates() })
-              }}
-          onChange={(event, value) => {
-            this.setState({ value, loading: true })
-            this.setState({keyword: value})
-            var output = search_competitor(this.state.competitors, value)
-            this.setState({searched_competitors: output, loading: false})
-          }}
-          renderItem={(item, isHighlighted) => (
-            <div
-              key={item.abbr}
-              id={item.abbr}
-            >{item.name} ({item.email})</div>
-          )}
-        />
-        <button 
+        fullWidth = {true}
+        ref = "autocomplete"
+        value = {this.state.value}
+        items = {this.state.searched_competitors}
+        getItemValue = {(item) => item.name}
+        onSelect = {(value, item) => {
+          // set the menu to only the selected item
+          this.setState({ value, searched_competitors: [ item ] })
+          this.setState({keyword: value})
+        }}
+        onChange = {(event, value) => {
+          this.setState({ value, loading: true })
+          this.setState({keyword: value})
+          var output = search_competitor(this.state.competitors, value)
+          this.setState({searched_competitors: output, loading: false})
+        }}
+        renderItem = {(item, isHighlighted) => (
+          <div
+            key = {item.abbr}
+            id = {item.abbr}
+          >{item.name} ({item.email})</div>
+        )}
+      />
+      <button 
         className = {style.searchBtn}
         onClick={() => {
-                        browserHistory.push({
-                          pathname: "/competition/"+this.competition_id+"/competitorslist",
-                          state: {query: {name: this.state.keyword}}
-                        }); 
-                        }}
-        > Search </button>
-      </div>].concat(competitor_stats);
+          browserHistory.push({
+            pathname: "/competition/"+this.competition_id+"/competitorslist",
+                       state: {query: {name: this.state.keyword}}
+          }); 
+        }}
+        > Search
+      </button>
+    </div>].concat(competitor_stats);
     links["Competitors"] = "/competition/"+this.competition_id+"/competitorslist";
 
     dict['Events'] = this.state.competition_events.map(event => {
-                            var title = event.stylename+" "+event.levelname+" "+event.dance
-                            return (<p key={title+" "+event.ordernumber}>{title}</p>)
-                          })
+                        var title = event.stylename+" "+event.levelname+" "+event.dance
+                        return (<p key={title+" "+event.ordernumber}>{title}</p>)
+                      })
     links["Events"] = "/competition/"+this.competition_id+"/editevents";
 
     var total_officials = this.state.officials.length;
@@ -267,8 +245,7 @@ populate_expanded(box_name, lines_react, link){
     dict['Schedule'] = [<p><b>Total Rounds:</b> {total_rounds}</p>].concat(
                           this.state.competition_rounds
                             .map((round,i) => {
-
-                              return (<p key={round.id + " "+ i}><b>{(i+1)+": "}</b>{round.stylename+" "+round.levelname+" "+round.dance+" "+round.round}</p>)
+                              return (<p key = {round.id + " "+ i}><b>{(i+1)+": "}</b>{round.stylename + " " +round.levelname + " " + round.dance + " " + round.round}</p>)
                           }))
     links["Schedule"] = "/competition/"+this.competition_id+"/editschedule";
 
@@ -285,33 +262,32 @@ populate_expanded(box_name, lines_react, link){
     }
     var num = 6
     return (
-      <Page ref="page" {...this.props}>
-          <h1>{comp_name}</h1>
-          <div className={style.infoTable}>
-             {this.populate("Competition Info", dict["Competition Info"], num, links["Competition Info"])}
-              {this.populate("Officials", dict["Officials"], num, links["Officials"])}
-          <div className={style.separator}></div>
+      <Page ref = "page" {...this.props}>
+        <h1>{comp_name}</h1>
+        <div className = {style.infoTable}>
+          {this.populate("Competition Info", dict["Competition Info"], num, links["Competition Info"])}
+          {this.populate("Officials", dict["Officials"], num, links["Officials"])}
+          <div className = {style.separator}></div>
             {this.populate("Events", dict["Events"], num, links["Events"])}
             {this.populate("Schedule", dict["Schedule"], num, links["Schedule"])}
-          <div className={style.separator}></div>
+          <div className = {style.separator}></div>
              {this.populate("Competitors", dict["Competitors"], num, links["Competitors"])}
              {this.populate("Organizations", dict["Organizations"], num, links["Organizations"])}
-          <div className={style.separator}></div>
-          </div>
+          <div className = {style.separator}></div>
+        </div>
 
-                    <div className = {style.clear}>
-          <div id={style.createContainer}>
-            <button id={style.saveChanges} 
-              onClick={
-                () => {window.location.href = "/competition/"+this.competition_id+"/run"}}>Run Competition
+        <div className = {style.clear}>
+          <div id = {style.createContainer}>
+            <button id = {style.saveChanges} 
+              onClick = {
+                () => {window.location.href = "/competition/"+  this.competition_id + "/run"}}>Run Competition
             </button>
           </div>
           </div>
       </Page>
     ); 
-  }
-  else {
-    return <Page ref="page" {...this.props} />
+  } else {
+    return <Page ref = "page" {...this.props} />
   }
  }
 }

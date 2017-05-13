@@ -4,7 +4,6 @@ import {
   QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE,
   API_REQUEST, API_SUCCESS, API_FAILURE,
   SELECT_COMPETITION
-
 } from '../actions'
 
 // Get saved authentication info for state initalization
@@ -41,8 +40,8 @@ function auth(state = {
         profile: null
       })
     case LOCK_ERROR: {
-        console.error('ERRORR', action.err)
-        return state
+      console.error('ERRORR', action.err)
+      return state
     } break;
     default:
       return state
@@ -100,7 +99,7 @@ function app(state = {
 
 function selected(state = {
   competition: null
-}, action) {
+  }, action) {
   switch (action.type) {
     case SELECT_COMPETITION: {
       localStorage.setItem('competition', JSON.stringify(action.competition))

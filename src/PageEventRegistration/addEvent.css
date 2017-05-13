@@ -14,7 +14,7 @@
 	padding: 10px
 }
 
-.eventList > li:first-of-type{
+.eventList > li:first-of-type {
 	font-weight: bold;
 }
 

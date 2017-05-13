@@ -105,11 +105,11 @@ export default class DragAndDropTable extends React.Component {
     const cid = this.props.competition_id
     this.props.api.get(`/api/competition/${cid}/rounds`)
       .then(json => {
-          const rows = json.map((value, index) => {value.key = index; return value;});
-          this.setState({
-              rows: rows,
-              keyCounter: rows.length
-          });
+        const rows = json.map((value, index) => {value.key = index; return value;});
+        this.setState({
+          rows: rows,
+          keyCounter: rows.length
+        });
       })
       .catch(err => alert(err));
     this.props.api.get(`/api/competition/${cid}/events`)
@@ -117,7 +117,6 @@ export default class DragAndDropTable extends React.Component {
         this.setState({events: json})
       })
       .catch(err => alert(err));
-
   }
 
   render() {
@@ -135,9 +134,8 @@ export default class DragAndDropTable extends React.Component {
     const { columns, rows } = this.state;
 
     for (let i = 0; i < rows.length; i++) {
-        rows[i].ordernumber = (i + 1);
+      rows[i].ordernumber = (i + 1);
     }
-    //const resolvedColumns = resolve.columnChildren({ columns });
     const resolvedRows = resolve.resolve({
       columns: columns,
       method: resolve.nested
@@ -145,7 +143,7 @@ export default class DragAndDropTable extends React.Component {
 
     var numberOptions = [];
     for (let i = 1; i <= this.state.rows.length + 1; i++) {
-        numberOptions.push(<option key={"ordernumber_" + i} value={i}>{i}</option>);
+      numberOptions.push(<option key = {"ordernumber_" + i} value = {i}>{i}</option>);
     }
     var levelOptions = null;
     var styleOptions = null;
@@ -153,103 +151,103 @@ export default class DragAndDropTable extends React.Component {
     if (this.state.selectedStyle != "" && this.state.selectedDance != "") {
     	levelOptions = this.state.events
     		.filter(event => event.stylename == this.state.selectedStyle && event.dance == this.state.selectedDance)
-    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    		.map(event => (<option key = {"level_" + event.levelname} value = {event.levelname}>{event.levelname}</option>));
     } else if (this.state.selectedStyle != "") {
     	levelOptions = this.state.events
     		.filter(event => event.stylename == this.state.selectedStyle)
-    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    		.map(event => (<option key = {"level_" + event.levelname} value = {event.levelname}>{event.levelname}</option>));
     } else if (this.state.selectedDance != "") {
     	levelOptions = this.state.events
     		.filter(event => event.stylename == this.state.selectedDance)
-    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    		.map(event => (<option key = {"level_" + event.levelname} value = {event.levelname}>{event.levelname}</option>));
     } else {
     	levelOptions = this.state.events
-    		.map(event => (<option key={"level_" + event.levelname} value={event.levelname}>{event.levelname}</option>));
+    		.map(event => (<option key = {"level_" + event.levelname} value = {event.levelname}>{event.levelname}</option>));
     }
 
     if (this.state.selectedLevel != "" && this.state.selectedDance != "") {
     	styleOptions = this.state.events
     		.filter(event => event.levelname == this.state.selectedLevel && event.dance == this.state.selectedDance)
-    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    		.map(event => (<option key = {"style_" + event.stylename} value = {event.stylename}>{event.stylename}</option>));
     } else if (this.state.selectedLevel != "") {
     	styleOptions = this.state.events
     		.filter(event => event.levelname == this.state.selectedLevel)
-    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    		.map(event => (<option key = {"style_" + event.stylename} value = {event.stylename}>{event.stylename}</option>));
     } else if (this.state.selectedDance != "") {
     	styleOptions = this.state.events
     		.filter(event => event.dance == this.state.selectedDance)
-    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    		.map(event => (<option key = {"style_" + event.stylename} value = {event.stylename}>{event.stylename}</option>));
     } else {
     	styleOptions = this.state.events
-    		.map(event => (<option key={"style_" + event.stylename} value={event.stylename}>{event.stylename}</option>));
+    		.map(event => (<option key = {"style_" + event.stylename} value = {event.stylename}>{event.stylename}</option>));
     }
 
     if (this.state.selectedLevel != "" && this.state.selectedStyle != "") {
     	danceOptions = this.state.events
     		.filter(event => event.levelname == this.state.selectedLevel && event.stylename == this.state.selectedStyle)
-    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    		.map(event => (<option key = {"dance_" + event.dance} value = {event.dance}>{event.dance}</option>));
     } else if (this.state.selectedLevel != "") {
     	danceOptions = this.state.events
     		.filter(event => event.levelname == this.state.selectedLevel)
-    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    		.map(event => (<option key = {"dance_" + event.dance} value = {event.dance}>{event.dance}</option>));
     } else if (this.state.selectedStyle != "") {
     	danceOptions = this.state.events
     		.filter(event => event.stylename == this.state.selectedStyle)
-    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    		.map(event => (<option key = {"dance_" + event.dance} value = {event.dance}>{event.dance}</option>));
     } else {
     	danceOptions = this.state.events
-    		.map(event => (<option key={"dance_" + event.dance} value={event.dance}>{event.dance}</option>));
+    		.map(event => (<option key = {"dance_" + event.dance} value = {event.dance}>{event.dance}</option>));
     }
 
     return (
       <Table.Provider
-        components={components}
-        columns={columns}
-        className={style.tableWrapper}
+        components = {components}
+        columns = {columns}
+        className = {style.tableWrapper}
       >
         <Table.Header
-          headerRows={resolve.headerRows({ columns })}
-          className={style.tableHeader}
+          headerRows = {resolve.headerRows({ columns })}
+          className = {style.tableHeader}
         />
-        <tbody className={style.scheduleAddEventTBody}>
-            <tr>
+        <tbody className = {style.scheduleAddEventTBody}>
+          <tr>
+            <td>
+            	<select value = {this.state.selectedNumber} onChange = {(event) => this.setState({selectedNumber: event.target.value})}>
+            		<option disabled value = ""></option>
+            		{numberOptions}
+            	</select>
+            </td>
+            <td>
+            	<select value = {this.state.selectedLevel} onChange = {(event) => this.setState({selectedLevel: event.target.value})}>
+            		<option value = ""></option>
+            		{levelOptions}
+            	</select>
+            </td>
+            <td>
+            	<select value = {this.state.selectedStyle} onChange = {(event) => this.setState({selectedStyle: event.target.value})}>
+            		<option value = ""></option>
+            		{styleOptions}
+            	</select>
+            </td>
               <td>
-              	<select value={this.state.selectedNumber} onChange={(event) => this.setState({selectedNumber: event.target.value})}>
-              		<option disabled value=""></option>
-              		{numberOptions}
+              	<select value = {this.state.selectedDance} onChange = {(event) => this.setState({selectedDance: event.target.value})}>
+              		<option value = ""></option>
+              		{danceOptions}
               	</select>
               </td>
-              <td>
-              	<select value={this.state.selectedLevel} onChange={(event) => this.setState({selectedLevel: event.target.value})}>
-              		<option value=""></option>
-              		{levelOptions}
-              	</select>
-              </td>
-              <td>
-              	<select value={this.state.selectedStyle} onChange={(event) => this.setState({selectedStyle: event.target.value})}>
-              		<option value=""></option>
-              		{styleOptions}
-              	</select>
-              </td>
-                <td>
-                	<select value={this.state.selectedDance} onChange={(event) => this.setState({selectedDance: event.target.value})}>
-                		<option value=""></option>
-                		{danceOptions}
-                	</select>
-                </td>
-              <td>
-              </td>
-              <td>
-              	<div onClick={() => this.addNewRow()}>&#43;</div>
-              </td>
-            </tr>
-          </tbody>
+            <td>
+            </td>
+            <td>
+            	<div onClick = {() => this.addNewRow()}>&#43;</div>
+            </td>
+          </tr>
+        </tbody>
 
         <Table.Body
-          className={style.tableBody}
-          rows={resolvedRows}
-          rowKey="key"
-          onRow={this.onRow}
+          className = {style.tableBody}
+          rows = {resolvedRows}
+          rowKey = "key"
+          onRow = {this.onRow}
         />
       </Table.Provider>
     );
@@ -274,7 +272,7 @@ export default class DragAndDropTable extends React.Component {
     var numRounds = 0;
     for (let row of rows) {
     	if (row.levelname == selectedLevel && row.stylename == selectedStyle && row.dance == selectedDance) {
-    	    numRounds++;
+    	  numRounds++;
     		if (earliestRound == null) {
     			earliestRound = row;
     		} else if (earliestRound.round.indexOf("Round") == 0 && row.round.indexOf("Round") == 0 && earliestRound.round < row.round) {
@@ -358,31 +356,31 @@ export default class DragAndDropTable extends React.Component {
 
     let numberRowToChange = null;
     for (let row of rows) {
-        if (row.levelname == rowToRemove.levelname && row.stylename == rowToRemove.stylename && row.dance == rowToRemove.dance) {
-            if (roundName.indexOf("Round") == 0 && row.round.indexOf("Round") == 0) {
-                if (row.round > roundName) {
-                    let num = parseInt(row.round.replace(/^\D+/g, ''));
-                    row.round = "Round " + (num - 1);
-                }
-            } else if (roundName.indexOf("Round") == -1) {
-                if (roundName == "Final") {
-                    if (row.round == "Semifinal") {
-                        row.round = "Final";
-                    } else if (row.round == "Quarter") {
-                        row.round == "Semifinal";
-                    }
-                } else if (roundName == "Semifinal" && row.round == "Quarter") {
-                    row.round = "Semifinal";
-                } else if (roundName == "Quarter" && row.round.indexOf("Round") == 0) {
-                    if (numberRowToChange == null || numberRowToChange.round < row.round) {
-                        numberRowToChange = row;
-                    }
-                }
+      if (row.levelname == rowToRemove.levelname && row.stylename == rowToRemove.stylename && row.dance == rowToRemove.dance) {
+        if (roundName.indexOf("Round") == 0 && row.round.indexOf("Round") == 0) {
+          if (row.round > roundName) {
+            let num = parseInt(row.round.replace(/^\D+/g, ''));
+            row.round = "Round " + (num - 1);
+          }
+        } else if (roundName.indexOf("Round") == -1) {
+          if (roundName == "Final") {
+            if (row.round == "Semifinal") {
+              row.round = "Final";
+            } else if (row.round == "Quarter") {
+              row.round == "Semifinal";
             }
+          } else if (roundName == "Semifinal" && row.round == "Quarter") {
+            row.round = "Semifinal";
+          } else if (roundName == "Quarter" && row.round.indexOf("Round") == 0) {
+            if (numberRowToChange == null || numberRowToChange.round < row.round) {
+              numberRowToChange = row;
+            }
+          }
         }
+      }
     }
     if (numberRowToChange != null) {
-        numberRowToChange.round = "Quarter";
+      numberRowToChange.round = "Quarter";
     }
 
     this.setState({ rows });

@@ -107,17 +107,17 @@ export default class LevelTable extends React.Component {
           className = {style.tableHeader}
         />
         <tbody className = {style.scheduleAddEventTBody}>
-            <tr>
-              <td>
-                  <div width = '100' />
-              </td>
-              <td>
-                <input type = "text" ref = "input" value = {this.state.userData} onChange = {(event) => this.setState({userData: event.target.value})} style = {{width: '100%'}}/>
-              </td>
-              <td>
-              	<div onClick = {() =>this.addNewRow()} width = {100}>&#43;</div>
-              </td>
-            </tr>
+          <tr>
+            <td>
+              <div width = '100' />
+            </td>
+            <td>
+              <input type = "text" ref = "input" value = {this.state.userData} onChange = {(event) => this.setState({userData: event.target.value})} style = {{width: '100%'}}/>
+            </td>
+            <td>
+            	<div onClick = {() =>this.addNewRow()} width = {100}>&#43;</div>
+            </td>
+          </tr>
         </tbody>
         <Table.Body
           className = {style.tableBody}
