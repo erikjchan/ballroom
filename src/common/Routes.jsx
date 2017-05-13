@@ -65,9 +65,9 @@ const routes = {
 }
 
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={Any(LoginPage)} />
+  <Route path="/" component = {App}>
+    <IndexRoute component = {Any(LoginPage)} />
     { Object.keys(routes)
-      .map((route, i) => <Route key={i} path={route} component={routes[route]} />) }
+      .map((route, i) => <Route key = {i} path = {route} component = {routes[route]} />) }
   </Route>
 );

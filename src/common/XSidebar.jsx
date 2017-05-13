@@ -9,6 +9,7 @@ export default class OurSidebar extends React.Component {
   constructor(props) {
     super(props)
   }
+
   /**
    * Starts the login process.
    */
@@ -80,12 +81,6 @@ export default class OurSidebar extends React.Component {
       <Link key={8} to={`/organizationpayment/${competition_id}/0`}>
         - Organization Payment
       </Link>,
-
-      /*isAdmin && competition_selected &&
-      <Link key={9} to={`/competition/${competition_id}/regcompetitor/1`}>
-        - Competitor Registration
-      </Link>*/
-
     ]
   }
 
@@ -103,16 +98,14 @@ export default class OurSidebar extends React.Component {
         Edit Profile
       </Link>,
 
-
       // Login / Logout 
-
       !isAuthenticated &&
-      <a key={9} onClick={this.loginUser.bind(this)}>
+      <a key={9} onClick = {this.loginUser.bind(this)}>
         Login / Signup
       </a>,
 
       isAuthenticated &&
-      <a key={10} onClick={this.logoutUser.bind(this)}>
+      <a key={10} onClick = {this.logoutUser.bind(this)}>
         Logout
       </a>
     ]
@@ -124,18 +117,18 @@ export default class OurSidebar extends React.Component {
     const isAdmin = this.props.profile.role === 'admin'
 
       return (
-        <div className={styles.nav}>
+        <div className = {styles.nav}>
           
           { isAuthenticated &&
-          <div className={styles.circle}>
+          <div className = {styles.circle}>
             <p>{this.props.profile.nickname.substring(0,2).toUpperCase()}</p>
           </div> }
   
-          <div className={styles.sub_menu + ' ' + styles.sub_menu_top}>
+          <div className = {styles.sub_menu + ' ' + styles.sub_menu_top}>
             {this.getTopLinks()}
           </div>
   
-          <div className={styles.sub_menu + ' ' + styles.sub_menu_bottom}>
+          <div className = {styles.sub_menu + ' ' + styles.sub_menu_bottom}>
             {this.getBottomLinks()}
           </div>
         </div>
