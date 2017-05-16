@@ -21,7 +21,7 @@ const get_num_couples_per_event_for_competition = cid => {
 
 const NUM_COUPLES_FINAL_ROUND = 7;
 
-const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, numRounds, counter, values, ordernumber, eventid) => {
+const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, numRounds, couples, counter, values, ordernumber, eventid) => {
     if (i <= numRounds) {
         const size = Math.min(couples, NUM_COUPLES_FINAL_ROUND * Math.pow(2, numRounds - i));
         if (i == numRounds) {
@@ -30,7 +30,7 @@ const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, nu
                     rollback(client, done);
                     return reject(err);
                 }
-                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, couples, counter, values, ordernumber + 1, eventid);
             });
         } else if (i == numRounds - 1) {
             client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
@@ -38,7 +38,7 @@ const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, nu
                     rollback(client, done);
                     return reject(err);
                 }
-                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, couples, counter, values, ordernumber + 1, eventid);
             });
         } else if (i == numRounds - 2) {
             client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
@@ -46,7 +46,7 @@ const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, nu
                     rollback(client, done);
                     return reject(err);
                 }
-                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, couples, counter, values, ordernumber + 1, eventid);
             });
         } else {
             const name = 'Round ' + i;
@@ -55,7 +55,7 @@ const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, nu
                     rollback(client, done);
                     return reject(err);
                 }
-                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, couples, counter, values, ordernumber + 1, eventid);
             });
         }
     } else {
@@ -69,7 +69,7 @@ const createRoundInsertTopHelper = (resolve, reject, err, client, done, counter,
         const couples = parseInt(row.count);
         const eventid = row.id;
         const numRounds = Math.max(1, Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1));
-        createRoundInsertBottomHelper(resolve, reject, err, client, done, 1, numRounds, counter, values, ordernumber, eventid)
+        createRoundInsertBottomHelper(resolve, reject, err, client, done, 1, numRounds, couples, counter, values, ordernumber, eventid)
     } else {
         client.query('COMMIT', (err) => {
             if (err) {
