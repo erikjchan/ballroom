@@ -205,7 +205,7 @@ export default class RunCompetition extends React.Component {
       {
         cell: { formatters: [
           (value, {rowData}) => !rowData.callbackscalculated && (
-            <button
+            <button className={style.enterCallbackBtns}
               onClick={() => this.enterCallbacksFor(rowData)}
             > Enter Callbacks
             </button>)    

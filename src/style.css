@@ -554,6 +554,43 @@ End
   box-shadow: 0px 4px 10px #444444;
 }
 
+.editBtns {
+  float: right;
+  display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
+}
+.saveBtns {
+  margin-top:20px;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
+}
 .addeditBtns {
   float: right;
   display:inline-block;
@@ -568,6 +605,27 @@ End
   border: 0;
   vertical-align: middle;
   text-align: center;
+}
+
+.enterCallbackBtns {
+  /*margin-left:20px;
+  margin-bottom:20px;*/
+  margin: 10px;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 .editpayBtns {

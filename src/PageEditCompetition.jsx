@@ -205,9 +205,10 @@ export default class PageEditCompetition extends React.Component {
 
       return (
         <Page ref = "page" {...this.props}>
-          <div className = {style.titles}>
+          {/*<div className = {style.titles}>
             <p>{comp_name}</p>
-          </div>
+          </div>*/}
+          <h1>Edit Competition</h1>
           {/*<div className={style.infoBoxEditCompetition}>*/}
           <div className = {style.infoBoxExpanded}>
             <Box admin = {true} title = {
