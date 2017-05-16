@@ -119,10 +119,20 @@ export default class PageEventRegistration extends React.Component {
         this.setState({level_styles: json})
       })
       .catch(err => alert(err))
-    this.setState({
-        levelid: parseInt(levelid),
-        eventid: null 
-    });
+      if ( this.state.styleid){
+        fetch(`/api/competition/${this.competition_id}/level/${levelid}/style/${this.state.styleid}`)
+        .then(response => {
+          return response.json()
+        })
+        .then(json => {
+          this.setState({level_style_events: json})
+        })
+        .catch(err => alert(err))
+      }
+      this.setState({
+          levelid: parseInt(levelid),
+          eventid: null 
+      });
   };
 
   handleStyleChange = (styleid) => {
@@ -158,6 +168,8 @@ export default class PageEventRegistration extends React.Component {
   registerEventHandler = () => {
       const { levelid, styleid, eventid, partner, isLeading, user_competition_events } = this.state;
       const button_enabled = (eventid != null) && (isLeading != null) && (partner != null)
+      console.log(user_competition_events)
+      console.log(eventid)
       if (button_enabled) {
           if (!user_competition_events.every(this.checkIfNotExists)) {
               console.log(user_competition_events.every(this.checkIfNotExists));
