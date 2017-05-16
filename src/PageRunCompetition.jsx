@@ -109,8 +109,7 @@ export default class RunCompetition extends React.Component {
     const next_round = this.state.rounds[this.state.current_round.ordernumber];
     this.updateDBCurrentRoundId(next_round.id);
     this.setState({ current_round : next_round });
-    fetch(`/api/competitors/round/${next_round.id}`)
-      .then(response => response.json())
+    this.props.api.get(`/api/competitors/round/${next_round.id}`)
       .then(json => {
         this.setState({competitors: json.map(c => c.number)});
       });
@@ -130,8 +129,7 @@ export default class RunCompetition extends React.Component {
     const prev_round = this.state.rounds[this.state.current_round.ordernumber - 2];
     this.updateDBCurrentRoundId(prev_round.id);
     this.setState({ current_round: prev_round });
-    fetch(`/api/competitors/round/${prev_round.id}`)
-      .then(response => response.json())
+    this.props.api.get(`/api/competitors/round/${prev_round.id}`)
       .then(json => {
         this.setState({competitors: json.map(c => c.number)});
       });
@@ -151,16 +149,9 @@ export default class RunCompetition extends React.Component {
   }
 
   updateDBCurrentRoundId(rid) {
-    fetch("/api/competition/updateCompetitionCurrentRoundId", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    this.props.api.post("/api/competition/updateCompetitionCurrentRoundId", {
         cid: this.competition_id,
         rid: rid
-      })
     });
   }
 
