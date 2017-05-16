@@ -18,12 +18,15 @@ import CompetitorsList      from '../PageCompetitorList.jsx'
 import EditProfile          from '../PageEditProfile.jsx'
 import EnterCallbacks       from '../PageEnterCallbacks.jsx'
 import EditCompetition      from '../PageEditCompetition.jsx'
-import EditOfficial         from '../PageEditOfficial.jsx'
+import EditOfficials        from '../PageEditOfficials.jsx'
 import EditLevelsAndStyles  from '../PageEditLevelsAndStyles.jsx'
 import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
-import AffiliationPayment   from '../PageAffiliationPayment.jsx'
+import OrganizationPayment  from '../PageOrganizationPayment.jsx'
+import QueryTest            from '../../test.js'
+import PageNewUser          from '../PageNewUser.jsx'
+import CompetitorPayment    from '../PageCompetitorPayment.jsx'
 
 /**
  * Semantics:
@@ -37,31 +40,34 @@ const Judge = Authorization(['judge', 'admin'])
 const Admin = Authorization(['admin'])
 
 const routes = {
-  'home'                                                       : Any(HomePage),
-  'competition/:competition_id/eventregistration'              : User(EventRegistration),
-  'competitions'                                               : User(CompetitionListPage),
-  'editprofile'                                                : User(EditProfile),
-  'competition/:competition_id/run'                            : Judge(RunCompetition),
-  'competition/:competition_id/round/:round_id/entercallbacks' : Judge(EnterCallbacks),
-  'competition/:competition_id/editschedule'                   : Admin(EditSchedule),
-  'competition/:competition_id/editlevelsandstyles'            : Admin(EditLevelsAndStyles),
-  'competition/:competition_id/editevents'                     : Admin(EditEvents),
-  'competition/:competition_id/competitorslist'                : Admin(CompetitorsList),
-  'competition/:competition_id/seecompetitor/:competitor_id'   : Admin(SeeCompetitor),
-  'competition/:competition_id/regcompetitor/:competitor_id'   : Admin(RegisterCompetitor),
-  'competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
-  'admin/competitions'                                         : User(CompetitionListAdmin),
-  'admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
-  'editcompetition/:competition_id'                            : Admin(EditCompetition),
-  'editofficial/:competition_id'                               : Admin(EditOfficial), 
-  'affiliationpayment/:competition_id/:affiliation_id'         : Admin(AffiliationPayment),
-
+  '/home'                                                       : Any(HomePage),
+  '/competition/:competition_id/eventregistration'              : User(EventRegistration),
+  '/competitions'                                               : User(CompetitionListPage),
+  '/editprofile'                                                : User(EditProfile),
+  '/competition/:competition_id/run'                            : Judge(RunCompetition),
+  '/competition/:competition_id/round/:round_id/entercallbacks' : Judge(EnterCallbacks),
+  '/competition/:competition_id/editschedule'                   : Admin(EditSchedule),
+  '/competition/:competition_id/editlevelsandstyles'            : Admin(EditLevelsAndStyles),
+  '/competition/:competition_id/editevents'                     : Admin(EditEvents),
+  '/competition/:competition_id/competitorslist'                : Admin(CompetitorsList),
+  '/competition/:competition_id/seecompetitor/:competitor_id'   : Admin(SeeCompetitor),
+  '/competition/:competition_id/regcompetitor/:competitor_id'   : Admin(RegisterCompetitor),
+  '/competition/:competition_id/:competitor_id'                 : User(CompetitionPage),
+  '/admin/competitions'                                         : User(CompetitionListAdmin),
+  '/admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
+  '/editcompetition/:competition_id'                            : Admin(EditCompetition),
+  '/editofficials/:competition_id'                              : Admin(EditOfficials),
+  '/querytest'                                                  : Any(QueryTest),
+  '/newuser'                                                    : User(PageNewUser),
+  '/organizationpayment/:competition_id/:organization_id'       : Admin(OrganizationPayment),
+  '/querytest'                                                  : Any(QueryTest),
+  '/competitorpayment/:competition_id/:competitor_id'           : User(CompetitorPayment),
 }
 
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={Any(LoginPage)} />
+  <Route path="/" component = {App}>
+    <IndexRoute component = {Any(LoginPage)} />
     { Object.keys(routes)
-      .map((route, i) => <Route key={i} path={route} component={routes[route]} />) }
+      .map((route, i) => <Route key = {i} path = {route} component = {routes[route]} />) }
   </Route>
 );

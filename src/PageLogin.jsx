@@ -1,5 +1,4 @@
-
-import styles from "./style.css"
+import style from "./style.css"
 import React from 'react'
 import Page from './Page.jsx'
 import { Link } from 'react-router'
@@ -12,6 +11,19 @@ export default class LoginPage extends React.Component {
    */
   loginUser() {
     window.dispatch(login())
+  }
+
+  generateRounds() {
+    fetch('/api/competition/generateRounds', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cid: 1, // TODO: change in production
+      })
+    })
   }
 
   render() {
@@ -32,7 +44,16 @@ export default class LoginPage extends React.Component {
     // console.log(action, fetchQuote())
     return (
      <Page ref="page" {...this.props}>
-        <h1>Welcome to Footcraft!</h1>
+      <h1>Welcome to Floorcraft!</h1>
+
+      Floorcraft is a service that allows both collegiate ballroom competition organizers 
+      to manage competitions and competitors to register for competitions.
+
+      The site is an open-source project that can be found at <a href="https://github.com/ejc233/ballroom/">this link</a>.
+
+
+      <div style={{visibility: 'hidden'}}>
+        <h1>Welcome to Floorcraft!</h1>
         { message }
         { this.props.profile.role === 'none' && <button onClick={this.loginUser.bind(this)}>Login / Signup</button> }
 
@@ -47,10 +68,13 @@ export default class LoginPage extends React.Component {
         <p><Link to='competition/1/run'              >RunCompetition</Link></p>
         <p><Link to='editprofile'                    >EditProfile</Link></p>
         <p><Link to='editcompetition/1'              >EditCompetition</Link></p>
-        <p><Link to='editofficial/1'                 >EditOfficial</Link></p>
-        <p><Link to='affiliationpayment/1/1'           >AffiliationPayment</Link></p>        
+        <p><Link to='newuser'                        >NewUser</Link></p>
+        <p><Link to='editofficials/1'                >EditOfficials</Link></p>
+        <p><Link to='organizationpayment/1/1'        >OrganizationPayment</Link></p>        
         <p><Link to='competition/1/seecompetitor/1'  >SeeCompetitor</Link></p>
         <p><Link to='competition/1/regcompetitor/1'  >RegisterCompetitor</Link></p>
+        <p><Link to='querytest'                      >QueryTest</Link></p>   
+        <p><Link to='competitorpayment/1/1'          >CompetitorPayment</Link></p>      
         <button onClick={() => this.props.dispatch(action) } />
         <pre>
           {JSON.stringify(this.props, function(key, value) {
@@ -65,6 +89,8 @@ export default class LoginPage extends React.Component {
               return value;
           }, 2)}
         </pre>
+    </div>
+    <button onClick={() => this.generateRounds()}>Create rounds for events</button>
 
       </Page>
     );

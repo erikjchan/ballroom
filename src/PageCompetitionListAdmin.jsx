@@ -1,3 +1,10 @@
+/* 
+ * COMPETITIONS LIST (ADMIN)
+ *
+ * This page will be used by admins to see all the competitions they have created,
+ * as well as to create new competitions
+ */
+
 import style from "./style.css";
 import React from 'react';
 import * as Table from 'reactabular-table';
@@ -7,12 +14,10 @@ import Autocomplete from 'react-autocomplete';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import CompetitionsTable from './PageCompetitionList/competitions.jsx';
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import { selectCompetition } from './actions'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-// max flow overflow hidden for scrollbar
-
 
 // admin/competitions
 class PageCompetitionList extends React.Component {
@@ -26,18 +31,22 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    fetch(`/api/competitions`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competitions`)
       .then(json => { 
+        this.competitions = json;
+        for (let i = 0; i < this.competitions.length; i++) {
+          var date = new Date(this.competitions[i].startdate);
+          this.competitions[i].startdate = date.toDateString();
+        }
         // update the state of our component
         this.setState({ competitions : json })
       })
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(this.refs.page.errorNotif(
-        `There was an error fetching the competitions`))
+      .catch(err => alert(`There was an error getting the competitions`))
   }
+
   /**
    * Selects a competition for browsing.
    * All sidebar links will now point to pages
@@ -46,67 +55,65 @@ class PageCompetitionList extends React.Component {
    * this competition.
    */
   browseCompetition (competition) {
-    console.log(this, competition)
     this.props.dispatch(selectCompetition(competition))
-    browserHistory.push('admin/competition/' + competition.id)
+    browserHistory.push('/admin/competition/' + competition.id)
   }
 
   /**
    * Builds the table with the competitions you're registered to.
    * @return {[type]} [description]
    */
-  getYourCompetitionsTable () {
+  getAllCompetitionsTable () {
     const yourColumns = [
-      { property: 'Name',
-        header: { label: 'Name' }
+      {
+        property: 'name',
+        header: {
+          label: 'Name'
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) =>
+              <a onClick={() => this.browseCompetition(rowData)}>{value}</a>
+          ]
+        },
       },
-      { property: 'StartDate',
-        header: { label: 'Date' }
-      },
-      { property: 'Select',
-        header: { label: '' }
+      { property: 'startdate',
+        header: {
+          label: 'Date'
+        }
       }
     ]
 
-    // TODO; filter to only my competitions
-
-    const rows = this.state.competitions.map(row => {
-      row['Select'] = <button
-        className = {style.search}
-        onClick = {() => this.browseCompetition(row)}>Browse</button>;
-      return row
-    })
-
     return <Table.Provider
-            className="pure-table pure-table-striped event-table"
+            className = "pure-table pure-table-striped event-table"
             columns = {yourColumns}>
-            <Table.Header />
-            <Table.Body
-              rows = {rows || []}
-              rowKey = "id"
-            />
-          </Table.Provider>
+              <Table.Header />
+              <Table.Body
+                rows = {this.state.competitions || []}
+                rowKey = "id"
+              />
+           </Table.Provider>
+  }
+
+  onCreateNewCompetition(){
+    // Competition ID 0 creates new competition
+    browserHistory.push(`/editcompetition/0`)
   }
 
   render() {
-  
     return (
-     	<Page ref="page" {...this.props}>
-        <div className={style.content}>
+     	<Page ref = "page" {...this.props}>
+        <div className = {style.content}>
          	<h1>Competitions Page</h1>
-             <Box title="Your Competitions"
-             content={this.getYourCompetitionsTable()} />
+             <Box admin = {true} title = "All Competitions"
+             content = {this.getAllCompetitionsTable()} />
           <hr />
-        	<div>
-        <div className = {style.addeditBtns}>
-            <button 
-                className={style.editBtns} 
-                onClick={()=>{ browserHistory.push('/editcompetition/0/') }}> 
-                Create New Competition
-            </button>
-     	</div>
-          </div>
-       	</div>
+          <div className = {style.clear}>
+          <div id = {style.createContainer}>
+            <button id = {style.saveChanges} onClick = {this.onCreateNewCompetition.bind(this)}>Create New Competition</button>
+       	  </div>
+           </div>
+        </div>
       </Page>
      );
   }

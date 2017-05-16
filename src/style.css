@@ -1,5 +1,3 @@
-
-
 .heading {
   font-size: 10vw;
 }
@@ -18,13 +16,14 @@
   text-align: center;
 }
 
-.separator{
+.separator {
 	display: block;
+  clear:both;
 	height: 0;
 	width: 0;
 }
 
-.registerBtn{
+.registerBtn {
   background-color: #CFC7C5;
   color: black;
   font-size: 16px;
@@ -39,53 +38,60 @@
   box-shadow: 0px 4px 10px #444444;
 }
 
-.runBtn{
-	background-color: #606776;
-  color: white;
-	font-size: 24px;
-	padding: 10px;
-	width: auto;
-	height: auto;
-	border-radius: 20px;
-	box-shadow: 0px 5px 8px black;
-  /*display: block;
-	float: right;*/
+.runBtn {
+  float: right;
+  background-color: white;
+  color: black;
+  opacity: 0.5;
+  font-size: 20px;
+  padding: 6px;
+  width: auto;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
   margin-left: 78%;
   margin-bottom: 40px;
 }
 
-.searchBtn{
-  background-color: #606776;
-  color: white;
-	/*font-size: 24px;
-	padding: 10px;*/
-	width: auto;
-	height: auto;
-	border-radius: 5px;
+.searchBtn {
+  display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 0;
+  border: 0;
+  text-align: center;
+  box-shadow: 0px 2px 5px #444444;
 }
 
-.titleContainer{
+.titleContainer {
   vertical-align: middle;	
 }
 
-.editBtn{
+.editBtn {
 	float: right;
-	background-color: white;
+	background-color: #C5C7CF;
 	color: black;
-	opacity: 0.5;
+	opacity: 1;
 	font-size: 20px;
 	padding: 6px;
 	width: auto;
 	height: 100%;
 	border-radius: 10px;
-	box-shadow: 0 0 0;
+	box-shadow: 0px 4px 10px #444444;
 	border: 0;
 	vertical-align: middle;
  	text-align: center;
 }
 
-.lines{
-	padding: 4px 20px;
+.lines {
+	padding: 5px 20px;
 	font-size: 14px;
 	margin: 0 auto;
 }
@@ -108,8 +114,6 @@ Competitions Page End
 Edit Schedule Page
 Start
  */
-
-
 #titleContainer {
   position: relative;
 }
@@ -122,7 +126,8 @@ Start
   position: absolute;
   right: 5vw;
   top: 15px;
-  display: inline-block;
+  /*display: inline-block;
+  overflow: auto;*/
 }
 
 #buttonsContainer > div {
@@ -134,15 +139,85 @@ Start
   padding: 10px;
   background-color: #365D82;
   color: white;
+  height:100%;
+  overflow: auto;
+}
+
+#createContainer {
+  float: right;
+  display: inline-block;
+  height: 100%;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#createContainer > div {
+  font-size: 18pt;
+  box-sizing: border-box;
+  border: solid black 1px;
+  border-radius: 20px;
+  padding: 30px;
+  background-color: #365D82;
+  color: white;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.clear {
+    clear:both;
+    line-height:0;
+}
+
+.clear::after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
 }
 
 #saveChanges {
-  cursor: pointer;
+  margin-right: 20px;
+  float: left;
+  display:inline-block;
+  background-color: #365D82;
+  color: white;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 50px;
+  border-radius: 10px;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 #cancelChanges {
-  margin-left: 30px;
   cursor: pointer;
+  margin-right: 20px;
+  float: left;
+  display:inline-block;
+  background-color: #365D82;
+  color: white;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 50px;
+  border-radius: 10px;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 #dragAndDropWrapper {
@@ -159,12 +234,6 @@ Start
   vertical-align: middle;
 }
 
-/*#dragAndDropWrapperTopBar > div {
-  display: inline-block;
-  width: 50%;
-  vertical-align: middle;
-}*/
-
 #dragAndDropTitle {
   color: white;
   font-size: 30px;
@@ -174,30 +243,23 @@ Start
 
 #dragAndDropAutosort {
 	float: right;
-	background-color: white;
+	background-color: #C5C7CF;
 	color: black;
-	opacity: 0.5;
+	opacity: 1;
 	font-size: 20px;
 	padding: 6px;
 	width: auto;
 	height: 100%;
 	border-radius: 10px;
-	box-shadow: 0 0 0;
+	box-shadow: ;
 	border: 0;
 	vertical-align: middle;
  	text-align: center;
   cursor: pointer;
   float:right;
   margin-right: 20px;
+  box-shadow: 0px 4px 10px #444444;
 }
-
-/*#dragAndDropAutosort > div {
-  display: inline-block;
-  background-color: #eeeeee;
-  border-radius: 10px;
-  text-align: center;
-  padding: 5px 20px;
-}*/
 
 #scheduleWrapper {
   padding: 30px;
@@ -238,29 +300,28 @@ Start
 
 .tableWrapper {
   border-collapse: separate;
-  background-color: #888888;
-  border-spacing: 0px 20px;
+  background-color: #C5C7CF;
+  border-spacing: 0px 5px;
+  width: 100%;
 }
 
 .tableWrapper > thead > tr {
   background-color: #dddddd;
+  box-shadow: 0px 4px 4px #444444
 }
 
 .tableWrapper > thead th {
   box-sizing: border-box;
   text-align: center;
-  border-top: solid black 1px;
-  border-bottom: solid black 1px;
   padding: 10px;
-  box-shadow: 0px 3px #333333;
 }
 
 .tableWrapper > thead th:first-child {
-  border-left: solid black 1px;
+  /*border-left: solid black 1px;*/
 }
 
 .tableWrapper > thead th:last-child {
-  border-right: solid black 1px;
+  /*border-right: solid black 1px;*/
 }
 
 .tableWrapper > thead input {
@@ -274,17 +335,16 @@ Start
 .scheduleAddEventTBody td:last-child > div {
   text-align: center;
   cursor: pointer;
-  border: solid black 1px;
-  box-shadow: 0px 3px #333333;
+  /*border: solid black 1px;*/
+  box-shadow: 0px 2px 5px #444444;
   background-color: white;
-
 }
 
 .scheduleAddEventTBody td > select {
   width: 100%;
 }
 
-.editLnSBox{
+.editLnSBox {
 	width: 50%;
 	height: auto;
 	display: inline-block;
@@ -299,24 +359,22 @@ Start
 .tableBody td {
   box-sizing: border-box;
   text-align: center;
-  border-top: solid black 1px;
-  border-bottom: solid black 1px;
   padding: 10px;
-  box-shadow: 0px 3px #333333;
+  box-shadow: 0px 4px #666666;
+  overflow: hidden;
 }
 
 .tableBody > tr > td:first-child {
-  border-left: solid black 1px;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  border-left: solid #999 1px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 .tableBody > tr > td:last-child {
-  border-right: solid black 1px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-right: solid #999 1px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
-
 /**
 Edit Schedule Page
 End
@@ -338,18 +396,22 @@ End
 }
 
 .search {
-  background-color: white;
+  display:inline-block;
+  background-color: #CFC7C5;
   color: black;
-  opacity: 0.5;
+  opacity: 1;
   font-size: 20px;
   padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
   width: auto;
   height: 100%;
   border-radius: 10px;
   box-shadow: 0 0 0;
-  border: 1;
+  border: 0;
   vertical-align: middle;
   text-align: center;
+  box-shadow: 0px 4px 10px #444444;
 }
 
 .createNew {
@@ -392,14 +454,13 @@ End
   text-align: center;
 }
 
-.infoTables{
+.infoTables {
   width: auto;
   height: auto;
-  /*padding: 20px 40px;*/
 }
 
 
-.infoBox{
+.infoBox {
 	width: 50%;
 	height: 340px;
 	display: inline-block;
@@ -407,43 +468,35 @@ End
 	vertical-align: middle;
 }
 
-.infoBoxExpanded{
+.infoBoxExpanded {
 	width: 100%;
-	height: 100%;
-	padding: 0px;
+  height: 100%;
+  overflow:auto;
 }
 
-.infoBoxLeft{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
+.infoBoxLeft {
   width: 50%;
-  height: 340px;
+  height: 360px;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
-  /*float:left;*/
-  /*margin-bottom: 20px;*/
 }
 
-.infoBoxRight{
-  /*border: 4px solid #7F7F7F;*/
-  /*border-radius: 8px;*/
+.infoBoxRight {
   width: 50%;
-  height: 340px;
+  height: 360px;
   display: inline-block;
   padding: 0px;
   vertical-align: middle;
-  /*float:right;*/
-  /*margin-bottom: 20px;*/
 }
 
-.separators{
+.separators {
   display: block;
   height: 0;
   width: 0;
 }
 
-.runBtns{
+.runBtns {
   background-color: #E7B6A4;
   font-size: 24px;
   padding: 10px;
@@ -455,11 +508,11 @@ End
   margin-right: 40px;
 }
 
-.titleContainers{
+.titleContainers {
   vertical-align: middle; 
 }
 
-.editBtns{
+.editBtns {
   float: right;
   display:inline-block;
   background-color: #CFC7C5;
@@ -479,16 +532,31 @@ End
   box-shadow: 0px 4px 10px #444444;
 }
 
-/*.lines{
-  padding: 20px;
-  font-size: 14px;
+.roundBtns {
+  float: right;
+  margin-left:20px;
+  margin-bottom:20px;
+  display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
   height: 100%;
-}*/
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
+}
 
-.addeditBtns{
+.addeditBtns {
   float: right;
   display:inline-block;
-  /*background-color: white;*/
   color: black;
   opacity: 1;
   font-size: 20px;
@@ -502,8 +570,7 @@ End
   text-align: center;
 }
 
-.editpayBtns{
-  /*background-color: white;*/
+.editpayBtns {
   color: black;
   opacity: 1;
   font-size: 20px;
@@ -517,11 +584,13 @@ End
   text-align: center;
 }
 
-.comp_containers{
-  padding:60px;
+.comp_containers {
+  padding-top: 30px;
+  padding-right: 30px;
+  padding-bottom: 60px;
 }
 
-.eventtable_containers{
+.eventtable_containers {
   background-color: white;
   box-shadow: 0px 4px 10px #444444;
 }
@@ -534,35 +603,23 @@ End
   text-align: center;
 }
 
-.infoTable{
+.infoTable {
   width: auto;
   height: auto;
-  /*padding: 20px 40px;*/
 }
 
-.separator{
+.separator {
   display: block;
+  clear:both;
   height: 0;
   width: 0;
 }
 
-/*.runBtn{
-  background-color: #E7B6A4;
-  font-size: 24px;
-  padding: 10px;
-  width: auto;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 5px 8px black;
-  float: right;
-  margin-right: 40px;
-}*/
-
-.titleContainer{
+.titleContainer {
   vertical-align: middle; 
 }
 
-.returnBtn{
+.returnBtn {
   float: left;
   background-color: white;
   color: black;
@@ -579,30 +636,6 @@ End
   margin-right: 10px;
 }
 
-/*.editBtn{
-  float: right;
-  background-color: white;
-  color: black;
-  opacity: 0.5;
-  font-size: 20px;
-  padding: 6px;
-  width: auto;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 0;
-  border: 0;
-  vertical-align: middle;
-  text-align: center;
-}*/
-
-/*.lines{
-  padding: 20px;
-  font-size: 14px;
-  height: 100%;
-}*/
-
-/* */
-
 
 
 
@@ -612,7 +645,8 @@ form{
 }
 
 .long_form{
-  height:100vh;
+  height:100%;
+  padding: 20px;
 }
 .form_row{
   /*margin-top:10px;*/
@@ -621,8 +655,9 @@ form{
   display: inline-block;
 }
 input{
-  border-radius:5px;
-  margin-top: 10px;
+  font-size: 16;
+  border: 1px solid #aaa;
+  border-radius: 4px;
 }
 input[type = "text"]{
   width:100%;
@@ -632,13 +667,22 @@ input[type = "text"]{
   width:80%;
 }
 input[type="date"]{
-  width:90%;
+  width:100%;
 }
+
 label{
-  font-size: 20px;
-  /*margin:10px;*/
+  /*font-size: 20px;*/
   float:left;
   display:inline-block;
+  padding-right: 40px;
+}
+
+.long_form label{
+  font-size: 20px;
+  float:left;
+  display:inline-block;
+  padding-right: 40px;
+  width: 30%
 }
 .long_label{
   width:60%;
@@ -648,6 +692,28 @@ label{
   margin-right: 20px;
   float: left;
   display:inline-block;
+  background-color: #CFC7C5;
+  color: black;
+  opacity: 1;
+  font-size: 20px;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 0;
+  border: 0;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 0px 4px 10px #444444;
+}
+
+
+.blockcompetitionEditBtns{
+  margin-top: 30px;
+  margin-right: 20px;
+  display: block;
   background-color: #CFC7C5;
   color: black;
   opacity: 1;
@@ -696,65 +762,14 @@ label{
   box-shadow: 0px 4px 10px #444444;
 }
 
-
-
-
-
-/****************************************** Global *****************************************/
-
-:global(.container) {
-  background-color: white;
-  border: 1px #AAA solid;
-  border-radius: 5px 5px 0px 0px;
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.24);
-  max-width: 500px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.full_label{
+  width:100%;
 }
 
-:global(.container h5) {
-  margin: 0px;
-}
 
-:global(.container h4) {
-  margin: 0px;
-}
 
-:global(.container h3) {
-  margin: 0px;
-}
-
-:global(.container h4) {
-  margin: 0px;
-}
-
-:global(h5) {
-  margin: 3px;
-}
-
-:global(.container h2) {
-  padding: 4px 6px;
-  margin: 0px;
-  background-color: #E7B6A4;
-  border-radius: 5px 5px 0px 0px;
-}
-
-:global(.container.admin h2) {
-  background-color: #365d82;
-  color: white;
-  font-weight: lighter;
-}
-
-:global(.container div.container-content) {
-  padding: 23px 16px;
-}
-
-:global(.container div) {
-  padding: 12px 0px;
-}
-
-:global(.right_align) {
-  text-align: right;
-  width: 100%;
-  display: block;
+/****************************************** Edit Officials *****************************************/
+.addLabel{
+  width:30%;
+  margin: 10px;
 }

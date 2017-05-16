@@ -1,4 +1,11 @@
-import styles from "./style.css"
+/* 
+ * EVENT REGISTRATION
+ *
+ * This page will be used by users to register for events in a 
+ * specific selected competition
+ */
+
+import style from "./style.css"
 import React from 'react'
 import AddEvent from './PageEventRegistration/addEvent.jsx'
 import EventTable from './common/EventTable.jsx'
@@ -10,27 +17,6 @@ import Box from './common/Box.jsx'
 import { Link } from 'react-router'
 import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
-
-/*
-
-
-export default class RadioTest extends React.Component {
-  state = {
-    value: 'vvendetta'
-  };
-
-  handleChange = (value) => {
-    this.setState({value});
-  };
-
-  render () {
-    return (
-      
-    );
-  }
-}
-
- */
 
 // competition/:competition_id/eventregistration
 export default class PageEventRegistration extends React.Component {
@@ -44,29 +30,34 @@ export default class PageEventRegistration extends React.Component {
       competition_events: [],
       user_competition_events: [],
       competitors: [],
+      levels: [],
+      level_styles: [],
+      level_style_events: [],
 
       value: '',
       loading: false,
       partner: null,
 
       // Selected stuff
-      level: null,
-      style: null,
-      event: null,
+      levelid: null,
+      styleid: null,
+      eventid: null,
       isLeading: null,
     }
 
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {this.competition_id = parseInt(this.props.params.competition_id)}
+    try {
+      // this.competition_id = this.props.selected.competition.id
+      this.competition_id = this.props.params.competition_id
+      this.competitor_id = this.props.profile.competitor_id 
+    }
     catch (e) { alert('Invalid competition ID!') }
   }
-
-  componentDidMount() {
+  componentDidMount(){
     /* Call the API for competition data */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => { 
         // update the state of our component
         this.setState({ competition : json })
@@ -77,131 +68,195 @@ export default class PageEventRegistration extends React.Component {
       .catch(err => alert(err))
 
     /** Pretty similar to above! */
-    fetch(`/api/events`)
-      .then(response => response.json())
-      .then(json => json.filter(event => {
-        console.log(event.competitionId, this.competition_id)
-        return event.competitionId === this.competition_id
-      }))
+    this.props.api.get(`/api/competition/${this.competition_id}/events`)
       .then(json => {
         this.setState({ competition_events : json})
       })
       .catch(err => alert(err))
 
-    /** Fetch the events a user is already registered to */
-    fetch(`http://localhost:8080/api/competitors/0/events`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(json => {
+        console.log(json)
         for (let i = 0; i < json.length; i++) {
-            if (json[i].leading) {
+            json[i].title = json[i].dance;
+            if (json[i].leadcompetitorid == this.competitor_id) {
                 json[i].leader = "You"
-                json[i].follower = json[i].partner
+                json[i].follower = json[i].followfirstname+" "+json[i].followlastname
             } else {
-                json[i].leader = json[i].partner
                 json[i].follower = "You"
+                json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
             }
         }
-        console.log('JSON', json)
-        this.setState({user_competition_events: json.splice(0,3)})
+        this.setState({user_competition_events: json})
+      })
+      .catch(err => { alert(err); console.log(err)})
+
+    /** Fetch levels in a competition */
+    this.props.api.get(`/api/competition/${this.competition_id}/levels`)
+      .then(json => {
+
+        this.setState({levels: json})
       })
       .catch(err => alert(err))
 
     /** Fetch competitors for partner search */
-    fetch(`http://localhost:8080/api/competitors`)
-      .then(response => {
-        return response.json()
-      })
+    this.props.api.get(`/api/competitors`)
       .then(json => {
-
         this.setState({competitors: json})
       })
       .catch(err => alert(err))
   }
 
-  handleLevelChange = (level) => {
+  handleLevelChange = (levelid) => {
+    fetch(`/api/competition/${this.competition_id}/level/${levelid}/styles`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+        this.setState({level_styles: json})
+      })
+      .catch(err => alert(err))
     this.setState({
-        level: level,
-        style: null,
-        event: null 
+        levelid: parseInt(levelid),
+        eventid: null 
     });
   };
 
-  handleStyleChange = (style) => {
+  handleStyleChange = (styleid) => {
+    fetch(`/api/competition/${this.competition_id}/level/${this.state.levelid}/style/${styleid}`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+        this.setState({level_style_events: json})
+      })
+      .catch(err => alert(err))
     this.setState({
-        style: style,
-        event: null
+        styleid: parseInt(styleid),
+        eventid: null
     });
   };
 
-  handleEventChange = (event) => {
-    this.setState({event});
+  handleEventChange = (eventid) => {
+    this.setState({
+      eventid: parseInt(eventid)
+    });
   };
 
   handleLeadChange = (isLeading) => {
       this.setState({isLeading});
   };
 
-  checkIfExists = (reg) => {
-      const { level, style, event } = this.state;
-      return (reg["level"] !== level) || (reg["style"] !== style) || (reg["title"] !== event);
+  checkIfNotExists = (reg) => {
+      const { eventid } = this.state;
+      return (reg["eventid"] != eventid);
   };
 
   registerEventHandler = () => {
-      const { level, style, event, partner, isLeading, user_competition_events } = this.state;
-      const button_enabled = (event != null) && (isLeading != null) && (partner != null)
+      const { levelid, styleid, eventid, partner, isLeading, user_competition_events } = this.state;
+      const button_enabled = (eventid != null) && (isLeading != null) && (partner != null)
       if (button_enabled) {
-          if (!user_competition_events.every(this.checkIfExists)) {
+          if (!user_competition_events.every(this.checkIfNotExists)) {
+              console.log(user_competition_events.every(this.checkIfNotExists));
               alert('You are already registered for this event!');
               return false
+          } else if (this.competitor_id == partner) {
+              alert('This is a partner dance competition silly, dance with somebody else!');
+              return false
           }
-          console.log(isLeading);
+          var leadcompetitorid = partner;
+          var followcompetitorid = this.competitor_id;
           if (isLeading == 'Leading') {
-              user_competition_events.push(
-                  {level: level, style: style, title: event, round: '', leader: "You", follower: partner}
-              );
-          } else {
-              user_competition_events.push(
-                  {level: level, style: style, title: event, round: '', leader: partner, follower: "You"}
-              );
+            leadcompetitorid = this.competitor_id;
+            followcompetitorid = partner;
           }
-
-          this.setState({user_competition_events});
+            fetch("/api/create_partnership", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    leadcompetitorid: leadcompetitorid,
+                    followcompetitorid: followcompetitorid,
+                    eventid: eventid,
+                    competitionid: this.competition_id
+                })
+            }).then((response) => {
+                fetch("/api/create_paymentrecord", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      competitionid: this.competition_id,
+                      competitorid: leadcompetitorid,
+                      amount: this.state.competition.regularprice,
+                      online: false,
+                      paidwithaffiliation: true,
+                    })
+                }).then((response) =>{
+                    console.log(response)
+                    fetch("/api/create_paymentrecord", {
+                      method: 'POST',
+                      headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        competitionid: this.competition_id,
+                        competitorid: followcompetitorid,
+                        amount: this.state.competition.regularprice,
+                        online: false,
+                        paidwithaffiliation: true,
+                      })
+                  }).then((response) =>{
+                    console.log(response)
+                    window.location.reload();
+                  })
+                })
+            });
       } else {
           alert('Please finish selecting a event and your partner!');
       }
   };
 
-  onRemove(id) {
-      if (!confirm("Are you sure you want to delete this?")) {
-          return false;
-      }
-      const rows = cloneDeep(this.state.user_competition_events);
-      const idx = findIndex(rows, { id });
-
-      // this could go through flux etc.
-      rows.splice(idx, 1);
-
-      this.setState({ user_competition_events: rows });
-  }
-
+dropEventHandler = (rowData) => {
+        const eventName = rowData.level + " " + rowData.style + " " + rowData.dance;
+        const name = rowData.leader == "You" ? rowData.follower : rowData.leader;
+        if (!confirm("Are you sure you want to drop " + eventName + " with " + name + "?")) {
+            return false;
+        }
+        fetch("/api/delete_partnership", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                leadcompetitorid: rowData.leadcompetitorid,
+                followcompetitorid: rowData.followcompetitorid,
+                eventid: rowData.eventid
+            })
+        }).then(() => {
+            window.location.reload();
+        });
+  };
+  
   render() {
     const search_competitor = (list, query) => {
     if (query === '') return []
     return list.filter(comp => 
         comp.email.indexOf(query) != -1 ||
-        comp.first_name.toLowerCase().indexOf(query.toLowerCase()) != -1 ||
-        comp.last_name.toLowerCase().indexOf(query.toLowerCase()) != -1
+        comp.firstname.toLowerCase().indexOf(query.toLowerCase()) != -1 ||
+        comp.lastname.toLowerCase().indexOf(query.toLowerCase()) != -1
       )
     }
 
-    const show_style = this.state.level !== null
-    const show_smooth = this.state.style == 'Smooth'
-    const show_standard = this.state.style == 'Standard'
-    const show_rhythm = this.state.style == 'Rhythm'
-    const show_latin = this.state.style == 'Latin'
-    const show_leading = this.state.event !== null
+    const show_style = this.state.levelid !== null
+    const show_event = this.state.styleid !== null
+    const show_leading = this.state.eventid !== null
 
     const myMenuStyle = {
       borderRadius: '3px',
@@ -220,17 +275,16 @@ export default class PageEventRegistration extends React.Component {
     <Page ref="page" {...this.props}>
       <h1>Event Registration</h1>
         <Box 
-        title = {<div>Register for New Event</div>}
-        content={
-        <div className={styles.lines}>
+        title = {<div>Register for New Event</div>}>
+        <div className={style.lines}>
         { true && <span>
             <h2>Level</h2>
-            <RadioGroup name='comic' value={this.state.level} onChange={this.handleLevelChange}>
-              <RadioButton label='Newcomer' value='Newcomer'/>
-              <RadioButton label='Bronze' value='Bronze'/>
-              <RadioButton label='Silver' value='Silver'/>
-              <RadioButton label='Gold' value='Gold'/>
-              <RadioButton label='Open' value='Open'/>
+            <RadioGroup name='comic' value={this.state.levelid && this.state.levelid.toString()} onChange={this.handleLevelChange}>
+              {
+                this.state.levels.map(item =>{
+                  return (<RadioButton value={item.id.toString()} key={item.id} label={item.name}/>);
+                })
+              }
             </RadioGroup>
             <br/>
           </span>
@@ -239,57 +293,29 @@ export default class PageEventRegistration extends React.Component {
         { show_style && <span>
             <br/>
             <h2>Style</h2>
-            <RadioGroup name='comic' value={this.state.style} onChange={this.handleStyleChange}>
-              <RadioButton label='Smooth' value='Smooth'/>
-              <RadioButton label='Standard' value='Standard'/>
-              <RadioButton label='Rhythm' value='Rhythm'/>
-              <RadioButton label='Latin' value='Latin'/>
+            <RadioGroup name='comic' value={this.state.styleid && this.state.styleid.toString()} onChange={this.handleStyleChange}>
+              {
+                this.state.level_styles.map(item =>{
+                  return (<RadioButton value={item.id.toString()} key={item.id} label={item.name}/>);
+                })
+              }
             </RadioGroup>
             <br/>
           </span>
         }
         {<div>
           <br/>
-        { show_smooth && <span>
+        { show_event && <span>
             <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Waltz`} value='Waltz'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Tango`} value='Tango'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Foxtrot`} value='Foxtrot'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} V. Waltz`} value='V. Waltz'/>
-            </RadioGroup>
-          </span>
-        }
-        { show_standard && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Waltz`} value='Waltz'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Tango`} value='Tango'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Foxtrot`} value='Foxtrot'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Quickstep`} value='Quickstep'/>
-            </RadioGroup>
-          </span>
-        }
-        { show_rhythm && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Cha Cha`} value='Cha Cha'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Rhumba`} value='Rhumba'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Swing`} value='Swing'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Mambo`} value='Mambo'/>
-            </RadioGroup>
-          </span>
-        }
-        { show_latin && <span>
-            <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.event} onChange={this.handleEventChange}>
-              <RadioButton label={`${this.state.level} ${this.state.style} Cha Cha`} value='Cha Cha'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Rhumba`} value='Rhumba'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Jive`} value='Jive'/>
-              <RadioButton label={`${this.state.level} ${this.state.style} Samba`} value='Samba'/>
-            </RadioGroup>
-          </span>
+            <RadioGroup name='comic' value={this.state.eventid && this.state.eventid.toString()} onChange={this.handleEventChange}>
+              {
+                this.state.level_style_events.map(item =>{
+                  return (<RadioButton value={item.id.toString()} key={item.id} label={`${item.levelname} ${item.stylename} ${item.dance}`}/>);
+                })
               }
+            </RadioGroup>
+          </span>
+        }
           <br/>
         </div>}
 
@@ -316,14 +342,14 @@ export default class PageEventRegistration extends React.Component {
           getItemValue={(item) => item.email}
           onSelect={(value, item) => {
             // set the menu to only the selected item
-            this.setState({ value, competitors: [ item ], partner: item.first_name + " " + item.last_name })
+            this.setState({ value, competitors: [ item ], partner: item.id })
             // or you could reset it to a default list again
             // this.setState({ unitedStates: getStates() })
               }}
           onChange={(event, value) => {
             this.setState({ value, loading: true })
 
-            fetch(`http://localhost:8080/api/competitors`)
+            fetch(`/api/competitors`)
               .then(response => response.json())
               .then(json => {
                 json = search_competitor(json, value)
@@ -335,22 +361,21 @@ export default class PageEventRegistration extends React.Component {
             <div
               key={item.abbr}
               id={item.abbr}
-            >{item.first_name} {item.last_name} ({item.email})</div>
+            >{item.firstname} {item.lastname} ({item.email})</div>
           )}
         />
-      <p><button onClick={this.registerEventHandler} className={styles.registerBtn}>Register!</button></p>
+      <p><button onClick={this.registerEventHandler} className={style.registerBtn}>Register</button></p>
               </div>
-        }/>
+      </Box>
 
-      <Box title={<div>You're already registered to these:</div>}
-      content = {
+      <Box title={<div>Your Current Registrations</div>}>
         <EventTable
           events={this.state.user_competition_events}
           extra_columns={[{
             content: (value, {rowData}) => (
               <div>
                 <span
-                  onClick={() => this.onRemove(rowData.id)}
+                  onClick={()=>this.dropEventHandler(rowData)}
                   style={{ marginLeft: '1em', cursor: 'pointer' }}
                 >
                   &#10007; Drop
@@ -359,8 +384,7 @@ export default class PageEventRegistration extends React.Component {
             )
           }]}
         />
-      }
-      />
+      </Box>
      </Page>
    );
  }

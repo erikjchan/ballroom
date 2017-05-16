@@ -13,7 +13,6 @@ import { createStore, applyMiddleware } from 'redux'
 import { Router, browserHistory } from 'react-router';
 import thunkMiddleware from 'redux-thunk'
 import api from './actions/middleware/ballroom_api'
-// import api from './actions/middleware/api'
 
 // Source files
 import Routes from './common/Routes.jsx';
@@ -24,8 +23,8 @@ class Root extends React.Component {
   render () {
     const { store } = this.props
     window.dispatch = store.dispatch
-    return (<Provider store={this.props.store}>
-      <Router history={browserHistory}>
+    return (<Provider store = {this.props.store}>
+      <Router history = {browserHistory}>
         {Routes}
       </Router>
     </Provider>)
@@ -38,4 +37,3 @@ let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api)(createStor
 ReactDOM.render(
   <Root store={createStoreWithMiddleware(ballroomApp)} />,
   document.getElementById('app'));
-

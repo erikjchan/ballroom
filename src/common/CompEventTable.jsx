@@ -1,4 +1,3 @@
-
 import React from 'react'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import * as Table from 'reactabular-table';
@@ -78,10 +77,10 @@ export default class CompYourEvents extends React.Component {
     return (
       <div>
         <Table.Provider
-          className="pure-table pure-table-striped event-table"
-          columns={columns}>
+          className = "pure-table pure-table-striped event-table"
+          columns = {columns}>
           <Table.Header />
-          <Table.Body rows={this.props.events} rowKey="id" />
+          <Table.Body rows = {this.props.events} rowKey = "id" />
         </Table.Provider>
       </div>
     );

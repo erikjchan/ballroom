@@ -1,6 +1,8 @@
 .nav {
     font-family: 'Lato', sans-serif;
     position: fixed;
+    display: flex;
+    flex-direction: column;
     top: 0;
     left: 0;
     width: 300px;
@@ -41,38 +43,37 @@
     font-size: 17px;
 }
 
-.sub_menu a:link, .sub_menu a:visited{
+.sub_menu a:link, .sub_menu a:visited {
     text-decoration: none;
     color: #fff;
 }
 
 .sub_menu a:hover {
     text-decoration: none;
-    /*border-bottom: 5px solid #F64747;*/
     color: #F64747;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
 
 .circle {
-    left:50px;
-    top:20px;
+    margin-top: 50px;
     position: relative;
     width: 80px;
-    height: 80px;
-    border-radius: 40px;
+    height: 100px;
+    border-radius: 50px;
     background: white;
+    align-self: center;
+    display: block;
 }
 
-.circle:hover{
-    /*background: #d6d6d6;*/
+.circle:hover {
     border-bottom: 10px solid #F64747;
     color: #F64747;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
 
-.circle p{
+.circle p {
     text-align: center;
     vertical-align: center;
     margin: 0;

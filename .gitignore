@@ -24,3 +24,4 @@ node_modules
 
 _notes
 *~
+api/db.js

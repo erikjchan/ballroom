@@ -1,4 +1,3 @@
-
 import React from 'react'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import * as Table from 'reactabular-table';
@@ -40,33 +39,25 @@ export default class YourEvents extends React.Component {
 
     const columns = [
       {
-          property: 'id',
-          header: {
-              label: 'Official ID',
-              sortable: true,
-              resizable: true
-          }
-      },
-      {
-          property: 'firstname',
-          header: {
-              label: 'Official Name',
-              sortable: true,
-              resizable: true
-          }
-      },
-      {
-        property: 'email',
+        property: 'id',
         header: {
-          label: 'Email',
+            label: 'ID',
+            sortable: true,
+            resizable: true
+          }
+      },
+      {
+        property: 'name',
+        header: {
+          label: 'Name',
           sortable: true,
           resizable: true
         }
       },
       {
-        property: 'token',
+        property: 'rolename',
         header: {
-          label: 'Number',
+          label: 'Position',
           sortable: true,
           resizable: true
         }
@@ -86,10 +77,10 @@ export default class YourEvents extends React.Component {
     return (
       <div>
         <Table.Provider
-          className="pure-table pure-table-striped event-table"
-          columns={columns}>
+          className = "pure-table pure-table-striped event-table"
+          columns = {columns}>
           <Table.Header />
-          <Table.Body rows={this.props.events} rowKey="id" />
+          <Table.Body rows = {this.props.events} rowKey = "id" />
         </Table.Provider>
       </div>
     );

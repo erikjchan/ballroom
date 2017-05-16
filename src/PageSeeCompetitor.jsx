@@ -1,11 +1,17 @@
-import styles from "./style.css"
+/*
+ * SEE COMPETITOR
+ *
+ * This page allows admins to see detailed information about the
+ * selected competitor as well as mark them as paid or not paid
+ */
+
+import style from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import Page from './Page.jsx'
 import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
-import Box from './common/BoxAdmin.jsx'
-import style from './style.css';
+import Box from './common/Box.jsx'
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import connection from './common/connection';
 import { browserHistory } from 'react-router';
@@ -16,59 +22,58 @@ class PageSeeCompetitor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        competitor: lib.flat_loading_proxy,
         competitor_events: [],
-        paid: "False"
+        competitor: {},
+        competitor_paymentrecord: null,
+        paid: ''
     }
 
-    try {this.competition_id = parseInt(this.props.params.competition_id)}
+    try {this.competition_id = this.props.selected.competition.id}
     catch (e) { alert('Invalid competition ID!') }
-    try{this.competitor_id = parseInt(this.props.params.competitor_id)}
+    try{this.competitor_id = this.props.params.competitor_id}
     catch (e) {alert('Invalid competitor ID!') }
   }
 
     componentDidMount() {
-        console.log("ARE WE DOING STUFF");
+    /* Call the API for competitor info */
+        this.props.api.get(`/api/competitors/${this.competitor_id}`)
+          .then(json => {
+              this.setState({competitor: json})
+              console.log(this.state.competitor)
+          })
+          .catch(err => { alert(err); console.log(err)})
 
-    /* Call the API for competition info */
-    fetch(`/api/competitors/${this.competitor_id}/competition/${this.competition_id}`)
-      .then(response => { return response.json() }) // parse the result
-      .then(json => { 
-          // update the state of our component
-          console.log("WE DOING STUFF")
-          if (json.pay_w_org)
-              json.pay_w_org = "True"
-          else
-              json.pay_w_org = "False"
+        this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
+          .then(json => {
+              console.log(json)
+              var timestamp = new Date(json.timestamp);
+              json.timestamp = timestamp.toUTCString();
+              this.state.paid = (json.amount == 0) ? "true" : "false"
 
-          if (json.amount_owed == 0) {
-              this.setState({ paid: "True" });
-          }
-        this.setState({ competitor : json })
-      })
-      // todo; display a nice (sorry, there's no connection!) error
-      // and setup a timer to retry. Fingers crossed, hopefully the 
-      // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+              // update the state of our component
+              this.setState({competitor_paymentrecord: json})
+              console.log(this.state.competitor_paymentrecord)
+          })
+          .catch(err => { alert(err); console.log(err)})
 
     /**  Call the API for events that the competitor is in */
-    fetch(`/api/competitors/${0}/events`)
-      .then(response => {
-        return response.json()
-      })
-      .then(json => {
-        for (let i = 0; i < json.length; i++) {
-            if (json[i].leading) {
-                json[i].leader = this.state.competitor.name
-                json[i].follower = json[i].partner
-            } else {
-                json[i].leader = json[i].partner
-                json[i].follower = this.state.competitor.name
-            }
-        }
-        this.setState({competitor_events: json})
-      })
-      .catch(err => { alert(err); console.log(err)})
+        /**  Call the API for events that the competitor is in */
+        this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
+          .then(json => {
+              console.log(json)
+              for (let i = 0; i < json.length; i++) {
+                  json[i].title = json[i].dance;
+                  if (json[i].leadcompetitorid == this.competitor_id) {
+                      json[i].leader = this.state.competitor.firstname+" "+this.state.competitor.lastname
+                      json[i].follower = json[i].followfirstname+" "+json[i].followlastname
+                  } else {
+                      json[i].follower = this.state.competitor.firstname+" "+this.state.competitor.lastname
+                      json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
+                  }
+              }
+              this.setState({competitor_events: json})
+          })
+          .catch(err => { alert(err); console.log(err)})
   }
 
   handleChange (name, value) {
@@ -79,67 +84,82 @@ class PageSeeCompetitor extends React.Component {
     this.setState({paid: event});
   };
 
-  saveChanges () { lib.post('/api/post/competitor', this.state) } // todo
+  saveChanges () { 
+      const totalAmount = this.state.paid == "true" ? 0 : this.state.competitor_paymentrecord.amount
 
+      const send_object = {
+          competitionid: this.props.selected.competition.id,
+          competitorid: this.competitor_id,
+          amount: totalAmount,
+          online: false,
+          paidwithaffiliation: this.state.competitor_paymentrecord.paidwithaffiliation
+      }
 
-  render() {    
-    return (
+      console.log(send_object);
 
-     <Page ref="page" {...this.props}>
-      <Box title={"See Competitor"}
-          content={
-            <div className={style.lines}>
-            <br />
-            <h2>Competitor Summary:</h2>
-            <div className={styles.lines}>
-                    <p><b>Name:</b> {this.state.competitor.name}</p>
-                    <p><b>Email:</b> {this.state.competitor.email}</p>
-                    <p><b>Organization:</b> {this.state.competitor.organization_name}</p>
-                    <p><b>Number:</b> {this.state.competitor.lead_number}</p>
-                    <p><b>Amount Owed:</b> ${this.state.competitor.amount_owed}</p>
-                    <p><b>Pay with Affiliation:</b> {this.state.competitor.pay_w_org} </p>
-                    <h3>Mark as Paid?</h3>
-                        <span>
-                            <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
-                             <RadioButton label='Paid' value='True'/>
-                             <RadioButton label='Unpaid' value='False'/>
-                            </RadioGroup>
-                        </span>
-                    <br /><br />
-                    <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
-             </div>
-            <div className={styles.separators}></div>
-            <h2>Competitor is registered for the following events:</h2>
-            <EventTable
-                events={this.state.competitor_events} 
-            /> 
-            <div className = {styles.comp_containers}>
-            <div className = {styles.addeditBtns}>
-                <button className={styles.editBtns} onClick={()=>{ browserHistory.push('/competition/0/regcompetitor/0') }}> 
-                    Add/Edit Event
-                </button>
-            </div>
-            </div>
+      /** Post updates */
+      this.props.api.post("/api/payment_records/update", send_object).then(()=>{
+                window.location.reload();
+      })
 
-            </div>
-          } />
-      </Page>   
-    );
+  } // todo
+      
+
+  render() {
+      if (this.state.competitor && this.state.competitor_events && this.state.competitor_paymentrecord) {
+        return (
+
+         <Page ref="page" {...this.props}>
+          <Box title={"Competitor Info: "+this.state.competitor.firstname+" "+this.state.competitor.lastname}
+              admin={true}
+              content={
+                <div className={style.lines}>
+                <br />
+                {this.state.competitor_paymentrecord &&
+                <div className={style.lines}>
+                        <p><b>Name:</b> {this.state.competitor.firstname+" "+this.state.competitor.lastname} </p>
+                        <p><b>Email:</b> {this.state.competitor.email} </p>
+                        <p><b>Organization:</b> {this.state.competitor.affiliationname} </p>
+                        <p><b>Number:</b> {this.state.competitor.number==null? "None":this.state.competitor.number} </p>
+                        <p><b>Date Registered:</b> {this.state.competitor_paymentrecord.timestamp} </p>
+                        <p><b>Amount Owed:</b> ${this.state.competitor_paymentrecord.amount} </p>
+                        <p><b>Pay with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
+                        <h3>Mark as Paid?</h3>
+                            <span>
+                                <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
+                                 <RadioButton label='Paid' value='true'/>
+                                 <RadioButton label='Unpaid' value='false'/>
+                                </RadioGroup>
+                            </span>
+                        <br /> <br/>
+                        <p><button className={style.blockcompetitionEditBtns} onClick={this.saveChanges.bind(this)}>Save</button></p>
+                 </div>
+                }
+                <br/>
+                <div className={style.separators}></div>
+                 <hr/>
+                <h2>Competitor is registered for the following events:</h2>
+                <EventTable
+                    events={this.state.competitor_events}
+                />
+                <div className = {style.comp_containers}>
+                <div className = {style.addeditBtns}>
+                    <button className={style.editBtns} onClick={()=>{ browserHistory.push('/competition/' + this.competition_id + '/regcompetitor/' + this.competitor_id) }}>
+                        Add/Edit Event
+                    </button>
+                </div>
+                </div>
+
+                </div>
+              } />
+          </Page>
+        );
+    } else {
+        console.log("waiting on data")
+        return <Page ref="page" {...this.props}/>
+    }
   }
 }
 
 export default connection(PageSeeCompetitor)
-
-// const get_competitors = n => collection(n)(i => ({
-//   "id" : i,
-//   "first_name" : randomData(1).firstName,
-//   "last_name" : randomData().lastName,
-//   "email" :  randomData().emailAddress,
-//   "mailing_address" : randomData().street,
-//   "organization_id" : randomId(ORGANIZATIONS),
-//   "password" : uuidV1(),
-//   "registered" : randomBool(),
-//   "lead_number" : randomInt(0, 100),
-// }))
-
 

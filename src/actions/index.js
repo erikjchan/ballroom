@@ -1,5 +1,6 @@
 // The middleware to call the API for quotes
 import { CALL_API } from './middleware/ballroom_api'
+import { browserHistory } from 'react-router';
 
 /*********************************** Login ***********************************/
 
@@ -20,15 +21,18 @@ const lockError   = (err) => ({ type: LOCK_ERROR, err })
 export const login = () => {
   const lock = new Auth0Lock('Dl30IRGbXkkPlENLT4nR9QIWLHiMAxxF', 'mrkev.auth0.com');
   return dispatch => {
-    lock.show((err, profile, token) => {
+    lock.show((err, profile, token, access_token) => {
+      profile.access_token = access_token
+      profile.competitor_id = profile.app_metadata.competitor_id
       if (err) { console.error(err)
         dispatch(lockError(err))
         return
       }
-      console.log(profile, token)
+      // console.log(profile, token)
       localStorage.setItem('profile', JSON.stringify(profile))
       localStorage.setItem('id_token', token)
       dispatch(lockSuccess(profile, token))
+      browserHistory.push('/')
     })
   }
 }
@@ -121,7 +125,6 @@ export function apiRequest(key, request) {
     }
   }
 }
-
 
 // // Same API middlware is used to get a 
 // // secret quote, but we set authenticated

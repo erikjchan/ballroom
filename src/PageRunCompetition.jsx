@@ -1,10 +1,16 @@
+/* 
+ * RUN COMPETITION  
+ *
+ * This page lets admins progress their competition though the selected rounds.
+ */
+
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';
 import EventRunningInfo from './PageRunCompetition/event.jsx'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
-import Box from './common/BoxAdmin.jsx'
+import Box from './common/Box.jsx'
 import style from './style.css';
 import { browserHistory } from 'react-router';
 
@@ -25,18 +31,16 @@ export default class RunCompetition extends React.Component {
     /** Take the competition ID from the URL (Router hands
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
-    try {this.competition_id = parseInt(this.props.params.competition_id)}
+    try {this.competition_id = this.props.params.competition_id}
     catch (e) { alert('Invalid competition ID!') }
   }
 
   componentDidMount() {
 
     /* Call the API for competition info */
-    fetch(`/api/competition/${this.competition_id}`)
-      .then(response => response.json()) // parse the result
+    this.props.api.get(`/api/competition/${this.competition_id}`)
       .then(json => {
-        fetch(`/api/competition/${this.competition_id}/rounds`)
-          .then(response => response.json()) // parse the result
+        this.props.api.get(`/api/competition/${this.competition_id}/rounds`)
           .then(json2 => {
             // update the state of our component
             this.setState({
@@ -49,17 +53,15 @@ export default class RunCompetition extends React.Component {
           // todo; display a nice (sorry, there's no connection!) error
           // and setup a timer to retry. Fingers crossed, hopefully the
           // connection comes back
-          .catch(this.refs.page.errorNotif(
-            `There was an error fetching the rounds`))
-        fetch(`/api/competitors/round/${json.currentroundid}`)
-          .then(response => response.json())
+          .catch(err => alert(`There was an error fetching the rounds`))
+        this.props.api.get(`/api/competitors/round/${json.currentroundid}`)
           .then(json => {
             this.setState({competitors: json.map(c => c.number)});
           });  
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
-      .catch(this.refs.page.errorNotif(
+      .catch(err => alert(
         `There was an error fetching the competition`))
   }
 
@@ -243,7 +245,7 @@ export default class RunCompetition extends React.Component {
       {
         property: 'size',
         header: {
-          label: 'No. of couples',
+          label: 'Number of Couples',
           sortable: true,
           resizable: true
         }
@@ -320,14 +322,14 @@ export default class RunCompetition extends React.Component {
 
         <h1>Running: {this.state.competition.name}</h1>
 
-       <Box title={"Past Rounds"}
+       <Box admin={true} title={"Past Rounds"}
             content ={past_rounds_table} />
         {/*<div className="container admin">
           <h2>Past Rounds</h2>
           {past_rounds_table}
         </div>*/}
 
-       <Box title={"Current Round"}
+       <Box admin={true} title={"Current Round"}
             content ={
           <div className={style.lines}>
             <h3>{this.getRoundName(current_round)}</h3>
@@ -342,23 +344,29 @@ export default class RunCompetition extends React.Component {
             </ul>
 
             <span className="right_align">
-              <button onClick={this.prevRound.bind(this)}> Previous Round </button>
-              <button onClick={this.nextRound.bind(this)}> Next Round </button>
+              <button className={style.roundBtns} onClick={this.nextRound.bind(this)}> Next Round </button>
+              <button className={style.roundBtns} onClick={this.prevRound.bind(this)}> Previous Round </button>
             </span>
           </div>} />
 
         {/*<div className="container admin">
           <h2>Current Round</h2>*/}
         
-        <Box
-          title = "Upcoming rounds"
+        <Box admin={true} 
+          title = "Upcoming Rounds"
           content = {future_rounds_table}
         />
         {/*<div className="container admin">
           <h2>Upcoming rounds</h2>
           {future_rounds_table}
-        </div>*/}       
-        <Link to={`/competition/${this.competition_id}/editschedule`}>Edit schedule</Link>
+        </div>*/}
+          <div className = {style.clear}>
+        <div id={style.createContainer}>
+            <button id={style.saveChanges} 
+              onClick={
+                () => this.props.router.push(`/competition/${this.competition_id}/editschedule`)}>Edit Schedule</button>
+        </div>
+        </div>
 
     </Page>
    )
