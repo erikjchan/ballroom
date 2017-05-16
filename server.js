@@ -2,20 +2,19 @@ import express from 'express';
 const app = express();
 const ip = require('ip');
 const bodyParser = require("body-parser")
-const api_routes = require('./api')
-const test_routes = require('./api/test')
+const api_setup = require('./api')
+const tests_setup = require('./api/test')
 const log_debug = require('./api/log')
 
 /********************************* MIDDLEWARE *********************************/
 
 app.use('/', function (req, res, next) { console.log(req.route); next(); })
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 /********************************* API Routes *********************************/
 
-api_routes(app)
-test_routes(app)
+api_setup(app)
+tests_setup(app)
 
 /*********************************** Assets ***********************************/
 

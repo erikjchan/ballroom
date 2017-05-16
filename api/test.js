@@ -1,6 +1,6 @@
 // Database queries
-const query = require('../query')
-const query2 = require('../query2')
+const query = require('./query')
+const query2 = require('./query2')
 const log_debug = require('./log')
 
 /************************ TEST PATHS *************************/

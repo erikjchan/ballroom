@@ -14,7 +14,10 @@
     "type": "git",
     "url": "https://github.com/pheuter/essential-react.git"
   },
-  "require": "babel-register",
+  "ava": {
+    "require": ["babel-register"],
+    "babel": "inherit"
+  },
   "keywords": [
     "skeleton",
     "template",
@@ -99,6 +102,7 @@
     "searchtabular": "^1.4.0",
     "selectabular": "^2.0.1",
     "sql-template-strings": "^2.2.2",
+    "supertest": "^3.0.0",
     "table-resolver": "^3.1.0",
     "tap-dot": "^1.0.5",
     "tap-mocha-reporter": "^3.0.3",
