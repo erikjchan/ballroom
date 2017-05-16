@@ -251,7 +251,7 @@ Start
 	width: auto;
 	height: 100%;
 	border-radius: 10px;
-	box-shadow: ;
+	box-shadow: none;
 	border: 0;
 	vertical-align: middle;
  	text-align: center;
@@ -303,6 +303,11 @@ Start
   background-color: #C5C7CF;
   border-spacing: 0px 5px;
   width: 100%;
+  margin-top: 10px;
+}
+
+.regularWidth {
+  width: auto !important;
 }
 
 .tableWrapper > thead > tr {

@@ -403,24 +403,18 @@ app.get('/api/competitions/:cid/unregistered', (req, res) => {
     });
 })
 
-app.get('/api/admin/:id/competitions', (req, res) => {
-    res.send(data.competitions)
-})
-
-app.get('/api/events', (req, res) => {
-    res.send(data.events)
-})
-
 app.get('/api/event/:eid/', (req, res) => {
     const eid =  parseInt(req.params.eid)
     const events = data.events.filter(e => e.id === eid)
     res.send(events[0])
 })
 
-app.get('/api/event/:rid/rounds', (req, res) => {
+app.get('/api/event/rounds/:rid', (req, res) => {
     const rid = parseInt(req.params.rid)
-    const rounds = data.rounds.filter(e => e.id === rid)
-    res.send(rounds)
+    query.get_rounds_in_same_event_as_round(rid).then(value => {
+        console.log(value);
+        res.send(value);
+    });
 })
 
 app.get('/api/affiliations', (req, res) => {
@@ -429,23 +423,6 @@ app.get('/api/affiliations', (req, res) => {
         res.send(value);
     });
 })
-
-app.get('/api/rounds', (req, res) => {
-    res.send(data.rounds)
-})
-
-app.get('/api/schedule', (req, res) => {
-    res.send(data.schedule)
-})
-
-app.get('/api/partnerships', (req, res) => {
-    res.send(data.partnerships)
-})
-
-app.get('/api/organizations', (req, res) => {
-    res.send(data.organizations)
-})
-
 
 app.get('/api/payment_records', (req, res) => {
     query2.get_all_paymentrecords().then(function (value) {
@@ -479,10 +456,19 @@ app.get('/api/payment_records/:competitionid/:competitorid', (req, res) => {
     });
 })
 
+app.post('/api/callbacks/update', (req, res) => {
+   query.update_callbacks_for_round_and_judge(req.body).then(function(value) {
+      log_debug(2)(value);
+      res.send(value);
+   });
+});
 
-app.get('/api/callbacks', (req, res) => {
-    res.send(data.callbacks)
-})
+app.post('/api/callbacks/calculate', (req, res) => {
+    query.calculate_callbacks_for_round(req.body).then(function(value) {
+        log_debug(2)(value);
+        res.send(value);
+    });
+});
 
 app.get('/api/admins', (req, res) => {
     query.get_all_admins().then(value => {
@@ -500,6 +486,13 @@ app.get('/api/roles', (req, res) => {
 
 app.get('/api/officials/:id', (req, res) => {
     query.get_official(req.params.id).then(value => {
+        log_debug(2)(value)
+        res.send(value);
+    });
+})
+
+app.get('/api/judges/round/:rid', (req, res) => {
+    query.get_judges_submitted_round(req.params.rid).then(value => {
         log_debug(2)(value)
         res.send(value);
     });
