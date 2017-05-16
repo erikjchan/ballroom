@@ -82,9 +82,9 @@ ALTER TABLE affiliation OWNER TO postgres;
 
 CREATE TABLE callback (
     id SERIAL,
-    "timestamp" timestamp without time zone,
+    "timestamp" timestamp without time zone default (now() at time zone 'utc'),
     judgeid integer,
-    leadcompetitornumber integer,
+    number integer,
     roundid integer,
     competitionid integer
 );
@@ -205,8 +205,8 @@ CREATE TABLE partnership (
     followconfirmed boolean,
     competitionid integer,
     number integer,
-    calledback boolean,
-    "timestamp" timestamp without time zone
+    calledback boolean DEFAULT true,
+    "timestamp" timestamp with time zone
 );
 
 
@@ -710,56 +710,55 @@ INSERT INTO partnership VALUES (16, 17, 5, true, true, 1, 16, true, '2017-05-10 
 INSERT INTO partnership VALUES (18, 19, 5, true, true, 1, 18, true, '2017-05-10 00:00:00');
 INSERT INTO partnership VALUES (20, 21, 5, true, true, 1, 20, true, '2017-05-10 00:00:00');
 
-INSERT INTO paymentrecord VALUES (1, 1, '2017-05-10 00:00:00', 1, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (2, 1, '2017-05-10 00:00:00', 2, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (3, 1, '2017-05-10 00:00:00', 3, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (4, 1, '2017-05-10 00:00:00', 4, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (5, 1, '2017-05-10 00:00:00', 5, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (6, 1, '2017-05-10 00:00:00', 6, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (7, 1, '2017-05-10 00:00:00', 7, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (8, 1, '2017-05-10 00:00:00', 8, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (9, 1, '2017-05-10 00:00:00', 9, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (10, 1, '2017-05-10 00:00:00', 10, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (11, 1, '2017-05-10 00:00:00', 11, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (12, 1, '2017-05-10 00:00:00', 12, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (13, 1, '2017-05-10 00:00:00', 13, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (14, 1, '2017-05-10 00:00:00', 14, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (15, 1, '2017-05-10 00:00:00', 15, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (16, 1, '2017-05-10 00:00:00', 16, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (17, 1, '2017-05-10 00:00:00', 17, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (18, 1, '2017-05-10 00:00:00', 18, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (19, 1, '2017-05-10 00:00:00', 19, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (20, 1, '2017-05-10 00:00:00', 20, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (21, 1, '2017-05-10 00:00:00', 21, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (22, 1, '2017-05-10 00:00:00', 22, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (23, 1, '2017-05-10 00:00:00', 23, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (24, 1, '2017-05-10 00:00:00', 24, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (25, 1, '2017-05-10 00:00:00', 25, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (26, 1, '2017-05-10 00:00:00', 26, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (27, 1, '2017-05-10 00:00:00', 27, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (28, 1, '2017-05-10 00:00:00', 28, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (29, 1, '2017-05-10 00:00:00', 29, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (30, 1, '2017-05-10 00:00:00', 30, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (31, 1, '2017-05-10 00:00:00', 31, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (32, 1, '2017-05-10 00:00:00', 32, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (33, 1, '2017-05-10 00:00:00', 33, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (34, 1, '2017-05-10 00:00:00', 34, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (35, 1, '2017-05-10 00:00:00', 35, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (36, 1, '2017-05-10 00:00:00', 36, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (37, 1, '2017-05-10 00:00:00', 37, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (38, 1, '2017-05-10 00:00:00', 38, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (39, 1, '2017-05-10 00:00:00', 39, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (40, 1, '2017-05-10 00:00:00', 40, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (41, 1, '2017-05-10 00:00:00', 41, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (42, 1, '2017-05-10 00:00:00', 42, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (43, 1, '2017-05-10 00:00:00', 43, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (44, 1, '2017-05-10 00:00:00', 44, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (45, 1, '2017-05-10 00:00:00', 45, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (46, 1, '2017-05-10 00:00:00', 46, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (47, 1, '2017-05-10 00:00:00', 47, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (48, 1, '2017-05-10 00:00:00', 48, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (49, 1, '2017-05-10 00:00:00', 49, 21.87, true, true);
-INSERT INTO paymentrecord VALUES (50, 1, '2017-05-10 00:00:00', 50, 21.87, true, true);
-
-
 SELECT pg_catalog.setval('paymentrecord_id_seq', 1, true);
+
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 1, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 2, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 3, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 4, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 5, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 6, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 7, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 8, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 9, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 10, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 11, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 12, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 13, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 14, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 15, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 16, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 17, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 18, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 19, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 20, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 21, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 22, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 23, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 24, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 25, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 26, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 27, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 28, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 29, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 30, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 31, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 32, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 33, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 34, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 35, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 36, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 37, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 38, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 39, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 40, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 41, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 42, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 43, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 44, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 45, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 46, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 47, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 48, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 49, 21.87, true, true);
+INSERT INTO paymentrecord (competitionid, timestamp, competitorid, amount, online, paidwithaffiliation) VALUES (1, '2017-05-10 00:00:00', 50, 21.87, true, true);

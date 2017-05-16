@@ -1,4 +1,4 @@
-const pool = require('./api/db');
+const pool = require('./db');
 const SQL = require('sql-template-strings')
 
 const rollback = (client, done) => {

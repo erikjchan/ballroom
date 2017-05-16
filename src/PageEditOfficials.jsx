@@ -123,7 +123,7 @@ export default class EditOfficials extends React.Component {
 
             return (<Page ref="page" {...this.props}>
 
-                <h1>Edit Officials: {this.state.competition.name}</h1>
+                <h1>Edit Officials</h1>
                 <Box admin={true} title={"Add Official"}
                         content ={
                 <div className={style.lines}>
@@ -143,7 +143,7 @@ export default class EditOfficials extends React.Component {
                         />
                     </label>
                     <label className="addLabel">
-                        Role:<br />
+                        Position:<br />
                         <select value={this.state.selectedRoleId} onChange={(event) => this.setState({selectedRoleId: event.target.value})}>
                           <option value="" disabled></option>
                           {this.state.roles.map(role => (<option key={"role_id_" + role.id} value={role.id}>{role.name}</option>))}
@@ -154,7 +154,7 @@ export default class EditOfficials extends React.Component {
                     </div>} />
                 <Box
                 admin={true} 
-                title = "Officials"
+                title = "Current Officials"
                 content = {
                     <EventTable
           events={this.state.officials}

@@ -2,7 +2,7 @@
  * COMPETITION HOME PAGE (ADMIN)
  *
  * This page is the main hub for admins to see information about the
- * competitions that they have created and selected.
+ * competition that they have created and selected.
  */
 
 import style from "./style.css"

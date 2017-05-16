@@ -14,16 +14,9 @@ export default class LoginPage extends React.Component {
   }
 
   generateRounds() {
-    fetch('/api/competition/generateRounds', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    this.props.api.post('/api/competition/generateRounds', {
         cid: 1, // TODO: change in production
-      })
-    })
+      });
   }
 
   render() {

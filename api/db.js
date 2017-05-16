@@ -42,6 +42,7 @@ module.exports.query = function (text, values) {
           resolve(res.rows);
         }
         catch(e){
+          console.log('error', e, 'at', err);
           reject(err);
         }
       });

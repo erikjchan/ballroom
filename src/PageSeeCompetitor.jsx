@@ -110,6 +110,7 @@ class PageSeeCompetitor extends React.Component {
         return (
 
          <Page ref="page" {...this.props}>
+            <h1>See Competitor</h1>
           <Box title={"Competitor Info: "+this.state.competitor.firstname+" "+this.state.competitor.lastname}
               admin={true}
               content={

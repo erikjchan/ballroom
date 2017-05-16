@@ -7,7 +7,6 @@
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';
-import EventRunningInfo from './PageRunCompetition/event.jsx'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
 import Box from './common/Box.jsx'
@@ -162,7 +161,7 @@ export default class RunCompetition extends React.Component {
     // Confirm with the user
     if (!confirm(`Are you sure you want to enter callbacks for ${this.getRoundName(round)}?`)) return;
 
-    browserHistory.push(`competition/${this.competition_id}/round/${round.id}/entercallbacks`);
+    browserHistory.push(`/competition/${this.competition_id}/round/${round.id}/entercallbacks`);
 
   }
 
@@ -205,7 +204,7 @@ export default class RunCompetition extends React.Component {
       {
         cell: { formatters: [
           (value, {rowData}) => !rowData.callbackscalculated && (
-            <button
+            <button className={style.enterCallbackBtns}
               onClick={() => this.enterCallbacksFor(rowData)}
             > Enter Callbacks
             </button>)    

@@ -18,7 +18,7 @@ export default class PageEnterCallbacks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-                columns: [
+                callbackColumns: [
                             {
                               property: 'number',
                               props: {
@@ -49,13 +49,38 @@ export default class PageEnterCallbacks extends React.Component {
                                 }
                               }
                             }],
-                  value: '',
-                  competition: null,
-                  officials: [],
-                  official: "",
-                  rows: [],
-                  // LOAD FROM API
-                  numberToRecall: 7,
+                judgeColumns: [
+                    {
+                        property: 'firstname',
+                        props: {
+                            label: 'First Name',
+                            style: {
+                                width: 50
+                            }
+                        },
+                        header: {
+                            label: 'First Name'
+                        }
+                    },
+                    {
+                        property: 'lastname',
+                        props: {
+                            label: 'Last Name',
+                            style: {
+                                width: 50
+                            }
+                        },
+                        header: {
+                            label: 'Last Name'
+                        }
+                    }],
+                  judges: [],
+                  judgesSubmitted: [],
+                  selectedJudgeId: "",
+                  inputCallback: "",
+                  rounds: [],
+                  competitors: [],
+                  rows: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -64,45 +89,109 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({inputCallback: event.target.value});
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
+    if (confirm("Are you sure you want to submit these callbacks?")) {
+        this.props.api.post('/api/callbacks/update', {
+           rid: this.props.params.round_id,
+           jid: this.state.selectedJudgeId,
+           cid: this.props.selected.competition.id,
+           callbacks: this.state.rows.map(r => ({
+               rid: this.props.params.round_id,
+               jid: this.state.selectedJudgeId,
+               cid: this.props.selected.competition.id,
+               number: r.number
+           }))
+        }).then(() => {
+            window.location.reload();
+        });
+
+    }
   }
     
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-        var { rows, value, numberToRecall } = this.state;
-        const newRow = { number: value }; 
-
-        if (isNaN(parseInt(value)) || parseInt(value) > 999 || parseInt(value) < 100) {
-            alert("Invalid input!");
-        } else if (rows.length >= numberToRecall) {
-            alert("Too many numbers entered!");
+        if (isNaN(this.state.inputCallback)) {
+            alert("Invalid competitor number: " + this.state.inputCallback);
         } else {
-            rows.push(newRow);
+            const number = parseInt(this.state.inputCallback);
+            let numberAlreadyEntered = false;
+            for (let r of this.state.rows) {
+                if (number == r.number) {
+                    numberAlreadyEntered = true;
+                }
+            }
+            if (numberAlreadyEntered) {
+                alert("Duplicate competitor number: " + number);
+                return false;
+            }
+            let numberIsValid = false;
+            for (let c of this.state.competitors) {
+                if (number == c.number) {
+                    numberIsValid = true;
+                }
+            }
+            if (!numberIsValid) {
+                alert("Entered number is not in this round: " + number);
+                return false;
+            }
+            const rows = this.state.rows;
+            rows.push({
+                number: number
+            });
+            this.setState({
+                inputCallback: "",
+                rows: rows
+            });
         }
-        this.setState({ rows: rows, value: '' });
     }
   }
 
+  handleCalculation() {
+    const nextRound = this.getNextRound();
+    this.props.api.post('/api/callbacks/calculate', {
+        rid: this.props.params.round_id,
+        eventid: nextRound.eventid,
+        size: nextRound.size
+    }).then(json => {
+        if (json.finished) {
+            browserHistory.push(`/competition/${this.props.selected.competition.id}/run`);
+        } else {
+            alert("Callbacks calculation failed. Please try again");
+        }
+    }).catch(() => {alert("Callbacks calculation failed. Please try again")});
+  }
+
   componentDidMount() {
-      this.props.api.get(`/api/judges`)
+      console.log("competition id", this.props.selected.competition.id);
+      this.props.api.get(`/api/competition/${this.props.selected.competition.id}/judges`)
         .then(json => {
-            // update the state of our component
-            var judges = []
-            for (var j in json) {
-                judges.push(json[j]["First Name"] + " " + json[j]["Last Name"])
-            }
-            this.setState({ officials : judges })
+            this.setState({judges: json});
         })
+        .catch(() => alert("Failed to fetch judges"));
+      this.props.api.get(`/api/judges/round/${this.props.params.round_id}`)
+          .then(json => {
+              this.setState({judgesSubmitted: json});
+          })
+          .catch(() => alert("Failed to fetch submitted judges"));
         // todo; setup a timer to retry. Fingers crossed, hopefully the
         // connection comes back
-        .catch(err => alert(
-          `There was an error fetching the competition`))
+        /*.catch(this.refs.page.errorNotif(
+          `There was an error fetching the judges`))*/
 
+      this.props.api.get(`/api/competitors/round/${this.props.params.round_id}`)
+        .then(json => {
+            this.setState({competitors: json});
+        })
+        .catch(() => alert("Failed to fetch competitors"));
+        //.catch(this.refs.page.errorNotif("There was an error fetching the competitors"));
+      this.props.api.get(`/api/event/rounds/${this.props.params.round_id}`)
+          .then(json => {
+              this.setState({rounds: json});
+          })
+          .catch(() => alert("Failed to fetch rounds"));
   }
 
   onRemove(id) {
@@ -115,6 +204,28 @@ export default class PageEnterCallbacks extends React.Component {
       this.setState({ rows });
   }
 
+  getCurrentRound() {
+      for (let r of this.state.rounds) {
+          if (r.id == this.props.params.round_id) {
+              return r;
+          }
+      }
+      return null;
+  }
+
+  getNextRound() {
+      const currentRound = this.getCurrentRound();
+      let foundCurrentRound = false;
+      for (let r of this.state.rounds) {
+          if (foundCurrentRound && r.eventid == currentRound.eventid) {
+              return r;
+          } else if (r == currentRound) {
+              foundCurrentRound = true;
+          }
+      }
+      return null;
+  }
+
   render() {
     const components = {
       header: {
@@ -124,45 +235,87 @@ export default class PageEnterCallbacks extends React.Component {
       }
     };
 
-    const officials = this.state.officials;
-    const { columns, rows, numberToRecall } = this.state;
+    const judges = this.state.judges;
+    const { callbackColumns, rows, judgeColumns, judgesSubmitted } = this.state;
 
-    const resolvedRows = resolve.resolve({
-        columns: columns,
+    const resolvedCallbackRows = resolve.resolve({
+        columns: callbackColumns,
         method: resolve.nested
     })(rows);
+
+    const resolvedJudgeRows = resolve.resolve({
+        columns: judgeColumns,
+        method: resolve.nested
+    })(judgesSubmitted);
+
+    const judgeOptions = judges.map(judge => (<option value={judge.id}>{`${judge.firstname} ${judge.lastname}`}</option>))
+    const nextRound = this.getNextRound();
+    const numberToRecall = nextRound != null ? nextRound.size : null;
 
     return (
      <Page ref="page" {...this.props}>
         <h1>Enter Callbacks</h1>
-        <h4>Select Judge:</h4>
-        <select value={this.state.official} onChange={(event) => this.setState({official: event.target.value})}>
-            <option disabled value=""></option>
-            {officials}
-        </select>    
-        <h4>Enter Number:</h4>
-        <input type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleKeyPress} style={{width: 100}} />
-        <h4>Entered Numbers:</h4>
-        <Link to={`/competition/${0}/round/${0}/entercallbacks`}>
-            <input type="button"
-                   value="Submit numbers" />
-        </Link>
-        <p>Number of recalls entered: {rows.length} / {numberToRecall}</p>
-        <Table.Provider
-          components={components}
-          columns={columns}
-          className={style.tableWrapper}
-        >
-            <Table.Header
-              headerRows={resolve.headerRows({ columns })}
-              className={style.tableHeader}
-            />
-            <Table.Body
-              className={style.tableBody}
-              rows={resolvedRows}
-              rowKey="id"
-            />
-        </Table.Provider>
+         <div style={{display: 'inline-block', 'min-width': '50%'}}>
+             {this.state.judgesSubmitted.length != 0 &&
+                 <div style={{float: 'right'}}>
+                     <h4>Judges Who Submitted Callbacks</h4>
+                     <Table.Provider
+                         components={components}
+                         columns={judgeColumns}
+                         className={style.tableWrapper + ' ' + style.regularWidth}
+                     >
+                         <Table.Header
+                             headerRows={resolve.headerRows({columns: judgeColumns})}
+                             className={style.tableHeader}
+                         />
+                         <Table.Body
+                             className={style.tableBody}
+                             rows={resolvedJudgeRows}
+                             rowKey="id"
+                         />
+                     </Table.Provider>
+                     <input style={{position: 'relative', top: '20px'}} type="button" value="Calculate Callbacks"
+                            disabled={judgesSubmitted.length == 0} onClick={this.handleCalculation.bind(this)}/>
+                 </div>
+             }
+            <h4>Select Judge:</h4>
+            <select value={this.state.selectedJudgeId} onChange={(event) => this.setState({selectedJudgeId: event.target.value})}>
+                <option disabled value=""></option>
+                {judgeOptions}
+            </select>
+            <h4>Couples in round:</h4>
+            <p style={{'line-height': '1.5em', 'word-spacing': '1em'}}>
+                {this.state.competitors.map(c => <span key={c.number}> {c.number} </span>)}
+            </p>
+            <h4>Enter Number:</h4>
+            <input type="text" value={this.state.inputCallback} onChange={this.handleChange} onKeyPress={this.handleKeyPress} disabled={this.state.selectedJudgeId == "" || rows.length == numberToRecall} style={{width: 100}} />
+             <br />
+             <span style={{'font-size': '9pt', 'font-style': 'italic'}}>Press Enter to input the number</span>
+             {numberToRecall != null &&
+                 <p>Number of recalls entered: {rows.length} / {numberToRecall}</p>
+             }
+             {this.state.rows.length != 0 &&
+                <div>
+                    <input type="button" value="Submit numbers" disabled={rows.length != numberToRecall} onClick={this.handleSubmit} />
+                    <h4>Entered Numbers:</h4>
+                    <Table.Provider
+                     components={components}
+                     columns={callbackColumns}
+                     className={style.tableWrapper + ' ' + style.regularWidth}
+                     >
+                         <Table.Header
+                         headerRows={resolve.headerRows({ columns: callbackColumns })}
+                         className={style.tableHeader}
+                         />
+                         <Table.Body
+                         className={style.tableBody}
+                         rows={resolvedCallbackRows}
+                         rowKey="number"
+                         />
+                    </Table.Provider>
+                </div>
+             }
+         </div>
       </Page>
     )
   }

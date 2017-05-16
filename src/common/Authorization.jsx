@@ -44,6 +44,7 @@ const Authorization = allowedRoles => WrappedComponent => {
     userIsNew() {
       const { app_metadata } = this.props.profile
       const competitor_id = app_metadata && app_metadata.competitor_id
+      console.log("Authenticated", this.props.isAuthenticated, (competitor_id === undefined || competitor_id === null))
       return this.props.isAuthenticated && 
         (competitor_id === undefined || competitor_id === null)
     }
