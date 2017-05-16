@@ -256,25 +256,28 @@ export default class PageEnterCallbacks extends React.Component {
      <Page ref="page" {...this.props}>
         <h1>Enter Callbacks</h1>
          <div style={{display: 'inline-block', 'min-width': '50%'}}>
-             <div style={{float: 'right'}}>
-                 <h4>Judges Who Submitted Callbacks</h4>
-                 <Table.Provider
-                     components={components}
-                     columns={judgeColumns}
-                     className={style.tableWrapper + ' ' + style.regularWidth}
-                 >
-                     <Table.Header
-                         headerRows={resolve.headerRows({ columns: judgeColumns })}
-                         className={style.tableHeader}
-                     />
-                     <Table.Body
-                         className={style.tableBody}
-                         rows={resolvedJudgeRows}
-                         rowKey="id"
-                     />
-                 </Table.Provider>
-                 <input style={{position: 'relative', top: '20px'}} type="button" value="Calculate Callbacks" disabled={judgesSubmitted.length == 0} onClick={this.handleCalculation.bind(this)} />
-             </div>
+             {this.state.judgesSubmitted.length != 0 &&
+                 <div style={{float: 'right'}}>
+                     <h4>Judges Who Submitted Callbacks</h4>
+                     <Table.Provider
+                         components={components}
+                         columns={judgeColumns}
+                         className={style.tableWrapper + ' ' + style.regularWidth}
+                     >
+                         <Table.Header
+                             headerRows={resolve.headerRows({columns: judgeColumns})}
+                             className={style.tableHeader}
+                         />
+                         <Table.Body
+                             className={style.tableBody}
+                             rows={resolvedJudgeRows}
+                             rowKey="id"
+                         />
+                     </Table.Provider>
+                     <input style={{position: 'relative', top: '20px'}} type="button" value="Calculate Callbacks"
+                            disabled={judgesSubmitted.length == 0} onClick={this.handleCalculation.bind(this)}/>
+                 </div>
+             }
             <h4>Select Judge:</h4>
             <select value={this.state.selectedJudgeId} onChange={(event) => this.setState({selectedJudgeId: event.target.value})}>
                 <option disabled value=""></option>
@@ -286,26 +289,32 @@ export default class PageEnterCallbacks extends React.Component {
             </p>
             <h4>Enter Number:</h4>
             <input type="text" value={this.state.inputCallback} onChange={this.handleChange} onKeyPress={this.handleKeyPress} disabled={this.state.selectedJudgeId == "" || rows.length == numberToRecall} style={{width: 100}} />
-            <h4>Entered Numbers:</h4>
+             <br />
+             <span style={{'font-size': '9pt', 'font-style': 'italic'}}>Press Enter to input the number</span>
              {numberToRecall != null &&
                  <p>Number of recalls entered: {rows.length} / {numberToRecall}</p>
              }
-             <input type="button" value="Submit numbers" disabled={rows.length != numberToRecall} onClick={this.handleSubmit} />
-            <Table.Provider
-              components={components}
-              columns={callbackColumns}
-              className={style.tableWrapper + ' ' + style.regularWidth}
-            >
-                <Table.Header
-                  headerRows={resolve.headerRows({ columns: callbackColumns })}
-                  className={style.tableHeader}
-                />
-                <Table.Body
-                  className={style.tableBody}
-                  rows={resolvedCallbackRows}
-                  rowKey="number"
-                />
-            </Table.Provider>
+             {this.state.rows.length != 0 &&
+                <div>
+                    <input type="button" value="Submit numbers" disabled={rows.length != numberToRecall} onClick={this.handleSubmit} />
+                    <h4>Entered Numbers:</h4>
+                    < Table.Provider
+                     components={components}
+                     columns={callbackColumns}
+                     className={style.tableWrapper + ' ' + style.regularWidth}
+                     >
+                     <Table.Header
+                     headerRows={resolve.headerRows({ columns: callbackColumns })}
+                     className={style.tableHeader}
+                     />
+                     <Table.Body
+                     className={style.tableBody}
+                     rows={resolvedCallbackRows}
+                     rowKey="number"
+                     />
+                        </Table.Provider>
+                </div>
+             }
          </div>
       </Page>
     )
