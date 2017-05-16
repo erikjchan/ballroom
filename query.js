@@ -90,7 +90,7 @@ const create_rounds_for_events_for_competition = cid => {
                   console.error('error getting client', err);
                   reject(err);
               } else {
-                  client.query('SELECT * FROM round LEFT JOIN event ON (round.eventid = event.id) WHERE competitionid = ${cid}', (err, result) => {
+                  client.query(SQL`SELECT * FROM round LEFT JOIN event ON (round.eventid = event.id) WHERE competitionid = ${cid}`, (err, result) => {
                     if (err) {
                       return reject(err);
                     }
