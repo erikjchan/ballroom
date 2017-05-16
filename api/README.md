@@ -1,0 +1,13 @@
+# /api
+
+This directory contains the source for the ballroom api; essentally the "backend"
+of the application.
+
+## index.js
+
+Here are the definitions for all the routes
+
+## db.js
+
+Here lies the logic to connect to a postgres instance on to which the data will be saved
+

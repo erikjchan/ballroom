@@ -5,6 +5,7 @@
 // Database queries
 const query = require('../query')
 const query2 = require('../query2')
+const log_debug = require('./log')
 
 const jwt = require('express-jwt');
 const ManagementClient = require('auth0').ManagementClient;
@@ -27,14 +28,7 @@ const jwtCheck = jwt({
   audience: 'Dl30IRGbXkkPlENLT4nR9QIWLHiMAxxF'
 })
 
-const DEBUG_LEVEL = 1;
-const log_debug = level => msg => {
-  if (DEBUG_LEVEL === level) console.log(msg)
-}
-
 /*********************************** ROUTES ***********************************/
-
-
 
 module.exports = app => {
 
@@ -378,7 +372,8 @@ module.exports = app => {
       query.get_competitions().then(value => {
           log_debug(2)(value)
           res.send(value);
-      });
+      })
+      .catch(console.error)
   })
 
   app.get('/api/competitions/:cid', (req, res) => {
