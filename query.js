@@ -100,55 +100,7 @@ const create_rounds_for_events_for_competition = cid => {
                             rollback(client, done);
                             return reject(err);
                         }
-                        //let ordernumber = 1;
                         createRoundInsertTopHelper(resolve, reject, err, client, done, 0, value, 1);
-                        /*for (let row of value) {
-                            let couples = parseInt(row.count);
-                            let eventid = row.id;
-                            let numRounds = Math.max(1, Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1));
-                            for (let i = 1; i <= numRounds; i++) {
-                                let size = Math.min(couples, NUM_COUPLES_FINAL_ROUND * Math.pow(2, numRounds - i));
-                                if (i == numRounds) {
-                                    client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
-                                        if (err) {
-                                            rollback(client, done);
-                                            return reject(err);
-                                        }
-                                    });
-                                } else if (i == numRounds - 1) {
-                                    client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
-                                        if (err) {
-                                            rollback(client, done);
-                                            return reject(err);
-                                        }
-                                    });
-                                } else if (i == numRounds - 2) {
-                                    client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
-                                        if (err) {
-                                            rollback(client, done);
-                                            return reject(err);
-                                        }
-                                    });
-                                } else {
-                                    const name = 'Round ' + i;
-                                    client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, ${name}, ${ordernumber}, ${size})`, (err, result) => {
-                                        if (err) {
-                                            rollback(client, done);
-                                            return reject(err);
-                                        }
-                                    });
-                                }
-                                ordernumber++;
-                            }
-                        }
-                        client.query('COMMIT', (err) => {
-                            if (err) {
-                                rollback(client, done);
-                                return reject(err);
-                            }
-                            done(null);
-                            resolve('{"finished": true}');
-                        });*/
                       });
                     }
                   });
