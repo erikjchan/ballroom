@@ -162,7 +162,7 @@ export default class RunCompetition extends React.Component {
     // Confirm with the user
     if (!confirm(`Are you sure you want to enter callbacks for ${this.getRoundName(round)}?`)) return;
 
-    browserHistory.push(`competition/${this.competition_id}/round/${round.id}/entercallbacks`);
+    browserHistory.push(`/competition/${this.competition_id}/round/${round.id}/entercallbacks`);
 
   }
 

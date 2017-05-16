@@ -82,7 +82,7 @@ ALTER TABLE affiliation OWNER TO postgres;
 
 CREATE TABLE callback (
     id SERIAL,
-    "timestamp" timestamp without time zone,
+    "timestamp" timestamp without time zone default (now() at time zone 'utc'),
     judgeid integer,
     number integer,
     roundid integer,

@@ -287,7 +287,6 @@ const update_levels_and_styles_for_competition = data => {
 }
 
 const update_rounds_for_competition = data => {
-    console.log("data", data);
     return new Promise(function(resolve, reject) {
         pool.connect(function(err, client, done) {
            if (err) {
@@ -385,6 +384,55 @@ const update_rounds_for_competition = data => {
     });
 }
 
+const callbacksInsertHelper = (resolve, reject, err, client, done, counter, callbacks) => {
+    if (counter < callbacks.length) {
+        const data = callbacks[counter];
+        client.query(SQL`INSERT INTO callback (judgeid, number, roundid, competitionid) 
+            VALUES (${data.jid}, ${data.number}, ${data.rid}, ${data.cid})`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                callbacksInsertHelper(resolve, reject, err, client, done, counter + 1, callbacks);
+        });
+    } else {
+        client.query('COMMIT', (err) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            done(null);
+            resolve('{"finished": true}');
+        });
+    }
+}
+
+const update_callbacks_for_round_and_judge = (data) => {
+    console.log("data", data);
+    return new Promise(function(resolve, reject) {
+       pool.connect(function(err, client, done) {
+          if (err) {
+              console.error('error getting client', err);
+              reject(err);
+          }  else {
+              client.query('BEGIN', (err) => {
+                  if (err) {
+                      rollback(client, done);
+                      reject(err);
+                  }
+                  client.query(SQL`DELETE FROM callback WHERE roundid = ${data.rid} AND judgeid = ${data.jid}`, (err) => {
+                     if (err) {
+                         rollback(client, done);
+                         reject(err);
+                     }
+                     callbacksInsertHelper(resolve, reject, err, client, done, 0, data.callbacks);
+                  });
+              });
+          }
+       });
+    });
+}
+
 const update_competition_info = data => {
     return pool.query(SQL`UPDATE competition SET name = ${data.name}, leadidstartnum = ${data.leadidstartnum},
         locationname = ${data.locationname}, earlyprice = ${data.earlyprice}, regularprice = ${data.regularprice},
@@ -418,18 +466,15 @@ const get_judges_for_competition = (comp_id) => {
       WHERE competitionid = ${comp_id} AND role.name = 'Adjudicator'`);
 }
 
+const get_judges_submitted_round = (rid) => {
+    return pool.query(SQL`SELECT DISTINCT ON (id) official.id, firstname, lastname FROM callback LEFT JOIN official ON (callback.judgeid = official.id) WHERE roundid = ${rid};`);
+}
+
 const get_official = id => {
     return pool.query(SQL`SELECT official.*, role.name as rolename FROM official
       LEFT JOIN role ON(roleid = role.id) 
       WHERE id = ${id}`);
 }
-
-const get_callbacks_for_round = (rid) => {
-    return pool.query(SQL`SELECT judgeid, firstname, lastname, number, roundid, callback.competitionid FROM callback
-     LEFT JOIN judge ON (judgeid = judge.id)
-     WHERE roundid = ${rid}`);
-}
-
 
 const get_affiliations = () => {
     return pool.query('SELECT * FROM affiliation');
@@ -487,7 +532,7 @@ const get_rounds_for_competition = cid => {
 }
 
 const get_rounds_in_same_event_as_round = rid => {
-  return pool.query(SQL`SELECT * FROM round WHERE eventid IN (SELECT eventid FROM round WHERE id = ${cid}) ORDER BY ordernumber`);
+  return pool.query(SQL`SELECT * FROM round WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) ORDER BY ordernumber`);
 }
 
 const get_competitors_for_competition = cid => {
@@ -501,7 +546,7 @@ const get_competitors_for_competition = cid => {
 }
 
 const get_competitors_for_round = rid => {
-  return pool.query(SQL`SELECT number FROM partnership WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) AND calledback = true`);
+    return pool.query(SQL`SELECT number FROM partnership WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) AND calledback = true`);
 }
 
 const get_affiliations_for_competition = cid => {
@@ -531,7 +576,7 @@ module.exports = {
     get_roles,
     get_officials_for_competition,
     get_judges_for_competition,
-    get_callbacks_for_round,
+    get_judges_submitted_round,
     get_official,
     get_affiliations,
     get_competitions,
@@ -551,6 +596,7 @@ module.exports = {
     update_events_for_competition,
     update_levels_and_styles_for_competition,
     update_rounds_for_competition,
+    update_callbacks_for_round_and_judge,
     update_competition_info,
     update_competition_current_round_id
 }
