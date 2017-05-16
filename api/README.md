@@ -11,3 +11,6 @@ Here are the definitions for all the routes
 
 Here lies the logic to connect to a postgres instance on to which the data will be saved
 
+## query.js query2.js
+
+A collection of queries to handle operations on the database
