@@ -7,7 +7,6 @@
 
 import style from "./style.css"
 import React from 'react'
-import AddEvent from './PageEventRegistration/addEvent.jsx'
 import EventTable from './common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'

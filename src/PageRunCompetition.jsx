@@ -7,7 +7,6 @@
 import { Link } from 'react-router'
 import React from 'react'
 import * as Table from 'reactabular-table';
-import EventRunningInfo from './PageRunCompetition/event.jsx'
 import lib from './common/lib.js'
 import Page from './Page.jsx'
 import Box from './common/Box.jsx'
