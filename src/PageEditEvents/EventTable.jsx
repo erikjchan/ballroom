@@ -80,7 +80,7 @@ export default class EventTable extends React.Component {
       rows: [],
       levels: [],
       styles: [],
-      selectedNumber: "",
+      selectedNumber: 1,
       selectedLevel: "",
       selectedStyle: "",
       danceInput: "",
@@ -166,7 +166,6 @@ export default class EventTable extends React.Component {
             <tr>
               <td>
               	<select value = {this.state.selectedNumber} onChange = {(event) => this.setState({selectedNumber: event.target.value})}>
-              		<option disabled value = ""></option>
               		{numberOptions}
               	</select>
               </td>
