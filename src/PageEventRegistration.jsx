@@ -102,6 +102,9 @@ export default class PageEventRegistration extends React.Component {
     /** Fetch competitors for partner search */
     this.props.api.get(`/api/competitors`)
       .then(json => {
+        json = json.filter(item => {
+          return item.id != this.competitor_id
+        })
         this.setState({competitors: json})
       })
       .catch(err => alert(err))
@@ -352,6 +355,9 @@ dropEventHandler = (rowData) => {
             fetch(`/api/competitors`)
               .then(response => response.json())
               .then(json => {
+                json = json.filter(item => {
+                    return item.id != this.competitor_id
+                })
                 json = search_competitor(json, value)
                 this.setState({competitors: json, loading: false})
               })
