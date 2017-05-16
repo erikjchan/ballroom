@@ -54,31 +54,31 @@ module.exports = app => {
     res.status(200).send("quoter.getRandomOne()");
   });
 
-  app.post('/api/create_user', (req, res) => {
-     const { profile, firstname, lastname, email, mailingaddress, affiliationname } = req.body;
-     const { user_id } = profile
-     query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationname)
-     .then(idstr => {
-         const idobj = JSON.parse(idstr)
 
+   app.post('/api/create_user', (req, res) => {
+      const { profile, firstname, lastname, email, mailingaddress, affiliationname } = req.body;
+      const { user_id } = profile
+      query2.create_competitor(firstname, lastname, email, mailingaddress, affiliationname)
+      .then(idstr => {
+          const idobj = JSON.parse(idstr)
 
-         // Update Auth0 profile app_metadata
-         management.users
-         .updateAppMetadata({ id: user_id }, {competitor_id : idobj.id})
-         .then(body => { console.log(body); res.send(idobj)})
-         .catch(err => { console.error(err); res.send({severity: "ERROR", err})})
-     }, err => {
-       res.send(err)
-     })
-     .catch(err => res.send(err))
-  });
+          // Update Auth0 profile app_metadata
+          management.users
+          .updateAppMetadata({ id: user_id }, {competitor_id : idobj.id})
+          .then(body => { console.log(body); res.send(idobj)})
+          .catch(err => { console.error(err); res.send({severity: "ERROR", err})})
+      }, err => {
+        res.send(err)
+      })
+      .catch(err => res.send(err))
+   });
 
-  app.post('/api/create_competition', (req, res) => {
-    query2.create_competition(req.body).then(function (value){
-      console.log(value);
-      res.send(value[0]);
-    })
-  });
+    app.post('/api/create_competition', (req, res) => {
+      query2.create_competition(req.body).then(function (value){
+          console.log(value);
+          res.send(value[0]);
+      })
+   });
 
   app.post('/api/create_official', (req, res) => {
       const token = req.body.token
@@ -233,7 +233,7 @@ module.exports = app => {
           res.end(value);
       });
   });
-
+      
   app.post('/api/payment_records/update/', (req, res) => {
       const competitionid = parseInt(req.body.competitionid)
       const competitorid = parseInt(req.body.competitorid)
@@ -359,6 +359,12 @@ module.exports = app => {
       });
   })
 
+  // app.get('/api/competitors/:id1/competition/:id2', (req, res) => {
+  //     const id1 = parseInt(req.params.id1)
+  //     const id2 = parseInt(req.params.id2)
+  //     res.send(data.competitor_competition_information[id1])
+  // })
+
   app.get('/api/competitors/:id/:cid/events', (req, res) => {
       const id = parseInt(req.params.id)
       const cid = parseInt(req.params.cid)
@@ -386,6 +392,20 @@ module.exports = app => {
       const cid = parseInt(req.params.cid)
       query.get_other_competitions(cid).then(value => {
           console.log(value)
+          res.send(value);
+      });
+  })
+
+  app.get('/api/event/:eid/', (req, res) => {
+      const eid =  parseInt(req.params.eid)
+      const events = data.events.filter(e => e.id === eid)
+      res.send(events[0])
+  })
+
+  app.get('/api/event/rounds/:rid', (req, res) => {
+      const rid = parseInt(req.params.rid)
+      query.get_rounds_in_same_event_as_round(rid).then(value => {
+          console.log(value);
           res.send(value);
       });
   })
@@ -429,6 +449,20 @@ module.exports = app => {
       });
   })
 
+  app.post('/api/callbacks/update', (req, res) => {
+     query.update_callbacks_for_round_and_judge(req.body).then(function(value) {
+        log_debug(2)(value);
+        res.send(value);
+     });
+  });
+
+  app.post('/api/callbacks/calculate', (req, res) => {
+      query.calculate_callbacks_for_round(req.body).then(function(value) {
+          log_debug(2)(value);
+          res.send(value);
+      });
+  });
+
   app.get('/api/admins', (req, res) => {
       query.get_all_admins().then(value => {
           log_debug(2)(value)
@@ -445,6 +479,13 @@ module.exports = app => {
 
   app.get('/api/officials/:id', (req, res) => {
       query.get_official(req.params.id).then(value => {
+          log_debug(2)(value)
+          res.send(value);
+      });
+  })
+
+  app.get('/api/judges/round/:rid', (req, res) => {
+      query.get_judges_submitted_round(req.params.rid).then(value => {
           log_debug(2)(value)
           res.send(value);
       });

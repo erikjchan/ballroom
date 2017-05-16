@@ -82,9 +82,9 @@ ALTER TABLE affiliation OWNER TO postgres;
 
 CREATE TABLE callback (
     id SERIAL,
-    "timestamp" timestamp without time zone,
+    "timestamp" timestamp without time zone default (now() at time zone 'utc'),
     judgeid integer,
-    leadcompetitornumber integer,
+    number integer,
     roundid integer,
     competitionid integer
 );
@@ -205,8 +205,8 @@ CREATE TABLE partnership (
     followconfirmed boolean,
     competitionid integer,
     number integer,
-    calledback boolean,
-    "timestamp" timestamp without time zone
+    calledback boolean DEFAULT true,
+    "timestamp" timestamp with time zone
 );
 
 

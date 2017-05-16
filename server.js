@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 setup_api(app)
+/************************ TEST PATHS *************************/
 
-/******************************** TEST PATHS. *********************************/
 app.get('/test/competitors', (req, res) => {
     query2.get_all_competitors().then(function (value) {
         log_debug(2)(value)
