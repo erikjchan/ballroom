@@ -298,21 +298,21 @@ export default class PageEnterCallbacks extends React.Component {
                 <div>
                     <input type="button" value="Submit numbers" disabled={rows.length != numberToRecall} onClick={this.handleSubmit} />
                     <h4>Entered Numbers:</h4>
-                    < Table.Provider
+                    <Table.Provider
                      components={components}
                      columns={callbackColumns}
                      className={style.tableWrapper + ' ' + style.regularWidth}
                      >
-                     <Table.Header
-                     headerRows={resolve.headerRows({ columns: callbackColumns })}
-                     className={style.tableHeader}
-                     />
-                     <Table.Body
-                     className={style.tableBody}
-                     rows={resolvedCallbackRows}
-                     rowKey="number"
-                     />
-                        </Table.Provider>
+                         <Table.Header
+                         headerRows={resolve.headerRows({ columns: callbackColumns })}
+                         className={style.tableHeader}
+                         />
+                         <Table.Body
+                         className={style.tableBody}
+                         rows={resolvedCallbackRows}
+                         rowKey="number"
+                         />
+                    </Table.Provider>
                 </div>
              }
          </div>
