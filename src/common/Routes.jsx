@@ -24,7 +24,7 @@ import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
 import OrganizationPayment  from '../PageOrganizationPayment.jsx'
-import QueryTest            from '../../test.js'
+import QueryTest            from '../PageQueryTest.jsx'
 import PageNewUser          from '../PageNewUser.jsx'
 import CompetitorPayment    from '../PageCompetitorPayment.jsx'
 
