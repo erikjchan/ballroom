@@ -463,6 +463,13 @@ app.post('/api/callbacks/update', (req, res) => {
    });
 });
 
+app.post('/api/callbacks/calculate', (req, res) => {
+    query.calculate_callbacks_for_round(req.body).then(function(value) {
+        log_debug(2)(value);
+        res.send(value);
+    });
+});
+
 app.get('/api/admins', (req, res) => {
     query.get_all_admins().then(value => {
         log_debug(2)(value)

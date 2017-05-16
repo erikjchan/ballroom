@@ -21,6 +21,67 @@ const get_num_couples_per_event_for_competition = cid => {
 
 const NUM_COUPLES_FINAL_ROUND = 7;
 
+const createRoundInsertBottomHelper = (resolve, reject, err, client, done, i, numRounds, counter, values, ordernumber, eventid) => {
+    if (i <= numRounds) {
+        const size = Math.min(couples, NUM_COUPLES_FINAL_ROUND * Math.pow(2, numRounds - i));
+        if (i == numRounds) {
+            client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Final', ${ordernumber}, ${size})`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+            });
+        } else if (i == numRounds - 1) {
+            client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Semifinal', ${ordernumber}, ${size})`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+            });
+        } else if (i == numRounds - 2) {
+            client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, 'Quarter', ${ordernumber}, ${size})`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+            });
+        } else {
+            const name = 'Round ' + i;
+            client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size) VALUES (${eventid}, ${name}, ${ordernumber}, ${size})`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                createRoundInsertBottomHelper(resolve, reject, err, client, done, i + 1, numRounds, counter, values, ordernumber + 1, eventid);
+            });
+        }
+    } else {
+        createRoundInsertTopHelper(resolve, reject, err, client, done, counter + 1, values, ordernumber);
+    }
+}
+
+const createRoundInsertTopHelper = (resolve, reject, err, client, done, counter, values, ordernumber) => {
+    if (counter < values.length) {
+        const row = values[counter];
+        const couples = parseInt(row.count);
+        const eventid = row.id;
+        const numRounds = Math.max(1, Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1));
+        createRoundInsertBottomHelper(resolve, reject, err, client, done, 1, numRounds, counter, values, ordernumber, eventid)
+    } else {
+        client.query('COMMIT', (err) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            done(null);
+            resolve('{"finished": true}');
+        });
+    }
+}
+
 const create_rounds_for_events_for_competition = cid => {
     return new Promise(function(resolve, reject) {
        get_num_couples_per_event_for_competition(cid).then(value => {
@@ -29,7 +90,7 @@ const create_rounds_for_events_for_competition = cid => {
                   console.error('error getting client', err);
                   reject(err);
               } else {
-                  client.query('SELECT * FROM round', (err, result) => {
+                  client.query('SELECT * FROM round LEFT JOIN event ON (round.eventid = event.id) WHERE competitionid = ${cid}', (err, result) => {
                     if (err) {
                       return reject(err);
                     }
@@ -39,8 +100,9 @@ const create_rounds_for_events_for_competition = cid => {
                             rollback(client, done);
                             return reject(err);
                         }
-                        let ordernumber = 1;
-                        for (let row of value) {
+                        //let ordernumber = 1;
+                        createRoundInsertTopHelper(resolve, reject, err, client, done, 0, value, 1);
+                        /*for (let row of value) {
                             let couples = parseInt(row.count);
                             let eventid = row.id;
                             let numRounds = Math.max(1, Math.ceil(Math.log2(couples / NUM_COUPLES_FINAL_ROUND) + 1));
@@ -86,7 +148,7 @@ const create_rounds_for_events_for_competition = cid => {
                             }
                             done(null);
                             resolve('{"finished": true}');
-                        });
+                        });*/
                       });
                     }
                   });
@@ -94,6 +156,64 @@ const create_rounds_for_events_for_competition = cid => {
           })
        });
     });
+}
+
+const newEventsInsertHelper = (resolve, reject, err, client, done, counter, data) => {
+    if (counter < data.rows.length) {
+        const row = data.rows[counter];
+        client.query(SQL`INSERT INTO newevents (id, stylename, levelname, dance, ordernumber) VALUES (${row.id}, ${row.stylename}, ${row.levelname}, ${row.dance}, ${row.ordernumber})`, (err, result) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            newEventsInsertHelper(resolve, reject, err, client, done, counter + 1, data);
+        });
+    } else {
+        client.query(SQL`UPDATE newevents SET styleid = s.id FROM style s WHERE newevents.stylename = s.name AND s.competitionid = ${data.cid}`, (err, result) => {
+            if (err) {
+                console.log(err);
+                rollback(client, done);
+                return reject(err);
+            }
+            client.query(SQL`UPDATE newevents SET levelid = l.id FROM level l WHERE newevents.levelname = l.name AND l.competitionid = ${data.cid}`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                client.query(SQL`DELETE FROM event WHERE id NOT IN 
+                    (SELECT id FROM newevents WHERE id IS NOT NULL) AND competitionid = ${data.cid} returning id`, (err, result) => {
+                    if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                    }
+                    client.query(SQL`UPDATE event e SET ordernumber = n.ordernumber FROM newevents n
+                        WHERE e.id = n.id`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                        client.query(SQL`INSERT INTO event (competitionid, styleid, levelid, dance, ordernumber)
+                            SELECT ${data.cid} AS competitionid, styleid, levelid, dance, ordernumber
+                            FROM newevents
+                            WHERE id IS NULL`, (err, result) => {
+                            if (err) {
+                                rollback(client, done);
+                                return reject(err);
+                            }
+                            client.query('COMMIT', (err) => {
+                                if (err) {
+                                    rollback(client, done);
+                                    return reject(err);
+                                }
+                                done(null);
+                                resolve('{"finished": true}');
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
 }
 
 const update_events_for_competition = data => {
@@ -122,63 +242,100 @@ const update_events_for_competition = data => {
                            return reject(err);
                        }
                    });
-                   for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newevents (id, stylename, levelname, dance, ordernumber) VALUES (${row.id}, ${row.stylename}, ${row.levelname}, ${row.dance}, ${row.ordernumber})`, (err, result) => {
-                           if (err) {
-                               rollback(client, done);
-                               return reject(err);
-                           }
-                       });
-                   }
-                   client.query(SQL`UPDATE newevents SET styleid = s.id FROM style s WHERE newevents.stylename = s.name AND s.competitionid = ${data.cid}`, (err, result) => {
-                       if (err) {
-                           console.log(err);
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`UPDATE newevents SET levelid = l.id FROM level l WHERE newevents.levelname = l.name AND l.competitionid = ${data.cid}`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`DELETE FROM event WHERE id NOT IN 
-                    (SELECT id FROM newevents WHERE id IS NOT NULL) AND competitionid = ${data.cid} returning id`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                       console.log("deleted ids", result.rows);
-                   });
-                   client.query(SQL`UPDATE event e SET ordernumber = n.ordernumber FROM newevents n
-                    WHERE e.id = n.id`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`INSERT INTO event (competitionid, styleid, levelid, dance, ordernumber)
-                    SELECT ${data.cid} AS competitionid, styleid, levelid, dance, ordernumber
-                    FROM newevents
-                    WHERE id IS NULL`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query('COMMIT', (err) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                       done(null);
-                       resolve('{"finished": true}');
-                   });
+                   newEventsInsertHelper(resolve, reject, err, client, done, 0, data);
                });
            }
         });
     });
+}
+
+const newStylesInsertHelper = (resolve, reject, err, client, done, counter, data) => {
+    if (counter < data.styles.length) {
+        const row = data.styles[counter];
+        client.query(SQL`INSERT INTO newrows (id, name, ordernumber) VALUES (${row.id}, ${row.name}, ${row.ordernumber})`, (err, result) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            newStylesInsertHelper(resolve, reject, err, client, done, counter + 1, data);
+        });
+    } else {
+        client.query(SQL`DELETE FROM style WHERE id NOT IN 
+                    (SELECT id FROM newrows WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            client.query(SQL`UPDATE style s SET ordernumber = n.ordernumber FROM newrows n
+                    WHERE s.id = n.id`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                client.query(SQL`INSERT INTO style (name, ordernumber, competitionid)
+                    SELECT name, ordernumber, ${data.cid} AS competitionid
+                    FROM newrows
+                    WHERE id IS NULL`, (err, result) => {
+                    if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                    }
+                    client.query('COMMIT', (err) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                        done(null);
+                        resolve('{"finished": true}');
+                    });
+                });
+            });
+        });
+    }
+}
+
+const newLevelsInsertHelper = (resolve, reject, err, client, done, counter, data) => {
+    if (counter < data.levels.length) {
+        const row = data.levels[counter];
+        client.query(SQL`INSERT INTO newrows (id, name, ordernumber) VALUES (${row.id}, ${row.name}, ${row.ordernumber})`, (err, result) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            newLevelsInsertHelper(resolve, reject, err, client, done, counter + 1, data);
+        });
+    } else {
+        client.query(SQL`DELETE FROM level WHERE id NOT IN 
+                    (SELECT id FROM newrows WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            client.query(SQL`UPDATE level l SET ordernumber = n.ordernumber FROM newrows n
+                    WHERE l.id = n.id`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                client.query(SQL`INSERT INTO level (name, ordernumber, competitionid)
+                    SELECT name, ordernumber, ${data.cid} AS competitionid
+                    FROM newrows
+                    WHERE id IS NULL`, (err, result) => {
+                    if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                    }
+                    client.query('TRUNCATE newrows', (err) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                        newStylesInsertHelper (resolve, reject, err, client, done, 0, data)
+                    });
+                });
+            });
+        });
+    }
 }
 
 const update_levels_and_styles_for_competition = data => {
@@ -202,88 +359,92 @@ const update_levels_and_styles_for_competition = data => {
                             rollback(client, done);
                             return reject(err);
                         }
-                    });
-                    console.log("levels", data.levels);
-                    for (let row of data.levels) {
-                        client.query(SQL`INSERT INTO newrows (id, name, ordernumber) VALUES (${row.id}, ${row.name}, ${row.ordernumber})`, (err, result) => {
-                            if (err) {
-                                rollback(client, done);
-                                return reject(err);
-                            }
-                        });
-                    }
-                    client.query(SQL`DELETE FROM level WHERE id NOT IN 
-                    (SELECT id FROM newrows WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    client.query(SQL`UPDATE level l SET ordernumber = n.ordernumber FROM newrows n
-                    WHERE l.id = n.id`, (err, result) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    client.query(SQL`INSERT INTO level (name, ordernumber, competitionid)
-                    SELECT name, ordernumber, ${data.cid} AS competitionid
-                    FROM newrows
-                    WHERE id IS NULL`, (err, result) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    client.query('TRUNCATE newrows', (err) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    for (let row of data.styles) {
-                        client.query(SQL`INSERT INTO newrows (id, name, ordernumber) VALUES (${row.id}, ${row.name}, ${row.ordernumber})`, (err, result) => {
-                            if (err) {
-                                rollback(client, done);
-                                return reject(err);
-                            }
-                        });
-                    }
-                    client.query(SQL`DELETE FROM style WHERE id NOT IN 
-                    (SELECT id FROM newrows WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    client.query(SQL`UPDATE style s SET ordernumber = n.ordernumber FROM newrows n
-                    WHERE s.id = n.id`, (err, result) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    client.query(SQL`INSERT INTO style (name, ordernumber, competitionid)
-                    SELECT name, ordernumber, ${data.cid} AS competitionid
-                    FROM newrows
-                    WHERE id IS NULL`, (err, result) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                    });
-                    client.query('COMMIT', (err) => {
-                        if (err) {
-                            rollback(client, done);
-                            return reject(err);
-                        }
-                        done(null);
-                        resolve('{"finished": true}');
+                        newLevelsInsertHelper(resolve, reject, err, client, done, 0, data);
                     });
                 });
             }
         });
     });
+}
+
+const newRoundsInsertHelper = (resolve, reject, err, client, done, counter, data) => {
+    if (counter < data.rows.length) {
+        const row = data.rows[counter];
+        client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, callbackscalculated) 
+                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.callbackscalculated})`, (err, result) => {
+            if (err) {
+                rollback(client, done);
+                return reject(err);
+            }
+            newRoundsInsertHelper(resolve, reject, err, client, done, counter + 1, data);
+        });
+    } else {
+        client.query(SQL`UPDATE newrounds SET styleid = s.id FROM style s WHERE newrounds.stylename = s.name AND s.competitionid = ${data.cid}`, (err, result) => {
+            if (err) {
+                console.log(err);
+                rollback(client, done);
+                return reject(err);
+            }
+            client.query(SQL`UPDATE newrounds SET levelid = l.id FROM level l WHERE newrounds.levelname = l.name AND l.competitionid = ${data.cid}`, (err, result) => {
+                if (err) {
+                    rollback(client, done);
+                    return reject(err);
+                }
+                client.query(SQL`UPDATE newrounds SET eventid = e.id FROM event e WHERE newrounds.levelid = e.levelid AND newrounds.styleid = e.styleid AND newrounds.dance = e.dance AND e.competitionid = ${data.cid}`, (err, result) => {
+                    if (err) {
+                        rollback(client, done);
+                        return reject(err);
+                    }
+                    client.query(SQL`DELETE FROM round USING round AS rd
+                        LEFT JOIN event ON (rd.eventid = event.id) 
+                        WHERE round.id NOT IN 
+                        (SELECT id FROM newrounds WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
+                        if (err) {
+                            rollback(client, done);
+                            return reject(err);
+                        }
+                        client.query(SQL`UPDATE round r SET name = n.name, ordernumber = n.ordernumber FROM newrounds n
+                            WHERE r.id = n.id`, (err, result) => {
+                            if (err) {
+                                rollback(client, done);
+                                return reject(err);
+                            }
+                            client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, callbackscalculated)
+                                SELECT eventid, name, ordernumber, size, callbackscalculated
+                                FROM newrounds
+                                WHERE id IS NULL`, (err, result) => {
+                                if (err) {
+                                    rollback(client, done);
+                                    console.log(err);
+                                    return reject(err);
+                                }
+                                client.query(SQL`SELECT id FROM newrounds ORDER BY ordernumber LIMIT 1`, (err, result) => {
+                                    if (err) {
+                                        rollback(client, done);
+                                        return reject(err);
+                                    }
+                                    client.query(SQL`UPDATE competition SET currentroundid = ${result.rows[0].id}`, (err) => {
+                                        if (err) {
+                                            rollback(client, done);
+                                            return reject(err);
+                                        }
+                                        client.query('COMMIT', (err) => {
+                                            if (err) {
+                                                rollback(client, done);
+                                                return reject(err);
+                                            }
+                                            done(null);
+                                            resolve('{"finished": true}');
+                                        });
+                                    })
+                                })
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
 }
 
 const update_rounds_for_competition = data => {
@@ -315,72 +476,70 @@ const update_rounds_for_competition = data => {
                            rollback(client, done);
                            return reject(err);
                        }
-                   });
-                   for (let row of data.rows) {
-                       client.query(SQL`INSERT INTO newrounds (id, levelname, stylename, dance, name, ordernumber, size, callbackscalculated) 
-                          VALUES (${row.id}, ${row.levelname}, ${row.stylename}, ${row.dance}, ${row.round}, ${row.ordernumber}, ${row.size}, ${row.callbackscalculated})`, (err, result) => {
-                           if (err) {
-                               rollback(client, done);
-                               return reject(err);
-                           }
-                       });
-                   }
-                   client.query(SQL`UPDATE newrounds SET styleid = s.id FROM style s WHERE newrounds.stylename = s.name AND s.competitionid = ${data.cid}`, (err, result) => {
-                       if (err) {
-                           console.log(err);
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`UPDATE newrounds SET levelid = l.id FROM level l WHERE newrounds.levelname = l.name AND l.competitionid = ${data.cid}`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`UPDATE newrounds SET eventid = e.id FROM event e WHERE newrounds.levelid = e.levelid AND newrounds.styleid = e.styleid AND newrounds.dance = e.dance AND e.competitionid = ${data.cid}`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`DELETE FROM round USING round AS rd
-                    LEFT JOIN event ON (rd.eventid = event.id) 
-                    WHERE round.id NOT IN 
-                    (SELECT id FROM newrounds WHERE id IS NOT NULL) AND competitionid = ${data.cid}`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`UPDATE round r SET name = n.name, ordernumber = n.ordernumber FROM newrounds n
-                    WHERE r.id = n.id`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                   });
-                   client.query(SQL`INSERT INTO round (eventid, name, ordernumber, size, callbackscalculated)
-                    SELECT eventid, name, ordernumber, size, callbackscalculated
-                    FROM newrounds
-                    WHERE id IS NULL`, (err, result) => {
-                       if (err) {
-                           rollback(client, done);
-                           console.log(err);
-                           return reject(err);
-                       }
-                   });
-                   client.query('COMMIT', (err) => {
-                       if (err) {
-                           rollback(client, done);
-                           return reject(err);
-                       }
-                       done(null);
-                       resolve('{"finished": true}');
+                       newRoundsInsertHelper(resolve, reject, err, client, done, 0, data);
                    });
                });
            }
         });
+    });
+}
+
+const calculate_callbacks_for_round = (data) => {
+    return new Promise(function(resolve, reject) {
+       pool.connect(function(err, client, done) {
+          if (err) {
+              console.error('error getting client', err);
+              reject(err);
+          } else {
+              client.query('BEGIN', (err) => {
+                  if (err) {
+                      rollback(client, done);
+                      reject(err);
+                  } else {
+                      client.query(SQL`CREATE TEMPORARY TABLE topcallbacks (
+                        number integer
+                        ) ON COMMIT DROP`, (err, result) => {
+                          if (err) {
+                              rollback(client, done);
+                              reject(err);
+                          } else {
+                              client.query(SQL`WITH ranking AS (SELECT COUNT(judgeid) as c, number FROM callback WHERE roundid = ${data.rid} GROUP BY number ORDER BY c DESC LIMIT ${data.size})
+                                    INSERT INTO topcallbacks (number) SELECT number FROM callback WHERE roundid = ${data.rid} 
+                                    GROUP BY number HAVING COUNT(judgeid) >= (SELECT MIN(c) FROM ranking)`, (err) => {
+                                  if (err) {
+                                      rollback(client, done);
+                                      reject(err);
+                                  } else {
+                                      client.query(SQL`UPDATE partnership SET calledback = false FROM topcallbacks WHERE partnership.number NOT IN (SELECT number FROM topcallbacks) AND eventid = ${data.eventid}`, (err) => {
+                                         if (err) {
+                                             rollback(client, done);
+                                             reject(err);
+                                         } else {
+                                             client.query(SQL`UPDATE round SET callbackscalculated = true WHERE id = ${data.rid}`, (err) => {
+                                                if (err) {
+                                                    rollback(client, done);
+                                                    reject(err);
+                                                } else {
+                                                    client.query('COMMIT', (err) => {
+                                                        if (err) {
+                                                            rollback(client, done);
+                                                            return reject(err);
+                                                        }
+                                                        done(null);
+                                                        resolve('{"finished": true}');
+                                                    });
+                                                }
+                                             });
+                                         }
+                                      });
+                                  }
+                              });
+                          }
+                      });
+                  }
+              })
+          }
+       });
     });
 }
 
@@ -598,5 +757,6 @@ module.exports = {
     update_rounds_for_competition,
     update_callbacks_for_round_and_judge,
     update_competition_info,
-    update_competition_current_round_id
+    update_competition_current_round_id,
+    calculate_callbacks_for_round
 }

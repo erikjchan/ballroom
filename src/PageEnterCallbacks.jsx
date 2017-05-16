@@ -149,17 +149,33 @@ export default class PageEnterCallbacks extends React.Component {
     }
   }
 
+  handleCalculation() {
+    const nextRound = this.getNextRound();
+    this.props.api.post('/api/callbacks/calculate', {
+        rid: this.props.params.round_id,
+        eventid: nextRound.eventid,
+        size: nextRound.size
+    }).then(json => {
+        if (json.finished) {
+            browserHistory.push(`/competition/${this.props.selected.competition.id}/run`);
+        } else {
+            alert("Callbacks calculation failed. Please try again");
+        }
+    }).catch(() => {alert("Callbacks calculation failed. Please try again")});
+  }
+
   componentDidMount() {
       console.log("competition id", this.props.selected.competition.id);
       this.props.api.get(`/api/competition/${this.props.selected.competition.id}/judges`)
         .then(json => {
             this.setState({judges: json});
         })
+        .catch(() => alert("Failed to fetch judges"));
       this.props.api.get(`/api/judges/round/${this.props.params.round_id}`)
           .then(json => {
-              console.log("judgesSubmitted", json);
               this.setState({judgesSubmitted: json});
           })
+          .catch(() => alert("Failed to fetch submitted judges"));
         // todo; setup a timer to retry. Fingers crossed, hopefully the
         // connection comes back
         /*.catch(this.refs.page.errorNotif(
@@ -169,11 +185,13 @@ export default class PageEnterCallbacks extends React.Component {
         .then(json => {
             this.setState({competitors: json});
         })
+        .catch(() => alert("Failed to fetch competitors"));
         //.catch(this.refs.page.errorNotif("There was an error fetching the competitors"));
       this.props.api.get(`/api/event/rounds/${this.props.params.round_id}`)
           .then(json => {
               this.setState({rounds: json});
           })
+          .catch(() => alert("Failed to fetch rounds"));
   }
 
   onRemove(id) {
@@ -237,8 +255,8 @@ export default class PageEnterCallbacks extends React.Component {
     return (
      <Page ref="page" {...this.props}>
         <h1>Enter Callbacks</h1>
-         <div style={{display: 'inline-block'}}>
-             <div style={{float: 'right', 'margin-left': "100px"}}>
+         <div style={{display: 'inline-block', 'min-width': '50%'}}>
+             <div style={{float: 'right'}}>
                  <h4>Judges Who Submitted Callbacks</h4>
                  <Table.Provider
                      components={components}
@@ -255,6 +273,7 @@ export default class PageEnterCallbacks extends React.Component {
                          rowKey="id"
                      />
                  </Table.Provider>
+                 <input style={{position: 'relative', top: '20px'}} type="button" value="Calculate Callbacks" disabled={judgesSubmitted.length == 0} onClick={this.handleCalculation.bind(this)} />
              </div>
             <h4>Select Judge:</h4>
             <select value={this.state.selectedJudgeId} onChange={(event) => this.setState({selectedJudgeId: event.target.value})}>
