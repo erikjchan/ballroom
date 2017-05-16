@@ -6,7 +6,7 @@
   "scripts": {
     "server": "node start.js",
     "build": "webpack -p --progress --config webpack.production.config.js",
-    "test": "nyc ava --fail-fast --verbose --require babel-register",
+    "test": "ava --fail-fast",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "clean": "rm build/app.js"
   },
@@ -14,6 +14,7 @@
     "type": "git",
     "url": "https://github.com/pheuter/essential-react.git"
   },
+  "require": "babel-register",
   "keywords": [
     "skeleton",
     "template",
@@ -51,6 +52,7 @@
   },
   "dependencies": {
     "@types/express-jwt": "0.0.34",
+    "ansi-codes": "0.0.1-security",
     "auth0": "^2.6.0",
     "babel-core": "^6.5.2",
     "babel-polyfill": "^6.5.0",
@@ -92,10 +94,15 @@
     "reactabular-table": "^8.6.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.4",
     "searchtabular": "^1.4.0",
     "selectabular": "^2.0.1",
     "sql-template-strings": "^2.2.2",
     "table-resolver": "^3.1.0",
+    "tap-dot": "^1.0.5",
+    "tap-mocha-reporter": "^3.0.3",
+    "tap-simple": "^0.3.1",
     "uuid": "^3.0.1",
     "webpack-hot-middleware": "^2.17.1"
   }
