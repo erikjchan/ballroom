@@ -46,8 +46,10 @@ export default class PageEnterCallbacks extends React.Component {
                   callbacks: [],
                   judges: [],
                   selectedJudgeId: null,
+                  inputCallback: "",
                   rounds: [],
-                  competitors: []
+                  competitors: [],
+                  rows: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -56,9 +58,7 @@ export default class PageEnterCallbacks extends React.Component {
   }
 
   handleChange(event) {
-    console.log("DOING THING CHANGE")
-    console.log(this);
-    this.setState({value: event.target.value});
+    this.setState({inputCallback: event.target.value});
   }
 
   handleSubmit(event) {
@@ -68,14 +68,53 @@ export default class PageEnterCallbacks extends React.Component {
     
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-        let callbacks = event.target.value.replace(/\n/g, " ").split(" ");
-        
+        if (isNaN(this.state.inputCallback)) {
+            alert("Invalid competitor number: " + this.state.inputCallback);
+        } else {
+            const number = parseInt(this.state.inputCallback);
+            let numberAlreadyCalled = false;
+            for (let c of this.state.callbacks) {
+                if (this.state.selectedJudgeId == c.judgeid && number == c.number) {
+                    numberAlreadyCalled = true;
+                }
+            }
+            if (numberAlreadyCalled) {
+                alert("Duplicate competitor number: " + number);
+                return false;
+            }
+            let numberIsValid = false;
+            for (let c of this.state.competitors) {
+                if (number == c) {
+                    numberIsValid = true;
+                }
+            }
+            if (!numberIsValid) {
+                alert("Entered number is not in this round: " + number);
+                return false;
+            }
+            const callbacks = this.state.callbacks;
+            callbacks.push({
+                judgeid: this.state.selectedJudgeId,
+                number: number,
+                roundid: this.props.params.round_id,
+                competitionid: this.props.selected.competition.id
+            });
+            const rows = this.state.rows;
+            rows.push({
+                id: rows.length,
+                number: number
+            });
+            this.setState({
+                callbacks: callbacks,
+                inputCallback: "",
+                rows: rows
+            });
+        }
     }
   }
 
   componentDidMount() {
-      fetch(`/api/competition/${1}/judges`) // TODO: Change 1 to cid
-        .then(response => response.json()) // parse the result
+      this.props.api.get(`/api/competition/${this.props.selected.competition.id}/judges`)
         .then(json => {
             this.setState({judges: json});
         })
@@ -84,20 +123,17 @@ export default class PageEnterCallbacks extends React.Component {
         .catch(this.refs.page.errorNotif(
           `There was an error fetching the judges`))
 
-      fetch(`/api/competitors/round/${this.props.params.round_id}`)
-        .then(response => response.json())
+      this.props.api.get(`/api/competitors/round/${this.props.params.round_id}`)
         .then(json => {
             this.setState({competitors: json});
         })
         .catch(this.refs.page.errorNotif("There was an error fetching the competitors"));
-      fetch(`/api/callbacks/${this.props.params.round_id}`)
-        .then(response => response.json())
+      this.props.api.get(`/api/callbacks/${this.props.params.round_id}`)
         .then(json => {
             this.setState({callbacks: json});
         })
         .catch(this.refs.page.errorNotif("There was an error fetching the callbacks"));
-      fetch(`/api/event/rounds/${this.props.params.round_id}`)
-          .then(response => response.json())
+      this.props.api.get(`/api/event/rounds/${this.props.params.round_id}`)
           .then(json => {
               this.setState({rounds: json});
           })
@@ -108,9 +144,15 @@ export default class PageEnterCallbacks extends React.Component {
       const idx = findIndex(rows, { id });
 
       // this could go through flux etc.
-      rows.splice(idx, 1);
+      const row = rows.splice(idx, 1);
 
-      this.setState({ rows });
+      const callbacks = cloneDeep(this.state.callbacks);
+      const idx2 = findIndex(callbacks, {judgeId: this.state.selectedJudgeId, number: row[0].number});
+      callbacks.splice(idx2, 1);
+
+      console.log(callbacks);
+
+      this.setState({ rows, callbacks });
   }
 
   getCurrentRound() {
@@ -122,17 +164,17 @@ export default class PageEnterCallbacks extends React.Component {
       return null;
   }
 
-  stringifyCallbacks() {
-      var callbacks = "";
-      if (this.state.selectedJudgeId == null) {
-          return "";
-      }
-      for (let c of this.state.callbacks) {
-          if (c.judgeid == this.state.selectedJudgeId) {
-              callbacks += (c.number + "\n");
+  getNextRound() {
+      const currentRound = this.getCurrentRound();
+      let foundCurrentRound = false;
+      for (let r of this.state.rounds) {
+          if (foundCurrentRound && r.eventid == currentRound.eventid) {
+              return r;
+          } else if (r == currentRound) {
+              foundCurrentRound = true;
           }
       }
-      return callbacks;
+      return null;
   }
 
   render() {
@@ -153,6 +195,8 @@ export default class PageEnterCallbacks extends React.Component {
     })(rows);
 
     const judgeOptions = judges.map(judge => (<option value={judge.id}>{`${judge.firstname} ${judge.lastname}`}</option>))
+    const nextRound = this.getNextRound();
+    const numberToRecall = nextRound != null ? nextRound.size : null;
 
     return (
      <Page ref="page" {...this.props}>
@@ -163,13 +207,15 @@ export default class PageEnterCallbacks extends React.Component {
             {judgeOptions}
         </select>    
         <h4>Enter Number:</h4>
-        <textarea value={this.stringifyCallbacks()} onChange={this.handleChange} onKeyPress={this.handleKeyPress} style={{width: 100}}></textarea>
+        <input type="text" value={this.state.inputCallback} onChange={this.handleChange} onKeyPress={this.handleKeyPress} disabled={this.state.selectedJudgeId != null} style={{width: 100}} />
         <h4>Entered Numbers:</h4>
         <Link to={`/competition/${0}/round/${0}/entercallbacks`}>
             <input type="button"
                    value="Submit numbers" />
         </Link>
-        <p>Number of recalls entered: {rows.length} / {numberToRecall}</p>
+         {numberToRecall != null &&
+             <p>Number of recalls entered: {rows.length} / {numberToRecall}</p>
+         }
         <Table.Provider
           components={components}
           columns={columns}

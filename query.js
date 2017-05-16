@@ -402,7 +402,7 @@ const get_judge = id => {
 }
 
 const get_callbacks_for_round = (rid) => {
-    return pool.query(SQL`SELECT judgeid, firstname, lastname, number FROM callback
+    return pool.query(SQL`SELECT judgeid, firstname, lastname, number, roundid, callback.competitionid FROM callback
      LEFT JOIN judge ON (judgeid = judge.id)
      WHERE roundid = ${rid}`);
 }
