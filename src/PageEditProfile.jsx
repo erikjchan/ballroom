@@ -111,7 +111,7 @@ export default class PageEditProfile extends React.Component {
               </select>
             </span>
           }
-          <p><button onClick={this.saveChanges.bind(this)}>Save</button></p>
+          <p><button className={style.saveBtns} onClick={this.saveChanges.bind(this)}>Save</button></p>
           </div>
         </Box>
       </Page>

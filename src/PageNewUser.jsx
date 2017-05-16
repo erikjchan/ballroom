@@ -4,6 +4,7 @@ import lib from './common/lib'
 import style from './style.css';
 import { browserHistory } from 'react-router';
 import Autosuggest from 'react-autosuggest';
+import Box from './common/Box.jsx'
 
 export default class PageNewUser extends React.Component {
 
@@ -106,8 +107,9 @@ export default class PageNewUser extends React.Component {
       <Page ref="page" {...this.props}>
 
         <h1>Welcome!</h1>
-        <h3>Lets get you started with a profile</h3>
-
+        <Box admin={false} title={"Create Profile"}>
+          <div className={style.lines}>
+          <br />
         <h5>First Name</h5>
         <input
           type='text'
@@ -139,14 +141,15 @@ export default class PageNewUser extends React.Component {
             onChange: this.onOrganizationChange.bind(this)
           }}
         />
-
         <h5>Mailing Address</h5>
         <input
           type='text'
           value={competitor.mailingaddress}
           onChange={this.handleCompetitorFormChange.bind(this, 'mailingaddress')} />
-        <p><button onClick={this.createCompetitor.bind(this)}>Save</button></p>
-      </Page>
+        <p><button className={style.saveBtns} onClick={this.createCompetitor.bind(this)}>Save</button></p>
+          </div>
+        </Box>
+        </Page>
     )
   }
 }
