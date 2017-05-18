@@ -338,7 +338,7 @@ class PageEventRegistration extends React.Component {
             >{item.firstname} {item.lastname} ({item.email})</div>
           )}
         />
-      <p><button onClick={this.registerEventHandler} className={style.registerBtn}>Register!</button></p>
+      <p><button onClick={this.registerEventHandler} className={style.registerBtn}>Register</button></p>
               </div>
         }/>
 

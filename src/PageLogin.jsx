@@ -15,8 +15,8 @@ export default class LoginPage extends React.Component {
 
   generateRounds() {
     this.props.api.post('/api/competition/generateRounds', {
-        cid: 1, // TODO: change in production
-      });
+      cid: 1, // TODO: change in production
+    });
   }
 
   render() {
@@ -36,19 +36,19 @@ export default class LoginPage extends React.Component {
 
     // console.log(action, fetchQuote())
     return (
-     <Page ref="page" {...this.props}>
+     <Page ref = "page" {...this.props}>
       <h1>Welcome to Floorcraft!</h1>
 
       Floorcraft is a service that allows both collegiate ballroom competition organizers 
       to manage competitions and competitors to register for competitions.
 
-      The site is an open-source project that can be found at <a href="https://github.com/ejc233/ballroom/">this link</a>.
+      The site is an open-source project that can be found at <a href = "https://github.com/ejc233/ballroom/">this link</a>.
 
 
       <div style={{visibility: 'hidden'}}>
         <h1>Welcome to Floorcraft!</h1>
         { message }
-        { this.props.profile.role === 'none' && <button onClick={this.loginUser.bind(this)}>Login / Signup</button> }
+        { this.props.profile.role === 'none' && <button onClick = {this.loginUser.bind(this)}>Login / Signup</button> }
 
         <p>Index of all pages, for the sake of development convenience</p>
         <p><Link to='home'                           >HomePage</Link></p>
@@ -71,19 +71,19 @@ export default class LoginPage extends React.Component {
         <button onClick={() => this.props.dispatch(action) } />
         <pre>
           {JSON.stringify(this.props, function(key, value) {
-              if (typeof value === 'object' && value !== null) {
-                  if (cache.indexOf(value) !== -1) {
-                      // Circular reference found, discard key
-                      return;
-                  }
-                  // Store value in our collection
-                  cache.push(value);
+            if (typeof value === 'object' && value !== null) {
+              if (cache.indexOf(value) !== -1) {
+                // Circular reference found, discard key
+                return;
               }
-              return value;
+              // Store value in our collection
+              cache.push(value);
+            }
+            return value;
           }, 2)}
         </pre>
     </div>
-    <button onClick={() => this.generateRounds()}>Create rounds for events</button>
+    <button onClick = {() => this.generateRounds()}>Create rounds for events</button>
 
       </Page>
     );

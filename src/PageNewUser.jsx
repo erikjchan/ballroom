@@ -19,11 +19,11 @@ export default class PageNewUser extends React.Component {
   }
 
   componentDidMount() {
-      /** Get organizations */
-      this.props.api.get(`/api/affiliations`)
-        .then(organizations => {
-          this.setState({ organizations })
-        })
+    /** Get organizations */
+    this.props.api.get(`/api/affiliations`)
+      .then(organizations => {
+        this.setState({ organizations })
+      })
   }
 
   /** Updates state to reflect form change */

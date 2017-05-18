@@ -60,7 +60,7 @@ export default class EditOfficials extends React.Component {
       .then(json => {
         // update the state of our component
         json.map(item => {
-            item.name = item.firstname+" "+item.lastname
+          item.name = item.firstname+" "+item.lastname
         })
         this.setState({ officials : json })
       })
@@ -71,38 +71,37 @@ export default class EditOfficials extends React.Component {
   }
 
   onRemove(rowData) {
-      if (!confirm('Are you sure you want to delete the judge?\n'+
-                        "  id: "+rowData.id + "\n"+
-                        "  name: "+rowData.firstname+" "+rowData.lastname+"\n"+
-                        "  email: "+rowData.rolename
-                        )) {
-          return false;
-      }
-      this.props.api.post("/api/delete_official", {id: rowData.id});
-      const officials = cloneDeep(this.state.officials);
-      const idx = findIndex(officials, { id: rowData.id });
-
-      // this could go through flux etc.
-      const officialToRemove = officials[idx];
-      officials.splice(idx, 1);
-      this.setState({officials: officials});
+    if (!confirm('Are you sure you want to delete the judge?\n'+
+                      "  id: "+rowData.id + "\n"+
+                      "  name: "+rowData.firstname+" "+rowData.lastname+"\n"+
+                      "  email: "+rowData.rolename
+                      )) {
+      return false;
+    }
+    this.props.api.post("/api/delete_official", {id: rowData.id});
+    const officials = cloneDeep(this.state.officials);
+    const idx = findIndex(officials, { id: rowData.id });
+    // this could go through flux etc.
+    const officialToRemove = officials[idx];
+    officials.splice(idx, 1);
+    this.setState({officials: officials});
   }
 
-  addOfficial(event){
-      if (this.state.selectedRoleId == "") {
-        return false;
-      }
-      const official = {
-        firstname: this.state.inputFirstName,
-        lastname: this.state.inputLastName,
-        roleid: this.state.selectedRoleId,
-        competitionid: this.competition_id
-      }
-      official.token = crypto.randomBytes(16).toString('hex');
-      this.props.api.post("/api/create_official", official)
-        .then((res) => {
-            window.location.reload();
-        });
+  addOfficial(event) {
+    if (this.state.selectedRoleId == "") {
+      return false;
+    }
+    const official = {
+      firstname: this.state.inputFirstName,
+      lastname: this.state.inputLastName,
+      roleid: this.state.selectedRoleId,
+      competitionid: this.competition_id
+    }
+    official.token = crypto.randomBytes(16).toString('hex');
+    this.props.api.post("/api/create_official", official)
+      .then((res) => {
+        window.location.reload();
+      });
   }
 
 
@@ -110,77 +109,62 @@ export default class EditOfficials extends React.Component {
 
   render() {
       if (this.state.competition){
-
-            /*const official_table = (this.officials === null)
-            ? <div className="container-content"> Empty </div>
-            : <Table.Provider
-                style={{width: '100%'}}
-                className="pure-table pure-table-striped"
-                columns={this.columnsForOfficials()}>
-                <Table.Header />
-                <Table.Body rows={this.state.officials.slice(0,this.state.officials.length)} rowKey="id" />
-                </Table.Provider>*/
-
-            return (<Page ref="page" {...this.props}>
-
-                <h1>Edit Officials</h1>
-                <Box admin={true} title={"Add Official"}
-                        content ={
-                <div className={style.lines}>
-                    <br/>
-                    <label className="addLabel">
-                        First Name: <br />
-                        <input type="text" name="firstname" size = '20'
-                               value = {this.state.inputFirstName} 
-                               onChange = {(event) => this.setState({inputFirstName: event.target.value})}
-                        />
-                    </label>
-                    <label className="addLabel">
-                         Last Name: <br />
-                        <input type="text" name="lastname" size = '20'
-                               value = {this.state.inputLastName} 
-                               onChange = {(event) => this.setState({inputLastName: event.target.value})}
-                        />
-                    </label>
-                    <label className="addLabel">
-                        Position:<br />
-                        <select value={this.state.selectedRoleId} onChange={(event) => this.setState({selectedRoleId: event.target.value})}>
-                          <option value="" disabled></option>
-                          {this.state.roles.map(role => (<option key={"role_id_" + role.id} value={role.id}>{role.name}</option>))}
-                        </select>
-                    </label>
-                <button className = {style.judgeEditBtns}
-                       onClick={this.addOfficial.bind(this)}>Add Official</button>
-                    </div>} />
-                <Box
-                admin={true} 
-                title = "Current Officials"
-                content = {
-                    <EventTable
-          events={this.state.officials}
-          extra_columns={[{
-            content: (value, {rowData}) => (
-                <div>
-                <div>
-                <span
-                  onClick={() => this.onRemove(rowData)}
-                  style={{ marginLeft: '1em', cursor: 'pointer' }}
-                >
-                  &#10007; Drop
-                </span>
-              </div>
-              </div>
-            )
-          }]}
-        />
-                }
+        return (<Page ref = "page" {...this.props}>
+                  <h1>Edit Officials</h1>
+                  <Box admin = {true} title = {"Add Official"}
+                    content = {
+                      <div className = {style.lines}>
+                        <br/>
+                          <label className="addLabel">
+                            First Name: <br />
+                            <input type = "text" name = "firstname" size = '20'
+                              value = {this.state.inputFirstName} 
+                              onChange = {(event) => this.setState({inputFirstName: event.target.value})}
+                            />
+                          </label>
+                          <label className = "addLabel">
+                            Last Name: <br />
+                            <input type = "text" name = "lastname" size = '20'
+                              value = {this.state.inputLastName} 
+                              onChange = {(event) => this.setState({inputLastName: event.target.value})}
+                            />
+                          </label>
+                          <label className="addLabel">
+                            Position:<br />
+                            <select value = {this.state.selectedRoleId} onChange = {(event) => this.setState({selectedRoleId: event.target.value})}>
+                              <option value="" disabled></option>
+                              {this.state.roles.map(role => (<option key = {"role_id_" + role.id} value = {role.id}>{role.name}</option>))}
+                            </select>
+                          </label>
+                          <button className = {style.judgeEditBtns}
+                    onClick = {this.addOfficial.bind(this)}>Add Official</button>
+                      </div>} />
+                  <Box admin = {true} title = "Current Officials"
+                    content = {
+                      <EventTable
+                        events = {this.state.officials}
+                        extra_columns = {[{
+                          content: (value, {rowData}) => (
+                          <div>
+                          <div>
+                          <span
+                            onClick = {() => this.onRemove(rowData)}
+                            style = {{ marginLeft: '1em', cursor: 'pointer' }}
+                          >
+                            &#10007; Drop
+                          </span>
+                          </div>
+                          </div>
+                          )
+                        }]}
+                      />
+                    }
                 
-                />
-            </Page>
-        )
-    }
-    else{
-        return <Page ref="page" {...this.props}/>
+                  />
+                </Page>
+            )
+    } else {
+      return <Page ref="page" {...this.props}/>
     }
   }
 }

@@ -77,14 +77,14 @@ export default class PageEventRegistration extends React.Component {
       .then(json => {
         console.log(json)
         for (let i = 0; i < json.length; i++) {
-            json[i].title = json[i].dance;
-            if (json[i].leadcompetitorid == this.competitor_id) {
-                json[i].leader = "You"
-                json[i].follower = json[i].followfirstname+" "+json[i].followlastname
-            } else {
-                json[i].follower = "You"
-                json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
-            }
+          json[i].title = json[i].dance;
+          if (json[i].leadcompetitorid == this.competitor_id) {
+            json[i].leader = "You"
+            json[i].follower = json[i].followfirstname+" "+json[i].followlastname
+          } else {
+            json[i].follower = "You"
+            json[i].leader = json[i].leadfirstname+" "+json[i].leadlastname
+          }
         }
         this.setState({user_competition_events: json})
       })
