@@ -6,11 +6,11 @@ var Pool = require('pg').Pool;
 // note: all config is optional and the environment variables
 // will be read if the config is not present
 var config = {
-  user: 'postgres', //env var: PGUSER
-  database: 'postgres', //env var: PGDATABASE
-  password: 'admin', //env var: PGPASSWORD
-  host: 'localhost', // Server hosting the postgres database
-  port: 5432, //env var: PGPORT
+  user: process.env.RDS_USERNAME || 'postgres', //env var: PGUSER
+  database: process.env.RDS_DB_NAME || 'postgres', //env var: PGDATABASE
+  password: process.env.RDS_PASSWORD || 'admin', //env var: PGPASSWORD
+  host: process.env.RDS_HOSTNAME || 'localhost', // Server hosting the postgres database
+  port: process.env.RDS_PORT || 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
