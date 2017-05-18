@@ -423,43 +423,64 @@ app.get('/api/payment_records/competition/:id', (req, res) => {
     });
 })
 
-app.get('/api/payment_records/competitor/:id', (req, res) => {
-    const id = parseInt(req.params.id)
-    query2.get_paymentrecords_by_competitior(id).then(function (value) {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Payment Records for a Competitor
+    * URL       :   /api/payment_records/:competitionid/:competitorid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                competitionid: int,
+                timestamp: date,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
+                }
 
-app.get('/api/payment_records/:competitionid/:competitorid', (req, res) => {
-    const competitionid = parseInt(req.params.competitionid)
-    const competitorid = parseInt(req.params.competitorid)
-    query2.get_paymentrecord_by_competition_competitor(competitionid, competitorid).then(function (value) {
-        log_debug(2)(value)
-        res.send(value[0]);
-    });
-})
+    * Response  :   {}
 
-app.post('/api/callbacks/update', (req, res) => {
-   query.update_callbacks_for_round_and_judge(req.body).then(function(value) {
-      log_debug(2)(value);
-      res.send(value);
-   });
-});
+* Get a Payment Record for a Competition and Competitor
+    * URL       :   /api/payment_records/:competitionid/:competitorid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                competitionid: int,
+                timestamp: date,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
+                }
 
-app.post('/api/callbacks/calculate', (req, res) => {
-    query.calculate_callbacks_for_round(req.body).then(function(value) {
-        log_debug(2)(value);
-        res.send(value);
-    });
-});
+    * Response  :   {}
 
-app.get('/api/admins', (req, res) => {
-    query.get_all_admins().then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Update the Callbacks of a Judge for a Round
+    * URL       :   /api/callbacks/update
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                }
+                }
+
+    * Response  :   {}
+
+* Calculate the Callbacks for a Round
+    * URL       :   /api/callbacks/calculate
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                }
+                }
+
+    * Response  :   {}
+    * Description   :   This determines the competitors that will be called back to the next round and then updates the calledback status of eliminated competitors to false and the callbackscalculated status of the round to true.
 
 * Get all the Admins
     * URL       :   /api/admins
