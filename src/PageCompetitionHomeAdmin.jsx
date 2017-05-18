@@ -40,6 +40,14 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     catch (e) { alert('Invalid competition ID!') }
  }
 
+ generateRounds() {
+    this.props.api.post('/api/competition/generateRounds', {
+      cid: this.competition_id
+    })
+    .then(() => this.props.api.get(`/api/competition/${this.competition_id}/rounds`))
+    .then(json => this.setState({ competition_rounds : json}));
+  }
+
   componentDidMount() {
     /* Call the API for competition info */
     this.props.api.get(`/api/competition/${this.competition_id}`)
@@ -57,7 +65,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
         this.competition.earlyregdeadline = earlyregdeadline.toDateString();
         this.competition.regularregdeadline = regularregdeadline.toDateString();
         this.competition.lateregdeadline = lateregdeadline.toDateString();
-        
+
         // update the state of our component
         this.setState({ competition : json })
       })
@@ -65,14 +73,19 @@ export default class PageCompetitionHomeAdmin extends React.Component {
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
 
-
     /**  Call the API for event schedule  */
       .then(() => this.props.api.get(`/api/competition/${this.competition_id}/events`))
       .then(json => this.setState({ competition_events : json}))
 
     /**  Call the API for round schedule  */
       .then(() => this.props.api.get(`/api/competition/${this.competition_id}/rounds`))
-      .then(json => this.setState({ competition_rounds : json}))
+      .then(json => {
+        if (json.length == 0 && Date.now() > new Date(this.competition.lateregdeadline)) {
+          this.generateRounds();
+        } else if (json.length > 0) {
+          this.setState({ competition_rounds : json});
+        }
+      })
 
 
     /** Get competitors  */
