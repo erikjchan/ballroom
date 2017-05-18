@@ -13,12 +13,6 @@ export default class LoginPage extends React.Component {
     window.dispatch(login())
   }
 
-  generateRounds() {
-    this.props.api.post('/api/competition/generateRounds', {
-      cid: 1, // TODO: change in production
-    });
-  }
-
   render() {
     const params = new URLSearchParams(window.location.search)
     const msg = params.get('msg')
@@ -83,7 +77,6 @@ export default class LoginPage extends React.Component {
           }, 2)}
         </pre>
     </div>
-    <button onClick = {() => this.generateRounds()}>Create rounds for events</button>
 
       </Page>
     );
