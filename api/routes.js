@@ -365,8 +365,8 @@ module.exports = app => {
       });
   })
 
-  app.get('/api/competitions', (req, res) => {
-      query.get_competitions().then(value => {
+  app.get('/api/competitions/:email', (req, res) => {
+      query.get_competitions(req.params.email).then(value => {
           log_debug(2)(value)
           res.send(value);
       })
