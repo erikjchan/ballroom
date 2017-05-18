@@ -197,10 +197,7 @@ API for viewing and updating database.
                 size: int
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 * Update Events for the current Competition
     * URL       :   /api/competition/updateEvents
@@ -217,10 +214,7 @@ API for viewing and updating database.
                 ordernumber: int
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 * Update Levels and Styles for the current Competition
     * URL       :   /api/competition/updateLevelsStyles
@@ -233,10 +227,7 @@ API for viewing and updating database.
                 ordernumber: int
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 * Update Rounds for the current Competition
     * URL       :   /api/competition/updateRounds
@@ -257,10 +248,7 @@ API for viewing and updating database.
                 callbackscalculated: bool
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 * Update the current Competition
     * URL       :   /api/competition/updateCompetitionInfo
@@ -284,10 +272,7 @@ API for viewing and updating database.
                 description: string
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 * Update the current Competition Round id
     * URL       :   /api/competition/updateCompetitionCurrentRoundId
@@ -299,10 +284,7 @@ API for viewing and updating database.
                 rid: int
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 * Update a Payment Record
     * URL       :   /api/payment_records/update/
@@ -317,10 +299,7 @@ API for viewing and updating database.
                 paidwithaffiliation: bool
                 }
                 }
-    * Response  :   
-                {
-                
-                }
+    * Response  :   {}
 
 ## GET
 
@@ -596,8 +575,7 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -690,9 +668,7 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -850,9 +826,7 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -865,9 +839,7 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -950,8 +922,7 @@ API for viewing and updating database.
     * Method    :   POST
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
 
     * Response  :   
@@ -964,14 +935,11 @@ API for viewing and updating database.
     * Method    :   POST
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
 
     * Response  :   
-                {
-                
-                }
+                {}
     * Description   :   This determines the competitors that will be called back to the next round and then updates the calledback status of eliminated competitors to false and the callbackscalculated status of the round to true.
 
 * Get all the Admins
@@ -979,8 +947,7 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -993,8 +960,7 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
     * Response  :   
                 {
