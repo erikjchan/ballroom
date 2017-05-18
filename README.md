@@ -183,34 +183,84 @@ API for viewing and updating database.
 				}
 				}
 	* Response	:	{}
-	
-app.post('/api/competition/generateRounds', (req, res) => {
-    query.create_rounds_for_events_for_competition(req.body.cid).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
 
-app.post('/api/competition/updateEvents', (req, res) => {
-    query.update_events_for_competition(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
 
-app.post('/api/competition/updateLevelsStyles', (req, res) => {
-    query.update_levels_and_styles_for_competition(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
+* Generates Rounds based on which Partnerships are signed up for which Events
+    * URL       :   /api/competition/generateRounds
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                eventid: int,
+                name: string,
+                ordernumber: int,
+                size: int
+                }
+                }
+    * Response  :   
+                {
+                
+                }
 
-app.post('/api/competition/updateRounds', (req, res) => {
-    query.update_rounds_for_competition(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
+* Update Events for the current Competition
+    * URL       :   /api/competition/updateEvents
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                styleid: int,
+                stylename: string,
+                levelid: int,
+                levelname: string,
+                dance: string,
+                ordernumber: int
+                }
+                }
+    * Response  :   
+                {
+                
+                }
+
+* Update Levels and Styles for the current Competition
+    * URL       :   /api/competition/updateLevelsStyles
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                ordernumber: int
+                }
+                }
+    * Response  :   
+                {
+                
+                }
+
+* Update Rounds for the current Competition
+    * URL       :   /api/competition/updateRounds
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                levelid: int,
+                levelname: string,
+                styleid: int,
+                stylename: string,
+                dance: string,
+                eventid: int,
+                name: string,
+                ordernumber: int,
+                size: int,
+                callbackscalculated: bool
+                }
+                }
+    * Response  :   
+                {
+                
+                }
 
 * Update the current Competition
     * URL       :   /api/competition/updateCompetitionInfo
