@@ -220,7 +220,6 @@ module.exports = app => {
 
   app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
       query.update_competition_current_round_id(req.body).then(value => {
-          //res.end('{"finished": true}');
           console.log(value)
           res.send(value);
       }, err => {
