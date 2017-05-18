@@ -212,34 +212,65 @@ app.post('/api/competition/updateRounds', (req, res) => {
     });
 });
 
-app.post('/api/competition/updateCompetitionInfo', (req, res) => {
-    query.update_competition_info(req.body).then(value => {
-        console.log(value)
-        res.send(value);
-    }, err =>{
-        console.log(err);
-        res.send(err);
-    });
-});
+* Update the current Competition
+    * URL       :   /api/competition/updateCompetitionInfo
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                leadidstartnum: string,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                description: string
+                }
+                }
+    * Response  :   
+                {
+                
+                }
 
-app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
-    query.update_competition_current_round_id(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
-    
-app.post('/api/payment_records/update/', (req, res) => {
-    const competitionid = parseInt(req.body.competitionid)
-    const competitorid = parseInt(req.body.competitorid)
-    const amount = parseFloat(req.body.amount)
-    const online = req.body.online
-    const paidwithaffiliation = req.body.paidwithaffiliation
-    query2.update_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
-        log_debug(2)(value)
-        res.send(value);
-    });
-});
+* Update the current Competition Round id
+    * URL       :   /api/competition/updateCompetitionCurrentRoundId
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                cid: int,
+                rid: int
+                }
+                }
+    * Response  :   
+                {
+                
+                }
+
+* Update a Payment Record
+    * URL       :   /api/payment_records/update/
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                competitionid: int,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
+                }
+    * Response  :   
+                {
+                
+                }
 
 ## GET
 
