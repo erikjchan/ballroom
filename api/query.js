@@ -519,7 +519,6 @@ const callbacksInsertHelper = (resolve, reject, err, client, done, counter, call
 }
 
 const update_callbacks_for_round_and_judge = (data) => {
-    console.log("data", data);
     return new Promise(function(resolve, reject) {
        pool.connect(function(err, client, done) {
           if (err) {
