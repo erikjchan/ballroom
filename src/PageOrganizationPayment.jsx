@@ -110,16 +110,9 @@ class PageOrganizationPayment extends React.Component {
   onSaveHandler(){
     console.log(this.state)
     if (this.state.paid == "true" && this.state.showInfo){
-           fetch("/api/clear_organization_owed", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+           this.props.api.post("/api/clear_organization_owed", {
                     competitionid: this.competition_id,
                     affiliationid: this.organization_id
-                })
             }).then(() => {
                 window.location.reload();
             });

@@ -56,7 +56,7 @@ export default class RunCompetition extends React.Component {
         this.props.api.get(`/api/competitors/round/${json.currentroundid}`)
           .then(json => {
             this.setState({competitors: json.map(c => c.number)});
-          });  
+          }).catch(() => alert("Failed to fetch competitors for current round " + json.currentroundid));  
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
@@ -99,7 +99,7 @@ export default class RunCompetition extends React.Component {
    */
   nextRound () {
     // We've reached the last round. Do nothing.
-    if (this.state.current_round.ordernumber + 1 >= this.state.rounds.length) return;
+    if (this.state.current_round.ordernumber >= this.state.rounds.length) return;
 
     // Acutally switch rounds?
     if (!confirm("This will start the next round.\nDo you want to continue?")) return;
@@ -151,7 +151,7 @@ export default class RunCompetition extends React.Component {
     this.props.api.post("/api/competition/updateCompetitionCurrentRoundId", {
         cid: this.competition_id,
         rid: rid
-    });
+    }).then(() => alert("err2"));
   }
 
   /******************************** Management ********************************/

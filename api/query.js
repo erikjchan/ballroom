@@ -673,13 +673,12 @@ const get_affiliations_for_competition = cid => {
 }
 
 const get_num_competitors_per_style_for_competition = cid => {
-    return pool.query(SQL`SELECT COUNT(c.id), s.name
+    return pool.query(SQL`SELECT COUNT(cid), sname FROM (SELECT DISTINCT ON (c.id, s.id) c.id as cid, s.name as sname
         FROM competitor c 
         LEFT JOIN partnership p ON (c.id = p.leadcompetitorid OR c.id = p.followcompetitorid)
         LEFT JOIN event e ON (e.id = p.eventid)
         LEFT JOIN style s ON (e.styleid = s.id)
-        WHERE p.competitionid = ${cid}
-        GROUP BY s.name`)
+        WHERE p.competitionid = 1 order by s.id, c.id) AS g GROUP BY sname`)
 }
 
 // INSERT

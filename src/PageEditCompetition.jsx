@@ -74,29 +74,15 @@ export default class PageEditCompetition extends React.Component {
   onSaveHandler() {
     console.log(this.state.competition);
     if (this.competition_id > 0) {
-      fetch("/api/competition/updateCompetitionInfo", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.state.competition)
-      })
+      this.props.api.post("/api/competition/updateCompetitionInfo", this.state.competition)
         .then(() => {
-        window.location.reload();
+          window.location.reload();
         });
     } else {
       if (!confirm("Are you sure to create a new competition with the provided information? You can continue editing the competition after the creation.")) {
         return;
       }
-      fetch("/api/create_competition", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.state.competition)
-      })
+      this.props.api.post("/api/create_competition", this.state.competition)
         .then(res => res.json()).then(json => {
           console.log(json);
           this.props.dispatch(selectCompetition(json))

@@ -599,9 +599,7 @@ API for viewing and updating database.
                 }
                 }
     * Response  :   
-                {
-                
-                }
+                {}
 
 * Get the confirmed Partnerships for the Competitor in the Competition
     * URL       :   /api/competitors/:id/:cid/events
@@ -926,9 +924,7 @@ API for viewing and updating database.
                 }
 
     * Response  :   
-                {
-                
-                }
+                {}
 
 * Calculate the Callbacks for a Round
     * URL       :   /api/callbacks/calculate
