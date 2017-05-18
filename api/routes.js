@@ -388,12 +388,6 @@ module.exports = app => {
       });
   })
 
-  app.get('/api/event/:eid/', (req, res) => {
-      const eid =  parseInt(req.params.eid)
-      const events = data.events.filter(e => e.id === eid)
-      res.send(events[0])
-  })
-
   app.get('/api/event/rounds/:rid', (req, res) => {
       const rid = parseInt(req.params.rid)
       query.get_rounds_in_same_event_as_round(rid).then(value => {
