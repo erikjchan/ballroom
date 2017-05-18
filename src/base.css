@@ -80,3 +80,7 @@ html, body {
 :global(.react-autosuggest__suggestion--highlighted) {
   background-color: #ddd;
 }
+
+:global(input[type="radio"]) {
+    margin: 6px;
+}

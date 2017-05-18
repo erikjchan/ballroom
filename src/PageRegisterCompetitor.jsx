@@ -10,7 +10,7 @@ import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import Autocomplete from 'react-autocomplete'
 import Page from './Page.jsx'
-import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
+import { RadioGroup, Radio } from 'react-radio-group'
 import Box from './common/Box.jsx'
 import { Link } from 'react-router'
 import connection from './common/connection'
@@ -254,10 +254,10 @@ class PageEventRegistration extends React.Component {
         
         { true && <span>
             <h2>Level</h2>
-            <RadioGroup name='comic' value={this.state.levelid} onChange={this.handleLevelChange}>
+            <RadioGroup name='level' selectedValue={this.state.levelid} onChange={this.handleLevelChange}>
               {
                 this.state.levels.map(item =>{
-                  return (<RadioButton value={item.id} label={item.name}/>);
+                  return (<div><Radio value={item.id}/>{item.name}</div>);
                 })
               }
             </RadioGroup>
@@ -268,10 +268,10 @@ class PageEventRegistration extends React.Component {
         { show_style && <span>
             <br/>
             <h2>Style</h2>
-            <RadioGroup name='comic' value={this.state.styleid} onChange={this.handleStyleChange}>
+            <RadioGroup name='style' selectedValue={this.state.styleid} onChange={this.handleStyleChange}>
               {
                 this.state.level_styles.map(item =>{
-                  return (<RadioButton value={item.id} label={item.name}/>);
+                  return (<div><Radio value={item.id}/>{item.name}</div>);
                 })
               }
             </RadioGroup>
@@ -282,10 +282,10 @@ class PageEventRegistration extends React.Component {
           <br/>
         { show_event && <span>
             <h2>Event</h2>
-            <RadioGroup name='comic' value={this.state.eventid} onChange={this.handleEventChange}>
+            <RadioGroup name='event' selectedValue={this.state.eventid} onChange={this.handleEventChange}>
               {
                 this.state.level_style_events.map(item =>{
-                  return (<RadioButton value={item.id} label={`${item.levelname} ${item.stylename} ${item.dance}`}/>);
+                  return (<div><Radio value={item.id}/>{`${item.levelname} ${item.stylename} ${item.dance}`}</div>);
                 })
               }
             </RadioGroup>
@@ -296,9 +296,9 @@ class PageEventRegistration extends React.Component {
               { show_leading && <span>
                  <br/>
             <h3>Are you leading or following?</h3>
-            <RadioGroup name='comic' value={this.state.isLeading} onChange={this.handleLeadChange}>
-              <RadioButton label='Leading' value='Leading'/>
-              <RadioButton label='Following' value='Following'/>
+            <RadioGroup name='lead' selectedValue={this.state.isLeading} onChange={this.handleLeadChange}>
+              <div><Radio value='Leading'/>Leading</div>
+              <div><Radio value='Following'/>Following</div>
             </RadioGroup>
             <br/>
           </span>

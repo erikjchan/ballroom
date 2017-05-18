@@ -9,10 +9,9 @@ import style from "./style.css"
 import React from 'react'
 import EventTable from './common/EventTable.jsx'
 import Page from './Page.jsx'
-import Input from 'react-toolbox/lib/input';
 import lib from './common/lib'
 import Box from './common/Box.jsx'
-import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
+import { RadioGroup, Radio } from 'react-radio-group'
 import connection from './common/connection';
 import { browserHistory } from 'react-router';
 
@@ -127,9 +126,9 @@ class PageSeeCompetitor extends React.Component {
                         <p><b>Pay with Organization:</b> {this.state.competitor_paymentrecord.paidwithaffiliation? "Yes": "No"} </p>
                         <h3>Mark as Paid?</h3>
                             <span>
-                                <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange}>
-                                 <RadioButton label='Paid' value='true'/>
-                                 <RadioButton label='Unpaid' value='false'/>
+                                <RadioGroup name='payment' selectedValue={this.state.paid} onChange={this.handlePayChange.bind(this)}>
+                                    <div><Radio value='true'/>Paid</div>
+                                    <div><Radio value='false'/>Unpaid</div>
                                 </RadioGroup>
                             </span>
                         <br /> <br/>

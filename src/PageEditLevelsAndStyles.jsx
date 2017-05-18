@@ -9,8 +9,6 @@
 import React from 'react'
 import XSidebar from './common/XSidebar.jsx'
 import * as Table from 'reactabular-table';
-import {Button, IconButton } from 'react-toolbox/lib/button';
-import { Snackbar } from 'react-toolbox/lib/snackbar';
 import lib from './common/lib.js';
 import Box from './common/Box.jsx'
 import { DragDropContext } from 'react-dnd';

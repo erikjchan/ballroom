@@ -18,7 +18,7 @@ import Page from './Page.jsx'
 import * as Table from 'reactabular-table';
 import { browserHistory } from 'react-router';
 import connection from './common/connection'
-import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
+import { RadioGroup, Radio } from 'react-radio-group'
 
 // organizationpayment/:competition_id/:organization_id
 class PageOrganizationPayment extends React.Component {
@@ -208,9 +208,9 @@ class PageOrganizationPayment extends React.Component {
                 <p><b>Amount Owed:</b> ${organization_owed} </p>          
                 <h3>Mark as Paid?</h3>
                 <span>
-                    <RadioGroup name='comic' value={this.state.paid} onChange={this.handlePayChange.bind(this)}>
-                        <RadioButton label='Paid' value='true'/>
-                        <RadioButton label='Unpaid' value='false'/>
+                    <RadioGroup name='payment' selectedValue={this.state.paid} onChange={this.handlePayChange.bind(this)}>
+                        <div><Radio value='true'/>Paid</div>
+                        <div><Radio value='false'/>Unpaid</div>
                     </RadioGroup>
                 </span>
                  <div className = {style.form_row}>
