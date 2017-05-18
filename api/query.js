@@ -673,7 +673,7 @@ const get_num_competitors_per_style_for_competition = cid => {
         LEFT JOIN partnership p ON (c.id = p.leadcompetitorid OR c.id = p.followcompetitorid)
         LEFT JOIN event e ON (e.id = p.eventid)
         LEFT JOIN style s ON (e.styleid = s.id)
-        WHERE p.competitionid = 1 order by s.id, c.id) AS g GROUP BY sname`)
+        WHERE p.competitionid = ${cid} ORDER BY s.ordernumber) AS g GROUP BY sname`)
 }
 
 // INSERT
