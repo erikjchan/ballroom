@@ -372,56 +372,198 @@ app.get('/api/competitions', (req, res) => {
     });
 })
 
-app.get('/api/competitions/:cid', (req, res) => {
-    const cid = parseInt(req.params.cid)
-    query.get_your_competitions(cid).then(value => {
-        console.log(value)
-        res.send(value);
-    });
-})
-app.get('/api/competitions/:cid/unregistered', (req, res) => {
-    const cid = parseInt(req.params.cid)
-    query.get_other_competitions(cid).then(value => {
-        console.log(value)
-        res.send(value);
-    });
-})
+* Get all the Competitions
+    * URL       :   /api/competitions
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
+                }
 
-app.get('/api/event/:eid/', (req, res) => {
-    const eid =  parseInt(req.params.eid)
-    const events = data.events.filter(e => e.id === eid)
-    res.send(events[0])
-})
+    * Response  :   {}
 
-app.get('/api/event/rounds/:rid', (req, res) => {
-    const rid = parseInt(req.params.rid)
-    query.get_rounds_in_same_event_as_round(rid).then(value => {
-        console.log(value);
-        res.send(value);
-    });
-})
+* Get the Competitions a Competitor is registered for
+    * URL       :   /api/competitions/:cid/
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
+                }
 
-app.get('/api/affiliations', (req, res) => {
-    query.get_affiliations().then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+    * Response  :   {}
 
-app.get('/api/payment_records', (req, res) => {
-    query2.get_all_paymentrecords().then(function (value) {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
 
-app.get('/api/payment_records/competition/:id', (req, res) => {
-    const id = parseInt(req.params.id)
-    query2.get_paymentrecords_by_competition(id).then(function (value) {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Competitions a Competitor is not registered for
+    * URL       :   /api/competitions/:cid/unregistered
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
+                }
+
+    * Response  :   {}
+
+* Get the Competitions a Competitor is not registered for
+    * URL       :   /api/event/:eid/
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
+                }
+
+    * Response  :   {}
+
+* Get an Event by id
+    * URL       :   /api/event/:eid/
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                competitionid: int,
+                styleid: int,
+                levelid: int,
+                dance: string,
+                ordernumber integer
+                }
+                }
+
+    * Response  :   {}
+
+
+* Get all the Rounds in the same Event as a specified Round
+    * URL       :   /api/event/rounds/:rid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                eventid: int,
+                name: string,
+                ordernumber: int,
+                size: int,
+                callbackscalculated: bool
+                }
+                }
+
+    * Response  :   {}
+
+* Get all the Affiliations
+    * URL       :   /api/affiliations
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string
+                }
+                }
+
+    * Response  :   {}
+
+* Get all the Payment Records
+    * URL       :   /api/payment_records
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                competitionid: int,
+                timestamp: date,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
+                }
+
+    * Response  :   {}
+
+* Get the Payment Records for a Competition
+    * URL       :   /api/payment_records/competition/:id
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                competitionid: int,
+                timestamp: date,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
+                }
+
+    * Response  :   {}
 
 * Get the Payment Records for a Competitor
     * URL       :   /api/payment_records/:competitionid/:competitorid
@@ -441,7 +583,7 @@ app.get('/api/payment_records/competition/:id', (req, res) => {
 
     * Response  :   {}
 
-* Get a Payment Record for a Competition and Competitor
+* Get the Payment Record for a Competition and Competitor
     * URL       :   /api/payment_records/:competitionid/:competitorid
     * Method    :   GET
     * Request   :

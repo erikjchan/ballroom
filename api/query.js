@@ -435,7 +435,7 @@ const update_rounds_for_competition = data => {
         });
     });
 }
-
+//
 const calculate_callbacks_for_round = (data) => {
     return new Promise(function(resolve, reject) {
        pool.connect(function(err, client, done) {
