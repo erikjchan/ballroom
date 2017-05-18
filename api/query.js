@@ -435,7 +435,7 @@ const update_rounds_for_competition = data => {
         });
     });
 }
-
+//
 const calculate_callbacks_for_round = (data) => {
     return new Promise(function(resolve, reject) {
        pool.connect(function(err, client, done) {
@@ -591,8 +591,8 @@ const get_affiliations = () => {
     return pool.query('SELECT * FROM affiliation');
 }
 
-const get_competitions = () => {
-    return pool.query('SELECT * FROM competition ORDER BY startdate');
+const get_competitions = (email) => {
+    return pool.query(SQL`SELECT * FROM competition WHERE compadmin = ${email} ORDER BY startdate`);
 }
 
 const get_your_competitions = (cid) => {
