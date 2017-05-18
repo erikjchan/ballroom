@@ -124,7 +124,7 @@ test('api/competition/1/affiliations', async t => {
 
     t.is(res.status,200);
     t.deepEqual(res.body, 
-    [{"count":"50","sname":"Latin"},{"count":"20","sname":"Smooth"}]
+    [{"count":"20","sname":"Smooth"},{"count":"50","sname":"Latin"}]
  )});
 
 test('api/competition/1/events', async t => {
