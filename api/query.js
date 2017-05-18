@@ -643,7 +643,11 @@ const get_rounds_for_competition = cid => {
 }
 
 const get_rounds_in_same_event_as_round = rid => {
-  return pool.query(SQL`SELECT * FROM round WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) ORDER BY ordernumber`);
+  return pool.query(SQL`SELECT round.*, l.name as levelname, s.name as stylename, e.dance FROM round 
+    LEFT JOIN event e ON (round.eventid = e.id)
+    LEFT JOIN level l ON (e.levelid = l.id)
+    LEFT JOIN style s ON (e.styleid = s.id) 
+    WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) ORDER BY ordernumber`);
 }
 
 const get_competitors_for_competition = cid => {
