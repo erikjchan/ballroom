@@ -17,9 +17,9 @@ export default class API {
         else throw new Error('GET RESPONSE not ok')
       })
       /** Something went wrong */
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err) })
   }
-
+ 
   post(route, obj) {
     console.log(route, JSON.stringify(obj))
     return fetch(route, {
@@ -37,6 +37,6 @@ export default class API {
         throw new Error('POST RESPONSE not ok')}
     })
     /** Something went wrong */
-    .catch(err => { alert(err); console.log(err)})
+    .catch(err => { console.error(err) })
   }
 }
