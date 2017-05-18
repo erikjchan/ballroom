@@ -113,7 +113,6 @@ class PageOrganizationPayment extends React.Component {
            this.props.api.post("/api/clear_organization_owed", {
                     competitionid: this.competition_id,
                     affiliationid: this.organization_id
-                })
             }).then(() => {
                 window.location.reload();
             });
