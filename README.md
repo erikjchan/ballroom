@@ -342,35 +342,97 @@ app.get('/api/competitors/:id', (req, res) => {
     });
 })
 
-app.get('/api/competitors/', (req, res) => {
-    query2.get_all_competitors().then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get all the Competitors
+    * URL       :   /api/competitors/
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                firstname: string,
+                lastname: string,
+                email: string,
+                mailingaddress: string,
+                affiliationid: int,
+                hasregistered: bool
+                }
 
-app.get('/api/competitors/round/:rid', (req, res) => {
-    query.get_competitors_for_round(req.params.rid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Competitor numbers in a Round
+    * URL       :   /api/competitors/round/:rid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                number: int
+                }
+                }
+    * Response  :   
+                {
+                
+                }
 
-app.get('/api/competitors/:id/:cid/events', (req, res) => {
-    const id = parseInt(req.params.id)
-    const cid = parseInt(req.params.cid)
-    query2.get_confirmed_partnerships_by_competition_competitor(cid, id).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the confirmed Partnerships for the Competitor in the Competition
+    * URL       :   /api/competitors/:id/:cid/events
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                
+                }
+                }
+    * Response  :   
+                {
+                leadcompetitorid: int,
+                followcompetitorid: int,
+                eventid: int,
+                leadconfirmed: bool,
+                followconfirmed: bool,
+                competitionid: int,
+                number: int,
+                calledback: bool,
+                timestamp: date,
+                dance: string,
+                eventid: int,
+                style: string,
+                level: string,
+                leadfirstname: string,
+                leadlastname: string,
+                followfirstname: string,
+                followlastname: string
+                }
 
-app.get('/api/competitions', (req, res) => {
-    query.get_competitions().then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get all the Competitions the Admin is associated with
+    * URL       :   /api/competitions/:email
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
 
 * Get all the Competitions
     * URL       :   /api/competitions
@@ -378,32 +440,10 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
-                id: int,
-                name: string,
-                leadidstartnum: int,
-                locationname: string,
-                earlyprice: float,
-                regularprice: float,
-                lateprice: float,
-                startdate: date,
-                enddate: date,
-                regstartdate: date,
-                earlyregdeadline: date,
-                regularregdeadline: date,
-                lateregdeadline: date,
-                compadmin: string,
-                currentroundid: int,
-                description: string
+                
                 }
                 }
-
-    * Response  :   {}
-
-* Get the Competitions a Competitor is registered for
-    * URL       :   /api/competitions/:cid/
-    * Method    :   GET
-    * Request   :
-                {body:
+    * Response  :   
                 {
                 id: int,
                 name: string,
@@ -422,9 +462,35 @@ app.get('/api/competitions', (req, res) => {
                 currentroundid: int,
                 description: string
                 }
-                }
 
-    * Response  :   {}
+* Get the Competitions a Competitor is registered for
+    * URL       :   /api/competitions/:cid/
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
 
 
 * Get the Competitions a Competitor is not registered for
@@ -433,32 +499,10 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
-                id: int,
-                name: string,
-                leadidstartnum: int,
-                locationname: string,
-                earlyprice: float,
-                regularprice: float,
-                lateprice: float,
-                startdate: date,
-                enddate: date,
-                regstartdate: date,
-                earlyregdeadline: date,
-                regularregdeadline: date,
-                lateregdeadline: date,
-                compadmin: string,
-                currentroundid: int,
-                description: string
+                
                 }
                 }
-
-    * Response  :   {}
-
-* Get the Competitions a Competitor is not registered for
-    * URL       :   /api/event/:eid/
-    * Method    :   GET
-    * Request   :
-                {body:
+    * Response  :   
                 {
                 id: int,
                 name: string,
@@ -477,15 +521,46 @@ app.get('/api/competitions', (req, res) => {
                 currentroundid: int,
                 description: string
                 }
-                }
 
-    * Response  :   {}
+* Get the Competitions a Competitor is not registered for
+    * URL       :   /api/event/:eid/
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
 
 * Get an Event by id
     * URL       :   /api/event/:eid/
     * Method    :   GET
     * Request   :
                 {body:
+                {
+                
+                }
+                }
+    * Response  :   
                 {
                 id: int,
                 competitionid: int,
@@ -494,15 +569,18 @@ app.get('/api/competitions', (req, res) => {
                 dance: string,
                 ordernumber integer
                 }
-                }
-
-    * Response  :   {}
 
 
 * Get all the Rounds in the same Event as a specified Round
-    * URL       :   /api/event/rounds/:rid
+    * URL       :   /api/event/:eid/rounds
     * Method    :   GET
     * Request   :
+                {body:
+                {
+                eid: int
+                }
+                }
+    * Response  :   
                 {body:
                 {
                 id: int,
@@ -513,21 +591,20 @@ app.get('/api/competitions', (req, res) => {
                 callbackscalculated: bool
                 }
                 }
-
-    * Response  :   {}
-
 * Get all the Affiliations
     * URL       :   /api/affiliations
     * Method    :   GET
     * Request   :
                 {body:
                 {
+                
+                }
+                }
+    * Response  :   
+                {
                 id: int,
                 name: string
                 }
-                }
-
-    * Response  :   {}
 
 * Get all the Payment Records
     * URL       :   /api/payment_records
@@ -535,6 +612,11 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
+                
+                }
+                }
+    * Response  :   
+                {
                 id: int,
                 competitionid: int,
                 timestamp: date,
@@ -543,9 +625,6 @@ app.get('/api/competitions', (req, res) => {
                 online: bool,
                 paidwithaffiliation: bool
                 }
-                }
-
-    * Response  :   {}
 
 * Get the Payment Records for a Competition
     * URL       :   /api/payment_records/competition/:id
@@ -553,6 +632,12 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
+                int: id
+                }
+                }
+
+    * Response  :   
+                {
                 id: int,
                 competitionid: int,
                 timestamp: date,
@@ -561,9 +646,6 @@ app.get('/api/competitions', (req, res) => {
                 online: bool,
                 paidwithaffiliation: bool
                 }
-                }
-
-    * Response  :   {}
 
 * Get the Payment Records for a Competitor
     * URL       :   /api/payment_records/:competitionid/:competitorid
@@ -571,23 +653,12 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
-                id: int,
-                competitionid: int,
-                timestamp: date,
-                competitorid: int,
-                amount: float,
-                online: bool,
-                paidwithaffiliation: bool
+                int: competitionid,
+                int: competitorid
                 }
                 }
 
-    * Response  :   {}
-
-* Get the Payment Record for a Competition and Competitor
-    * URL       :   /api/payment_records/:competitionid/:competitorid
-    * Method    :   GET
-    * Request   :
-                {body:
+    * Response  :   
                 {
                 id: int,
                 competitionid: int,
@@ -597,9 +668,28 @@ app.get('/api/competitions', (req, res) => {
                 online: bool,
                 paidwithaffiliation: bool
                 }
+
+* Get the Payment Record for a Competition and Competitor
+    * URL       :   /api/payment_records/:competitionid/:competitorid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                competitionid: int,
+                competitorid: int
+                }
                 }
 
-    * Response  :   {}
+    * Response  :   
+                {
+                id: int,
+                competitionid: int,
+                timestamp: date,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
 
 * Update the Callbacks of a Judge for a Round
     * URL       :   /api/callbacks/update
@@ -610,7 +700,10 @@ app.get('/api/competitions', (req, res) => {
                 }
                 }
 
-    * Response  :   {}
+    * Response  :   
+                {
+                
+                }
 
 * Calculate the Callbacks for a Round
     * URL       :   /api/callbacks/calculate
@@ -621,7 +714,10 @@ app.get('/api/competitions', (req, res) => {
                 }
                 }
 
-    * Response  :   {}
+    * Response  :   
+                {
+                
+                }
     * Description   :   This determines the competitors that will be called back to the next round and then updates the calledback status of eliminated competitors to false and the callbackscalculated status of the round to true.
 
 * Get all the Admins
@@ -630,11 +726,12 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
+                }
+                }
+    * Response  :   
+                {
                 email: string
                 }
-                }
-
-    * Response  :   {}
 
 
 * Get all the Roles
@@ -643,18 +740,24 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
+                }
+                }
+    * Response  :   
+                {
                 id: int,
                 name: string
                 }
-                }
-
-    * Response  :   {}
 
 * Get an Official by id
     * URL       :   /api/officials/:id
     * Method    :   GET
     * Request   :
                 {body:
+                {
+                id: int
+                }
+                }
+    * Response  :
                 {
                 id: int,
                 token: string,
@@ -664,9 +767,6 @@ app.get('/api/competitions', (req, res) => {
                 comeptitionid: int,
                 rolename: string
                 }
-                }
-
-    * Response  :   {}
 
 
 * Get the Judges who submitted their Callbacks for a certain Round
@@ -675,10 +775,12 @@ app.get('/api/competitions', (req, res) => {
     * Request   :
                 {body:
                 {
+                rid: int,
+                }
+                }
+    * Response  :   
+                {
                 id: int,
                 firstname: string, 
                 lastname: string,
                 }
-                }
-
-    * Response  :   {}
