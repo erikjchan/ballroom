@@ -556,10 +556,6 @@ const update_competition_current_round_id = data => {
     return pool.query(SQL`UPDATE competition SET currentroundid = ${data.rid} WHERE id = ${data.cid}`);
 }
 
-const get_all_admins = () => {
-    return pool.query('SELECT * FROM admin');
-}
-
 const get_roles = () => {
   return pool.query('SELECT * FROM role');
 }
@@ -685,7 +681,6 @@ const get_num_competitors_per_style_for_competition = cid => {
 // DELETE
 
 module.exports = {
-    get_all_admins,
     get_roles,
     get_officials_for_competition,
     get_judges_for_competition,
