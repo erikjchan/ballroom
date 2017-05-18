@@ -64,72 +64,58 @@ export default class PageEditProfile extends React.Component {
 
   render() {
     return (
-     <Page ref="page" {...this.props}>
-        <Box admin={this.props.isAdmin} title={"Edit Profile"}>
-          <div className={style.lines}>
+     <Page ref = "page" {...this.props}>
+        <Box admin = {this.props.isAdmin} title = {"Edit Profile"}>
+          <div className = {style.lines}>
           <br />
           <h5>First Name</h5>
-          <div id='editProfileContainer'></div>
+          <div id = 'editProfileContainer'></div>
           <input
-            type='text'
-            name='firstname'
+            type = 'text'
+            name = 'firstname'
             value = {this.state.competitor.firstname}
-            onChange={this.handleChange.bind(this)}
-            maxLength={16} /><br/>
+            onChange = {this.handleChange.bind(this)}
+            maxLength = {16} /><br/>
           <h5>Last Name</h5>
           <input
-            type='text'
-            name='lastname'
+            type = 'text'
+            name = 'lastname'
             value = {this.state.competitor.lastname}
-            onChange={this.handleChange.bind(this)} /><br/>
+            onChange = {this.handleChange.bind(this)} /><br/>
           <h5>Email address</h5>
           <input
-            type='email'
+            type = 'email'
             name = 'email'
-            value={this.state.competitor.email}
+            value = {this.state.competitor.email}
             disabled
-            onChange={this.handleChange.bind(this)} /><br/>
+            onChange = {this.handleChange.bind(this)} /><br/>
           <h5>Mailing Address</h5>
           <input
-            type='text'
+            type = 'text'
             name = "mailingaddress"
-            value={this.state.competitor.mailingaddress}
-            onChange={this.handleChange.bind(this)} />
+            value = {this.state.competitor.mailingaddress}
+            onChange = {this.handleChange.bind(this)} />
           
           { !this.props.isAdmin &&
             <span>
               <h5>Affiliation</h5>
               <select name = "affiliationid"
-                  value={this.state.competitor.affiliationid || ''}
-                  onChange={this.handleChange.bind(this)}>
-                  <option value=''>Not Affiliated</option>
+                  value = {this.state.competitor.affiliationid || ''}
+                  onChange = {this.handleChange.bind(this)}>
+                  <option value = ''>Not Affiliated</option>
                   {
                     this.state.affiliations.map(item =>{
-                      return (<option value={item.id} key={item.id}> {item.name} </option>);
+                      return (<option value = {item.id} key = {item.id}> {item.name} </option>);
                     })
                   }
               </select>
             </span>
           }
-          <p><button className={style.saveBtns} onClick={this.saveChanges.bind(this)}>Save</button></p>
+          <p><button className = {style.saveBtns} onClick = {this.saveChanges.bind(this)}>Save</button></p>
           </div>
         </Box>
       </Page>
     )
   }
 }
-
-
-// const get_competitors = n => collection(n)(i => ({
-//   "id" : i,
-//   "first_name" : randomData(1).firstName,
-//   "last_name" : randomData().lastName,
-//   "email" :  randomData().emailAddress,
-//   "mailing_address" : randomData().street,
-//   "organization_id" : randomId(ORGANIZATIONS),
-//   "password" : uuidV1(),
-//   "registered" : randomBool(),
-//   "lead_number" : randomInt(0, 100),
-// }))
-
 
