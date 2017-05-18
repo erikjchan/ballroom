@@ -4,7 +4,7 @@
   "description": "A minimal skeleton for building testable React apps using Babel",
   "main": "src/main.js",
   "scripts": {
-    "server": "DEV=1 node start.js",
+    "server": "node start.js --dev",
     "build": "webpack -p --progress --config webpack.production.config.js",
     "test": "ava --fail-fast",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
