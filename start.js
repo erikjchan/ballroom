@@ -2,4 +2,8 @@
 const babelRegister = require('babel-register');
 babelRegister();
 
+if (process.argv.indexOf('--dev') > -1) {
+  process.env.DEV = 1
+}
+
 require('./server');
