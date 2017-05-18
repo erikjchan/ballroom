@@ -46,7 +46,7 @@ const page_routes = [
 
 
 app.get('/app.js', (req, res) => {
-  if (process.env.PRODUCTION) {
+  if (!process.env.DEV) {
     res.sendFile(__dirname + '/build/app.js');
   } else {
     res.redirect('//' + ip.address() + ':9090/build/app.js');
@@ -54,7 +54,7 @@ app.get('/app.js', (req, res) => {
 });
 
 app.get('/style.css', (req, res) => {
-  if (process.env.PRODUCTION) {
+  if (!process.env.DEV) {
     res.sendFile(__dirname + '/build/style.css');
   } else {
     res.redirect('//' + ip.address() + ':9090/build/style.css');
