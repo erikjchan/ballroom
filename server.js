@@ -77,7 +77,8 @@ app.get(page_routes, (req, res) => {
  *
  *************************************************************/
 
-if (!process.env.PRODUCTION) {
+
+if (!process.env.PRODUCTION || process.env.DEV) {
     const webpack = require('webpack');
     const WebpackDevServer = require('webpack-dev-server');
     const config = require('./webpack.local.config');
@@ -101,7 +102,7 @@ if (!process.env.PRODUCTION) {
  *
  *****************/
 
-const port = process.env.PORT || 8080;
+const port = (process.env.DEV) ? (process.env.PORT || 8080) : 80;
 const server = app.listen(port, () => {
     const host = server.address().address;
     const port = server.address().port;
