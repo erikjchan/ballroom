@@ -527,11 +527,13 @@ SELECT pg_catalog.setval('callback_id_seq', 1, false);
 
 SELECT pg_catalog.setval('round_id_seq', 1, false);
 
-INSERT INTO admin VALUES ('admin@email.edu');
+INSERT INTO admin VALUES ('admin@admin.com');
+INSERT INTO admin VALUES ('none@none.edu');
 
-INSERT INTO competition VALUES (1, 'Cornell DanceSport Classic', 1, 'Ithaca, New York', 10.00, 20.00, 30.00, '2017-05-09 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'admin@email.edu', 1, 'description');
+INSERT INTO competition VALUES (1, 'Cornell DanceSport Classic', 1, 'Ithaca, New York', 10.00, 20.00, 30.00, '2017-05-09 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'admin@admin.com', 1, 'description');
+INSERT INTO competition VALUES (2, 'None', 1, 'Ithaca, New York', 10.00, 20.00, 30.00, '2017-05-09 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'none@none.edu', 1, 'description');
 
-SELECT pg_catalog.setval('competition_id_seq', 1, true);
+SELECT pg_catalog.setval('competition_id_seq', 2, true);
 
 INSERT INTO affiliation VALUES (1,'Cornell Dance Team');
 INSERT INTO affiliation VALUES (2,'Harvard Dance Team');

@@ -435,7 +435,7 @@ const update_rounds_for_competition = data => {
         });
     });
 }
-
+//
 const calculate_callbacks_for_round = (data) => {
     return new Promise(function(resolve, reject) {
        pool.connect(function(err, client, done) {
@@ -591,8 +591,8 @@ const get_affiliations = () => {
     return pool.query('SELECT * FROM affiliation');
 }
 
-const get_competitions = () => {
-    return pool.query('SELECT * FROM competition ORDER BY startdate');
+const get_competitions = (email) => {
+    return pool.query(SQL`SELECT * FROM competition WHERE compadmin = ${email} ORDER BY startdate`);
 }
 
 const get_your_competitions = (cid) => {
@@ -643,7 +643,11 @@ const get_rounds_for_competition = cid => {
 }
 
 const get_rounds_in_same_event_as_round = rid => {
-  return pool.query(SQL`SELECT * FROM round WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) ORDER BY ordernumber`);
+  return pool.query(SQL`SELECT round.*, l.name as levelname, s.name as stylename, e.dance FROM round 
+    LEFT JOIN event e ON (round.eventid = e.id)
+    LEFT JOIN level l ON (e.levelid = l.id)
+    LEFT JOIN style s ON (e.styleid = s.id) 
+    WHERE eventid IN (SELECT eventid FROM round WHERE id = ${rid}) ORDER BY ordernumber`);
 }
 
 const get_competitors_for_competition = cid => {

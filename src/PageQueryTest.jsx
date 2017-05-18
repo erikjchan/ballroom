@@ -65,10 +65,17 @@ export default class PageQueryTest extends React.Component {
         affiliationname: "Princeton Dance Team"   
       },
       competitor2:{email: this.props.profile.email },
-
+      competitor3:{
+        firstname:"test2",
+        lastname: "user2",
+        email: null,
+        mailingaddress: null,
+        affiliationname: "Princeton Dance Team"
+      },
       bool1: null,
       bool2: null,
-      bool3: null
+      bool3: null,
+      bool4: null
     }
 
     /** Take the competition ID from the URL (Router hands
@@ -135,7 +142,19 @@ export default class PageQueryTest extends React.Component {
         // update the state of our component
             this.setState({ competitor1 : json })
             this.setState({bool3: (this.state.competitor1.affiliationname == "Princeton Dance Team").toString()})
-            //console.log(this.state.bool3)
+            console.log(this.state.bool3)
+
+            /********************************* Update Competitor Info ***************************/
+            this.props.api.post("/api/update_competitor", this.state.competitor3)
+             .then(() => { 
+               console.log(id)
+               this.props.api.get(`/api/competitors/51`)
+               .then(json => {           
+                 this.setState({competitor3: json})
+                 console.log(this.state.competitor3.email)
+                 this.setState({bool4: (this.state.competitor3.email == "admin@admin.com").toString()})
+               })
+              });
          })      
     });
 
@@ -143,11 +162,12 @@ export default class PageQueryTest extends React.Component {
 
 
   render() {
-    //   console.log(this.state.bool1)
-    //   console.log(this.state.bool2)
-    //   console.log(this.state.bool3)
+      console.log(this.state.bool1)
+      console.log(this.state.bool2)
+      console.log(this.state.bool3)
+      console.log(this.state.bool4)
 
-    if (this.state.bool1 && this.state.bool2 && this.state.bool3 ) {
+    if (this.state.bool1 && this.state.bool2 && this.state.bool3 && this.state.bool4) {
       var comp_name = this.state.competition1.name;
       
       return (
@@ -165,7 +185,7 @@ export default class PageQueryTest extends React.Component {
                     <div><p>add new competition test: {this.state.bool1}</p></div> 
                     <div><p>update competition test: {this.state.bool2}</p></div>
                     <div><p>add new competitor test: {this.state.bool3}</p></div>
-                    
+                    <div><p>update competitor test: {this.state.bool4}</p></div>
                 </div>
               }/>
           </div>

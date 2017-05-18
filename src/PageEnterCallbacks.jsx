@@ -9,6 +9,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import findIndex from 'lodash/findIndex';
 import React from 'react'
 import Page from './Page.jsx'
+import Box from './common/Box.jsx'
 import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import { browserHistory, Link } from 'react-router';
@@ -54,9 +55,6 @@ export default class PageEnterCallbacks extends React.Component {
           property: 'firstname',
           props: {
             label: 'First Name',
-            style: {
-              width: 50
-            }
           },
           header: {
             label: 'First Name'
@@ -66,9 +64,6 @@ export default class PageEnterCallbacks extends React.Component {
           property: 'lastname',
           props: {
             label: 'Last Name',
-            style: {
-              width: 50
-            }
           },
           header: {
               label: 'Last Name'
@@ -189,6 +184,7 @@ export default class PageEnterCallbacks extends React.Component {
 
     this.props.api.get(`/api/event/rounds/${this.props.params.round_id}`)
       .then(json => {
+        console.log(json);
         this.setState({rounds: json});
       })
       .catch(() => alert("Failed to fetch rounds"));
@@ -204,8 +200,14 @@ export default class PageEnterCallbacks extends React.Component {
     this.setState({ rows });
   }
 
+  getRoundName(round) {
+    console.log(round);
+    return round.levelname + " " + round.stylename + " " + round.dance + " " + round.name;
+  }
+
   getCurrentRound() {
     for (let r of this.state.rounds) {
+      console.log("check", r.id, this.props.params.round_id);
       if (r.id == this.props.params.round_id) {
         return r;
       }
@@ -249,15 +251,20 @@ export default class PageEnterCallbacks extends React.Component {
     })(judgesSubmitted);
 
     const judgeOptions = judges.map(judge => (<option value={judge.id}>{`${judge.firstname} ${judge.lastname}`}</option>))
+    const currentRound = this.getCurrentRound();
     const nextRound = this.getNextRound();
     const numberToRecall = nextRound != null ? nextRound.size : null;
+    console.log("current round", currentRound);
 
     return (
      <Page ref="page" {...this.props}>
         <h1>Enter Callbacks</h1>
-         <div style = {{display: 'inline-block', 'min-width': '50%'}}>
+        <Box title={currentRound != null ? this.getRoundName(currentRound) : "Loading"}
+          admin={true}
+          content={
+         <div style = {{display: 'inline-block', 'min-width': '50%'}} className={style.lines}>
              {this.state.judgesSubmitted.length != 0 &&
-                 <div styl = {{float: 'right'}}>
+                 <div style = {{float: 'right'}}>
                      <h4>Judges Who Submitted Callbacks</h4>
                      <Table.Provider
                          components = {components}
@@ -274,7 +281,7 @@ export default class PageEnterCallbacks extends React.Component {
                              rowKey = "id"
                          />
                      </Table.Provider>
-                     <input style = {{position: 'relative', top: '20px'}} type = "button" value = "Calculate Callbacks"
+                     <input className={style.saveBtns} style = {{position: 'relative', top: '20px'}} type = "button" value = "Calculate Callbacks"
                             disabled = {judgesSubmitted.length == 0} onClick = {this.handleCalculation.bind(this)}/>
                  </div>
              }
@@ -297,7 +304,7 @@ export default class PageEnterCallbacks extends React.Component {
              }
              {this.state.rows.length != 0 &&
                 <div>
-                    <input type = "button" value = "Submit numbers" disabled = {rows.length != numberToRecall} onClick = {this.handleSubmit} />
+                    <input className={style.saveBtns} type = "button" value = "Submit numbers" disabled = {rows.length != numberToRecall} onClick = {this.handleSubmit} />
                     <h4>Entered Numbers:</h4>
                     <Table.Provider
                      components = {components}
@@ -317,6 +324,7 @@ export default class PageEnterCallbacks extends React.Component {
                 </div>
              }
          </div>
+       } />
       </Page>
     )
   }

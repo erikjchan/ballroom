@@ -1,6 +1,5 @@
 import http from 'ava-http';
 import test from 'ava';
-import * as rp from 'request-promise-native'
 import { api } from './helpers'
 const request = require('supertest');
 

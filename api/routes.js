@@ -365,8 +365,8 @@ module.exports = app => {
       });
   })
 
-  app.get('/api/competitions', (req, res) => {
-      query.get_competitions().then(value => {
+  app.get('/api/competitions/:email', (req, res) => {
+      query.get_competitions(req.params.email).then(value => {
           log_debug(2)(value)
           res.send(value);
       })
@@ -386,12 +386,6 @@ module.exports = app => {
           console.log(value)
           res.send(value);
       });
-  })
-
-  app.get('/api/event/:eid/', (req, res) => {
-      const eid =  parseInt(req.params.eid)
-      const events = data.events.filter(e => e.id === eid)
-      res.send(events[0])
   })
 
   app.get('/api/event/rounds/:rid', (req, res) => {
@@ -426,7 +420,7 @@ module.exports = app => {
 
   app.get('/api/payment_records/competitor/:id', (req, res) => {
       const id = parseInt(req.params.id)
-      query2.get_paymentrecords_by_competitior(id).then(function (value) {
+      query2.get_paymentrecords_by_competitor(id).then(function (value) {
           log_debug(2)(value)
           res.send(value);
       });

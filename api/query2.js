@@ -133,7 +133,7 @@ const get_paymentrecords_by_competition = (id) => {
     return pool.query(SQL`SELECT * FROM paymentrecord WHERE competitionid = ${id};`);
 }
 
-const get_paymentrecords_by_competitior = (id) => {
+const get_paymentrecords_by_competitor = (id) => {
     return pool.query(SQL`SELECT * FROM paymentrecord WHERE competitorid = ${id};`);
 }
 
@@ -421,7 +421,7 @@ module.exports = {
     get_all_paymentrecords,
     get_paymentrecord_by_competition_competitor,
     get_paymentrecords_by_competition,
-    get_paymentrecords_by_competitior,
+    get_paymentrecords_by_competitor,
     create_paymentrecord,
     update_paymentrecord,
     get_styles_for_competition_level,

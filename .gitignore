@@ -25,3 +25,8 @@ node_modules
 _notes
 *~
 api/db.js
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
