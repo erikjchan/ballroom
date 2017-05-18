@@ -31,7 +31,8 @@ class PageCompetitionList extends React.Component {
 
   componentDidMount() {
     /* Call the API for competitions info */
-    this.props.api.get(`/api/competitions`)
+    console.log("admin profile", this.props.profile);
+    this.props.api.get(`/api/competitions/${this.props.profile.email}`)
       .then(json => { 
         this.competitions = json;
         for (let i = 0; i < this.competitions.length; i++) {
