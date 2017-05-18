@@ -151,7 +151,7 @@ export default class RunCompetition extends React.Component {
     this.props.api.post("/api/competition/updateCompetitionCurrentRoundId", {
         cid: this.competition_id,
         rid: rid
-    }).then(() => alert("err2"));
+    })
   }
 
   /******************************** Management ********************************/

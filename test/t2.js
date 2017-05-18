@@ -1,4 +1,4 @@
-
+import http from 'ava-http';
 import test from 'ava';
 import { api } from './helpers'
 const request = require('supertest');
@@ -285,7 +285,7 @@ test('api/payment_records/1/1', async t => {
     {"id":2,"competitionid":1,"timestamp":"2017-05-10T04:00:00.000Z","competitorid":1,"amount":"21.87","online":true,"paidwithaffiliation":true}
 )});
 
-/************************************ Affiliation APIs******************************************/
+/************************************ Other APIs******************************************/
 
 test('api/affiliations/1', async t => {
     t.plan(2);
@@ -317,3 +317,23 @@ test('api/judges/round/1', async t => {
     []
 )});
 
+
+
+
+
+/****************************** Callback APIs **************************************/
+// test('api/callbacks/update', async t => {
+//   t.plan(1);
+
+//   const body = {
+//     'rid':1,
+//     'jid':1,
+//     'cid':1,
+//     'callbacks': null
+//   };
+
+//   const res = await http.postResponse('http://localhost:8080/api/callbacks/update', {body});
+//   t.is(res.statusCode, 200);
+//   console.log(res.body);
+
+// });
