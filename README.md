@@ -313,34 +313,89 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     });
 })
 
-app.get('/api/competition/:cid/level/:lid/style/:sid', (req, res) => {
-    query2.get_events_for_competition_level_style(req.params.cid, req.params.lid, req.params.sid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
 
-app.get('/api/competition/:cid/rounds', (req, res) => {
-    query.get_rounds_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Events for a Competition, Level, and Style
+    * URL       :   /api/competition/:cid/level/:lid/style/:sid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int,
+                lid: int,
+                sid: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                dance: string,
+                stylename: string,
+                levelname: string,
+                ordernumber: int
+                }
 
-app.get('/api/competition/:cid/styles', (req, res) => {
-    query.get_styles_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Rounds of a Competition
+    * URL       :   /api/competition/:cid/rounds
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                levelname: string,
+                levelorder: int,
+                stylename: string,
+                styleorder: int,
+                dance: string,
+                eventorder: int,
+                round: string,
+                ordernumber: int,
+                size: int,
+                callbackscalculated: bool,
+                eventid: int
+                }
 
-app.get('/api/competitors/:id', (req, res) => {
-    const id = parseInt(req.params.id)
-    query2.get_competitor_by_id(req.params.id).then(value => {
-        log_debug(2)(value)
-        res.send(value[0]);
-    });
-})
+* Get the Styles of a Competition
+    * URL       :   /api/competition/:cid/styles
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                ordernumber: int
+                }
+
+* Get a Competitor by id
+    * URL       :   /api/competitors/:id
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                firstname: string,
+                lastname: string,
+                email: string,
+                mailingaddress: string,
+                affiliationid: int,
+                hasregistered: bool,
+                affiliationname: string
+                number: int
+                }
 
 * Get all the Competitors
     * URL       :   /api/competitors/
@@ -366,6 +421,7 @@ app.get('/api/competitors/:id', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
+                rid: int
                 {
                 number: int
                 }
@@ -381,7 +437,8 @@ app.get('/api/competitors/:id', (req, res) => {
     * Request   :
                 {body:
                 {
-                
+                id: int,
+                cid: int,
                 }
                 }
     * Response  :   
@@ -411,7 +468,7 @@ app.get('/api/competitors/:id', (req, res) => {
     * Request   :
                 {body:
                 {
-                
+                email: string
                 }
                 }
     * Response  :   
@@ -469,7 +526,7 @@ app.get('/api/competitors/:id', (req, res) => {
     * Request   :
                 {body:
                 {
-                
+                cid: int
                 }
                 }
     * Response  :   
@@ -499,7 +556,7 @@ app.get('/api/competitors/:id', (req, res) => {
     * Request   :
                 {body:
                 {
-                
+                cid: int
                 }
                 }
     * Response  :   
@@ -528,7 +585,7 @@ app.get('/api/competitors/:id', (req, res) => {
     * Request   :
                 {body:
                 {
-                
+                eid: int
                 }
                 }
     * Response  :   
@@ -557,7 +614,7 @@ app.get('/api/competitors/:id', (req, res) => {
     * Request   :
                 {body:
                 {
-                
+                eid: int
                 }
                 }
     * Response  :   
@@ -572,12 +629,12 @@ app.get('/api/competitors/:id', (req, res) => {
 
 
 * Get all the Rounds in the same Event as a specified Round
-    * URL       :   /api/event/:eid/rounds
+    * URL       :   /api/event/rounds/:rid
     * Method    :   GET
     * Request   :
                 {body:
                 {
-                eid: int
+                rid: int
                 }
                 }
     * Response  :   
@@ -588,7 +645,10 @@ app.get('/api/competitors/:id', (req, res) => {
                 name: string,
                 ordernumber: int,
                 size: int,
-                callbackscalculated: bool
+                callbackscalculated: bool,
+                levelname: string,
+                stylename: string,
+                dance: string
                 }
                 }
 * Get all the Affiliations
