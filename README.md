@@ -183,136 +183,309 @@ API for viewing and updating database.
 				}
 				}
 	* Response	:	{}
-	
-app.post('/api/competition/generateRounds', (req, res) => {
-    query.create_rounds_for_events_for_competition(req.body.cid).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
 
-app.post('/api/competition/updateEvents', (req, res) => {
-    query.update_events_for_competition(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
 
-app.post('/api/competition/updateLevelsStyles', (req, res) => {
-    query.update_levels_and_styles_for_competition(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
+* Generates Rounds based on which Partnerships are signed up for which Events
+    * URL       :   /api/competition/generateRounds
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                eventid: int,
+                name: string,
+                ordernumber: int,
+                size: int
+                }
+                }
+    * Response  :   {}
 
-app.post('/api/competition/updateRounds', (req, res) => {
-    query.update_rounds_for_competition(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
+* Update Events for the current Competition
+    * URL       :   /api/competition/updateEvents
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                styleid: int,
+                stylename: string,
+                levelid: int,
+                levelname: string,
+                dance: string,
+                ordernumber: int
+                }
+                }
+    * Response  :   {}
 
-app.post('/api/competition/updateCompetitionInfo', (req, res) => {
-    query.update_competition_info(req.body).then(value => {
-        console.log(value)
-        res.send(value);
-    }, err =>{
-        console.log(err);
-        res.send(err);
-    });
-});
+* Update Levels and Styles for the current Competition
+    * URL       :   /api/competition/updateLevelsStyles
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                ordernumber: int
+                }
+                }
+    * Response  :   {}
 
-app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
-    query.update_competition_current_round_id(req.body).then(value => {
-        log_debug(2)(value)
-        res.end(value);
-    });
-});
-    
-app.post('/api/payment_records/update/', (req, res) => {
-    const competitionid = parseInt(req.body.competitionid)
-    const competitorid = parseInt(req.body.competitorid)
-    const amount = parseFloat(req.body.amount)
-    const online = req.body.online
-    const paidwithaffiliation = req.body.paidwithaffiliation
-    query2.update_paymentrecord(competitionid, competitorid, amount, online, paidwithaffiliation).then(function (value) {
-        log_debug(2)(value)
-        res.send(value);
-    });
-});
+* Update Rounds for the current Competition
+    * URL       :   /api/competition/updateRounds
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                levelid: int,
+                levelname: string,
+                styleid: int,
+                stylename: string,
+                dance: string,
+                eventid: int,
+                name: string,
+                ordernumber: int,
+                size: int,
+                callbackscalculated: bool
+                }
+                }
+    * Response  :   {}
+
+* Update the current Competition
+    * URL       :   /api/competition/updateCompetitionInfo
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string,
+                leadidstartnum: string,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                description: string
+                }
+                }
+    * Response  :   {}
+
+* Update the current Competition Round id
+    * URL       :   /api/competition/updateCompetitionCurrentRoundId
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                cid: int,
+                rid: int
+                }
+                }
+    * Response  :   {}
+
+* Update a Payment Record
+    * URL       :   /api/payment_records/update/
+    * Method    :   POST
+    * Request   :
+                {body:
+                {
+                competitionid: int,
+                competitorid: int,
+                amount: float,
+                online: bool,
+                paidwithaffiliation: bool
+                }
+                }
+    * Response  :   {}
 
 ## GET
 
-app.get('/api/competition/:id', (req, res) => {
-    query.get_competition_info(req.params.id).then(value => {
-        log_debug(2)(value)
-        res.send(value[0]);
-    });
-})
+* Get a Competition by id
+    * URL       :   /api/competition/:id
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                leadidstartnum: int,
+                locationname: string,
+                earlyprice: float,
+                regularprice: float,
+                lateprice: float,
+                startdate: date,
+                enddate: date,
+                regstartdate: date,
+                earlyregdeadline: date,
+                regularregdeadline: date,
+                lateregdeadline: date,
+                compadmin: string,
+                currentroundid: int,
+                description: string
+                }
 
-app.get('/api/competition/:cid/affiliations', (req, res) => {
-    query.get_affiliations_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Affiliations for a Competition
+    * URL       :   /api/competition/:cid/affiliations
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int
+                }
+                }
+    * Response  :   
+                {
+                affiliationname: string
+                }
 
-app.get('/api/affiliations/:id', (req, res) => {
-    query2.get_affiliation(req.params.id).then(value => {
-        log_debug(2)(value)
-        res.send(value[0]);
-    });
-})
+* Get an Affiliation by id
+    * URL       :   /api/affiliations/:id
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string
+                }
 
-app.get('/api/competition/:cid/competitors', (req, res) => {
-    query.get_competitors_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Competitors for a Competition
+    * URL       :   /api/competition/:cid/competitors
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int,
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string
+                email: string,
+                number: int,
+                affiliationname: name,
+                paidwithaffiliation: bool
+                amount: bool
+                }
 
-app.get('/api/competition/:cid/competitors_styles', (req, res) => {
-    query.get_num_competitors_per_style_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
 
-app.get('/api/competition/:cid/events', (req, res) => {
-    query.get_events_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the number of Competitors per Style for a Competition
+    * URL       :   /api/competition/:cid/competitors_styles
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int,
+                }
+                }
+    * Response  :   
+                {
+                count: int,
+                name: string,
+                }
 
-app.get('/api/competition/:cid/officials', (req, res) => {
-    query.get_officials_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Events for a Competition
+    * URL       :   /api/competition/:cid/events
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int,
+                }
+                }
+    * Response  :   
+                {
+                id : int,
+                stylename: string,
+                levelname: string,
+                dance: string,
+                ordernumber: int
+                }
 
-app.get('/api/competition/:cid/judges', (req, res) => {
-    query.get_judges_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Officials of a Competition
+    * URL       :   /api/competition/:cid/officials
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                token: string,
+                firstname: string,
+                lastname: string,
+                roleid: int,
+                competitionid: int,
+                rolename: string
+                }
 
-app.get('/api/competition/:cid/levels', (req, res) => {
-    query.get_levels_for_competition(req.params.cid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Adjudicators of a Competition
+    * URL       :   /api/competition/:cid/judges
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                token: string,
+                firstname: string,
+                lastname: string,
+                roleid: int,
+                competitionid: int
+                }
 
-app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
-    query2.get_styles_for_competition_level(req.params.cid, req.params.lid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+* Get the Levels of a Competition
+    * URL       :   /api/competition/:cid/levels
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                ordernumber: int
+                }
 
+* Get the Styles for a Competition and Level
+    * URL       :   /api/competition/:cid/level/:lid/styles
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                cid: int,
+                lid: int,
+                }
+                }
+    * Response  :   
+                {
+                id: int,
+                name: string,
+                ordernumber: int
+                }
 
 * Get the Events for a Competition, Level, and Style
     * URL       :   /api/competition/:cid/level/:lid/style/:sid
@@ -402,8 +575,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -496,9 +668,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -656,9 +826,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -671,9 +839,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -756,8 +922,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   POST
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
 
     * Response  :   
@@ -770,14 +935,11 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   POST
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
 
     * Response  :   
-                {
-                
-                }
+                {}
     * Description   :   This determines the competitors that will be called back to the next round and then updates the calledback status of eliminated competitors to false and the callbackscalculated status of the round to true.
 
 * Get all the Admins
@@ -785,8 +947,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
     * Response  :   
                 {
@@ -799,8 +960,7 @@ app.get('/api/competition/:cid/level/:lid/styles', (req, res) => {
     * Method    :   GET
     * Request   :
                 {body:
-                {
-                }
+                {}
                 }
     * Response  :   
                 {
