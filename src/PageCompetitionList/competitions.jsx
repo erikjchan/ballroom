@@ -118,8 +118,7 @@ class CompetitionsTable extends React.Component {
 	}
 
   componentDidMount() {
-      fetch(`api/competitions/${this.competitor_id}/unregistered`)
-		   .then(response => response.json())
+      this.props.api.get(`api/competitions/${this.competitor_id}/unregistered`)
 		   .then(json => {
           for (let i = 0; i < json.length; i++) {
             json[i].regularprice = "$" + (json[i].regularprice || 0);
