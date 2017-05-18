@@ -168,7 +168,7 @@ populate_expanded(box_name, lines_react, link){
 
     var competitor_stats = this.state.style_statistics.map(
       (item) => {
-        return <p><b>{item.name+": "}</b> {item.count}</p>
+        return <p><b>{item.sname+": "}</b> {item.count}</p>
       }
     );
 
