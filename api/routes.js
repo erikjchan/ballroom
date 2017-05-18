@@ -426,7 +426,7 @@ module.exports = app => {
 
   app.get('/api/payment_records/competitor/:id', (req, res) => {
       const id = parseInt(req.params.id)
-      query2.get_paymentrecords_by_competitior(id).then(function (value) {
+      query2.get_paymentrecords_by_competitor(id).then(function (value) {
           log_debug(2)(value)
           res.send(value);
       });
