@@ -38,8 +38,8 @@ test('/api/main', async t => {
 //     'token': '',
 //     'firstname':'angie',
 //     'lastname': 'pinilla',
-//     'roleid':'4444',
-//     'competitionid': '4'
+//     'roleid': 1,
+//     'competitionid':1
 //   };
 
 //   const res = await http.postResponse('http://localhost:8080/api/create_official', {body});
@@ -182,14 +182,15 @@ test('/api/main', async t => {
 
 // test('update events', async t => {
 //   const body = {
-//     'id':'',
-//     'styleid':'',
+//     'id':1,
+//     'rows':[{'styleid':1,
 //     'stylename':'',
-//     'levelid':'',
+//     'levelid':1,
 //     'levelname':'',
 //     'dance':'',
-//     'ordernumber':''
-//   };
+//     'ordernumber':1
+//     }]
+//    };
 
 //   const res = await http.postResponse('http://localhost:8080/api/competition/updateEvents', {body});
 //         t.is(res.statusCode, 200);
@@ -200,9 +201,15 @@ test('/api/main', async t => {
 
 // test('update levels and styles', async t => {
 //   const body = {
-//     'id':'',
+//     'cid':1,
+//     'levels':[{'id':1,
 //     'name':'',
-//     'ordernumber':''
+//     'ordernumber':1
+//     }],
+//     'styles':[{'id':1,
+//     'name':'',
+//     'ordernumber':1
+//   }]
 //   };
 
 //   const res = await http.postResponse('http://localhost:8080/api/competition/updateLevelsStyles', {body});
@@ -213,17 +220,17 @@ test('/api/main', async t => {
 
 // test('update rounds', async t => {
 //   const body = {
-//     'id':'',
-//     'levelid':'',
+//     'id':1,
+//     'levelid':1,
 //     'levelname':'',
-//     'styleid':'',
+//     'styleid':1,
 //     'stylename':'',
 //     'dance':'',
-//     'eventid':'',
+//     'eventid':1,
 //     'name':'',
-//     'ordernumber':'',
-//     'size':'',
-//     'callbackscalculated':''
+//     'ordernumber':1,
+//     'size':3,
+//     'callbackscalculated':true
 //   };
 
 //   const res = await http.postResponse('http://localhost:8080/api/competition/updateRounds', {body});
@@ -234,13 +241,13 @@ test('/api/main', async t => {
 
 // test('update competition info', async t => {
 //   const body = {
-//     'id':'',
-//     'name':'',
-//     'leadidstartnum':'',
+//     'id':1,
+//     'name':'test',
+//     'leadidstartnum':1,
 //     'locationname':'',
-//     'earlyprice':'',
-//     'regularprice':'',
-//     'lateprice':'',
+//     'earlyprice':20,
+//     'regularprice':30,
+//     'lateprice':40,
 //     'startdate':'',
 //     'enddate':'',
 //     'regstartdate':'',
@@ -259,8 +266,8 @@ test('/api/main', async t => {
 
 // test('update competition by current round id', async t => {
 //   const body = {
-//     'cid':'',
-//     'rid':'',
+//     'cid':1,
+//     'rid':1,
 //   };
 
 //   const res = await http.postResponse('http://localhost:8080/api/competition/updateCompetitionCurrentRoundId', {body});
@@ -270,40 +277,21 @@ test('/api/main', async t => {
 // });
 
 
-// /* GET */
+/* GET */
 
 
 
-// // test('get events for competition, level, and style', async t => {
-// //         const params = {
-// //                 cid:'1',
-// //                 level:'silver',
-// //                 lid:'1',
-// //                 style:'cha-cha',
-// //                 sid:'1',
-// //         };
-// //         const res = await http.getResponse('http://localhost:8080/api/competition', {params});
-// //         t.is(res.statusCode, 200);
-// //         console.log(res.body);
-// // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// test('get events for competition, level, and style', async t => {
+//         const params = {
+//                 cid:'1',
+//                 level:'silver',
+//                 lid:'1',
+//                 style:'cha-cha',
+//                 sid:'1',
+//         };
+//         const res = await http.getResponse('http://localhost:8080/api/competition', {params});
+//         t.is(res.statusCode, 200);
+//         console.log(res.body);
+// });
 
 
