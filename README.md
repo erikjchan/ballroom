@@ -461,23 +461,61 @@ app.get('/api/admins', (req, res) => {
     });
 })
 
-app.get('/api/roles', (req, res) => {
-    query.get_roles().then(value => {
-      log_debug(2)(value);
-      res.send(value);
-    });
-})
+* Get all the Admins
+    * URL       :   /api/admins
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                email: string
+                }
+                }
 
-app.get('/api/officials/:id', (req, res) => {
-    query.get_official(req.params.id).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+    * Response  :   {}
 
-app.get('/api/judges/round/:rid', (req, res) => {
-    query.get_judges_submitted_round(req.params.rid).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-})
+
+* Get all the Roles
+    * URL       :   /api/roles
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                name: string
+                }
+                }
+
+    * Response  :   {}
+
+* Get an Official by id
+    * URL       :   /api/officials/:id
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                token: string,
+                firstname: string,
+                lastname: string,
+                roleid: int,
+                comeptitionid: int,
+                rolename: string
+                }
+                }
+
+    * Response  :   {}
+
+
+* Get the Judges who submitted their Callbacks for a certain Round
+    * URL       :   /api/judges/round/:rid
+    * Method    :   GET
+    * Request   :
+                {body:
+                {
+                id: int,
+                firstname: string, 
+                lastname: string,
+                }
+                }
+
+    * Response  :   {}
