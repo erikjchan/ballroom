@@ -93,8 +93,8 @@ test('api/competition/1', async t => {
 
     t.is(res.status,200);
     t.deepEqual(res.body, 
-    {"id":1,"name":"Cornell DanceSport Classic","leadidstartnum":1,"locationname":"Ithaca, New York","earlyprice":"10.00","regularprice":"20.00","lateprice":"30.00","startdate":"2017-05-09T04:00:00.000Z","enddate":"2017-05-10T04:00:00.000Z","regstartdate":"2017-05-05T04:00:00.000Z","earlyregdeadline":"2017-05-07T04:00:00.000Z","regularregdeadline":"2017-05-08T04:00:00.000Z","lateregdeadline":"2017-05-09T04:00:00.000Z","compadmin":"admin@admin.com","currentroundid":1,"description":"description"}
-     )});
+{"id":1,"name":"Cornell DanceSport Classic","leadidstartnum":1,"locationname":"Ithaca, New York","earlyprice":"10.00","regularprice":"20.00","lateprice":"30.00","startdate":"2017-05-09T04:00:00.000Z","enddate":"2017-05-10T04:00:00.000Z","regstartdate":"2017-05-05T04:00:00.000Z","earlyregdeadline":"2017-05-07T04:00:00.000Z","regularregdeadline":"2017-05-08T04:00:00.000Z","lateregdeadline":"2017-05-09T04:00:00.000Z","compadmin":"admin@admin.com","currentroundid":1,"description":"description"}
+    )});
 
 
 test('api/competition/1/affiliations', async t => {
@@ -124,7 +124,7 @@ test('api/competition/1/affiliations', async t => {
 
     t.is(res.status,200);
     t.deepEqual(res.body, 
-    [{"count":"40","name":"Smooth"},{"count":"90","name":"Latin"}]
+    [{"count":"20","sname":"Smooth"},{"count":"50","sname":"Latin"}]
  )});
 
 test('api/competition/1/events', async t => {
@@ -322,18 +322,34 @@ test('api/judges/round/1', async t => {
 
 
 /****************************** Callback APIs **************************************/
-// test('api/callbacks/update', async t => {
-//   t.plan(1);
+test('api/callbacks/update', async t => {
+  t.plan(1);
 
-//   const body = {
-//     'rid':1,
-//     'jid':1,
-//     'cid':1,
-//     'callbacks': null
-//   };
+  const body = {
+    'rid':1,
+    'jid':1,
+    'cid':1,
+    'callbacks': [1,2,3]
+  };
 
-//   const res = await http.postResponse('http://localhost:8080/api/callbacks/update', {body});
-//   t.is(res.statusCode, 200);
-//   console.log(res.body);
+  const res = await http.postResponse('http://localhost:8080/api/callbacks/update', {body});
+  t.is(res.statusCode, 200);
+  console.log(res.body);
 
-// });
+});
+
+
+test('api/callbacks/calculate', async t => {
+  t.plan(1);
+
+  const body = {
+      'rid':1,
+      'eventid':1,
+      'size':3
+  };
+
+  const res = await http.postResponse('http://localhost:8080/api/callbacks/calculate', {body});
+  t.is(res.statusCode, 200);
+  console.log(res.body);
+
+});
