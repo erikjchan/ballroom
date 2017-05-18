@@ -93,8 +93,7 @@ export default class EventTable extends React.Component {
 
   componentDidMount() {
     const cid = this.props.competition_id
-    fetch("/api/competition/" + cid + "/events")
-      .then(response => response.json())
+    this.props.api.get("/api/competition/" + cid + "/events")
       .then(json => {
         const rows = json.map((value, index) => {value.key = index; return value;});
         this.setState({
@@ -104,8 +103,7 @@ export default class EventTable extends React.Component {
       })
       .catch(err => alert(err));
 
-    fetch("/api/competition/" + cid + "/levels")
-      .then(response => response.json())
+    this.props.api.get("/api/competition/" + cid + "/levels")
       .then(json => {
         this.setState({
           levels: json
@@ -113,8 +111,7 @@ export default class EventTable extends React.Component {
       })
       .catch(err => alert(err));
 
-    fetch("/api/competition/" + cid + "/styles")
-      .then(response => response.json())
+    this.props.api.get("/api/competition/" + cid + "/styles")
       .then(json => {
         this.setState({
           styles: json
