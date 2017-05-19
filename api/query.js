@@ -556,10 +556,6 @@ const update_competition_current_round_id = data => {
     return pool.query(SQL`UPDATE competition SET currentroundid = ${data.rid} WHERE id = ${data.cid}`);
 }
 
-const get_all_admins = () => {
-    return pool.query('SELECT * FROM admin');
-}
-
 const get_roles = () => {
   return pool.query('SELECT * FROM role');
 }
@@ -677,7 +673,7 @@ const get_num_competitors_per_style_for_competition = cid => {
         LEFT JOIN partnership p ON (c.id = p.leadcompetitorid OR c.id = p.followcompetitorid)
         LEFT JOIN event e ON (e.id = p.eventid)
         LEFT JOIN style s ON (e.styleid = s.id)
-        WHERE p.competitionid = 1 order by s.id, c.id) AS g GROUP BY sname`)
+        WHERE p.competitionid = ${cid}) AS g GROUP BY sname ORDER BY sname`)
 }
 
 // INSERT
@@ -685,7 +681,6 @@ const get_num_competitors_per_style_for_competition = cid => {
 // DELETE
 
 module.exports = {
-    get_all_admins,
     get_roles,
     get_officials_for_competition,
     get_judges_for_competition,

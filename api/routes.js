@@ -32,10 +32,8 @@ module.exports = app => {
   // first check jwt, then fetch role straight from auth0
   app.use('/api/protected', jwtCheck, function (req, res, next) {
 
-    console.log(req.query.access_token)
     auth0.users.getInfo(req.query.access_token).then(json => {
     const profile = JSON.parse(json)
-      console.log('ay', profile)
       if (profile.roles.admin) next()
       else return res.sendStatus(401)
     }).catch(err => {res.sendStatus(400); console.error(err)})
@@ -56,7 +54,7 @@ module.exports = app => {
           // Update Auth0 profile app_metadata
           management.users
           .updateAppMetadata({ id: user_id }, {competitor_id : idobj.id})
-          .then(body => { console.log(body); res.send(idobj)})
+          .then(body => { res.send(idobj)})
           .catch(err => { console.error(err); res.send({severity: "ERROR", err})})
       }, err => {
         res.send(err)
@@ -66,7 +64,6 @@ module.exports = app => {
 
     app.post('/api/create_competition', (req, res) => {
       query2.create_competition(req.body).then(function (value){
-          console.log(value);
           res.send(value[0]);
       })
    });
@@ -78,7 +75,6 @@ module.exports = app => {
       const roleid = req.body.roleid
       const competitionid = req.body.competitionid
       query2.create_official(firstname, lastname, token, roleid, competitionid).then(function (value) {
-              console.log(value);
               res.send(value);
           },
           function (err){
@@ -90,7 +86,6 @@ module.exports = app => {
       const cid = req.body.competitionid
       const aid = req.body.affiliationid
       query2.clear_organization_owed(cid, aid).then(function (value) {
-              console.log(value);
               res.send(value);
           },
           function (err){
@@ -117,7 +112,6 @@ module.exports = app => {
       const cid = req.params.cid
       const aid = req.params.aid
       query2.get_organization_owed(cid, aid).then(function (value) {
-              console.log(value);
               res.send(value[0]);
           },
           function (err){
@@ -128,7 +122,6 @@ module.exports = app => {
   app.post('/api/delete_official', (req, res) => {
       const id = req.body.id
       query2.delete_official(id).then(function (value) {
-              console.log(value);
               res.send(value);
           },
           function (err){
@@ -145,7 +138,6 @@ module.exports = app => {
       const hasregistered = req.body.hasregistered
       query2.update_competitor_by_id(id, firstname, lastname, mailingaddress, affiliationid, hasregistered)
           .then(function (value) {
-                  console.log(value);
                   res.send(value);
               },
               function (err){
@@ -210,7 +202,6 @@ module.exports = app => {
 
   app.post('/api/competition/updateCompetitionInfo', (req, res) => {
       query.update_competition_info(req.body).then(value => {
-          console.log(value)
           res.send(value);
       }, err =>{
           console.log(err);
@@ -220,10 +211,8 @@ module.exports = app => {
 
   app.post('/api/competition/updateCompetitionCurrentRoundId', (req, res) => {
       query.update_competition_current_round_id(req.body).then(value => {
-          console.log(value)
           res.send(value);
       }, err => {
-          console.log(err);
           res.send(err);
       });
   });
@@ -379,14 +368,12 @@ module.exports = app => {
   app.get('/api/competitions/:cid', (req, res) => {
       const cid = parseInt(req.params.cid)
       query.get_your_competitions(cid).then(value => {
-          console.log(value)
           res.send(value);
       });
   })
   app.get('/api/competitions/:cid/unregistered', (req, res) => {
       const cid = parseInt(req.params.cid)
       query.get_other_competitions(cid).then(value => {
-          console.log(value)
           res.send(value);
       });
   })
@@ -394,7 +381,6 @@ module.exports = app => {
   app.get('/api/event/rounds/:rid', (req, res) => {
       const rid = parseInt(req.params.rid)
       query.get_rounds_in_same_event_as_round(rid).then(value => {
-          console.log(value);
           res.send(value);
       });
   })
@@ -452,13 +438,6 @@ module.exports = app => {
       });
   });
 
-  app.get('/api/admins', (req, res) => {
-      query.get_all_admins().then(value => {
-          log_debug(2)(value)
-          res.send(value);
-      });
-  })
-
   app.get('/api/roles', (req, res) => {
       query.get_roles().then(value => {
         log_debug(2)(value);
@@ -493,10 +472,8 @@ module.exports = app => {
           '/api/organizations',
           '/api/payment_records',
           '/api/callbacks',
-          '/api/admins',
           '/api/officials',
           'api/querytest'
       ]})
   })
-
 }

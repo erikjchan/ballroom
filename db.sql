@@ -40,7 +40,6 @@ SET default_with_oids = false;
 ---
 DROP TABLE IF EXISTS affiliation CASCADE;
 DROP TABLE IF EXISTS competition CASCADE;
-DROP TABLE IF EXISTS admin CASCADE;
 DROP TABLE IF EXISTS callback CASCADE;
 DROP TABLE IF EXISTS competitor CASCADE;
 DROP TABLE IF EXISTS paymentrecord CASCADE;
@@ -52,17 +51,6 @@ DROP TABLE IF EXISTS partnership CASCADE;
 DROP TABLE IF EXISTS round CASCADE;
 DROP TABLE IF EXISTS style CASCADE;
 
-
---
--- Name: admin; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE admin (
-    email character varying(100) NOT NULL UNIQUE
-);
-
-
-ALTER TABLE admin OWNER TO postgres;
 
 --
 -- Name: affiliation; Type: TABLE; Schema: public; Owner: postgres
@@ -263,14 +251,6 @@ ALTER TABLE style OWNER TO postgres;
 
 
 --
--- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY admin
-    ADD CONSTRAINT admin_pkey PRIMARY KEY (email);
-
-
---
 -- Name: affiliation affiliation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -388,14 +368,6 @@ ALTER TABLE ONLY callback
 
 ALTER TABLE ONLY callback
     ADD CONSTRAINT callback_roundid_fkey FOREIGN KEY (roundid) REFERENCES round(id) ON DELETE CASCADE;
-
-
---
--- Name: competition competition_compadmin_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY competition
-    ADD CONSTRAINT competition_compadmin_fkey FOREIGN KEY (compadmin) REFERENCES admin(email) ON DELETE CASCADE;
 
 
 --
@@ -526,9 +498,6 @@ ALTER TABLE ONLY style
 SELECT pg_catalog.setval('callback_id_seq', 1, false);
 
 SELECT pg_catalog.setval('round_id_seq', 1, false);
-
-INSERT INTO admin VALUES ('admin@admin.com');
-INSERT INTO admin VALUES ('none@none.edu');
 
 INSERT INTO competition VALUES (1, 'Cornell DanceSport Classic', 1, 'Ithaca, New York', 10.00, 20.00, 30.00, '2017-05-09 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'admin@admin.com', 1, 'description');
 INSERT INTO competition VALUES (2, 'None', 1, 'Ithaca, New York', 10.00, 20.00, 30.00, '2017-05-09 00:00:00', '2017-05-10 00:00:00', '2017-05-05 00:00:00', '2017-05-07 00:00:00', '2017-05-08 00:00:00', '2017-05-09 00:00:00', 'none@none.edu', 1, 'description');
