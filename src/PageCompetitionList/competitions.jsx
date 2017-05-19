@@ -136,7 +136,7 @@ class CompetitionsTable extends React.Component {
 		    	}
 		     this.setState({ rows: json, }); 
 		 })
-		   .catch(err => alert(err));
+		   .catch(err => console.error(err));
   }
 
   render() {

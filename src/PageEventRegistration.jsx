@@ -63,14 +63,14 @@ export default class PageEventRegistration extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
 
     /** Pretty similar to above! */
     this.props.api.get(`/api/competition/${this.competition_id}/events`)
       .then(json => {
         this.setState({ competition_events : json})
       })
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
 
     this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
       .then(json => {
@@ -87,7 +87,7 @@ export default class PageEventRegistration extends React.Component {
         }
         this.setState({user_competition_events: json})
       })
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err); console.log(err)})
 
     /** Fetch levels in a competition */
     this.props.api.get(`/api/competition/${this.competition_id}/levels`)
@@ -95,7 +95,7 @@ export default class PageEventRegistration extends React.Component {
 
         this.setState({levels: json})
       })
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
 
     /** Fetch competitors for partner search */
     this.props.api.get(`/api/competitors`)
@@ -105,7 +105,7 @@ export default class PageEventRegistration extends React.Component {
         })
         this.setState({competitors: json})
       })
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
   }
 
   handleLevelChange = (levelid) => {
@@ -116,7 +116,7 @@ export default class PageEventRegistration extends React.Component {
       .then(json => {
         this.setState({level_styles: json})
       })
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
       if ( this.state.styleid){
         fetch(`/api/competition/${this.competition_id}/level/${levelid}/style/${this.state.styleid}`)
         .then(response => {
@@ -125,7 +125,7 @@ export default class PageEventRegistration extends React.Component {
         .then(json => {
           this.setState({level_style_events: json})
         })
-        .catch(err => alert(err))
+        .catch(err => console.error(err))
       }
       this.setState({
           levelid: parseInt(levelid),
@@ -141,7 +141,7 @@ export default class PageEventRegistration extends React.Component {
       .then(json => {
         this.setState({level_style_events: json})
       })
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
     this.setState({
         styleid: parseInt(styleid),
         eventid: null
@@ -371,7 +371,7 @@ dropEventHandler = (rowData) => {
                 json = search_competitor(json, value)
                 this.setState({competitors: json, loading: false})
               })
-              .catch(err => alert(err))
+              .catch(err => console.error(err))
           }}
           renderItem={(item, isHighlighted) => (
             <div

@@ -105,7 +105,7 @@ export default class PageCompetitionHomeAdmin extends React.Component {
     /** Get organizations */
       .then(() => this.props.api.get(`/api/competition/${this.competition_id}/affiliations`))
       .then(json => {this.setState({organizations: json})})
-      .catch(err => alert(err))
+      .catch(err => console.error(err))
   }
 
   populate(box_name, lines_react, max_line_num, link){

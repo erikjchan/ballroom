@@ -83,12 +83,12 @@ class EditLevelsAndStyles extends React.Component {
           .then(json => {
             this.refs.levelsTable.setState({rows: json})
           })
-          .catch(err => alert(err));
+          .catch(err => console.error(err));
         this.props.api.get("/api/competition/"+cid+"/styles") 
           .then(json => {
             this.refs.stylesTable.setState({rows: json})
           })
-          .catch(err => alert(err));
+          .catch(err => console.error(err));
       });
   }
 

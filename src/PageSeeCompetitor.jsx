@@ -40,7 +40,7 @@ class PageSeeCompetitor extends React.Component {
               this.setState({competitor: json})
               console.log(this.state.competitor)
           })
-          .catch(err => { alert(err); console.log(err)})
+          .catch(err => { console.log(err)})
 
         this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
           .then(json => {
@@ -53,7 +53,7 @@ class PageSeeCompetitor extends React.Component {
               this.setState({competitor_paymentrecord: json})
               console.log(this.state.competitor_paymentrecord)
           })
-          .catch(err => { alert(err); console.log(err)})
+          .catch(err => { console.log(err)})
 
     /**  Call the API for events that the competitor is in */
         /**  Call the API for events that the competitor is in */
@@ -72,7 +72,7 @@ class PageSeeCompetitor extends React.Component {
               }
               this.setState({competitor_events: json})
           })
-          .catch(err => { alert(err); console.log(err)})
+          .catch(err => { console.log(err)})
   }
 
   handleChange (name, value) {

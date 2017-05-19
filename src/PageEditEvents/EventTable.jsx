@@ -101,7 +101,7 @@ export default class EventTable extends React.Component {
           keyCounter: rows.length
         });
       })
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
 
     this.props.api.get("/api/competition/" + cid + "/levels")
       .then(json => {
@@ -109,7 +109,7 @@ export default class EventTable extends React.Component {
           levels: json
         });
       })
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
 
     this.props.api.get("/api/competition/" + cid + "/styles")
       .then(json => {
@@ -117,7 +117,7 @@ export default class EventTable extends React.Component {
           styles: json
         });
       })
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
   }
 
   render() {

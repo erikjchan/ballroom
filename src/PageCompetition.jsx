@@ -59,7 +59,7 @@ export default class PageCompetition extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err)})
 
     /** Get competitor */
     this.props.api.get(`/api/competitors/${this.competitor_id}`)
@@ -67,7 +67,7 @@ export default class PageCompetition extends React.Component {
         this.setState({competitor: json})
         console.log(this.state.competitor)
       })
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err)})
 
     this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
       .then(json => {
@@ -79,7 +79,7 @@ export default class PageCompetition extends React.Component {
         this.setState({competitor_paymentrecord: json})
         console.log(this.state.competitor_paymentrecord)
       })
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err)})
 
     /**  Call the API for events that the competitor is in */
     this.props.api.get(`/api/competitors/${this.competitor_id}/${this.competition_id}/events`)
@@ -97,7 +97,7 @@ export default class PageCompetition extends React.Component {
         }
         this.setState({competitor_events: json})
       })
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err)})
   }
 
  format_date(datestring){

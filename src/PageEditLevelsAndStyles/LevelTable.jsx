@@ -73,7 +73,7 @@ export default class LevelTable extends React.Component {
           keyCounter: rows.length
         });
       })
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
   }
 
   render() {

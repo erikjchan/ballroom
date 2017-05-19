@@ -62,7 +62,7 @@ class PageOrganizationPayment extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err)})
 
       /* Call the API for organization info */
     this.props.api.get(`/api/affiliations`)
@@ -73,7 +73,7 @@ class PageOrganizationPayment extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.error(err)})
 
     if (this.state.showInfo) {
         /* Call the API for organization info */
@@ -85,7 +85,7 @@ class PageOrganizationPayment extends React.Component {
           // todo; display a nice (sorry, there's no connection!) error
           // and setup a timer to retry. Fingers crossed, hopefully the 
           // connection comes back
-          .catch(err => { alert(err); console.log(err)})
+          .catch(err => { console.error(err)})
 
         this.props.api.get(`/api/get_organization_owed/${this.competition_id}/${this.organization_id}`)
           .then(json => { 
@@ -97,7 +97,7 @@ class PageOrganizationPayment extends React.Component {
           // todo; display a nice (sorry, there's no connection!) error
           // and setup a timer to retry. Fingers crossed, hopefully the 
           // connection comes back
-          .catch(err => { alert(err); console.log(err)})
+          .catch(err => { console.error(err)})
     }
   }
 

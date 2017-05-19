@@ -63,7 +63,7 @@ class EditSchedule extends React.Component {
   this.props.api.post("/api/competition/updateRounds", send_obj)
     .then(() => this.props.api.get(`/api/competition/${cid}/rounds`))
     .then(json => { this.refs.ddTable.setState({rows: json}) })
-    .catch(err => alert(err));
+    .catch(err => console.error(err));
  }
 
  confirmGoToUrl(url, message) {

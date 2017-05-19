@@ -111,12 +111,12 @@ export default class DragAndDropTable extends React.Component {
           keyCounter: rows.length
         });
       })
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
     this.props.api.get(`/api/competition/${cid}/events`)
       .then(json => {
         this.setState({events: json})
       })
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
   }
 
   render() {

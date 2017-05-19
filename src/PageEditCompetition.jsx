@@ -61,7 +61,7 @@ export default class PageEditCompetition extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.log(err)})
     }
   }
 

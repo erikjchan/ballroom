@@ -122,7 +122,7 @@ export default class CompetitorList extends React.Component {
 
         this.setState({ rows }); 
      })
-     .catch(err => alert(err));
+     .catch(err => console.error(err));
   }
 
   render() {

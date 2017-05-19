@@ -45,7 +45,7 @@ export default class PageCompetitorPayment extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.log(err)})
 
     /* Call the API for competition info */
     this.props.api.get(`/api/competition/${this.competition_id}`)
@@ -56,7 +56,7 @@ export default class PageCompetitorPayment extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err);console.log(err)})
+      .catch(err => { console.log(err)})
 
     /* Call the API for competitor payment info */
     this.props.api.get(`/api/payment_records/${this.competition_id}/${this.competitor_id}`)
@@ -67,7 +67,7 @@ export default class PageCompetitorPayment extends React.Component {
       // todo; display a nice (sorry, there's no connection!) error
       // and setup a timer to retry. Fingers crossed, hopefully the 
       // connection comes back
-      .catch(err => { alert(err); console.log(err)})
+      .catch(err => { console.log(err)})
   }
 
   render() {
