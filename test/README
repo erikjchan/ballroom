@@ -1,0 +1,6 @@
+This dietory contains the resources to run unit tests on the API of the system.
+The tests use ava.js, an API testing library. https://github.com/avajs/ava
+
+Tests are run sequentially, with all fetch tests being run before post tests.
+Each time before testing, developers should run db.sql in the root directory 
+to re-make the database so that test data is still valid. 
