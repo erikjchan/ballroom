@@ -23,8 +23,7 @@ test('/api/main', async t => {
       "/api/organizations",
       "/api/payment_records",
       "/api/callbacks",
-      "/api/officials",
-      "api/querytest"
+      "/api/officials"
     ]
   });
 });

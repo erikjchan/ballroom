@@ -24,7 +24,6 @@ import EditEvents           from '../PageEditEvents.jsx'
 import SeeCompetitor        from '../PageSeeCompetitor.jsx'
 import RegisterCompetitor   from '../PageRegisterCompetitor.jsx'
 import OrganizationPayment  from '../PageOrganizationPayment.jsx'
-import QueryTest            from '../PageQueryTest.jsx'
 import PageNewUser          from '../PageNewUser.jsx'
 import CompetitorPayment    from '../PageCompetitorPayment.jsx'
 
@@ -57,10 +56,8 @@ const routes = {
   '/admin/competition/:competition_id'                          : Admin(CompetitionHomeAdmin),
   '/editcompetition/:competition_id'                            : Admin(EditCompetition),
   '/editofficials/:competition_id'                              : Admin(EditOfficials),
-  '/querytest'                                                  : Any(QueryTest),
   '/newuser'                                                    : User(PageNewUser),
   '/organizationpayment/:competition_id/:organization_id'       : Admin(OrganizationPayment),
-  '/querytest'                                                  : Any(QueryTest),
   '/competitorpayment/:competition_id/:competitor_id'           : User(CompetitorPayment),
 }
 
