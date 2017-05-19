@@ -363,10 +363,10 @@ const delete_official = (id) => {
 const create_competition = (data) =>{
     return pool.query(SQL`INSERT INTO competition (name, leadidstartnum, locationname, earlyprice,
                           regularprice, lateprice, startdate, enddate, regstartdate, earlyregdeadline, 
-                          regularregdeadline, lateregdeadline, description) VALUES (${data.name}, ${data.leadidstartnum},
+                          regularregdeadline, lateregdeadline, description, compadmin) VALUES (${data.name}, ${data.leadidstartnum},
                           ${data.locationname}, ${data.earlyprice},  ${data.regularprice}, ${data.lateprice},
                           ${data.startdate}, ${data.enddate}, ${data.regstartdate}, ${data.earlyregdeadline},
-                          ${data.regularregdeadline}, ${data.lateregdeadline}, ${data.description}) RETURNING id;`);
+                          ${data.regularregdeadline}, ${data.lateregdeadline}, ${data.description}, ${data.compadmin}) RETURNING id;`);
 }
 
 const get_affiliation = (id) => {

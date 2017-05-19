@@ -74,7 +74,9 @@ export default class PageEditCompetition extends React.Component {
   onSaveHandler() {
     console.log(this.state.competition);
     if (this.competition_id > 0) {
-      this.props.api.post("/api/competition/updateCompetitionInfo", this.state.competition)
+      const competition = this.state.competition;
+      competition.compadmin = this.props.profile.email;
+      this.props.api.post("/api/competition/updateCompetitionInfo", competition)
         .then(() => {
           window.location.reload();
         });
@@ -82,7 +84,10 @@ export default class PageEditCompetition extends React.Component {
       if (!confirm("Are you sure to create a new competition with the provided information? You can continue editing the competition after the creation.")) {
         return;
       }
-      this.props.api.post("/api/create_competition", this.state.competition)
+      const competition = this.state.competition;
+      competition.compadmin = this.props.profile.email;
+      console.log("stuff",competition); 
+      this.props.api.post("/api/create_competition", competition)
         .then(json => {
           this.props.dispatch(selectCompetition(json))
           //window.location.href = '/editcompetition/'+json.id;
