@@ -1,5 +1,3 @@
-To set up database, run `psql -U postgres -d postgres -1 -f <path/to/db.sql>`
-
 # Background
 The client describes the goals of the project as follows:
 
@@ -22,6 +20,10 @@ The system needs to serve two categories of users and support them with a good b
 	* Definable limits on what events a competitor can register for
 	* Time based changing of prices for registration/deadlines
 	* Define events (e.g., Newcomer Tango vs PreChamp Tango)
+
+# Database
+
+To set up database, run `psql -U postgres -d postgres -1 -f <path/to/db.sql>`
 
 # APIs
 API for viewing and updating database.
