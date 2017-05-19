@@ -81,7 +81,8 @@ API for viewing and updating database.
 				earlyregdeadline: date,
 				regularregdeadline: date,
 				lateregdeadline: date,
-				description: string
+				description: string,
+                compadmin: string
 				}
 				}
 	* Response: {id: int // id of newly created competition}

@@ -553,7 +553,8 @@ test.serial('add new competition', async t => {
     'earlyregdeadline': '2017-05-09 00:00:00', 
     'regularregdeadline': '2017-05-09 00:00:00', 
     'lateregdeadline': '2017-05-09 00:00:00', 
-    'description': ' ' 
+    'description': ' ',
+    'compadmin': 'admin@admin.com'
   };
 
   const res = await http.postResponse('http://localhost:8080/api/create_competition', {body});
