@@ -31,7 +31,7 @@ export default class RunCompetition extends React.Component {
     it to us; see the path for this Page on Router) and make
     sure it's an integer */
     try {this.competition_id = this.props.params.competition_id}
-    catch (e) { alert('Invalid competition ID!') }
+    catch (e) { console.error('Invalid competition ID!') }
   }
 
   componentDidMount() {
@@ -52,15 +52,15 @@ export default class RunCompetition extends React.Component {
           // todo; display a nice (sorry, there's no connection!) error
           // and setup a timer to retry. Fingers crossed, hopefully the
           // connection comes back
-          .catch(err => alert(`There was an error fetching the rounds`))
+          .catch(err => console.error(`There was an error fetching the rounds`))
         this.props.api.get(`/api/competitors/round/${json.currentroundid}`)
           .then(json => {
             this.setState({competitors: json.map(c => c.number)});
-          }).catch(() => alert("Failed to fetch competitors for current round " + json.currentroundid));  
+          }).catch(() => console.error("Failed to fetch competitors for current round " + json.currentroundid));  
       })
       // todo; setup a timer to retry. Fingers crossed, hopefully the
       // connection comes back
-      .catch(err => alert(
+      .catch(err => console.error(
         `There was an error fetching the competition`))
   }
 
