@@ -538,3 +538,43 @@ test.serial('update competition by current round id', async t => {
         console.log(res.body);
 
 });
+
+
+test.serial('add new competition', async t => {
+  const body = {
+    'name': '', 
+    'leadidstartnum': 10, 
+    'locationname': '', 
+    'earlyprice': 10, 
+    'regularprice': 20, 
+    'lateprice': 30, 
+    'startdate': '2017-05-09 00:00:00' , 
+    'enddate': '2017-05-09 00:00:00',
+    'regstartdate': '2017-05-09 00:00:00', 
+    'earlyregdeadline': '2017-05-09 00:00:00', 
+    'regularregdeadline': '2017-05-09 00:00:00', 
+    'lateregdeadline': '2017-05-09 00:00:00', 
+    'description': ' ' 
+  };
+
+  const res = await http.postResponse('http://localhost:8080/api/create_competition', {body});
+        t.is(res.statusCode, 200);
+        console.log(res.body);
+
+});
+
+test.serial('add new competitor', async t => {
+  const body = {
+    'profile': ' ', 
+    'firstname': ' ', 
+    'lastname': ' ', 
+    'email': ' ', 
+    'mailingaddress': ' ', 
+    'affiliationname': ' '
+  };
+
+  const res = await http.postResponse('http://localhost:8080/api/create_user', {body});
+        t.is(res.statusCode, 200);
+        console.log(res.body);
+
+});
