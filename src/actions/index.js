@@ -19,7 +19,7 @@ const lockError   = (err) => ({ type: LOCK_ERROR, err })
 // Opens the Lock widget and
 // dispatches actions along the way
 export const login = () => {
-  const lock = new Auth0Lock('Dl30IRGbXkkPlENLT4nR9QIWLHiMAxxF', 'mrkev.auth0.com');
+  const lock = new Auth0Lock('taQWcPVhkpPly1Xr9CXs1wFroWuSVptB', 'floorcraftapp.auth0.com');
   return dispatch => {
     lock.show((err, profile, token, access_token) => {
       profile.access_token = access_token
