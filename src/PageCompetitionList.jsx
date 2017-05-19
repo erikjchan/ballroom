@@ -37,6 +37,7 @@ class PageCompetitionList extends React.Component {
         console.log(json);
         this.competitions = json;
         for (let i = 0; i < this.competitions.length; i++) {
+          // add dollar sign to prices and clean date format
           this.competitions[i].regularprice = "$" + (this.competitions[i].regularprice || 0);
           this.competitions[i].lateprice = "$" + (this.competitions[i].lateprice || 0);
           var date = new Date(this.competitions[i].startdate);
