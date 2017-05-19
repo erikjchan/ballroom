@@ -3,31 +3,31 @@ import test from 'ava';
 import { api } from './helpers'
 const request = require('supertest');
 
-// test('/api/main', async t => {
-//   t.plan(2);
+test('/api/main', async t => {
+  t.plan(2);
 
-//   const res = await request(api())
-//     .get('/api')
+  const res = await request(api())
+    .get('/api')
 
-//   t.is(res.status, 200);
-//   t.deepEqual(res.body, {
-//     "routes": [
-//       "/api/affiliations",
-//       "/api/competitors",
-//       "/api/competitions",
-//       "/api/levels",
-//       "/api/styles",
-//       "/api/events",
-//       "/api/rounds",
-//       "/api/partnerships",
-//       "/api/organizations",
-//       "/api/payment_records",
-//       "/api/callbacks",
-//       "/api/officials",
-//       "api/querytest"
-//     ]
-//   });
-// });
+  t.is(res.status, 200);
+  t.deepEqual(res.body, {
+    "routes": [
+      "/api/affiliations",
+      "/api/competitors",
+      "/api/competitions",
+      "/api/levels",
+      "/api/styles",
+      "/api/events",
+      "/api/rounds",
+      "/api/partnerships",
+      "/api/organizations",
+      "/api/payment_records",
+      "/api/callbacks",
+      "/api/officials",
+      "api/querytest"
+    ]
+  });
+});
 
 
 /* ################################# GET ######################################## */
@@ -55,15 +55,14 @@ test.serial('api/affiliations', async t => {
     [{"id":1,"name":"Cornell Dance Team"},{"id":2,"name":"Harvard Dance Team"},{"id":3,"name":"MIT Dance Team"},{"id":4,"name":"Princeton Dance Team"}]
 )});
 
-// test('api/competitors', async t => {
-//     t.plan(2);
-//     const res = await request(api())
-//     .get('/api/competitors/admin@admin.com')
+test.serial('api/competitors', async t => {
+    t.plan(2);
+    const res = await request(api())
+    .get('/api/competitors')
 
-//     t.is(res.status,200);
-//     t.deepEqual(res.body, 
-//     [{"id":1,"firstname":"Luke","lastname":"Skywalker","email":"luke@skywalker.com","mailingaddress":"Tatooine","affiliationid":1,"hasregistered":true},{"id":2,"firstname":"Leia","lastname":"Organa","email":"leia@organa.com","mailingaddress":"Alderaan","affiliationid":1,"hasregistered":true},{"id":3,"firstname":"Rey","lastname":"who knows","email":"rey@rey.com","mailingaddress":"Jakku","affiliationid":1,"hasregistered":false},{"id":4,"firstname":"fname4","lastname":"lname4","email":"email4@email.com","mailingaddress":"mailingaddress4","affiliationid":2,"hasregistered":false},{"id":5,"firstname":"fname5","lastname":"lname5","email":"email5@email.com","mailingaddress":"mailingaddress5","affiliationid":2,"hasregistered":false},{"id":6,"firstname":"fname6","lastname":"lname7","email":"email6@email.com","mailingaddress":"mailingaddress6","affiliationid":3,"hasregistered":false},{"id":7,"firstname":"fname7","lastname":"lname7","email":"email7@email.com","mailingaddress":"mailingaddress7","affiliationid":4,"hasregistered":false},{"id":8,"firstname":"fname8","lastname":"lname8","email":"email8@email.com","mailingaddress":"mailingaddress8","affiliationid":4,"hasregistered":false},{"id":9,"firstname":"fname9","lastname":"lname9","email":"email9@email.com","mailingaddress":"mailingaddress9","affiliationid":4,"hasregistered":false},{"id":10,"firstname":"fname10","lastname":"lname10","email":"email10@email.com","mailingaddress":"mailingaddress10","affiliationid":4,"hasregistered":false},{"id":11,"firstname":"fname11","lastname":"lname11","email":"email11@email.com","mailingaddress":"mailingaddress11","affiliationid":4,"hasregistered":false},{"id":12,"firstname":"fname12","lastname":"lname12","email":"email12@email.com","mailingaddress":"mailingaddress12","affiliationid":4,"hasregistered":false},{"id":13,"firstname":"fname13","lastname":"lname13","email":"email13@email.com","mailingaddress":"mailingaddress13","affiliationid":4,"hasregistered":false},{"id":14,"firstname":"fname14","lastname":"lname14","email":"email14@email.com","mailingaddress":"mailingaddress14","affiliationid":4,"hasregistered":false},{"id":15,"firstname":"fname15","lastname":"lname15","email":"email15@email.com","mailingaddress":"mailingaddress15","affiliationid":4,"hasregistered":false},{"id":16,"firstname":"fname16","lastname":"lname16","email":"email16@email.com","mailingaddress":"mailingaddress16","affiliationid":4,"hasregistered":false},{"id":17,"firstname":"fname17","lastname":"lname17","email":"email17@email.com","mailingaddress":"mailingaddress17","affiliationid":4,"hasregistered":false},{"id":18,"firstname":"fname18","lastname":"lname18","email":"email18@email.com","mailingaddress":"mailingaddress18","affiliationid":4,"hasregistered":false},{"id":19,"firstname":"fname19","lastname":"lname19","email":"email19@email.com","mailingaddress":"mailingaddress19","affiliationid":4,"hasregistered":false},{"id":20,"firstname":"fname20","lastname":"lname20","email":"email20@email.com","mailingaddress":"mailingaddress20","affiliationid":4,"hasregistered":false},{"id":21,"firstname":"fname21","lastname":"lname21","email":"email21@email.com","mailingaddress":"mailingaddress21","affiliationid":4,"hasregistered":false},{"id":22,"firstname":"fname22","lastname":"lname22","email":"email22@email.com","mailingaddress":"mailingaddress22","affiliationid":4,"hasregistered":false},{"id":23,"firstname":"fname23","lastname":"lname23","email":"email23@email.com","mailingaddress":"mailingaddress23","affiliationid":4,"hasregistered":false},{"id":24,"firstname":"fname24","lastname":"lname24","email":"email24@email.com","mailingaddress":"mailingaddress24","affiliationid":4,"hasregistered":false},{"id":25,"firstname":"fname25","lastname":"lname25","email":"email25@email.com","mailingaddress":"mailingaddress25","affiliationid":4,"hasregistered":false},{"id":26,"firstname":"fname26","lastname":"lname26","email":"email26@email.com","mailingaddress":"mailingaddress26","affiliationid":4,"hasregistered":false},{"id":27,"firstname":"fname27","lastname":"lname27","email":"email27@email.com","mailingaddress":"mailingaddress27","affiliationid":4,"hasregistered":false},{"id":28,"firstname":"fname28","lastname":"lname28","email":"email28@email.com","mailingaddress":"mailingaddress28","affiliationid":4,"hasregistered":false},{"id":29,"firstname":"fname29","lastname":"lname29","email":"email29@email.com","mailingaddress":"mailingaddress29","affiliationid":4,"hasregistered":false},{"id":30,"firstname":"fname30","lastname":"lname30","email":"email30@email.com","mailingaddress":"mailingaddress30","affiliationid":4,"hasregistered":false},{"id":31,"firstname":"fname31","lastname":"lname31","email":"email31@email.com","mailingaddress":"mailingaddress31","affiliationid":4,"hasregistered":false},{"id":32,"firstname":"fname32","lastname":"lname32","email":"email32@email.com","mailingaddress":"mailingaddress32","affiliationid":4,"hasregistered":false},{"id":33,"firstname":"fname33","lastname":"lname33","email":"email33@email.com","mailingaddress":"mailingaddress33","affiliationid":4,"hasregistered":false},{"id":34,"firstname":"fname34","lastname":"lname34","email":"email34@email.com","mailingaddress":"mailingaddress34","affiliationid":4,"hasregistered":false},{"id":35,"firstname":"fname35","lastname":"lname35","email":"email35@email.com","mailingaddress":"mailingaddress35","affiliationid":4,"hasregistered":false},{"id":36,"firstname":"fname36","lastname":"lname36","email":"email36@email.com","mailingaddress":"mailingaddress36","affiliationid":4,"hasregistered":false},{"id":37,"firstname":"fname37","lastname":"lname37","email":"email37@email.com","mailingaddress":"mailingaddress37","affiliationid":4,"hasregistered":false},{"id":38,"firstname":"fname38","lastname":"lname38","email":"email38@email.com","mailingaddress":"mailingaddress38","affiliationid":4,"hasregistered":false},{"id":39,"firstname":"fname39","lastname":"lname39","email":"email39@email.com","mailingaddress":"mailingaddress39","affiliationid":4,"hasregistered":false},{"id":40,"firstname":"fname40","lastname":"lname40","email":"email40@email.com","mailingaddress":"mailingaddress40","affiliationid":4,"hasregistered":false},{"id":41,"firstname":"fname41","lastname":"lname41","email":"email41@email.com","mailingaddress":"mailingaddress41","affiliationid":4,"hasregistered":false},{"id":42,"firstname":"fname42","lastname":"lname42","email":"email42@email.com","mailingaddress":"mailingaddress42","affiliationid":4,"hasregistered":false},{"id":43,"firstname":"fname43","lastname":"lname43","email":"email43@email.com","mailingaddress":"mailingaddress43","affiliationid":4,"hasregistered":false},{"id":44,"firstname":"fname44","lastname":"lname44","email":"email44@email.com","mailingaddress":"mailingaddress44","affiliationid":4,"hasregistered":false},{"id":45,"firstname":"fname45","lastname":"lname45","email":"email45@email.com","mailingaddress":"mailingaddress45","affiliationid":4,"hasregistered":false},{"id":46,"firstname":"fname46","lastname":"lname46","email":"email46@email.com","mailingaddress":"mailingaddress46","affiliationid":4,"hasregistered":false},{"id":47,"firstname":"fname47","lastname":"lname47","email":"email47@email.com","mailingaddress":"mailingaddress47","affiliationid":4,"hasregistered":false},{"id":48,"firstname":"fname48","lastname":"lname48","email":"email48@email.com","mailingaddress":"mailingaddress48","affiliationid":4,"hasregistered":false},{"id":49,"firstname":"fname49","lastname":"lname49","email":"email49@email.com","mailingaddress":"mailingaddress49","affiliationid":4,"hasregistered":false},{"id":50,"firstname":"fname50","lastname":"lname50","email":"email50@email.com","mailingaddress":"mailingaddress50","affiliationid":4,"hasregistered":false},{"id":51,"firstname":null,"lastname":null,"email":"admin@admin.com","mailingaddress":null,"affiliationid":4,"hasregistered":true}]
-//     )});
+    t.is(res.status,200);
+    t.deepEqual(res.body, 
+[{"id":1,"firstname":"Luke","lastname":"Skywalker","email":"luke@skywalker.com","mailingaddress":"Tatooine","affiliationid":1,"hasregistered":true},{"id":2,"firstname":"Leia","lastname":"Organa","email":"leia@organa.com","mailingaddress":"Alderaan","affiliationid":1,"hasregistered":true},{"id":3,"firstname":"Rey","lastname":"who knows","email":"rey@rey.com","mailingaddress":"Jakku","affiliationid":1,"hasregistered":false},{"id":4,"firstname":"fname4","lastname":"lname4","email":"email4@email.com","mailingaddress":"mailingaddress4","affiliationid":2,"hasregistered":false},{"id":5,"firstname":"fname5","lastname":"lname5","email":"email5@email.com","mailingaddress":"mailingaddress5","affiliationid":2,"hasregistered":false},{"id":6,"firstname":"fname6","lastname":"lname7","email":"email6@email.com","mailingaddress":"mailingaddress6","affiliationid":3,"hasregistered":false},{"id":7,"firstname":"fname7","lastname":"lname7","email":"email7@email.com","mailingaddress":"mailingaddress7","affiliationid":4,"hasregistered":false},{"id":8,"firstname":"fname8","lastname":"lname8","email":"email8@email.com","mailingaddress":"mailingaddress8","affiliationid":4,"hasregistered":false},{"id":9,"firstname":"fname9","lastname":"lname9","email":"email9@email.com","mailingaddress":"mailingaddress9","affiliationid":4,"hasregistered":false},{"id":10,"firstname":"fname10","lastname":"lname10","email":"email10@email.com","mailingaddress":"mailingaddress10","affiliationid":4,"hasregistered":false},{"id":11,"firstname":"fname11","lastname":"lname11","email":"email11@email.com","mailingaddress":"mailingaddress11","affiliationid":4,"hasregistered":false},{"id":12,"firstname":"fname12","lastname":"lname12","email":"email12@email.com","mailingaddress":"mailingaddress12","affiliationid":4,"hasregistered":false},{"id":13,"firstname":"fname13","lastname":"lname13","email":"email13@email.com","mailingaddress":"mailingaddress13","affiliationid":4,"hasregistered":false},{"id":14,"firstname":"fname14","lastname":"lname14","email":"email14@email.com","mailingaddress":"mailingaddress14","affiliationid":4,"hasregistered":false},{"id":15,"firstname":"fname15","lastname":"lname15","email":"email15@email.com","mailingaddress":"mailingaddress15","affiliationid":4,"hasregistered":false},{"id":16,"firstname":"fname16","lastname":"lname16","email":"email16@email.com","mailingaddress":"mailingaddress16","affiliationid":4,"hasregistered":false},{"id":17,"firstname":"fname17","lastname":"lname17","email":"email17@email.com","mailingaddress":"mailingaddress17","affiliationid":4,"hasregistered":false},{"id":18,"firstname":"fname18","lastname":"lname18","email":"email18@email.com","mailingaddress":"mailingaddress18","affiliationid":4,"hasregistered":false},{"id":19,"firstname":"fname19","lastname":"lname19","email":"email19@email.com","mailingaddress":"mailingaddress19","affiliationid":4,"hasregistered":false},{"id":20,"firstname":"fname20","lastname":"lname20","email":"email20@email.com","mailingaddress":"mailingaddress20","affiliationid":4,"hasregistered":false},{"id":21,"firstname":"fname21","lastname":"lname21","email":"email21@email.com","mailingaddress":"mailingaddress21","affiliationid":4,"hasregistered":false},{"id":22,"firstname":"fname22","lastname":"lname22","email":"email22@email.com","mailingaddress":"mailingaddress22","affiliationid":4,"hasregistered":false},{"id":23,"firstname":"fname23","lastname":"lname23","email":"email23@email.com","mailingaddress":"mailingaddress23","affiliationid":4,"hasregistered":false},{"id":24,"firstname":"fname24","lastname":"lname24","email":"email24@email.com","mailingaddress":"mailingaddress24","affiliationid":4,"hasregistered":false},{"id":25,"firstname":"fname25","lastname":"lname25","email":"email25@email.com","mailingaddress":"mailingaddress25","affiliationid":4,"hasregistered":false},{"id":26,"firstname":"fname26","lastname":"lname26","email":"email26@email.com","mailingaddress":"mailingaddress26","affiliationid":4,"hasregistered":false},{"id":27,"firstname":"fname27","lastname":"lname27","email":"email27@email.com","mailingaddress":"mailingaddress27","affiliationid":4,"hasregistered":false},{"id":28,"firstname":"fname28","lastname":"lname28","email":"email28@email.com","mailingaddress":"mailingaddress28","affiliationid":4,"hasregistered":false},{"id":29,"firstname":"fname29","lastname":"lname29","email":"email29@email.com","mailingaddress":"mailingaddress29","affiliationid":4,"hasregistered":false},{"id":30,"firstname":"fname30","lastname":"lname30","email":"email30@email.com","mailingaddress":"mailingaddress30","affiliationid":4,"hasregistered":false},{"id":31,"firstname":"fname31","lastname":"lname31","email":"email31@email.com","mailingaddress":"mailingaddress31","affiliationid":4,"hasregistered":false},{"id":32,"firstname":"fname32","lastname":"lname32","email":"email32@email.com","mailingaddress":"mailingaddress32","affiliationid":4,"hasregistered":false},{"id":33,"firstname":"fname33","lastname":"lname33","email":"email33@email.com","mailingaddress":"mailingaddress33","affiliationid":4,"hasregistered":false},{"id":34,"firstname":"fname34","lastname":"lname34","email":"email34@email.com","mailingaddress":"mailingaddress34","affiliationid":4,"hasregistered":false},{"id":35,"firstname":"fname35","lastname":"lname35","email":"email35@email.com","mailingaddress":"mailingaddress35","affiliationid":4,"hasregistered":false},{"id":36,"firstname":"fname36","lastname":"lname36","email":"email36@email.com","mailingaddress":"mailingaddress36","affiliationid":4,"hasregistered":false},{"id":37,"firstname":"fname37","lastname":"lname37","email":"email37@email.com","mailingaddress":"mailingaddress37","affiliationid":4,"hasregistered":false},{"id":38,"firstname":"fname38","lastname":"lname38","email":"email38@email.com","mailingaddress":"mailingaddress38","affiliationid":4,"hasregistered":false},{"id":39,"firstname":"fname39","lastname":"lname39","email":"email39@email.com","mailingaddress":"mailingaddress39","affiliationid":4,"hasregistered":false},{"id":40,"firstname":"fname40","lastname":"lname40","email":"email40@email.com","mailingaddress":"mailingaddress40","affiliationid":4,"hasregistered":false},{"id":41,"firstname":"fname41","lastname":"lname41","email":"email41@email.com","mailingaddress":"mailingaddress41","affiliationid":4,"hasregistered":false},{"id":42,"firstname":"fname42","lastname":"lname42","email":"email42@email.com","mailingaddress":"mailingaddress42","affiliationid":4,"hasregistered":false},{"id":43,"firstname":"fname43","lastname":"lname43","email":"email43@email.com","mailingaddress":"mailingaddress43","affiliationid":4,"hasregistered":false},{"id":44,"firstname":"fname44","lastname":"lname44","email":"email44@email.com","mailingaddress":"mailingaddress44","affiliationid":4,"hasregistered":false},{"id":45,"firstname":"fname45","lastname":"lname45","email":"email45@email.com","mailingaddress":"mailingaddress45","affiliationid":4,"hasregistered":false},{"id":46,"firstname":"fname46","lastname":"lname46","email":"email46@email.com","mailingaddress":"mailingaddress46","affiliationid":4,"hasregistered":false},{"id":47,"firstname":"fname47","lastname":"lname47","email":"email47@email.com","mailingaddress":"mailingaddress47","affiliationid":4,"hasregistered":false},{"id":48,"firstname":"fname48","lastname":"lname48","email":"email48@email.com","mailingaddress":"mailingaddress48","affiliationid":4,"hasregistered":false},{"id":49,"firstname":"fname49","lastname":"lname49","email":"email49@email.com","mailingaddress":"mailingaddress49","affiliationid":4,"hasregistered":false},{"id":50,"firstname":"fname50","lastname":"lname50","email":"email50@email.com","mailingaddress":"mailingaddress50","affiliationid":4,"hasregistered":false}]    )});
 
 
 test.serial('api/payment_records', async t => {
@@ -309,8 +308,6 @@ test.serial('api/judges/round/1', async t => {
     []
 )});
 
-
-
 /* ################################# POST ######################################## */
 
 /****************************** Callback APIs **************************************/
@@ -330,8 +327,18 @@ test.serial('api/callbacks/update', async t => {
 
 });
 
+test.serial('generate rounds', async t => {
+  const body = {
+    'cid':1,
+  };
 
-test('api/callbacks/calculate', async t => {
+  const res = await http.postResponse('http://localhost:8080/api/competition/generateRounds', {body});
+        t.is(res.statusCode, 200);
+        console.log(res.body);
+
+});
+
+test.serial('api/callbacks/calculate', async t => {
   t.plan(1);
 
   const body = {
@@ -347,7 +354,7 @@ test('api/callbacks/calculate', async t => {
 });
 
 /* test.serial: create official */
-test('/api/create_official', async t => {
+test.serial('/api/create_official', async t => {
   t.plan(1);
 
   const body = {
@@ -364,7 +371,7 @@ test('/api/create_official', async t => {
 
 });
 
-test('/api/delete_official', async t => {
+test.serial('/api/delete_official', async t => {
   const body = {
     'id': 1,
   };
@@ -374,7 +381,7 @@ test('/api/delete_official', async t => {
 
 });
 
-test('/api/clear_organization_owed', async t => {
+test.serial('/api/clear_organization_owed', async t => {
   const body = {
           'competitionid': 1,
           'affiliationid': 1,
@@ -384,7 +391,7 @@ test('/api/clear_organization_owed', async t => {
         console.log(res.body);
 });
 
-test('api/create_paymentrecord', async t => {
+test.serial('api/create_paymentrecord', async t => {
         const body = {
                 'competitionid':1,
                 'competitorid':1,
@@ -397,7 +404,7 @@ test('api/create_paymentrecord', async t => {
         console.log(res.body);
 });
 
-test('create partnership', async t => {
+test.serial('create partnership', async t => {
         const body = {
                 'leadcompetitorid':1,
                 'followcompetitorid':1,
@@ -409,7 +416,7 @@ test('create partnership', async t => {
         console.log(res.body);
 });
 
-test('delete partnership', async t => {
+test.serial('delete partnership', async t => {
         const body = {
                 'leadcompetitorid':1,
                 'followcompetitorid':1,
@@ -421,7 +428,7 @@ test('delete partnership', async t => {
 });
 
 
-test('update a payment record', async t => {
+test.serial('update a payment record', async t => {
   const body = {
     'competitionid':1,
     'competitorid':1,
@@ -436,38 +443,26 @@ test('update a payment record', async t => {
 
 });
 
-
-test('generate rounds', async t => {
+test.serial('update events', async t => {
   const body = {
-    'cid':1,
-  };
+    'id':1,
+    'rows':[{'styleid':1,
+             'stylename':'',
+             'levelid':1,
+             'levelname':'',
+             'dance':'',
+             'ordernumber':1
+    }]
+   };
 
-  const res = await http.postResponse('http://localhost:8080/api/competition/generateRounds', {body});
+  const res = await http.postResponse('http://localhost:8080/api/competition/updateEvents', {body});
         t.is(res.statusCode, 200);
         console.log(res.body);
 
 });
 
-// test('update events', async t => {
-//   const body = {
-//     'id':1,
-//     'rows':[{'styleid':1,
-//              'stylename':'',
-//              'levelid':1,
-//              'levelname':'',
-//              'dance':'',
-//              'ordernumber':1
-//     }]
-//    };
 
-//   const res = await http.postResponse('http://localhost:8080/api/competition/updateEvents', {body});
-//         t.is(res.statusCode, 200);
-//         console.log(res.body);
-
-// });
-
-
-test('update levels and styles', async t => {
+test.serial('update levels and styles', async t => {
   const body = {
     'cid':1,
     'levels':[{'id':1,
@@ -486,29 +481,29 @@ test('update levels and styles', async t => {
 
 });
 
-// test('update rounds', async t => {
-//   const body = {
-//     'cid':1,
-//     'rows': [{ 'levelid':1,
-//               'levelname':'',
-//               'styleid':1,
-//               'stylename':'',
-//               'dance':'',
-//               'eventid':1,
-//               'name':'',
-//               'ordernumber':1,
-//               'size':3,
-//               'callbackscalculated':true
-//             }]
-//   };
+test.serial('update rounds', async t => {
+  const body = {
+    'cid':1,
+    'rows': [{ 'levelid':1,
+              'levelname':'',
+              'styleid':1,
+              'stylename':'',
+              'dance':'',
+              'eventid':1,
+              'name':'',
+              'ordernumber':1,
+              'size':3,
+              'callbackscalculated':true
+            }]
+  };
 
-//   const res = await http.postResponse('http://localhost:8080/api/competition/updateRounds', {body});
-//         t.is(res.statusCode, 200);
-//         console.log(res.body);
+  const res = await http.postResponse('http://localhost:8080/api/competition/updateRounds', {body});
+        t.is(res.statusCode, 200);
+        console.log(res.body);
 
-// });
+});
 
-test('update competition info', async t => {
+test.serial('update competition info', async t => {
   const body = {
     'id':1,
     'name':'test',
@@ -532,7 +527,7 @@ test('update competition info', async t => {
 
 });
 
-test('update competition by current round id', async t => {
+test.serial('update competition by current round id', async t => {
   const body = {
     'cid':1,
     'rid':1,
