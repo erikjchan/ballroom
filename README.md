@@ -304,7 +304,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                id: int
+                id: int // id of competition
                 }
                 }
     * Response  :   
@@ -333,7 +333,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competition
                 }
                 }
     * Response  :   
@@ -347,7 +347,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                id: int
+                id: int // id of affiliation
                 }
                 }
     * Response  :   
@@ -362,7 +362,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int,
+                cid: int, // id of competition
                 }
                 }
     * Response  :   
@@ -383,7 +383,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int,
+                cid: int, // id of competition
                 }
                 }
     * Response  :   
@@ -398,7 +398,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int,
+                cid: int,// id of competition
                 }
                 }
     * Response  :   
@@ -416,7 +416,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competition
                 }
                 }
     * Response  :   
@@ -436,7 +436,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competition
                 }
                 }
     * Response  :   
@@ -455,7 +455,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int  // id of competition
                 }
                 }
     * Response  :   
@@ -471,8 +471,8 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int,
-                lid: int,
+                cid: int, // id of competition
+                lid: int, // id of level
                 }
                 }
     * Response  :   
@@ -488,9 +488,9 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int,
-                lid: int,
-                sid: int
+                cid: int, // id of competition
+                lid: int, // id of level
+                sid: int  // id of style
                 }
                 }
     * Response  :   
@@ -508,7 +508,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competition
                 }
                 }
     * Response  :   
@@ -533,7 +533,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competition
                 }
                 }
     * Response  :   
@@ -549,7 +549,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                id: int
+                id: int // id of competitor
                 }
                 }
     * Response  :   
@@ -588,13 +588,14 @@ API for viewing and updating database.
     * Method    :   GET
     * Request   :
                 {body:
-                rid: int
+		{
+                rid: int // id of round
+		}
+                }
+    * Response  :   
                 {
                 number: int
                 }
-                }
-    * Response  :   
-                {}
 
 * Get the confirmed Partnerships for the Competitor in the Competition
     * URL       :   /api/competitors/:id/:cid/events
@@ -602,8 +603,8 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                id: int,
-                cid: int,
+                id: int, // id of competitor
+                cid: int, // id of competition
                 }
                 }
     * Response  :   
@@ -633,7 +634,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                email: string
+                email: string // email address of admin
                 }
                 }
     * Response  :   
@@ -689,7 +690,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competition
                 }
                 }
     * Response  :   
@@ -719,7 +720,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                cid: int
+                cid: int // id of competitor
                 }
                 }
     * Response  :   
@@ -742,34 +743,6 @@ API for viewing and updating database.
                 description: string
                 }
 
-* Get the Competitions a Competitor is not registered for
-    * URL       :   /api/event/:eid/
-    * Method    :   GET
-    * Request   :
-                {body:
-                {
-                eid: int
-                }
-                }
-    * Response  :   
-                {
-                id: int,
-                name: string,
-                leadidstartnum: int,
-                locationname: string,
-                earlyprice: float,
-                regularprice: float,
-                lateprice: float,
-                startdate: date,
-                enddate: date,
-                regstartdate: date,
-                earlyregdeadline: date,
-                regularregdeadline: date,
-                lateregdeadline: date,
-                compadmin: string,
-                currentroundid: int,
-                description: string
-                }
 
 * Get an Event by id
     * URL       :   /api/event/:eid/
@@ -789,7 +762,6 @@ API for viewing and updating database.
                 dance: string,
                 ordernumber integer
                 }
-
 
 * Get all the Rounds in the same Event as a specified Round
     * URL       :   /api/event/rounds/:rid
@@ -814,6 +786,7 @@ API for viewing and updating database.
                 dance: string
                 }
                 }
+		
 * Get all the Affiliations
     * URL       :   /api/affiliations
     * Method    :   GET
@@ -851,7 +824,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                int: id
+                int: id // competition id
                 }
                 }
 
@@ -872,8 +845,8 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                int: competitionid,
-                int: competitorid
+                competitionid: int,
+                competitorid: int
                 }
                 }
 
@@ -986,7 +959,7 @@ API for viewing and updating database.
     * Request   :
                 {body:
                 {
-                rid: int,
+                rid: int, // round id
                 }
                 }
     * Response  :   
