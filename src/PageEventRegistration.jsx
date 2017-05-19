@@ -87,7 +87,7 @@ export default class PageEventRegistration extends React.Component {
         }
         this.setState({user_competition_events: json})
       })
-      .catch(err => { console.error(err); console.log(err)})
+      .catch(err => { console.error(err)})
 
     /** Fetch levels in a competition */
     this.props.api.get(`/api/competition/${this.competition_id}/levels`)
