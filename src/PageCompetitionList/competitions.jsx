@@ -1,3 +1,9 @@
+/*
+ * The "Other Competitions" table in the competition list page. This table displays 
+ * competitions that a competitor is not currently registered for. It allows
+ * the user to type into fields that will filter the results.
+ */
+
 import React from 'react';
 import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
@@ -102,6 +108,7 @@ class CompetitionsTable extends React.Component {
 		    cell: {
 		      formatters: [
             (value, { rowData }) => (
+              // button that redirects competitor to even registration for that competition
               <div>
               	<button
                   className = {style.editBtns}
@@ -121,6 +128,7 @@ class CompetitionsTable extends React.Component {
       this.props.api.get(`api/competitions/${this.competitor_id}/unregistered`)
 		   .then(json => {
           for (let i = 0; i < json.length; i++) {
+            // add dollar signs to prices and clean date format
             json[i].regularprice = "$" + (json[i].regularprice || 0);
             json[i].lateprice = "$" + (json[i].lateprice || 0);
             var regularregdeadline = new Date(json[i].regularregdeadline);
@@ -184,6 +192,7 @@ class CompetitionsTable extends React.Component {
   }
 
   _onFilterChange(cellDataKey, event) {
+    // filter the data based on the search input
     if (!event.target.value) {
       this.setState({ filteredDataList: this.rows });
     }
