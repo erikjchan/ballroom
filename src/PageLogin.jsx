@@ -59,8 +59,7 @@ export default class LoginPage extends React.Component {
         <p><Link to='editofficials/1'                >EditOfficials</Link></p>
         <p><Link to='organizationpayment/1/1'        >OrganizationPayment</Link></p>        
         <p><Link to='competition/1/seecompetitor/1'  >SeeCompetitor</Link></p>
-        <p><Link to='competition/1/regcompetitor/1'  >RegisterCompetitor</Link></p>
-        <p><Link to='querytest'                      >QueryTest</Link></p>   
+        <p><Link to='competition/1/regcompetitor/1'  >RegisterCompetitor</Link></p>  
         <p><Link to='competitorpayment/1/1'          >CompetitorPayment</Link></p>      
         <button onClick={() => this.props.dispatch(action) } />
         <pre>

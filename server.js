@@ -37,10 +37,8 @@ const page_routes = [
     '/admin/competition/:competition_id'                          ,
     '/editcompetition/:competition_id'                            ,
     '/editofficials/:competition_id'                              ,
-    '/querytest'                                                  ,
     '/newuser'                                                    ,
     '/organizationpayment/:competition_id/:organization_id'       ,
-    '/querytest'                                                  ,
     '/competitorpayment/:competition_id/:competitor_id'           ,
 ]
 
@@ -111,9 +109,9 @@ const server = app.listen(port, () => {
 });
 
 /****************TEST *****************/
-app.get('/api/querytest', (req, res) => {
-    test.get_test_result(req.body).then(value => {
-        log_debug(2)(value)
-        res.send(value);
-    });
-});
+// app.get('/api/querytest', (req, res) => {
+//     test.get_test_result(req.body).then(value => {
+//         log_debug(2)(value)
+//         res.send(value);
+//     });
+// });
