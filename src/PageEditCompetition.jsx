@@ -83,8 +83,7 @@ export default class PageEditCompetition extends React.Component {
         return;
       }
       this.props.api.post("/api/create_competition", this.state.competition)
-        .then(res => res.json()).then(json => {
-          console.log(json);
+        .then(json => {
           this.props.dispatch(selectCompetition(json))
           //window.location.href = '/editcompetition/'+json.id;
           browserHistory.push('/admin/competition/' + json.id)
